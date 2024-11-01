@@ -1,0 +1,24 @@
+/* Main Tailwind Style */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Header */
+.header {
+    @apply h-[88px] flex justify-between p-8;
+}
+.logo {
+    @apply lg:fixed;
+}
+
+/* Global Classes */
+
+.light > body {
+    @apply bg-white text-[rgba(0,0,0,0.8)] transition-colors duration-300 ease-linear
+}
+.dark > body {
+    @apply  bg-[#091a28] text-[#ebf4f1] transition-colors duration-300 ease-linear;
+}
+.container {
+    @apply max-w-3xl mx-auto px-8;
+}
