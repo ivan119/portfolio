@@ -11,8 +11,12 @@ const toggleTheme = () => {
 </script>
 <template>
   <header class="header">
-    <div>
-      <NuxtLink to="/" class="logo">logo</NuxtLink>
+    <div class="flex">
+      <NuxtLink to="/" class="logo">
+        <dev-tools-signature2 class="w-[120px] h-20" />
+
+        <dev-tools-signature v-if="false" class="w-[120px]"
+      /></NuxtLink>
     </div>
     <client-only>
       <component

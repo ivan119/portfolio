@@ -40,6 +40,8 @@
 }
 .dark > body {
   @apply bg-[#091a28] text-[#ebf4f1] transition-colors duration-300 ease-linear;
+  background-image: url("");
+  /* background: #091a28; */
 }
 .container {
   @apply max-w-3xl mx-auto px-8;
