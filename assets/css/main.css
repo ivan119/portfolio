@@ -5,20 +5,42 @@
 
 /* Header */
 .header {
-    @apply h-[88px] flex justify-between p-8;
+  @apply h-[88px] flex justify-between p-8;
 }
 .logo {
-    @apply lg:fixed;
+  @apply lg:fixed;
 }
 
 /* Global Classes */
 
+:root {
+  --c-bg: #091a28;
+  --c-scrollbar: #bbb;
+  --c-scrollbar-hover: #bbb;
+}
+
+/* Universal scrollbar styles */
+::-webkit-scrollbar {
+  width: 7px;
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(to bottom, #091a28, #ffffff);
+  border-radius: 3px;
+}
+.dark ::-webkit-scrollbar {
+  background: #091a28;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(to bottom, #ffffff, #091a28);
+}
 .light > body {
-    @apply bg-white text-[rgba(0,0,0,0.8)] transition-colors duration-300 ease-linear
+  @apply bg-white text-[rgba(0,0,0,0.8)] transition-colors duration-300 ease-linear;
 }
 .dark > body {
-    @apply  bg-[#091a28] text-[#ebf4f1] transition-colors duration-300 ease-linear;
+  @apply bg-[#091a28] text-[#ebf4f1] transition-colors duration-300 ease-linear;
 }
 .container {
-    @apply max-w-3xl mx-auto px-8;
+  @apply max-w-3xl mx-auto px-8;
 }
