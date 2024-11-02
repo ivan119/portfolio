@@ -5,6 +5,12 @@ export default defineNuxtConfig({
   ssr: true,
   css: ["~/assets/css/main.css"],
   modules: ["@nuxtjs/tailwindcss", "@nuxtjs/color-mode"],
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
   colorMode: {
     classSuffix: "",
     preference: "dark",
