@@ -48,7 +48,6 @@ watch(
 </style>
 <template>
   <div class="flex flex-col min-h-screen relative">
-    <dev-tools-animated-s-v-g-s-stroke />
     <navigation-header />
     <NuxtPage
       v-if="true"
