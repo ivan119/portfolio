@@ -35,14 +35,26 @@
 .dark ::-webkit-scrollbar-thumb {
   background-image: linear-gradient(to bottom, #ffffff, #091a28);
 }
+body {
+  @apply transition-colors duration-300 ease-linear overflow-x-hidden;
+}
 .light > body {
-  @apply bg-white text-[rgba(0,0,0,0.8)] transition-colors duration-300 ease-linear;
+  @apply bg-white text-[rgba(0,0,0,0.8)]
 }
 .dark > body {
-  @apply bg-[#091a28] text-[#ebf4f1] transition-colors duration-300 ease-linear;
-  background-image: url("");
+  @apply bg-[#091a28] text-[#ebf4f1]
   /* background: #091a28; */
 }
 .container {
   @apply max-w-3xl mx-auto px-8;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.963s;
+}
+
+.slide-enter,
+.slide-leave-to {
+  transform: translateX(-100%);
 }
