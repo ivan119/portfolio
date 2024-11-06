@@ -3,6 +3,22 @@ const transitionMode = ref<"slide" | "fade">("slide");
 const transitionSlide = ref("slide-right");
 const transitionFade = ref("page");
 const route = useRoute();
+
+const showIntro = ref(true);
+const showMainContent = computed(() => {
+  return !showIntro.value;
+});
+const showLogo = ref(false);
+const changeState = (value: Boolean) => {
+  showIntro.value = !value;
+};
+const testFunc = () => {
+  // TODO: MAKE THIS BETTER
+  showLogo.value = false;
+  setTimeout(() => {
+    showIntro.value = true;
+  }, 693);
+};
 watch(
   () => route.path,
   (page) => {
@@ -47,16 +63,25 @@ watch(
 }
 </style>
 <template>
-  <div class="flex flex-col min-h-screen relative">
-    <navigation-header />
-    <NuxtPage
-      v-if="true"
-      class="container grow"
-      :transition="{
-        name: transitionMode === 'slide' ? transitionSlide : transitionFade,
-        mode: 'out-in',
-      }"
+  <div
+    class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto"
+  >
+    <navigation-header :show-logo="showLogo" @show-intro="testFunc" />
+    <IntroComponent
+      v-if="showIntro"
+      class="grow"
+      @update:show-main-content="(args) => changeState(args)"
+      @show-logo="(args) => (showLogo = args)"
     />
-    <Footer class="container" />
+    <template v-if="showMainContent">
+      <NuxtPage
+        class="container grow"
+        :transition="{
+          name: transitionMode === 'slide' ? transitionSlide : transitionFade,
+          mode: 'out-in',
+        }"
+      />
+      <Footer class="container" />
+    </template>
   </div>
 </template>
