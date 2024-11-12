@@ -25,10 +25,11 @@ const toggleTheme = () => {
 <template>
   <header class="header">
     <div class="flex">
-      <NuxtLink v-if="showLogo" @click="testFunc" to="/" class="logo">
-        <dev-tools-signature2 class="w-[120px] h-20" />
-        <dev-tools-signature v-if="false" class="w-[120px]"
-      /></NuxtLink>
+      <transition name="page">
+        <NuxtLink v-if="showLogo" @click="testFunc" to="/" class="logo">
+          <dev-tools-signature2 class="w-[120px] h-20" />
+        </NuxtLink>
+      </transition>
     </div>
     <client-only>
       <component
