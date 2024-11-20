@@ -10,8 +10,15 @@ const greeting = ref(""); // Reactive greeting message
 let typewriterInstance = null; // Accessible variable for the Typewriter instance
 // Update greeting based on color mode
 const updateGreeting = () => {
+  const date = new Date();
+  const hours = date.getHours();
+  console.log(hours);
   greeting.value =
-    colorMode.value === "dark" ? "✨ Nice evening!" : "☀️ Have a good one!";
+    hours >= 5 && hours < 17
+      ? "️☀️  ️Have a nice day!"
+      : hours >= 17 && hours <= 19
+        ? "✨ Nice evening!"
+        : "✨ Have a good one!";
 };
 updateGreeting();
 // Watch for changes in color mode to update the greeting dynamically
@@ -62,7 +69,7 @@ const setupTypewriter = () => {
     )
     .changeDelay(33)
     .typeString(
-      '    <h2 class="text-xl md:text-2xl text-gray-700 dark:text-gray-300">\n' +
+      '    <h2 class="text-3l md:text-4xl text-gray-700 dark:text-gray-300">\n' +
         "        I design/develop things on web.\n" +
         "      </h2>",
     )
