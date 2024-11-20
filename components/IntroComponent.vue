@@ -56,9 +56,9 @@ const setupTypewriter = () => {
     .start()
     .pauseFor(1)
     .typeString(
-      '   <h1 class="text-4xl md:text-5xl font-bold">\n' +
+      '   <h2 class="text-4xl md:text-5xl font-bold">\n' +
         '        Hi <span class="animate-wave">👋</span> I\'m Ivan\n' +
-        "      </h1>",
+        "      </h2>",
     )
     .changeDelay(33)
     .typeString(
@@ -101,13 +101,11 @@ onMounted(() => {
 }
 </style>
 <template>
-  <div class="relative">
-    <div
-      :class="{
-        hidden: hideNow,
-      }"
-      class="p-3 sm:p-8 pt-3"
-      ref="typeWrite"
-    ></div>
-  </div>
+  <h1
+    :class="{
+      hidden: hideNow,
+    }"
+    class="p-3 sm:p-8 pt-3"
+    ref="typeWrite"
+  ></h1>
 </template>
