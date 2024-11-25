@@ -4,11 +4,11 @@ const transitionSlide = ref("slide-right");
 const transitionFade = ref("page");
 const route = useRoute();
 
-const showIntro = ref(true);
+const showIntro = ref(false);
 const showMainContent = computed(() => {
   return !showIntro.value;
 });
-const showLogo = ref(false);
+const showLogo = ref(true);
 const changeState = (value: Boolean) => {
   showIntro.value = !value;
 };

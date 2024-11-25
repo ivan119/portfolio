@@ -30,29 +30,26 @@ watch(colorMode, () => {
   const gr = document.getElementById("greeting");
   if (gr) gr.innerHTML = greeting.value;
 });
-const restartAnimation = () => {
-  const element = document.querySelector(".animate-wave");
-  if (element) {
-    element.style.animation = "none"; // Temporarily remove the animation
-    void element.offsetHeight; // Trigger a reflow (forces the browser to recalculate styles)
-    element.style.animation = ""; // Reapply the animation
+
+const handleCyaClick = () => {
+  const typeWriteDiv = document.querySelector(".typewrite-wrapper");
+  if (typeWriteDiv) {
+    typeWriteDiv.classList.add("slide-out-left");
+    setTimeout(() => {
+      // Remove element from DOM
+      typeWriteDiv.remove();
+      // Close the current browser tab
+      window.close();
+    }, 1000); // Wait for the animation to finish
   }
 };
+
 const addClickListener = () => {
   if (!import.meta.browser) return; // Ensure browser-only functionality
   const testElement = document.getElementById("test");
   if (testElement) {
     testElement.addEventListener("click", () => {
       typewriterInstance
-        .callFunction(() => {
-          restartAnimation();
-        })
-        .start()
-        .changeDeleteSpeed(3) // Faster delete speed
-        .deleteAll(11)
-        .changeDeleteSpeed(1)
-        .start()
-        .pauseFor(1111)
         .callFunction(() => {
           emit("showLogo", true);
           hideNow.value = true;
@@ -107,6 +104,15 @@ const setupTypewriter = () => {
     .typeString(
       `<p id="greeting" class="mt-12 text-sm text-gray-600 dark:text-gray-400 italic">\n${greeting.value}\n</p>`,
     )
+    .typeString(
+      `<p id="cya" class="text-sm text-gray-600 dark:text-gray-400 italic cursor-pointer underline mt-4">\ncya\n</p>`,
+    )
+    .callFunction(() => {
+      const cyaElement = document.getElementById("cya");
+      if (cyaElement) {
+        cyaElement.addEventListener("click", handleCyaClick);
+      }
+    })
     .start();
 };
 
@@ -170,6 +176,22 @@ p {
   }
 }
 
+/* Slide-out-left animation */
+.slide-out-left {
+  animation: slideOutLeft 1s forwards;
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
 .hidden {
   display: none;
 }
@@ -181,6 +203,7 @@ p {
       :class="{
         hidden: hideNow,
         'fade-in': fadeInClass,
+        'typewrite-wrapper': true,
       }"
       class="p-6 sm:p-12 pt-8"
     >
