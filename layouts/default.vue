@@ -4,11 +4,11 @@ const transitionSlide = ref("slide-right");
 const transitionFade = ref("page");
 const route = useRoute();
 
-const showIntro = ref(true);
+const showIntro = ref(false);
 const showMainContent = computed(() => {
   return !showIntro.value;
 });
-const showLogo = ref(false);
+const showLogo = ref(true);
 const changeState = (value: Boolean) => {
   showIntro.value = !value;
 };
@@ -61,6 +61,28 @@ watch(
   opacity: 0;
   transform: translate(50px, 0);
 }
+
+.slide-enter-active > *:not(.no-animation) {
+  animation: slide-in 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: backwards;
+}
+
+.slide-enter-active > *:not(.no-animation):nth-child(1) { animation-delay: 0.15s }
+.slide-enter-active > *:not(.no-animation):nth-child(2) { animation-delay: 0.3s }
+.slide-enter-active > *:not(.no-animation):nth-child(3) { animation-delay: 0.45s }
+.slide-enter-active > *:not(.no-animation):nth-child(4) { animation-delay: 0.6s }
+.slide-enter-active > *:not(.no-animation):nth-child(5) { animation-delay: 0.75s }
+
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>
 <template>
   <div
@@ -74,13 +96,15 @@ watch(
       @show-logo="(args) => (showLogo = args)"
     />
     <template v-if="showMainContent">
-      <NuxtPage
-        class="container grow"
-        :transition="{
-          name: transitionMode === 'slide' ? transitionSlide : transitionFade,
-          mode: 'out-in',
-        }"
-      />
+      <main class="flex-1">
+        <NuxtPage
+          class="slide-enter-active container grow"
+          :transition="{
+            name: transitionMode === 'slide' ? transitionSlide : transitionFade,
+            mode: 'out-in',
+          }"
+        />
+      </main>
       <Footer class="container" />
     </template>
   </div>
