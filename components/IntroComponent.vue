@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, nextTick } from "vue";
 import Typewriter from "typewriter-effect/dist/core";
 
 const emit = defineEmits(["update:showMainContent", "showLogo"]);
@@ -54,15 +54,15 @@ const restartAnimation = () => {
 const addClickListener = () => {
   if (!import.meta.browser) return; // Ensure browser-only functionality
   const porfolioLink = document.getElementById("portfolio-link");
-  if (porfolioLink) {
+  const typeWriteDiv = document.querySelector(".typewrite-wrapper");
+  
+  if (porfolioLink && typeWriteDiv) {
     porfolioLink.addEventListener("click", () => {
+      typeWriteDiv.classList.add('slide-portfolio');
       typewriterInstance
         .callFunction(() => {
           restartAnimation();
         })
-        .start()
-        .changeDeleteSpeed(1) // Faster delete speed
-        .deleteAll(1)
         .start()
         .pauseFor(1111)
         .callFunction(() => {
@@ -131,10 +131,39 @@ const setupTypewriter = () => {
     .start();
 };
 
+const resetComponent = () => {
+  hideNow.value = false;
+  fadeInClass.value = false;
+  const typeWriteDiv = document.querySelector(".typewrite-wrapper");
+  if (typeWriteDiv) {
+    typeWriteDiv.classList.remove('slide-portfolio');
+  }
+  // Reset and reinitialize typewriter
+  if (typewriterInstance) {
+    typewriterInstance.stop();
+  }
+  nextTick(() => {
+    fadeInClass.value = true;
+    setupTypewriter();
+  });
+};
+
+const props = defineProps({
+  showIntro: {
+    type: Boolean,
+    default: true
+  }
+});
+
+watch(() => props.showIntro, (newVal) => {
+  if (newVal) {
+    resetComponent();
+  }
+});
+
 // Apply the fade-in effect on mount
 onMounted(() => {
-  fadeInClass.value = true; // Trigger the fade-in effect
-  setupTypewriter();
+  resetComponent();
 });
 </script>
 
@@ -207,22 +236,32 @@ p {
   }
 }
 
+/* Slide-portfolio animation */
+.slide-portfolio {
+  animation: slidePortfolio 0.8s ease-in-out forwards;
+}
+
+@keyframes slidePortfolio {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
 .hidden {
   display: none;
 }
 </style>
 
 <template>
-  <div class="relative">
-    <div
-      :class="{
-        hidden: hideNow,
-        'fade-in': fadeInClass,
-        'typewrite-wrapper': true,
-      }"
-      class="p-6 sm:p-12 pt-8"
-    >
-      <div ref="typeWrite"></div>
-    </div>
+  <div 
+    class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-12 pt-8"
+    :class="{ 'fade-in': fadeInClass, 'hidden': hideNow }"
+  >
+    <div ref="typeWrite"></div>
   </div>
 </template>
