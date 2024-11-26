@@ -36,11 +36,11 @@ const handleCyaClick = () => {
   if (typeWriteDiv) {
     typeWriteDiv.classList.add("slide-out-left");
     setTimeout(() => {
-      // Remove element from DOM
-      typeWriteDiv.remove();
-      // Close the current browser tab
-      window.close();
-    }, 1000); // Wait for the animation to finish
+      // Change content to goodbye message
+      typeWriteDiv.innerHTML = '<div class="goodbye-message text-center text-2xl text-gray-800 dark:text-gray-300">Thanks for visiting! You can close this tab now 👋</div>';
+      typeWriteDiv.classList.remove("slide-out-left");
+      typeWriteDiv.classList.add("fade-in");
+    }, 1000);
   }
 };
 const restartAnimation = () => {
@@ -58,27 +58,24 @@ const addClickListener = () => {
   
   if (porfolioLink && typeWriteDiv) {
     porfolioLink.addEventListener("click", () => {
-      // Add staggered animation classes
       typeWriteDiv.classList.add('animate-slide');
-      const elements = typeWriteDiv.children;
-      Array.from(elements).forEach((el, index) => {
-        el.style.animationDelay = `${index * 0.1}s`;
-      });
       
-      typewriterInstance
-        .callFunction(() => {
-          restartAnimation();
-        })
-        .start()
-        .pauseFor(1111)
-        .callFunction(() => {
-          emit("showLogo", true);
-          hideNow.value = true;
-        })
-        .pauseFor(1963)
-        .callFunction(() => {
-          emit("update:showMainContent", true);
-        });
+      setTimeout(() => {
+        // Clear content and show welcome message
+        typeWriteDiv.classList.remove('animate-slide');
+        typeWriteDiv.innerHTML = '<div class="welcome-message text-center text-4xl md:text-5xl text-gray-800 dark:text-gray-300">Welcome</div>';
+        typeWriteDiv.classList.add('fade-welcome');
+        
+        // After welcome message, proceed with main content
+        setTimeout(() => {
+          typeWriteDiv.classList.add('fade-out');
+          setTimeout(() => {
+            emit("showLogo", true);
+            hideNow.value = true;
+            emit("update:showMainContent", true);
+          }, 600);
+        }, 2000);
+      }, 1200);
     });
   }
 };
@@ -142,7 +139,7 @@ const resetComponent = () => {
   fadeInClass.value = false;
   const typeWriteDiv = document.querySelector(".typewrite-wrapper");
   if (typeWriteDiv) {
-    typeWriteDiv.classList.remove('animate-slide');
+    typeWriteDiv.classList.remove('animate-slide', 'fade-welcome', 'fade-out');
     Array.from(typeWriteDiv.children).forEach(el => {
       el.style.animationDelay = '';
     });
@@ -246,11 +243,11 @@ p {
 }
 
 .animate-slide {
-  animation: slideOut 1s ease-in-out forwards;
+  animation: slideOut 1.2s ease-in-out forwards;
 }
 
 .animate-slide > * {
-  animation: slideOut 1s ease-in-out forwards;
+  animation: slideOut 1.2s ease-in-out forwards;
 }
 
 @keyframes slideOut {
@@ -258,7 +255,7 @@ p {
     transform: translateX(0);
     opacity: 1;
   }
-  60% {
+  70% {
     transform: translateX(10%);
     opacity: 1;
   }
@@ -280,6 +277,51 @@ p {
 
 .hidden {
   display: none;
+}
+
+.goodbye-message {
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-welcome {
+  animation: fadeWelcome 0.6s ease-in-out forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.6s ease-in-out forwards;
+}
+
+@keyframes fadeWelcome {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
 }
 </style>
 
