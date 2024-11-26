@@ -1,5 +1,5 @@
 <script setup>
-import CompanyLink from '~/components/CompanyLink.vue'
+import BaseButton from '~/components/BaseButton.vue'
 </script>
 
 <template>
@@ -14,20 +14,23 @@ import CompanyLink from '~/components/CompanyLink.vue'
         
         <p class="flex items-center gap-2">
           Currently working at 
-          <CompanyLink 
+          <BaseButton 
             href="https://gauss.hr" 
-            company="Gauss" 
-            logo="/images/gauss.svg"
-          />
+            external
+            icon="/images/gauss.svg"
+          >
+            Gauss
+          </BaseButton>
           as team lead developer
         </p>
         
-        <NuxtLink
+        <BaseButton
           to="/about"
-          class="text-lg hover:text-blue-500 dark:hover:text-blue-400 transition-colors duration-300"
+          variant="primary"
+          class="text-lg"
         >
           about
-        </NuxtLink>
+        </BaseButton>
       </div>
     </article>
   </div>
