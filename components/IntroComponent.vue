@@ -43,13 +43,28 @@ const handleCyaClick = () => {
     }, 1000); // Wait for the animation to finish
   }
 };
-
+const restartAnimation = () => {
+  const element = document.querySelector(".animate-wave");
+  if (element) {
+    element.style.animation = "none"; // Temporarily remove the animation
+    void element.offsetHeight; // Trigger a reflow (forces the browser to recalculate styles)
+    element.style.animation = ""; // Reapply the animation
+  }
+};
 const addClickListener = () => {
   if (!import.meta.browser) return; // Ensure browser-only functionality
-  const testElement = document.getElementById("test");
-  if (testElement) {
-    testElement.addEventListener("click", () => {
+  const porfolioLink = document.getElementById("portfolio-link");
+  if (porfolioLink) {
+    porfolioLink.addEventListener("click", () => {
       typewriterInstance
+        .callFunction(() => {
+          restartAnimation();
+        })
+        .start()
+        .changeDeleteSpeed(1) // Faster delete speed
+        .deleteAll(1)
+        .start()
+        .pauseFor(1111)
         .callFunction(() => {
           emit("showLogo", true);
           hideNow.value = true;
@@ -88,7 +103,7 @@ const setupTypewriter = () => {
     )
     .typeString(
       '<h3 class="text-xl mb-2 text-gray-800 dark:text-gray-300">\n' +
-        'Check out my <span id="test" class="cursor-pointer text-green-600 transition-colors ease-linear duration-200 underline hover:text-green-800 ">portfolio</span>\n' +
+        'Check out my <span id="portfolio-link" class="cursor-pointer text-green-600 transition-colors ease-linear duration-200 underline hover:text-green-800 ">portfolio</span>\n' +
         "</h3>",
     )
     .pauseFor(23)
