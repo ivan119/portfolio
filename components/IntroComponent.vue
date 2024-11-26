@@ -58,7 +58,13 @@ const addClickListener = () => {
   
   if (porfolioLink && typeWriteDiv) {
     porfolioLink.addEventListener("click", () => {
-      typeWriteDiv.classList.add('slide-portfolio');
+      // Add staggered animation classes
+      typeWriteDiv.classList.add('animate-slide');
+      const elements = typeWriteDiv.children;
+      Array.from(elements).forEach((el, index) => {
+        el.style.animationDelay = `${index * 0.1}s`;
+      });
+      
       typewriterInstance
         .callFunction(() => {
           restartAnimation();
@@ -136,7 +142,10 @@ const resetComponent = () => {
   fadeInClass.value = false;
   const typeWriteDiv = document.querySelector(".typewrite-wrapper");
   if (typeWriteDiv) {
-    typeWriteDiv.classList.remove('slide-portfolio');
+    typeWriteDiv.classList.remove('animate-slide');
+    Array.from(typeWriteDiv.children).forEach(el => {
+      el.style.animationDelay = '';
+    });
   }
   // Reset and reinitialize typewriter
   if (typewriterInstance) {
@@ -236,20 +245,37 @@ p {
   }
 }
 
-/* Slide-portfolio animation */
-.slide-portfolio {
-  animation: slidePortfolio 0.8s ease-in-out forwards;
+.animate-slide {
+  animation: slideOut 1s ease-in-out forwards;
 }
 
-@keyframes slidePortfolio {
+.animate-slide > * {
+  animation: slideOut 1s ease-in-out forwards;
+}
+
+@keyframes slideOut {
   0% {
     transform: translateX(0);
+    opacity: 1;
+  }
+  60% {
+    transform: translateX(10%);
     opacity: 1;
   }
   100% {
     transform: translateX(-100%);
     opacity: 0;
   }
+}
+
+.typewrite-wrapper {
+  perspective: 1000px;
+}
+
+/* Add some depth to the text elements */
+.typewrite-wrapper > * {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 .hidden {
