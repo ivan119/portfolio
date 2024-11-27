@@ -30,73 +30,7 @@ watch(
 );
 </script>
 
-<style>
-/* Page Transitions */
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.4s;
-}
-.page-enter-from,
-.page-leave-to {
-  opacity: 0;
-  filter: blur(1rem);
-}
-
-.slide-left-enter-active,
-.slide-left-leave-active,
-.slide-right-enter-active,
-.slide-right-leave-active {
-  transition: all 0.2s;
-}
-.slide-left-enter-from {
-  opacity: 0;
-  transform: translate(50px, 0);
-}
-.slide-left-leave-to {
-  opacity: 0;
-  transform: translate(-50px, 0);
-}
-.slide-right-enter-from {
-  opacity: 0;
-  transform: translate(-50px, 0);
-}
-.slide-right-leave-to {
-  opacity: 0;
-  transform: translate(50px, 0);
-}
-
-.slide-enter-active > *:not(.no-animation) {
-  animation: slide-in 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  animation-fill-mode: backwards;
-}
-
-.slide-enter-active > *:not(.no-animation):nth-child(1) {
-  animation-delay: 0.15s;
-}
-.slide-enter-active > *:not(.no-animation):nth-child(2) {
-  animation-delay: 0.3s;
-}
-.slide-enter-active > *:not(.no-animation):nth-child(3) {
-  animation-delay: 0.45s;
-}
-.slide-enter-active > *:not(.no-animation):nth-child(4) {
-  animation-delay: 0.6s;
-}
-.slide-enter-active > *:not(.no-animation):nth-child(5) {
-  animation-delay: 0.75s;
-}
-
-@keyframes slide-in {
-  0% {
-    opacity: 0;
-    transform: translateY(33px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-</style>
+<style></style>
 <template>
   <div
     class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto slide-enter-active"
