@@ -29,8 +29,6 @@ watch(
   },
 );
 </script>
-
-<style></style>
 <template>
   <div
     class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto slide-enter-active"
