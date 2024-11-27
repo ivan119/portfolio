@@ -1,13 +1,14 @@
 <template>
   <component
-    :is="component"
-    :to="to || href"
-    :target="external ? '_blank' : undefined"
-    class="inline-flex items-center gap-2 px-3 py-1 text-sm rounded-full transition-colors"
-    :class="[
-      variant === 'default' ? 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700' : '',
-      variant === 'primary' ? 'bg-primary-100 dark:bg-primary-800 hover:bg-primary-200 dark:hover:bg-primary-700' : '',
-    ]"
+  :is="component"
+  :to="to || href"
+  :target="external ? '_blank' : undefined"
+  class="transition-colors ease-linear duration-200 inline-flex items-center"
+  :class="[ // Dynamically add classes
+    icon ? 'text-sm px-3 py-1 rounded-full' : '',
+    variant === 'default' ? 'bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700' : '',
+    variant === 'primary' ? 'text-2xl text-teal-500 hover:text-teal-600' : '',
+  ]"
   >
     <img
       v-if="icon"
