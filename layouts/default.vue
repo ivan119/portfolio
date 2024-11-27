@@ -12,6 +12,9 @@ const showLogo = ref(true);
 const changeState = (value: Boolean) => {
   showIntro.value = !value;
 };
+const watchRoute = computed(() => {
+  return route.path;
+});
 const testFunc = () => {
   // TODO: MAKE THIS BETTER
   showLogo.value = false;
@@ -67,16 +70,26 @@ watch(
   animation-fill-mode: backwards;
 }
 
-.slide-enter-active > *:not(.no-animation):nth-child(1) { animation-delay: 0.15s }
-.slide-enter-active > *:not(.no-animation):nth-child(2) { animation-delay: 0.3s }
-.slide-enter-active > *:not(.no-animation):nth-child(3) { animation-delay: 0.45s }
-.slide-enter-active > *:not(.no-animation):nth-child(4) { animation-delay: 0.6s }
-.slide-enter-active > *:not(.no-animation):nth-child(5) { animation-delay: 0.75s }
+.slide-enter-active > *:not(.no-animation):nth-child(1) {
+  animation-delay: 0.15s;
+}
+.slide-enter-active > *:not(.no-animation):nth-child(2) {
+  animation-delay: 0.3s;
+}
+.slide-enter-active > *:not(.no-animation):nth-child(3) {
+  animation-delay: 0.45s;
+}
+.slide-enter-active > *:not(.no-animation):nth-child(4) {
+  animation-delay: 0.6s;
+}
+.slide-enter-active > *:not(.no-animation):nth-child(5) {
+  animation-delay: 0.75s;
+}
 
 @keyframes slide-in {
   0% {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(33px);
   }
   100% {
     opacity: 1;
@@ -86,12 +99,12 @@ watch(
 </style>
 <template>
   <div
-    class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto"
+    class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto slide-enter-active"
   >
     <navigation-header :show-logo="showLogo" @show-intro="testFunc" />
     <IntroComponent
-      v-if="showIntro"
-      class="grow"
+      v-if="!showMainContent && watchRoute === '/'"
+      class="grow no-animation"
       @update:show-main-content="(args) => changeState(args)"
       @show-logo="(args) => (showLogo = args)"
     />
