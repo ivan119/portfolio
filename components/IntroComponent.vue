@@ -1,15 +1,17 @@
 <script setup>
-import { onMounted, ref, watch, nextTick } from "vue";
+import { onMounted, ref, watch, nextTick, onUnmounted } from "vue";
 import Typewriter from "typewriter-effect/dist/core";
+import { useRouter } from 'vue-router';
 
 const emit = defineEmits(["update:showMainContent", "showLogo"]);
 const typeWrite = ref(null);
 const del = ref(1);
 const hideNow = ref(false);
-const colorMode = useColorMode();
 const greeting = ref(""); // Reactive greeting message
 const fadeInClass = ref(false); // Controls the fade-in effect
 let typewriterInstance = null; // Accessible variable for the Typewriter instance
+const isIntroActive = ref(true); // Track intro component state
+const router = useRouter();
 
 // Update greeting based on time of day
 const updateGreeting = () => {
@@ -25,24 +27,43 @@ const updateGreeting = () => {
 updateGreeting();
 
 // Watch for changes in color mode to update the greeting dynamically
-watch(colorMode, () => {
-  updateGreeting();
-  const gr = document.getElementById("greeting");
-  if (gr) gr.innerHTML = greeting.value;
+// watch(colorMode, () => {
+//   updateGreeting();
+//   const gr = document.getElementById("greeting");
+//   if (gr) gr.innerHTML = greeting.value;
+// });
+
+// Router navigation guard
+const navigationGuard = router.beforeEach((to, from, next) => {
+  if (isIntroActive.value) {
+    // Block all routes while intro is active
+    next(false);
+    return;
+  }
+  next(); // Allow navigation normally if intro is inactive
 });
 
 const handleCyaClick = () => {
   const typeWriteDiv = document.querySelector(".typewrite-wrapper");
   if (typeWriteDiv) {
-    typeWriteDiv.classList.add("slide-out-left");
-    setTimeout(() => {
-      // Change content to goodbye message
-      typeWriteDiv.innerHTML = '<div class="goodbye-message text-center text-2xl text-gray-800 dark:text-gray-300">Thanks for visiting! You can close this tab now 👋</div>';
-      typeWriteDiv.classList.remove("slide-out-left");
-      typeWriteDiv.classList.add("fade-in");
-    }, 1000);
+    // Clear existing content
+    typeWriteDiv.innerHTML = '';
+    
+    // Create new typewriter instance for goodbye message
+    const goodbyeTypewriter = new Typewriter(typeWriteDiv, {
+      loop: false,
+      delay: 50,
+    });
+
+    goodbyeTypewriter
+      .typeString('<div class="text-center text-4xl md:text-5xl text-gray-800 dark:text-gray-300">Thanks for visiting!</div>')
+      .start();
+
+    // Set intro to inactive after showing goodbye message
+    isIntroActive.value = false;
   }
 };
+
 const restartAnimation = () => {
   const element = document.querySelector(".animate-wave");
   if (element) {
@@ -51,28 +72,33 @@ const restartAnimation = () => {
     element.style.animation = ""; // Reapply the animation
   }
 };
+
 const addClickListener = () => {
   if (!import.meta.browser) return; // Ensure browser-only functionality
   const porfolioLink = document.getElementById("portfolio-link");
   const typeWriteDiv = document.querySelector(".typewrite-wrapper");
-  
+
   if (porfolioLink && typeWriteDiv) {
     porfolioLink.addEventListener("click", () => {
-      typeWriteDiv.classList.add('animate-slide');
-      
+      typeWriteDiv.classList.add("animate-slide");
+
       setTimeout(() => {
         // Clear content and show welcome message
-        typeWriteDiv.classList.remove('animate-slide');
-        typeWriteDiv.innerHTML = '<div class="welcome-message text-center text-4xl md:text-5xl text-gray-800 dark:text-gray-300">Welcome</div>';
-        typeWriteDiv.classList.add('fade-welcome');
-        
+        typeWriteDiv.classList.remove("animate-slide");
+        typeWriteDiv.innerHTML =
+          '<div class="welcome-message text-center text-4xl md:text-5xl text-gray-800 dark:text-gray-300">Welcome</div>';
+        typeWriteDiv.classList.add("fade-welcome");
+
         // After welcome message, proceed with main content
         setTimeout(() => {
-          typeWriteDiv.classList.add('fade-out');
+          typeWriteDiv.classList.add("fade-out");
           setTimeout(() => {
             emit("showLogo", true);
             hideNow.value = true;
             emit("update:showMainContent", true);
+
+            // Disable intro active state
+            isIntroActive.value = false;
           }, 600);
         }, 2000);
       }, 1200);
@@ -109,7 +135,7 @@ const setupTypewriter = () => {
         'Check out my <span id="portfolio-link" class="cursor-pointer text-green-600 transition-colors ease-linear duration-200 underline hover:text-green-800 ">portfolio</span>\n' +
         "</h3>",
     )
-    .pauseFor(23)
+    .pauseFor(3)
     .typeString(
       '<h3 class="text-xl text-gray-800 dark:text-gray-300">\n' +
         'Or contact <a href="mailto:ivankelava991@gmail.com" class="text-blue-600 transition-colors ease-linear duration-200 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-200">me</a>\n' +
@@ -118,7 +144,7 @@ const setupTypewriter = () => {
     .callFunction(() => {
       addClickListener();
     })
-    .pauseFor(42)
+    .pauseFor(693)
     .typeString(
       `<p id="greeting" class="mt-12 text-sm text-gray-600 dark:text-gray-400 italic">\n${greeting.value}\n</p>`,
     )
@@ -137,11 +163,12 @@ const setupTypewriter = () => {
 const resetComponent = () => {
   hideNow.value = false;
   fadeInClass.value = false;
+  isIntroActive.value = true; // Reset intro active state
   const typeWriteDiv = document.querySelector(".typewrite-wrapper");
   if (typeWriteDiv) {
-    typeWriteDiv.classList.remove('animate-slide', 'fade-welcome', 'fade-out');
-    Array.from(typeWriteDiv.children).forEach(el => {
-      el.style.animationDelay = '';
+    typeWriteDiv.classList.remove("animate-slide", "fade-welcome", "fade-out");
+    Array.from(typeWriteDiv.children).forEach((el) => {
+      el.style.animationDelay = "";
     });
   }
   // Reset and reinitialize typewriter
@@ -157,19 +184,27 @@ const resetComponent = () => {
 const props = defineProps({
   showIntro: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
 });
 
-watch(() => props.showIntro, (newVal) => {
-  if (newVal) {
-    resetComponent();
-  }
-});
+watch(
+  () => props.showIntro,
+  (newVal) => {
+    if (newVal) {
+      resetComponent();
+    }
+  },
+);
 
 // Apply the fade-in effect on mount
 onMounted(() => {
   resetComponent();
+});
+
+// Cleanup navigation guard when component is unmounted
+onUnmounted(() => {
+  navigationGuard(); // Remove the navigation guard
 });
 </script>
 
@@ -326,9 +361,9 @@ p {
 </style>
 
 <template>
-  <div 
+  <div
     class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-12 pt-8"
-    :class="{ 'fade-in': fadeInClass, 'hidden': hideNow }"
+    :class="{ 'fade-in': fadeInClass, hidden: hideNow }"
   >
     <div ref="typeWrite"></div>
   </div>
