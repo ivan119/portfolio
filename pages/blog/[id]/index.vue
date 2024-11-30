@@ -18,7 +18,7 @@ const { data: post, status } = await useAsyncData(
   <div class="max-w-4xl mx-auto px-4 py-8">
     <!-- Loading State -->
     <div
-      v-if="status.pending"
+      v-if="status === 'pending'"
       class="flex justify-center items-center min-h-[400px]"
     >
       <div

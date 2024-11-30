@@ -5,7 +5,7 @@ import BlogPost from "~/components/BlogPost.vue";
 
 definePageMeta({
   pageTransition: false,
-});
+})
 
 const { fetchPosts } = useDevToPosts();
 
@@ -26,7 +26,7 @@ const { data: posts, status } = await useAsyncData<DevToPost[]>(
 
     <!-- Loading State -->
     <div
-      v-if="status.loading"
+      v-if="status === 'pending'"
       class="flex justify-center items-center min-h-[400px]"
     >
       <div
