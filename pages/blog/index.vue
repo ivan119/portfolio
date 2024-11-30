@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { useDevToPosts } from "~/composables/useDevToPosts";
 import { useAsyncData } from "#imports";
-import BlogPost from "~/components/BlogPost.vue";
-
-definePageMeta({
-  pageTransition: false,
-})
+import type { DevToPost } from "~/composables/useDevToPosts";
 
 const { fetchPosts } = useDevToPosts();
 

@@ -2,9 +2,6 @@
 import { useDevToPosts } from "~/composables/useDevToPosts";
 import { useAsyncData, useRoute } from "#imports";
 
-definePageMeta({
-  pageTransition: false,
-});
 
 const route = useRoute();
 const { fetchSinglePost, formatDate } = useDevToPosts();
