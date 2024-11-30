@@ -16,9 +16,7 @@
     "@tresjs/nuxt": "^3.0.7",
     "nuxt": "^3.14.159",
     "three": "^0.170.0",
-    "typewriter-effect": "^2.21.0",
-    "vue": "latest",
-    "vue-router": "latest"
+    "typewriter-effect": "^2.21.0"
   },
   "volta": {
     "node": "22.11.0"

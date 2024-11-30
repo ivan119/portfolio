@@ -18,7 +18,7 @@ logs
 .fleet
 .idea
 
-# Local env files
+# Environment
 .env
 .env.*
 !.env.example
