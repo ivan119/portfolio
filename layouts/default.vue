@@ -2,7 +2,7 @@
 import { ref, computed, watch } from "vue";
 import { useRoute } from "#imports";
 
-const transitionMode = ref<"slide" | "fade">("slide");
+const transitionMode = ref<"slide" | "fade">("fade");
 const transitionSlide = ref("slide-right");
 const transitionFade = ref("page");
 const route = useRoute();
@@ -33,14 +33,13 @@ const usePageTransition = computed(() => {
 });
 
 // Update transition on route change
-const transition = computed(() => ({
+const transition = new Object({
   name:
     transitionMode.value === "slide"
       ? transitionSlideDirection.value
       : transitionFade.value,
-  mode:  "out-in",
-} as const));
-
+  mode: "out-in",
+});
 </script>
 
 <template>
