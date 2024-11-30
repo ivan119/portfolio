@@ -38,7 +38,7 @@ const transition = computed(() => ({
     transitionMode.value === "slide"
       ? transitionSlideDirection.value
       : transitionFade.value,
-  mode: "out-in",
+  mode:  "out-in",
 } as const));
 
 </script>
@@ -56,7 +56,7 @@ const transition = computed(() => ({
     />
     <template v-if="showMainContent">
       <main class="flex-1">
-        <NuxtPage class="container grow" :transition="!usePageTransition ? false : transition" />
+        <NuxtPage class="container grow" :transition="transition" />
       </main>
       <Footer class="container" />
     </template>
