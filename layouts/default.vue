@@ -33,15 +33,14 @@ const usePageTransition = computed(() => {
 });
 
 // Update transition on route change
-const transition = computed(() => {
-  return {
-    name:
-      transitionMode.value === "slide"
-        ? transitionSlideDirection.value
-        : transitionFade,
-    mode: "out-in", // This is to ensure that there is a transition effect during route changes
-  };
-});
+const transition = computed(() => ({
+  name:
+    transitionMode.value === "slide"
+      ? transitionSlideDirection.value
+      : transitionFade.value,
+  mode: "out-in",
+} as const));
+
 </script>
 
 <template>
@@ -56,10 +55,8 @@ const transition = computed(() => {
       @show-logo="(args) => (showLogo = args)"
     />
     <template v-if="showMainContent">
-      <pre>{{ usePageTransition }}</pre>
-      <pre>{{ transition }}</pre>
       <main class="flex-1">
-        <NuxtPage class="container grow" :transition="transition" />
+        <NuxtPage class="container grow" :transition="!usePageTransition ? false : transition" />
       </main>
       <Footer class="container" />
     </template>
