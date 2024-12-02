@@ -59,5 +59,6 @@ const transition = new Object({
       </main>
       <Footer class="container" />
     </template>
+    <ScrollProgress />
   </div>
 </template>

@@ -13,6 +13,57 @@
 
 /* Global Classes */
 
+/* Gradient Text Classes */
+.text-blue-green {
+  @apply bg-gradient-to-r from-blue-500 to-green-400 hover:from-blue-600 hover:to-green-500 bg-clip-text text-transparent transition-all duration-300 ease-in-out relative;
+}
+.text-blue-green::after {
+  @apply content-[''] absolute w-0 h-[2px] left-0 -bottom-[2px] bg-gradient-to-r from-blue-500 to-green-400 transition-all duration-300 ease-in-out;
+}
+.text-blue-green:hover::after {
+  @apply w-full;
+}
+
+.text-green-blue {
+  @apply bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 bg-clip-text text-transparent transition-all duration-300 ease-in-out relative;
+}
+.text-green-blue::after {
+  @apply content-[''] absolute w-0 h-[2px] left-0 -bottom-[2px] bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-300 ease-in-out;
+}
+.text-green-blue:hover::after {
+  @apply w-full;
+}
+
+.text-royal-primary {
+  @apply bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 bg-clip-text text-transparent transition-all duration-300 ease-in-out relative;
+}
+.text-royal-primary::after {
+  @apply content-[''] absolute w-0 h-[2px] left-0 -bottom-[2px] bg-gradient-to-r from-blue-600 to-purple-600 transition-all duration-300 ease-in-out;
+}
+.text-royal-primary:hover::after {
+  @apply w-full;
+}
+
+.text-royal-secondary {
+  @apply bg-gradient-to-r from-emerald-500 to-amber-500 hover:from-emerald-600 hover:to-amber-600 bg-clip-text text-transparent transition-all duration-300 ease-in-out relative;
+}
+.text-royal-secondary::after {
+  @apply content-[''] absolute w-0 h-[2px] left-0 -bottom-[2px] bg-gradient-to-r from-emerald-500 to-amber-500 transition-all duration-300 ease-in-out;
+}
+.text-royal-secondary:hover::after {
+  @apply w-full;
+}
+
+.text-royal-accent {
+  @apply bg-gradient-to-r from-slate-600 to-teal-500 hover:from-slate-700 hover:to-teal-600 bg-clip-text text-transparent transition-all duration-300 ease-in-out relative;
+}
+.text-royal-accent::after {
+  @apply content-[''] absolute w-0 h-[2px] left-0 -bottom-[2px] bg-gradient-to-r from-slate-600 to-teal-500 transition-all duration-300 ease-in-out;
+}
+.text-royal-accent:hover::after {
+  @apply w-full;
+}
+
 :root {
   --c-bg: #091a28;
   --c-scrollbar: #bbb;
@@ -20,24 +71,17 @@
 }
 
 /* Universal scrollbar styles */
+/* Hide default scrollbar */
 ::-webkit-scrollbar {
-  width: 7px;
-  background: white;
+  display: none;
 }
 
-::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(to bottom, #091a28, #ffffff);
-  border-radius: 3px;
-}
-.dark ::-webkit-scrollbar {
-  background: #091a28;
-}
-.dark ::-webkit-scrollbar-thumb {
-  background-image: linear-gradient(to bottom, #ffffff, #091a28);
-}
 body {
   @apply transition-colors duration-300 ease-linear overflow-x-hidden;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
+
 .light > body {
   @apply bg-white text-[rgba(0,0,0,0.8)]
 }
