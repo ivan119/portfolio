@@ -113,13 +113,13 @@ const setupTypewriter = () => {
     )
     .typeString(
       '<h3 class="text-xl mb-2 text-gray-800 dark:text-gray-300">\n' +
-        'Check out my <span id="portfolio-link" class="cursor-pointer text-green-600 transition-colors ease-linear duration-200 underline hover:text-green-800 ">portfolio</span>\n' +
+        'Check out my <span id="portfolio-link" class="cursor-pointer text-blue-green">portfolio</span>\n' +
         "</h3>",
     )
     .pauseFor(3)
     .typeString(
       '<h3 class="text-xl text-gray-800 dark:text-gray-300">\n' +
-        'Or contact <a href="mailto:ivankelava991@gmail.com" class="text-blue-600 transition-colors ease-linear duration-200 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-200">me</a>\n' +
+        'Or contact <a href="mailto:ivankelava991@gmail.com" class="text-green-blue">me</a>\n' +
         "</h3>",
     )
     .callFunction(() => {
@@ -130,7 +130,7 @@ const setupTypewriter = () => {
       `<p id="greeting" class="mt-12 text-sm text-gray-600 dark:text-gray-400 italic">\n${greeting.value}\n</p>`,
     )
     .typeString(
-      `<p class="text-sm text-gray-600 dark:text-gray-400 italic mt-4">\ncya\n</p>`,
+      `<p class="text-sm text-gray-600 dark:text-gray-400 italic mt-2">\ncya\n</p>`,
     )
     .start();
 };
