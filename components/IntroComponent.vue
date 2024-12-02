@@ -1,17 +1,29 @@
 <script setup>
-import { onMounted, ref, watch, nextTick, onUnmounted } from "vue";
+import { onMounted, ref, watch, nextTick } from "vue";
 import Typewriter from "typewriter-effect/dist/core";
-import { useRouter } from 'vue-router';
+import { navigateTo } from "#app";
+import { useRouter } from "vue-router";
 
 const emit = defineEmits(["update:showMainContent", "showLogo"]);
 const typeWrite = ref(null);
 const del = ref(1);
 const hideNow = ref(false);
+const colorMode = useColorMode();
 const greeting = ref(""); // Reactive greeting message
 const fadeInClass = ref(false); // Controls the fade-in effect
 let typewriterInstance = null; // Accessible variable for the Typewriter instance
 const isIntroActive = ref(true); // Track intro component state
+
+// Router navigation guard
 const router = useRouter();
+const navigationGuard = router.beforeEach((to, from, next) => {
+  if (isIntroActive.value) {
+    // Block navigation while intro is active
+    next(false);
+    return;
+  }
+  next(); // Allow navigation normally if intro is inactive
+});
 
 // Update greeting based on time of day
 const updateGreeting = () => {
@@ -27,42 +39,11 @@ const updateGreeting = () => {
 updateGreeting();
 
 // Watch for changes in color mode to update the greeting dynamically
-// watch(colorMode, () => {
-//   updateGreeting();
-//   const gr = document.getElementById("greeting");
-//   if (gr) gr.innerHTML = greeting.value;
-// });
-
-// Router navigation guard
-const navigationGuard = router.beforeEach((to, from, next) => {
-  if (isIntroActive.value) {
-    // Block all routes while intro is active
-    next(false);
-    return;
-  }
-  next(); // Allow navigation normally if intro is inactive
+watch(colorMode, () => {
+  updateGreeting();
+  const gr = document.getElementById("greeting");
+  if (gr) gr.innerHTML = greeting.value;
 });
-
-const handleCyaClick = () => {
-  const typeWriteDiv = document.querySelector(".typewrite-wrapper");
-  if (typeWriteDiv) {
-    // Clear existing content
-    typeWriteDiv.innerHTML = '';
-    
-    // Create new typewriter instance for goodbye message
-    const goodbyeTypewriter = new Typewriter(typeWriteDiv, {
-      loop: false,
-      delay: 50,
-    });
-
-    goodbyeTypewriter
-      .typeString('<div class="text-center text-4xl md:text-5xl text-gray-800 dark:text-gray-300">Thanks for visiting!</div>')
-      .start();
-
-    // Set intro to inactive after showing goodbye message
-    isIntroActive.value = false;
-  }
-};
 
 const restartAnimation = () => {
   const element = document.querySelector(".animate-wave");
@@ -149,14 +130,8 @@ const setupTypewriter = () => {
       `<p id="greeting" class="mt-12 text-sm text-gray-600 dark:text-gray-400 italic">\n${greeting.value}\n</p>`,
     )
     .typeString(
-      `<p id="cya" class="text-sm text-gray-600 dark:text-gray-400 italic cursor-pointer underline mt-4">\ncya\n</p>`,
+      `<p class="text-sm text-gray-600 dark:text-gray-400 italic mt-4">\ncya\n</p>`,
     )
-    .callFunction(() => {
-      const cyaElement = document.getElementById("cya");
-      if (cyaElement) {
-        cyaElement.addEventListener("click", handleCyaClick);
-      }
-    })
     .start();
 };
 
@@ -204,7 +179,8 @@ onMounted(() => {
 
 // Cleanup navigation guard when component is unmounted
 onUnmounted(() => {
-  navigationGuard(); // Remove the navigation guard
+  // Remove the navigation guard
+  navigationGuard();
 });
 </script>
 
@@ -263,7 +239,7 @@ p {
 
 /* Slide-out-left animation */
 .slide-out-left {
-  animation: slideOutLeft 1s forwards;
+  animation: slideOutLeft 0.5s forwards;
 }
 
 @keyframes slideOutLeft {
@@ -272,7 +248,7 @@ p {
     opacity: 1;
   }
   to {
-    transform: translateX(-100%);
+    transform: translateX(-50px);
     opacity: 0;
   }
 }
@@ -302,6 +278,7 @@ p {
 
 .typewrite-wrapper {
   perspective: 1000px;
+  transition: opacity 0.3s ease;
 }
 
 /* Add some depth to the text elements */
