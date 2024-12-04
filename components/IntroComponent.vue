@@ -76,13 +76,15 @@ const addClickListener = () => {
           setTimeout(() => {
             emit("showLogo", true);
             hideNow.value = true;
-            emit("update:showMainContent", true);
+            setTimeout(() => {
+              emit("update:showMainContent", true);
+            }, 396);
 
             // Disable intro active state
             isIntroActive.value = false;
-          }, 600);
-        }, 2000);
-      }, 1200);
+          }, 693);
+        }, 1872);
+      }, 1386);
     });
   }
 };
