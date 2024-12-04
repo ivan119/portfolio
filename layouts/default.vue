@@ -54,9 +54,11 @@ const transition = new Object({
       @show-logo="(args) => (showLogo = args)"
     />
     <template v-if="showMainContent">
-      <main class="flex-1">
-        <NuxtPage class="container grow" :transition="transition" />
-      </main>
+      <div class="flex-1">
+        <div class="grow">
+          <slot />
+        </div>
+      </div>
       <Footer class="container" />
     </template>
     <ScrollProgress />
