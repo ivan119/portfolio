@@ -35,20 +35,22 @@ const links = [
         </NuxtLink>
       </transition>
     </div>
-    <NuxtLink
-      v-for="link in links"
-      :key="link.to"
-      :to="link.to"
-      class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors"
-    >
-      {{ link.text }}
-    </NuxtLink>
-    <client-only>
-      <component
-        :is="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
-        class="cursor-pointer"
-        @click.native="toggleTheme"
-      />
-    </client-only>
+    <div class="flex items-center justify-center space-x-4">
+      <NuxtLink
+        v-for="link in links"
+        :key="link.to"
+        :to="link.to"
+        class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors"
+      >
+        {{ link.text }}
+      </NuxtLink>
+      <client-only>
+        <component
+          :is="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
+          class="cursor-pointer"
+          @click.native="toggleTheme"
+        />
+      </client-only>
+    </div>
   </header>
 </template>

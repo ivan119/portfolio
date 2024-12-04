@@ -1,11 +1,12 @@
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
+    class="text-slate-700 hover:text-slate-600 hover:opacity-90 transition-all duration-500 ease-in-out transform hover:scale-110"
     width="1.2em"
     height="1.2em"
     viewBox="0 0 24 24"
   >
-    <g fill="black" fill-opacity="0">
+    <g fill="currentColor" fill-opacity="0">
       <path
         d="M15.22 6.03l2.53-1.94L14.56 4L13.5 1l-1.06 3l-3.19.09l2.53 1.94l-.91 3.06l2.63-1.81l2.63 1.81z"
       >

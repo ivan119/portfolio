@@ -1,13 +1,14 @@
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
+    class="text-amber-400 hover:text-amber-300 hover:opacity-90 transition-all duration-500 ease-in-out transform hover:scale-110"
     width="1.2em"
     height="1.2em"
     viewBox="0 0 24 24"
   >
     <g
-      fill="none"
-      stroke="white"
+      fill="currentColor"
+      stroke="currentColor"
       stroke-linecap="round"
       stroke-linejoin="round"
       stroke-width="2"
@@ -60,7 +61,7 @@
         values="0 12 12;360 12 12"
       />
     </g>
-    <g fill="white">
+    <g fill="currentColor">
       <path
         d="M15.22 6.03L17.75 4.09L14.56 4L13.5 1L12.44 4L9.25 4.09L11.78 6.03L10.87 9.09L13.5 7.28L16.13 9.09L15.22 6.03Z"
       >
@@ -85,7 +86,7 @@
     </g>
     <path
       fill="none"
-      stroke="white"
+      stroke="currentColor"
       stroke-linecap="round"
       stroke-linejoin="round"
       stroke-width="2"
@@ -157,7 +158,7 @@
       r="10"
       mask="url(#lineMdMoonToSunnyOutlineLoopTransition0)"
       opacity="0"
-      fill="white"
+      fill="currentColor"
     >
       <animate
         fill="freeze"
