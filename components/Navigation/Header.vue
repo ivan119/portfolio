@@ -2,6 +2,9 @@
 // Import Sun and Moon components
 import SunIcon from "~/components/devTools/Icons/Sun.vue";
 import MoonIcon from "~/components/devTools/Icons/Moon.vue";
+import AboutIcon from "~/components/devTools/Icons/About.vue";
+import BlogIcon from "~/components/devTools/Icons/Blog.vue";
+
 const colorMode = useColorMode();
 defineProps({
   showLogo: {
@@ -22,8 +25,16 @@ const toggleTheme = () => {
   colorMode.preference = colorMode.preference === "dark" ? "light" : "dark";
 };
 const links = [
-  { to: "/about", text: "About" },
-  { to: "/blog", text: "Blog" },
+  { 
+    to: "/about", 
+    text: "About",
+    icon: AboutIcon
+  },
+  { 
+    to: "/blog", 
+    text: "Blog",
+    icon: BlogIcon
+  },
 ];
 </script>
 <template>
@@ -35,22 +46,40 @@ const links = [
         </NuxtLink>
       </transition>
     </div>
-    <div class="flex items-center justify-center space-x-4">
+    <div class="flex items-center justify-center">
       <NuxtLink
         v-for="link in links"
         :key="link.to"
         :to="link.to"
-        class="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors"
+        class="nav-link relative flex items-center mr-4 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
       >
-        {{ link.text }}
+        <component :is="link.icon" class="md:hidden" />
+        <span class="hidden md:block">{{ link.text }}</span>
       </NuxtLink>
       <client-only>
         <component
           :is="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
-          class="cursor-pointer"
+          class="cursor-pointer sm:ml-6"
           @click.native="toggleTheme"
         />
       </client-only>
     </div>
   </header>
 </template>
+
+<style scoped>
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: currentColor;
+  transition: width 0.3s ease-in-out;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+</style>
