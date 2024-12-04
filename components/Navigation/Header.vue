@@ -6,12 +6,31 @@ import AboutIcon from "~/components/devTools/Icons/About.vue";
 import BlogIcon from "~/components/devTools/Icons/Blog.vue";
 
 const colorMode = useColorMode();
-defineProps({
+const showLinks = ref(false);
+
+const props = defineProps({
   showLogo: {
     type: Boolean,
     default: true,
   },
 });
+
+watch(
+  () => props.showLogo,
+  (newValue) => {
+    if (newValue) {
+      setTimeout(() => {
+        showLinks.value = true;
+      }, 963);
+    } else {
+      setTimeout(() => {
+        showLinks.value = false;
+      }, 693);
+    }
+  },
+  { immediate: true }
+);
+
 const emit = defineEmits(["showIntro"]);
 const testFunc = () => {
   const route = useRoute();
@@ -25,15 +44,15 @@ const toggleTheme = () => {
   colorMode.preference = colorMode.preference === "dark" ? "light" : "dark";
 };
 const links = [
-  { 
-    to: "/about", 
+  {
+    to: "/about",
     text: "About",
-    icon: AboutIcon
+    icon: AboutIcon,
   },
-  { 
-    to: "/blog", 
+  {
+    to: "/blog",
     text: "Blog",
-    icon: BlogIcon
+    icon: BlogIcon,
   },
 ];
 </script>
@@ -41,21 +60,25 @@ const links = [
   <header class="header">
     <div class="flex items-center gap-8">
       <transition name="page">
-        <NuxtLink v-if="showLogo" @click="testFunc" to="/" class="logo">
+        <NuxtLink v-if="props.showLogo" @click="testFunc" to="/" class="logo">
           <dev-tools-signature2 class="w-[120px] h-20" />
         </NuxtLink>
       </transition>
     </div>
     <div class="flex items-center justify-center">
-      <NuxtLink
-        v-for="link in links"
-        :key="link.to"
-        :to="link.to"
-        class="nav-link relative flex items-center mr-4 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
-      >
-        <component :is="link.icon" class="md:hidden" />
-        <span class="hidden md:block">{{ link.text }}</span>
-      </NuxtLink>
+      <transition-group name="nav">
+        <template v-if="showLinks">
+          <NuxtLink
+            v-for="link in links"
+            :key="link.to"
+            :to="link.to"
+            class="nav-link relative flex items-center mr-4 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+          >
+            <component :is="link.icon" class="md:hidden" />
+            <span class="hidden md:block">{{ link.text }}</span>
+          </NuxtLink>
+        </template>
+      </transition-group>
       <client-only>
         <component
           :is="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
@@ -69,7 +92,7 @@ const links = [
 
 <style scoped>
 .nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -81,5 +104,18 @@ const links = [
 
 .nav-link:hover::after {
   width: 100%;
+}
+
+.nav-enter-active,
+.nav-leave-active {
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.nav-enter-from,
+.nav-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
 }
 </style>
