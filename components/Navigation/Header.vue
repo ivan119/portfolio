@@ -21,14 +21,14 @@ watch(
     if (newValue) {
       setTimeout(() => {
         showLinks.value = true;
-      }, 963);
+      }, 369);
     } else {
       setTimeout(() => {
         showLinks.value = false;
       }, 693);
     }
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 const emit = defineEmits(["showIntro"]);
