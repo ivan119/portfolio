@@ -44,14 +44,13 @@ export default defineNuxtConfig({
     format: ["webp"],
   },
   runtimeConfig: {
-    openaiApiKey: process.env.OPENAI_API_KEY,
     public: {
       quoteApiUrl: "https://api.quotable.io",
       techNewsApiUrl: "https://api.spaceflightnewsapi.net",
       factsApiUrl: "https://uselessfacts.jsph.pl",
       githubApiUrl: "https://api.github.com",
       blogGenerationEnabled: process.env.BLOG_GENERATION_ENABLED === "true",
-      maxBlogTokens: Number(process.env.MAX_BLOG_TOKENS) || 1500,
-    },
-  },
-});
+      maxBlogTokens: Number(process.env.MAX_BLOG_TOKENS) || 1500
+    }
+  }
+})

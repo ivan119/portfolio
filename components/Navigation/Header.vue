@@ -57,7 +57,7 @@ const links = [
 ];
 </script>
 <template>
-  <header class="header">
+  <header class="header animate">
     <div class="flex items-center gap-8">
       <transition name="page">
         <NuxtLink v-if="props.showLogo" @click="testFunc" to="/" class="logo">
@@ -82,7 +82,7 @@ const links = [
       <client-only>
         <component
           :is="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
-          class="cursor-pointer sm:ml-6"
+          class="cursor-pointer sm:ml-6 hover:animate"
           @click.native="toggleTheme"
         />
       </client-only>
