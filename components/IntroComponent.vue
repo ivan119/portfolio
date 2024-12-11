@@ -110,7 +110,7 @@ const setupTypewriter = () => {
     .pauseFor(23)
     .typeString(
       '<h3 class="text-2xl md:text-3xl mb-4 text-gray-800 dark:text-gray-300">\n' +
-        "Currently working as a team lead developer\n" +
+        "Currently working as a frontend team lead developer\n" +
         "</h3>",
     )
     .typeString(
