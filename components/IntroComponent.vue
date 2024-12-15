@@ -340,10 +340,10 @@ p {
 </style>
 
 <template>
-  <div
+  <article
     class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-12 pt-8"
     :class="{ 'fade-in': fadeInClass, hidden: hideNow }"
   >
     <div ref="typeWrite"></div>
-  </div>
+  </article>
 </template>
