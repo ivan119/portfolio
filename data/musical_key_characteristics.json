@@ -1,0 +1,98 @@
+[
+  {
+    "key": "C Major",
+    "description": "Completely Pure. Its character is: innocence, simplicity, naïvety, children's talk."
+  },
+  {
+    "key": "C Minor",
+    "description": "Declaration of love and at the same time the lament of unhappy love. All languishing, longing, sighing of the love-sick soul lies in this key."
+  },
+  {
+    "key": "D♭ Major",
+    "description": "A leering key, degenerating into grief and rapture. It cannot laugh, but it can smile; it cannot howl, but it can at least grimace its crying.--Consequently only unusual characters and feelings can be brought out in this key."
+  },
+  {
+    "key": "C# Minor",
+    "description": "Penitential lamentation, intimate conversation with God, the friend and help-meet of life; sighs of disappointed friendship and love lie in its radius."
+  },
+  {
+    "key": "D Major",
+    "description": "The key of triumph, of Hallelujahs, of war-cries, of victory-rejoicing. Thus, the inviting symphonies, the marches, holiday songs and heaven-rejoicing choruses are set in this key."
+  },
+  {
+    "key": "D Minor",
+    "description": "Melancholy womanliness, the spleen and humours brood."
+  },
+  {
+    "key": "E♭ Major",
+    "description": "The key of love, of devotion, of intimate conversation with God."
+  },
+  {
+    "key": "D# Minor",
+    "description": "Feelings of the anxiety of the soul's deepest distress, of brooding despair, of blackest depression, of the most gloomy condition of the soul. Every fear, every hesitation of the shuddering heart, breathes out of horrible D# minor. If ghosts could speak, their speech would approximate this key."
+  },
+  {
+    "key": "E Major",
+    "description": "Noisy shouts of joy, laughing pleasure and not yet complete, full delight lies in E Major."
+  },
+  {
+    "key": "E minor",
+    "description": "Naïve, womanly innocent declaration of love, lament without grumbling; sighs accompanied by few tears; this key speaks of the imminent hope of resolving in the pure happiness of C major."
+  },
+  {
+    "key": "F Major",
+    "description": "Complaisance & Calm."
+  },
+  {
+    "key": "F Minor",
+    "description": "Deep depression, funereal lament, groans of misery and longing for the grave."
+  },
+  {
+    "key": "F# Major",
+    "description": "Triumph over difficulty, free sigh of relief uttered when hurdles are surmounted; echo of a soul which has fiercely struggled and finally conquered lies in all uses of this key."
+  },
+  {
+    "key": "F# Minor",
+    "description": "A gloomy key: it tugs at passion as a dog biting a dress. Resentment and discontent are its language."
+  },
+  {
+    "key": "G Major",
+    "description": "Everything rustic, idyllic and lyrical, every calm and satisfied passion, every tender gratitude for true friendship and faithful love,--in a word every gentle and peaceful emotion of the heart is correctly expressed by this key."
+  },
+  {
+    "key": "G Minor",
+    "description": "Discontent, uneasiness, worry about a failed scheme; bad-tempered gnashing of teeth; in a word: resentment and dislike."
+  },
+  {
+    "key": "A♭ Major",
+    "description": "Key of the grave. Death, grave, putrefaction, judgment, eternity lie in its radius."
+  },
+  {
+    "key": "A♭ Minor",
+    "description": "Grumbler, heart squeezed until it suffocates; wailing lament, difficult struggle; in a word, the color of this key is everything struggling with difficulty."
+  },
+  {
+    "key": "A Major",
+    "description": "This key includes declarations of innocent love, satisfaction with one's state of affairs; hope of seeing one's beloved again when parting; youthful cheerfulness and trust in God."
+  },
+  {
+    "key": "A minor",
+    "description": "Pious womanliness and tenderness of character."
+  },
+  {
+    "key": "B♭ Major",
+    "description": "Cheerful love, clear conscience, hope aspiration for a better world."
+  },
+  {
+    "key": "B♭ minor",
+    "description": "A quaint creature, often dressed in the garment of night. It is somewhat surly and very seldom takes on a pleasant countenance. Mocking God and the world; discontented with itself and with everything; preparation for suicide sounds in this key."
+  },
+  {
+    "key": "B Major",
+    "description": "Strongly coloured, announcing wild passions, composed from the most glaring colors. Anger, rage, jealousy, fury, despair and every burden of the heart lies in its sphere."
+  },
+  {
+    "key": "B Minor",
+    "description": "This is as it were the key of patience, of calm awaiting one's fate and of submission to divine dispensation."
+  }
+]
