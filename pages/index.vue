@@ -32,6 +32,5 @@ const BaseButton = defineAsyncComponent(
         </div>
       </article>
     </div>
-    <MusicalKeys />
   </div>
 </template>
