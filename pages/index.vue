@@ -8,7 +8,7 @@ const buttonHover = (v) => {
 
 <template>
   <div>
-    <div class="flex flex-col gap-6">
+    <div v-if="true" class="flex flex-col gap-6">
       <h1 class="text-3xl md:text-4xl font-bold mb-3">Ivan Kelava</h1>
 
       <article class="flex flex-col gap-4 text-gray-800 dark:text-gray-300">
@@ -39,5 +39,8 @@ const buttonHover = (v) => {
         </div>
       </article>
     </div>
+    <template v-else>
+      <landing-component />
+    </template>
   </div>
 </template>
