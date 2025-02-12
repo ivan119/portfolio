@@ -1,8 +1,9 @@
 <script setup>
-// Lazy load BaseButton since it's not needed immediately
-const BaseButton = defineAsyncComponent(
-  () => import("~/components/BaseButton.vue"),
-);
+const isButtonHovered = ref(false);
+
+const buttonHover = (v) => {
+  isButtonHovered.value = v;
+};
 </script>
 
 <template>
@@ -18,11 +19,17 @@ const BaseButton = defineAsyncComponent(
         <p class="flex items-center gap-1">
           Currently working at
           <BaseButton
-            href="https://gauss.hr"
+            href="https://gauss.hr/en"
             external
-            icon="/images/gauss.svg"
-            loading="lazy"
+            @mouseover="buttonHover(true)"
+            @mouseleave="buttonHover(false)"
           >
+            <template #icon>
+              <dev-tools-icons-gauss-logo
+                class="w-6 h-6 mr-1"
+                :active-class="isButtonHovered"
+              />
+            </template>
             Gauss
           </BaseButton>
           as team lead developer
