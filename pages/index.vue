@@ -7,21 +7,30 @@ const buttonHover = (v) => {
 </script>
 
 <template>
-  <div>
+  <article>
     <div v-if="true" class="flex flex-col gap-6">
       <h1 class="text-3xl md:text-4xl font-bold mb-3">Ivan Kelava</h1>
 
-      <article class="flex flex-col gap-4 text-gray-800 dark:text-gray-300">
-        <h4 class="text-xl md:text-2xl mb-2">
+      <div class="flex flex-col md:gap-3 text-gray-800 dark:text-gray-300">
+        <h2 class="text-xl md:text-2xl mb-2">
           Hey, I am Ivan Kelava, senior frontend developer.
-        </h4>
+        </h2>
 
-        <p class="flex items-center gap-1">
+        <h3 class="flex items-center gap-1">
           Currently working at
+          <BaseButton href="https://gauss.hr/en" external>
+            <template #icon>
+              <dev-tools-icons-gauss-logo class="w-6 h-6 mr-1" />
+            </template>
+            Gauss
+          </BaseButton>
+        </h3>
+        <h3 class="flex items-center flex-wrap gap-1">
+          Core team lead and maintainer of
           <BaseButton
-            href="https://gauss.hr/en"
+            href="https://gaussbox.com/modules-cms"
             external
-            @mouseover="buttonHover(true)"
+            @mouseover="buttonHover(false)"
             @mouseleave="buttonHover(false)"
           >
             <template #icon>
@@ -30,17 +39,22 @@ const buttonHover = (v) => {
                 :active-class="isButtonHovered"
               />
             </template>
-            Gauss
+            Gauss CMS
           </BaseButton>
-          as team lead developer
+        </h3>
+      </div>
+      <div class="mt-3">
+        <p>
+          I thrive on turning ideas into reality. Explore my portfolio to see
+          the diverse range of projects I've brought to life. You can find my
+          <base-button to="/projects" variant="link">
+            projects list here.
+          </base-button>
         </p>
-        <div class="flex">
-          <BaseButton to="/about" variant="primary"> About </BaseButton>
-        </div>
-      </article>
+      </div>
     </div>
     <template v-else>
       <landing-component />
     </template>
-  </div>
+  </article>
 </template>
