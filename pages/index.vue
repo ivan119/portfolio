@@ -68,7 +68,7 @@ const buttonHover = (v) => {
         >
         or drop me an
         <BaseButton
-          href="mailto:ivan.kelava@example.com"
+          href="mailto:ivankelava991@gmail.com"
           external
           variant="link"
           >email here.</BaseButton

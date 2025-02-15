@@ -16,11 +16,11 @@ export default defineNuxtConfig({
       link: [{ rel: "icon", type: "image/png", href: "/logo32x32.png" }],
     },
   },
-  compatibilityDate: "2025-02-15",
+  compatibilityDate: "2024-04-03",
   experimental: {
     viewTransition: true,
   },
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   css: ["~/assets/css/main.css"],
   modules: [
     "@nuxtjs/tailwindcss",
