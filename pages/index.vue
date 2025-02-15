@@ -7,54 +7,73 @@ const buttonHover = (v) => {
 </script>
 
 <template>
-  <article>
-    <div v-if="true" class="flex flex-col gap-6">
-      <h1 class="text-3xl md:text-4xl font-bold mb-3">Ivan Kelava</h1>
+  <article class="flex flex-col gap-6">
+    <h1 class="text-3xl md:text-4xl font-bold mb-3">Ivan Kelava</h1>
 
-      <div class="flex flex-col md:gap-3 text-gray-800 dark:text-gray-300">
-        <h2 class="text-xl md:text-2xl mb-2">
-          Hey, I am Ivan Kelava, senior frontend developer.
-        </h2>
+    <div>
+      <h2 class="text-xl md:text-2xl">
+        Hey, I am Ivan Kelava, senior frontend developer.
+      </h2>
 
-        <h3 class="flex items-center gap-1">
-          Currently working at
-          <BaseButton href="https://gauss.hr/en" external>
-            <template #icon>
-              <dev-tools-icons-gauss-logo class="w-6 h-6 mr-1" />
-            </template>
-            Gauss
-          </BaseButton>
-        </h3>
-        <h3 class="flex items-center flex-wrap gap-1">
-          Core team lead and maintainer of
-          <BaseButton
-            href="https://gaussbox.com/modules-cms"
-            external
-            @mouseover="buttonHover(false)"
-            @mouseleave="buttonHover(false)"
-          >
-            <template #icon>
-              <dev-tools-icons-gauss-logo
-                class="w-6 h-6 mr-1"
-                :active-class="isButtonHovered"
-              />
-            </template>
-            Gauss CMS
-          </BaseButton>
-        </h3>
-      </div>
-      <div class="mt-3">
-        <p>
-          I thrive on turning ideas into reality. Explore my portfolio to see
-          the diverse range of projects I've brought to life. You can find my
-          <base-button to="/projects" variant="link">
-            projects list here.
-          </base-button>
-        </p>
-      </div>
+      <p class="flex items-center gap-2 flex-wrap">
+        Currently working at
+        <BaseButton href="https://gauss.hr/en" external>
+          <template #icon>
+            <dev-tools-icons-gauss-logo class="w-6 h-6 mr-1" />
+          </template>
+          Gauss
+        </BaseButton>
+      </p>
+
+      <p class="flex items-center gap-2 flex-wrap">
+        Core team lead and maintainer of
+        <BaseButton href="https://gaussbox.com/modules-cms" external>
+          <template #icon>
+            <dev-tools-icons-gauss-logo class="w-6 h-6 mr-1" />
+          </template>
+          Gauss CMS
+        </BaseButton>
+      </p>
     </div>
-    <template v-else>
-      <landing-component />
-    </template>
+
+    <div class="mt-4 space-y-4">
+      <p>
+        I thrive on turning ideas into reality. Explore my portfolio to see the
+        diverse range of projects I've brought to life. You can find my
+        <BaseButton to="/projects" variant="link"
+          >projects list here.</BaseButton
+        >
+      </p>
+
+      <p>
+        Besides programming, I enjoy working out, producing music, and taking
+        photographs of nature. Some of my photos can be found on
+        <BaseButton
+          href="https://instagram.com/your_instagram"
+          external
+          variant="link"
+          >Instagram.</BaseButton
+        >
+      </p>
+
+      <p>
+        Feel free to reach out if you'd like to collaborate, or just grab a
+        drink! I'm always open to connecting with new people. You can contact me
+        through
+        <BaseButton
+          href="https://linkedin.com/in/your_linkedin"
+          external
+          variant="link"
+          >LinkedIn</BaseButton
+        >
+        or drop me an
+        <BaseButton
+          href="mailto:ivan.kelava@example.com"
+          external
+          variant="link"
+          >email here.</BaseButton
+        >
+      </p>
+    </div>
   </article>
 </template>
