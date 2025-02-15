@@ -19,7 +19,9 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const buttonClasses = computed(() => [
-  props.variant === "link" ? "relative font-bold underline" : "",
+  props.variant === "link"
+    ? "relative font-bold underline decoration-gray-400  hover:decoration-gray-900 dark:decoration-gray-500 dark:hover:decoration-gray-100"
+    : "",
   props.variant === "default"
     ? "font-bold text-sm  py-1 rounded bg-gray-100  px-2 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
     : "",
@@ -41,27 +43,10 @@ const component = computed(() => {
     :href="href"
     :target="external ? '_blank' : undefined"
     :rel="external ? 'opener referrer' : undefined"
-    class="transition-colors ease-linear duration-[369] inline-flex items-center relative group"
+    class="transition-colors ease-linear duration-[369] inline-flex items-center"
     :class="buttonClasses"
   >
     <slot name="icon" />
     <slot />
-    <span v-if="props.variant === 'link'" class="underline-effect"></span>
   </component>
 </template>
-
-<style scoped>
-.underline-effect {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 0.04em;
-  background-color: currentColor;
-  transition: width 0.3s ease-in-out;
-}
-
-.group:hover .underline-effect {
-  width: 100%;
-}
-</style>
