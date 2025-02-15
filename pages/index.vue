@@ -8,10 +8,10 @@ const buttonHover = (v) => {
 
 <template>
   <article class="flex flex-col gap-6">
-    <h1 class="text-3xl md:text-4xl font-bold mb-3">Ivan Kelava</h1>
+    <h1 class="heading-1">Ivan Kelava</h1>
 
     <div>
-      <h2 class="text-xl md:text-2xl">
+      <h2 class="heading-2">
         Hey, I'm Ivan Kelava, a senior frontend developer
       </h2>
 
