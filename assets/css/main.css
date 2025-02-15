@@ -12,6 +12,31 @@
 }
 
 /* Global Classes */
+/* Global Heading Styles */
+.heading-1 {
+  @apply text-3xl md:text-4xl font-bold mb-3;
+}
+
+.heading-2 {
+  @apply text-xl md:text-2xl;
+}
+
+.heading-3 {
+  @apply text-lg md:text-xl;
+}
+.heading-4 {
+  @apply text-lg md:text-xl;
+}
+
+.heading-5 {
+  @apply text-base md:text-lg;
+}
+
+.heading-6 {
+  @apply text-sm md:text-base;
+}
+
+/* Add more heading styles as needed */
 
 /* Gradient Text Classes */
 .text-blue-green {
@@ -78,16 +103,16 @@
 
 body {
   @apply transition-colors duration-300 ease-linear overflow-x-hidden;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .light > body {
-  @apply bg-white text-[rgba(0,0,0,0.8)]
+  @apply bg-white text-[rgba(0,0,0,0.8)];
 }
 .dark > body {
   @apply bg-[#091a28] text-[#ebf4f1]
-  /* background: #091a28; */
+  /* background: #091a28; */;
 }
 .container {
   @apply max-w-3xl mx-auto px-8 py-6 md:py-10;
@@ -106,7 +131,7 @@ body {
 /* Page Transitions */
 .page-enter-active,
 .page-leave-active {
-  transition: all .369s;
+  transition: all 0.369s;
 }
 .page-enter-from,
 .page-leave-to {
