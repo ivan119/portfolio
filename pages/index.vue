@@ -53,9 +53,9 @@ const buttonHover = (v) => {
         <BaseButton variant="link" to="/skills"> here.</BaseButton>
       </p>
       <p>
-        Outside of programming, I enjoy working out, producing music, and
-        capturing the beauty of nature through photography. Some of my photos
-        can be found on
+        Outside of programming, I have experience producing music and capturing
+        the beauty of nature through photography. Some of my photos can be found
+        on my
         <BaseButton
           href="https://instagram.com/your_instagram"
           external
