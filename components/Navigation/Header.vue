@@ -4,7 +4,8 @@ import SunIcon from "~/components/devTools/Icons/Sun.vue";
 import MoonIcon from "~/components/devTools/Icons/Moon.vue";
 import AboutIcon from "~/components/devTools/Icons/About.vue";
 import BlogIcon from "~/components/devTools/Icons/Blog.vue";
-
+import SkillsIcon from "~/components/devTools/Icons/Skills.vue";
+import ProjectsIcon from "~/components/devTools/Icons/Projects.vue";
 const colorMode = useColorMode();
 const showLinks = ref(false);
 
@@ -48,11 +49,25 @@ const links = [
     to: "/about",
     text: "About",
     icon: AboutIcon,
+    show: false,
+  },
+  {
+    to: "/skills",
+    text: "Skills",
+    icon: SkillsIcon,
+    show: true,
+  },
+  {
+    to: "/projects",
+    text: "Projects",
+    icon: ProjectsIcon,
+    show: true,
   },
   {
     to: "/blog",
     text: "Blog",
     icon: BlogIcon,
+    show: false,
   },
 ];
 </script>
@@ -65,26 +80,27 @@ const links = [
           v-if="props.showLogo"
           @click="testFunc"
           to="/"
-          class="logo"
+          class="logo mt-6"
         >
           <dev-tools-signature2 class="w-[120px] h-20" />
         </NuxtLink>
       </transition>
     </div>
     <div class="flex items-center justify-center">
-      <transition-group name="nav">
-        <template v-if="showLinks">
+      <transition-group name="nav" tag="ul" class="flex">
+        <li v-for="link in links" :key="link.to" v-show="showLinks">
           <NuxtLink
-            v-for="link in links"
-            :key="link.to"
+            v-show="link.show"
             :to="link.to"
-            class="nav-link relative flex items-center mr-4 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+            class="nav-link font-bold relative flex items-center mr-4 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+            aria-label="Navigation link"
           >
             <component :is="link.icon" class="md:hidden" />
             <span class="hidden md:block">{{ link.text }}</span>
           </NuxtLink>
-        </template>
+        </li>
       </transition-group>
+
       <client-only>
         <component
           :is="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
