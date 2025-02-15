@@ -12,10 +12,10 @@ const buttonHover = (v) => {
 
     <div>
       <h2 class="text-xl md:text-2xl">
-        Hey, I am Ivan Kelava, senior frontend developer.
+        Hey, I'm Ivan Kelava, a senior frontend developer
       </h2>
 
-      <p class="flex items-center gap-2 flex-wrap">
+      <p class="flex items-center gap-2 flex-wrap mt-3">
         Currently working at
         <BaseButton href="https://gauss.hr/en" external>
           <template #icon>
@@ -38,16 +38,24 @@ const buttonHover = (v) => {
 
     <div class="mt-4 space-y-4">
       <p>
-        I thrive on turning ideas into reality. Explore my portfolio to see the
-        diverse range of projects I've brought to life. You can find my
+        With over 5 years of experience in crafting user-friendly websites and
+        large-scale platforms, I thrive on transforming innovative ideas into
+        tangible realities. Explore my portfolio to discover the diverse range
+        of projects I've brought to life. You can find my
         <BaseButton to="/projects" variant="link"
           >projects list here.</BaseButton
         >
       </p>
-
       <p>
-        Besides programming, I enjoy working out, producing music, and taking
-        photographs of nature. Some of my photos can be found on
+        Besides frontend development, I have experience with backend
+        technologies, making me a versatile full-stack developer. You can
+        explore my technical stack
+        <BaseButton variant="link" to="/skills"> here.</BaseButton>
+      </p>
+      <p>
+        Outside of programming, I enjoy working out, producing music, and
+        capturing the beauty of nature through photography. Some of my photos
+        can be found on
         <BaseButton
           href="https://instagram.com/your_instagram"
           external
