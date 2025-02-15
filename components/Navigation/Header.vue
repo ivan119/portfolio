@@ -60,7 +60,13 @@ const links = [
   <header class="header animate">
     <div class="flex items-center gap-8">
       <transition name="page">
-        <NuxtLink v-if="props.showLogo" @click="testFunc" to="/" class="logo">
+        <NuxtLink
+          aria-label="homepage-intro-link"
+          v-if="props.showLogo"
+          @click="testFunc"
+          to="/"
+          class="logo"
+        >
           <dev-tools-signature2 class="w-[120px] h-20" />
         </NuxtLink>
       </transition>
