@@ -12,9 +12,10 @@ const buttonHover = (v) => {
 
     <div>
       <h2 class="heading-2">
-        Hey, I'm Ivan Kelava, a senior frontend developer
+        Hey, I'm
+        <span class="font-extrabold highlighted">Ivan Kelava</span>, <br />
+        a senior frontend developer from Osijek, Croatia.
       </h2>
-
       <p class="flex items-center gap-2 flex-wrap mt-3">
         Currently working at
         <BaseButton href="https://gauss.hr/en" external>
