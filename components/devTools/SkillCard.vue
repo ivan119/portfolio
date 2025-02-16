@@ -1,20 +1,22 @@
-<!-- components/SkillCard.vue -->
+<script setup lang="ts">
+import { PropType } from "vue";
+interface Skill {
+  name: string;
+  icon: string;
+  url: string;
+}
+defineProps({
+  skill: {
+    type: Object as PropType<Skill>,
+  },
+});
+</script>
 <template>
   <NuxtLink :to="skill.url" class="skill-card" target="_blank">
     <i :class="['devicon', skill.icon, 'colored']"></i>
     <h5 class="heading-5">{{ skill.name }}</h5>
   </NuxtLink>
 </template>
-
-<script setup>
-defineProps({
-  skill: {
-    type: Object,
-    required: true,
-  },
-});
-</script>
-
 <style scoped>
 .skill-card {
   @apply flex flex-col items-center text-center no-underline p-3 transition-all duration-500 ease-in-out relative;
