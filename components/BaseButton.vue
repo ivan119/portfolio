@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const buttonClasses = computed(() => [
   props.variant === "link"
-    ? "font-bold underline decoration-2 decoration-gray-400  hover:decoration-gray-900 dark:decoration-gray-500 dark:hover:decoration-gray-100"
+    ? "font-bold underline decoration-2 decoration-gray-400  dark:hover:decoration-yellow-400 dark:decoration-gray-500 hover:decoration-red-800"
     : "",
   props.variant === "default"
     ? "font-bold text-sm  py-1 rounded bg-gray-100  px-2 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -43,7 +43,7 @@ const component = computed(() => {
     :href="href"
     :target="external ? '_blank' : undefined"
     :rel="external ? 'opener referrer' : undefined"
-    class="transition-colors ease-linear duration-[369] inline-flex items-center"
+    class="transition-colors ease-linear duration-[369] inline-flex items-center dark:hover:text-yellow-400 hover:text-red-800"
     :class="buttonClasses"
   >
     <slot name="icon" />
