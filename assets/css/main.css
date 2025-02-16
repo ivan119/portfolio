@@ -106,13 +106,12 @@ body {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-
+/* GLOBAL THEME TEXT AND BODY BACKGROUND! */
 .light > body {
   @apply bg-white text-[rgba(0,0,0,0.8)];
 }
 .dark > body {
   @apply bg-[#091a28] text-[#ebf4f1]
-  /* background: #091a28; */;
 }
 .container {
   @apply max-w-3xl mx-auto px-8 py-6 md:py-10;
