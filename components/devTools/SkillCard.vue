@@ -34,6 +34,17 @@ defineProps({
     linear-gradient(45deg, #2196f3, #4caf50) border-box;
   box-shadow: 0 0 15px rgba(33, 150, 243, 0.5); /* Soft glowing effect */
 }
+.dark .skill-card {
+  background:
+    linear-gradient(#091a28, #091a28) padding-box,
+    linear-gradient(45deg, #e2e8f0, #e2e8f0) border-box;
+}
+.dark .skill-card:hover {
+  background:
+    linear-gradient(#091a28, #091a28) padding-box,
+    linear-gradient(45deg, #2196f3, #4caf50) border-box;
+  box-shadow: 0 0 15px rgba(33, 150, 243, 0.5); /* Soft glowing effect */
+}
 .skill-card i {
   @apply text-4xl mb-2;
 }
