@@ -12,10 +12,10 @@ defineProps({
 });
 </script>
 <template>
-  <NuxtLink :to="skill.url" class="skill-card" target="_blank">
+  <BaseButton :to="skill.url" class="skill-card" external>
     <i :class="['devicon', skill.icon, 'colored']"></i>
     <h5 class="heading-5">{{ skill.name }}</h5>
-  </NuxtLink>
+  </BaseButton>
 </template>
 <style scoped>
 .skill-card {
