@@ -67,7 +67,7 @@ const links = [
     to: "/blog",
     text: "Blog",
     icon: BlogIcon,
-    show: false,
+    show: true,
   },
 ];
 </script>
@@ -101,14 +101,6 @@ const links = [
           </NuxtLink>
         </li>
       </transition-group>
-
-      <BaseButton
-        to="/blog/generate"
-        variant="primary"
-        class="hidden md:block"
-      >
-        Generate
-      </BaseButton>
 
       <client-only>
         <component

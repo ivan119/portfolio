@@ -46,13 +46,15 @@ const transition = new Object({
   <div
     class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto slide-enter-active"
   >
-    <navigation-header :show-logo="showLogo" @show-intro="testFunc" />
     <IntroComponent
       v-if="!showMainContent"
       class="grow no-animation"
       @update:show-main-content="(args) => changeState(args)"
       @show-logo="(args) => (showLogo = args)"
     />
+    <navigation-header :show-logo="showLogo" @show-intro="testFunc" />
+
+    <Navigation-Breadcrumbs class="max-w-7xl mx-auto" />
     <template v-if="showMainContent">
       <div class="flex-1">
         <div class="grow">

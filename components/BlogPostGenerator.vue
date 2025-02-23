@@ -2,20 +2,20 @@
   <div class="max-w-4xl mx-auto p-6">
     <header class="mb-12 text-center">
       <div class="inline-block">
-        <h1 class="text-5xl font-extrabold mb-3 bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+        <h1 class="text-5xl font-extrabold mb-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-purple-600 hover:to-blue-500 bg-clip-text text-transparent transition-all duration-500">
           AI Blog Generator
-          <span class="text-sm ml-2 px-3 py-1 bg-purple-600/10 rounded-full text-purple-600 font-medium">v1.0</span>
+          <span class="text-sm ml-2 px-3 py-1 bg-purple-600/10 dark:bg-purple-600/20 rounded-full text-purple-600 dark:text-purple-400 font-medium hover:scale-105 transition-transform">v1.0</span>
         </h1>
-        <div class="h-1 w-32 mx-auto bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"></div>
+        <div class="h-1 w-32 mx-auto bg-gradient-to-r from-blue-500 to-purple-600 rounded-full transform hover:scale-x-110 transition-transform duration-300"></div>
       </div>
-      <p class="text-gray-300 mt-4 text-lg">Create next-gen blog posts with AI-powered assistance</p>
+      <p class="text-gray-700 dark:text-gray-300 mt-4 text-lg font-light tracking-wide">Create next-gen blog posts with AI-powered assistance</p>
     </header>
     
-    <div class="backdrop-blur-md bg-white/20 rounded-3xl border border-gray-200/50 shadow-2xl p-8">
+    <div class="backdrop-blur-md bg-white/20 dark:bg-gray-900/20 rounded-3xl border border-gray-200/50 dark:border-gray-700/50 shadow-2xl hover:shadow-3xl transition-all duration-500 p-8">
       <form @submit.prevent="generatePost" class="space-y-6">
         <div class="relative">
-          <label for="prompt" class="block text-sm font-medium text-gray-200 mb-2 flex items-center">
-            <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <label for="prompt" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2 flex items-center group">
+            <svg class="w-5 h-5 mr-2 text-blue-500 group-hover:text-purple-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
             </svg>
             Blog Post Topic
@@ -26,16 +26,16 @@
               v-model="prompt"
               rows="4"
               max-rows="4"
-              class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl shadow-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white/30 backdrop-blur-sm transition-all duration-200"
+              class="w-full px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-xl shadow-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-purple-500 focus:border-blue-500 dark:focus:border-purple-500 bg-white/30 dark:bg-gray-800/30 backdrop-blur-sm transition-all duration-300 text-gray-800 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
               :placeholder="DEFAULT_PROMPT"
               aria-describedby="prompt-description"
             ></textarea>
-            <div class="absolute right-3 bottom-3 text-xs text-gray-400">
+            <div class="absolute right-3 bottom-3 text-xs text-gray-500 dark:text-gray-400 font-mono">
               {{ prompt.length }}/500
             </div>
           </div>
-          <p id="prompt-description" class="mt-2 text-sm text-gray-400 flex items-center">
-            <svg class="w-4 h-4 mr-1 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <p id="prompt-description" class="mt-2 text-sm text-gray-600 dark:text-gray-400 flex items-center group hover:text-gray-800 dark:hover:text-gray-200 transition-colors">
+            <svg class="w-4 h-4 mr-1 text-blue-500 group-hover:text-purple-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             Pro tip: Be specific about technologies, trends, or concepts you want to cover
@@ -45,11 +45,27 @@
         <BaseButton
           type="submit"
           :loading="isLoading"
-          class="w-full group relative overflow-hidden rounded-xl"
+          class="w-full group relative overflow-hidden rounded-xl transform hover:scale-[1.02] transition-all duration-300"
         >
           <span class="relative z-10">{{ isLoading ? 'Generating Magic...' : 'Generate Blog Post' }}</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-all duration-500 animate-gradient"></div>
         </BaseButton>
+
+        <!-- Loading Progress Bar -->
+        <div 
+          v-if="isLoading" 
+          class="relative pt-4"
+        >
+          <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200 dark:bg-gray-700/50">
+            <div
+              :style="{ width: `${loadingProgress}%` }"
+              class="transition-all duration-300 ease-out shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-blue-500 to-purple-600 animate-pulse"
+            ></div>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-400 mt-2 text-center font-medium">
+            {{ Math.round(loadingProgress) }}% - This might take up to 30 seconds...
+          </p>
+        </div>
       </form>
 
       <div v-if="generatedContent" class="mt-12">
@@ -119,6 +135,8 @@ const DEFAULT_PROMPT = 'Generate a detailed blog post about the latest technolog
 const prompt = ref(DEFAULT_PROMPT)
 const generatedContent = ref('')
 const isLoading = ref(false)
+const loadingProgress = ref(0)
+const loadingInterval = ref<NodeJS.Timeout | null>(null)
 const copied = ref(false)
 const error = ref<string | null>(null)
 const currentPost = ref<BlogPost | null>(null)
@@ -130,6 +148,26 @@ const formattedContent = computed(() => {
     .map(line => `<p>${line}</p>`)
     .join('')
 })
+
+const startLoadingProgress = () => {
+  loadingProgress.value = 0
+  loadingInterval.value = setInterval(() => {
+    if (loadingProgress.value < 90) { // Only go up to 90% automatically
+      loadingProgress.value += Math.random() * 2 // Random increment for more natural feel
+    }
+  }, 300)
+}
+
+const stopLoadingProgress = () => {
+  if (loadingInterval.value) {
+    clearInterval(loadingInterval.value)
+    loadingInterval.value = null
+  }
+  loadingProgress.value = 100 // Complete the progress
+  setTimeout(() => {
+    loadingProgress.value = 0 // Reset after animation
+  }, 500)
+}
 
 const copyContent = async () => {
   try {
@@ -152,6 +190,7 @@ const generatePost = async () => {
   
   isLoading.value = true
   error.value = null
+  startLoadingProgress()
   
   try {
     const { data } = await useFetch('/api/blog/generate', {
@@ -171,31 +210,56 @@ const generatePost = async () => {
     console.error('Error generating blog post:', err)
     error.value = 'Failed to generate blog post'
   } finally {
+    stopLoadingProgress()
     isLoading.value = false
   }
 }
+
+// Cleanup on component unmount
+onUnmounted(() => {
+  if (loadingInterval.value) {
+    clearInterval(loadingInterval.value)
+  }
+})
 </script>
 
 <style scoped>
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
 .prose {
-  @apply text-gray-200;
+  @apply text-gray-800 dark:text-gray-200;
 }
 
 .prose p {
   @apply mb-4;
 }
 
-/* Add a subtle gradient background to the page */
-:deep(body) {
-  @apply bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen;
-  background-image: 
-    radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 0% 0%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
-}
-
-/* Add glass morphism effect */
+/* Glass morphism effect */
 .backdrop-blur-md {
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Enhanced hover shadow */
+.hover\:shadow-3xl:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Add a subtle gradient background to the page */
+:deep(body) {
+  @apply bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen;
+  background-image: 
+    radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 0% 0%, rgba(124, 58, 237, 0.15) 0%, transparent 50%);
 }
 
 /* Add subtle animation for hover states */
@@ -204,6 +268,6 @@ const generatePost = async () => {
 }
 
 textarea:focus {
-  @apply shadow-lg scale-[1.02];
+  @apply shadow-lg scale-[1.02] dark:shadow-purple-500/20;
 }
 </style> 
