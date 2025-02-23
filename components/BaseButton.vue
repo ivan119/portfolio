@@ -8,14 +8,14 @@ interface Props {
   external?: boolean;
   alt?: string;
   variant?: "default" | "primary" | "link";
-  loading?: "lazy" | "eager";
+  loading?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   external: false,
   variant: "default",
   alt: "",
-  loading: "eager",
+  loading: false,
 });
 
 const buttonClasses = computed(() => [

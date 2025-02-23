@@ -71,6 +71,7 @@ const links = [
   },
 ];
 </script>
+
 <template>
   <header class="header animate">
     <div class="flex items-center gap-8">
@@ -100,6 +101,14 @@ const links = [
           </NuxtLink>
         </li>
       </transition-group>
+
+      <BaseButton
+        to="/blog/generate"
+        variant="primary"
+        class="hidden md:block"
+      >
+        Generate
+      </BaseButton>
 
       <client-only>
         <component

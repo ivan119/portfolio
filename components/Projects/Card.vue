@@ -26,9 +26,7 @@ const techStackData: Record<string, { icon: string; url: string }> = {
 </script>
 
 <template>
-  <div
-    class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow flex flex-col flex-grow"
-  >
+  <div class="article-card">
     <h2 class="heading-2 font-semibold mb-2">{{ project.name }}</h2>
     <p class="text-gray-700 dark:text-gray-300 flex-grow">
       {{ project.description }}

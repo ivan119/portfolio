@@ -22,7 +22,7 @@ defineProps({
     <div
       class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 md:mt-10"
     >
-      <dev-tools-skill-card
+      <skills-skill-card
         v-for="skill in skills"
         :key="skill.name"
         :skill="skill"
