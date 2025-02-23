@@ -16,7 +16,7 @@ defineProps({
 <template>
   <BaseButton :to="skill.url" class="skill-card" external>
     <i :class="['devicon', skill.icon, 'colored']"></i>
-    <h2 class="heading-3">{{ skill.name }}</h2>
+    <h2 class="heading-6">{{ skill.name }}</h2>
   </BaseButton>
 </template>
 <style scoped>

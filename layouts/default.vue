@@ -53,8 +53,6 @@ const transition = new Object({
       @show-logo="(args) => (showLogo = args)"
     />
     <navigation-header :show-logo="showLogo" @show-intro="testFunc" />
-
-    <Navigation-Breadcrumbs class="max-w-7xl mx-auto" />
     <template v-if="showMainContent">
       <div class="flex-1">
         <div class="grow">
