@@ -37,8 +37,9 @@ const doAnimationOnMount = () => {
 
 <template>
   <svg
-    width="256"
-    height="256"
+    class="dark:text-white text-gray-400"
+    width="56"
+    height="56"
     viewBox="0 0 256 256"
     :class="[
       rotateAnimation
