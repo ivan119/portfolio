@@ -16,8 +16,24 @@ const techStackData: Record<string, { icon: string; url: string }> = {
   },
 };
 
-// Define projects data
 const projects = [
+  {
+    title: "GaussCMS",
+    description: "A powerful Content Management System for creating, editing, and publishing content on websites and E-commerce platforms. Features include SEO optimization, multisite management, and multilingual support.",
+    link: "https://gaussbox.com/modules-cms",
+    tags: ["Vue.js", "TypeScript", "Node.js"],
+    categories: ["CMS", "Enterprise"],
+  },
+  {
+    title: "CeleroOne",
+    description: "A comprehensive financial management platform that streamlines business operations. Features include automated accounting, real-time analytics, and integrated payment processing.",
+    link: "https://celeroone.com",
+    tags: ["React", "Node.js", "AWS"],
+    categories: ["SaaS", "Fintech"],
+  },
+];
+// Define projects data
+const allProject = [
   {
     name: "Invest in Croatia",
     description:
@@ -46,18 +62,32 @@ const projects = [
   <article>
     <h1 class="heading-1">Projects</h1>
     <p class="text-lg mt-3">
-      Some of the projects I worked on or maintained while working at
+      Projects where I served as Team Lead at
       <BaseButton href="https://gauss.hr/en" variant="link" external>
         Gauss
       </BaseButton>
+      , leading development and architecture decisions.
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 md:mt-10">
-      <ProjectsCard
+      <ProjectCardNew
         v-for="project in projects"
-        :key="project.name"
+        :key="project.title"
         :project="project"
       />
     </div>
+
+    <p class="text-gray-600 dark:text-gray-400 mt-8 text-center">
+      More practice projects and experiments can be found on my 
+      <BaseButton 
+        href="https://github.com/ivan119" 
+        variant="link" 
+        external
+        class="inline-flex items-center gap-2"
+      >
+        <i class="devicon-github-original"></i>
+        GitHub
+      </BaseButton>
+    </p>
   </article>
 </template>
