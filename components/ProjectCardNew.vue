@@ -1,9 +1,14 @@
 <script setup lang="ts">
+interface Tag {
+  name: string;
+  icon: string;
+}
+
 interface Project {
   title: string;
   description: string;
   link: string;
-  tags: string[];
+  tags: Tag[];
   categories: string[];
 }
 
@@ -48,10 +53,11 @@ defineProps<{
       <div class="flex flex-wrap gap-2 mt-auto">
         <span
           v-for="tag in project.tags"
-          :key="tag"
-          class="text-xs font-medium px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
+          :key="tag.name"
+          class="inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"
         >
-          {{ tag }}
+          <i :class="[tag.icon, 'colored']"></i>
+          {{ tag.name }}
         </span>
       </div>
     </NuxtLink>

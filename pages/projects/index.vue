@@ -1,4 +1,18 @@
 <script setup lang="ts">
+// Define project interface
+interface Tag {
+  name: string;
+  icon: string;
+}
+
+interface Project {
+  title: string;
+  description: string;
+  link: string;
+  tags: Tag[];
+  categories: string[];
+}
+
 // Define tech stack with icons and links
 const techStackData: Record<string, { icon: string; url: string }> = {
   "Nuxt.js": { icon: "devicon-nuxtjs-plain", url: "https://nuxtjs.org/" },
@@ -16,19 +30,32 @@ const techStackData: Record<string, { icon: string; url: string }> = {
   },
 };
 
-const projects = [
+const projects: Project[] = [
   {
     title: "GaussCMS",
     description: "A powerful Content Management System for creating, editing, and publishing content on websites and E-commerce platforms. Features include SEO optimization, multisite management, and multilingual support.",
     link: "https://gaussbox.com/modules-cms",
-    tags: ["Vue.js", "TypeScript", "Node.js"],
+    tags: [
+      { name: "Vue.js", icon: "devicon-vuejs-plain" },
+      { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
+      { name: "TypeScript", icon: "devicon-typescript-plain" },
+      { name: "Tailwind", icon: "devicon-tailwindcss-plain" },
+      { name: "AdonisJS", icon: "devicon-adonisjs-original" }
+    ],
     categories: ["CMS", "Enterprise"],
   },
   {
     title: "CeleroOne",
-    description: "A comprehensive financial management platform that streamlines business operations. Features include automated accounting, real-time analytics, and integrated payment processing.",
-    link: "https://celeroone.com",
-    tags: ["React", "Node.js", "AWS"],
+    description: "A comprehensive workforce management solution for mobile teams. Features include real-time planning, process management, team coordination, and integrated communication tools for both office and field workers.",
+    link: "https://celero-one.com/en/",
+    tags: [
+      { name: "Vue.js", icon: "devicon-vuejs-plain" },
+      { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
+      { name: "Bootstrap", icon: "devicon-bootstrap-plain" },
+      { name: "PostgreSQL", icon: "devicon-postgresql-plain" },
+      { name: "MongoDB", icon: "devicon-mongodb-plain" },
+      { name: "PHP", icon: "devicon-php-plain" }
+    ],
     categories: ["SaaS", "Fintech"],
   },
 ];
