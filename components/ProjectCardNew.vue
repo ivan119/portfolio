@@ -14,9 +14,13 @@ defineProps<{
 
 <template>
   <article
-    class="skill-card bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden group"
+    class="skill-card bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden group flex flex-col"
   >
-    <NuxtLink :to="project.link" target="_blank" class="block p-6">
+    <NuxtLink
+      :to="project.link"
+      target="_blank"
+      class="block p-6 flex flex-col flex-1"
+    >
       <!-- Categories -->
       <div class="flex items-center gap-2 mb-4">
         <span
@@ -35,13 +39,13 @@ defineProps<{
         {{ project.title }}
       </h2>
 
-      <!-- Description -->
-      <p class="text-gray-600 dark:text-gray-300 mb-4">
+      <!-- Description (Fixed Height) -->
+      <p class="text-gray-600 dark:text-gray-300 mb-4 flex-grow min-h-[80px]">
         {{ project.description }}
       </p>
 
       <!-- Tech Tags -->
-      <div class="flex flex-wrap gap-2">
+      <div class="flex flex-wrap gap-2 mt-auto">
         <span
           v-for="tag in project.tags"
           :key="tag"
