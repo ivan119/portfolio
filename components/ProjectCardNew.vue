@@ -31,7 +31,7 @@ defineProps<{
         <span
           v-for="category in project.categories"
           :key="category"
-          class="px-3 py-1 text-sm font-medium rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300"
+          class="px-2 py-0.5 text-xs font-medium rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300"
         >
           {{ category }}
         </span>
@@ -39,7 +39,7 @@ defineProps<{
 
       <!-- Title -->
       <h2
-        class="text-2xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-teal-500 transition-colors"
+        class="text-2xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-teal-500 transition-colors ease-linear duration-[369]"
       >
         {{ project.title }}
       </h2>
