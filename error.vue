@@ -56,7 +56,7 @@ const props = defineProps({
           </p>
           <div class="flex flex-wrap gap-4 justify-center">
             <BaseButton
-              v-for="link in ['/', '/blog', '/projects', '/contact']"
+              v-for="link in ['/', '/blog', '/projects', '/skills']"
               :key="link"
               :to="link"
               variant="primary"

@@ -3,7 +3,7 @@ import { useDevToPosts } from "~/composables/useDevToPosts";
 import { useAsyncData } from "#imports";
 import type { DevToPost } from "~/composables/useDevToPosts";
 import { computed } from "vue";
-import AiGeneratedBlogs from "~/components/AiGeneratedBlogs.vue";
+import AiGeneratedBlogs from "~/components/AiGeneratedBlogs";
 
 definePageMeta({
   pageTransition: true, // Disable the transition for this page
@@ -30,7 +30,7 @@ const remainingPosts = computed(() => posts.value.slice(1));
     <div class="grid md:grid-cols-2 gap-12 mb-16 !slide-enter-active">
       <!-- Left: Featured Image -->
       <div v-if="featuredPost" class="relative">
-        <NuxtLink :to="`/blog/${featuredPost.id}`" class="block group">
+        <NuxtLink :to="`blog-new/${featuredPost.id}`" class="block group">
           <div class="relative aspect-video overflow-hidden rounded-2xl">
             <img
               :src="

@@ -53,6 +53,7 @@ export default defineNuxtConfig({
       maxBlogTokens: Number(process.env.MAX_BLOG_TOKENS) || 1500,
     },
   },
+  /*
   nitro: {
     routeRules: {
       '/api/**': {
@@ -64,5 +65,5 @@ export default defineNuxtConfig({
         }
       }
     }
-  }
+  } */
 });
