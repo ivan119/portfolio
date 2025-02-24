@@ -26,7 +26,7 @@ const techStackData: Record<string, { icon: string; url: string }> = {
 </script>
 
 <template>
-  <div class="article-card">
+  <NuxtLink :to="project.url" target="_blank" class="skill-card project-card">
     <h2 class="heading-2 font-semibold mb-2">{{ project.name }}</h2>
     <p class="text-gray-700 dark:text-gray-300 flex-grow">
       {{ project.description }}
@@ -40,10 +40,12 @@ const techStackData: Record<string, { icon: string; url: string }> = {
         class="flex items-center text-sm bg-blue-500 px-2 py-1 rounded"
       >
         <i :class="[techStackData[tech]?.icon, 'colored mr-2']"></i>
-        {{ tech }}
+        <span class="text-xs">
+          {{ tech }}
+        </span>
       </BaseButton>
     </div>
-    <div>
+    <!--  <div>
       <BaseButton
         :href="project.url"
         target="_blank"
@@ -51,6 +53,12 @@ const techStackData: Record<string, { icon: string; url: string }> = {
       >
         Visit Project
       </BaseButton>
-    </div>
-  </div>
+    </div>  -->
+  </NuxtLink>
 </template>
+
+<style>
+.project-card {
+  @apply items-start text-left p-3;
+}
+</style>

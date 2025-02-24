@@ -125,7 +125,7 @@ body {
 /* GLOBAL CARD */
 
 .skill-card {
-  @apply flex flex-col items-center text-center no-underline transition-all duration-500 ease-in-out relative;
+  @apply flex flex-col items-center no-underline transition-all duration-500 ease-in-out relative;
   border: 2px solid transparent;
   border-radius: 0.75rem; /* Ensures rounded corners */
   background:
