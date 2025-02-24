@@ -64,7 +64,7 @@ const links = [
     show: true,
   },
   {
-    to: "/blog",
+    to: "/blog-new",
     text: "Blog",
     icon: BlogIcon,
     show: true,
@@ -93,7 +93,8 @@ const links = [
           <NuxtLink
             v-show="link.show"
             :to="link.to"
-            class="nav-link font-bold relative flex items-center mr-4 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+            exact-active-class="nav-link-active"
+            class="nav-link font-bold relative flex items-center mr-4 text-gray-600 dark:text-gray-300 hover:text-teal-600"
             aria-label="Navigation link"
           >
             <component :is="link.icon" class="md:hidden" />
@@ -114,6 +115,9 @@ const links = [
 </template>
 
 <style scoped>
+.nav-link-active {
+  @apply text-teal-600;
+}
 .nav-link::after {
   content: "";
   position: absolute;
