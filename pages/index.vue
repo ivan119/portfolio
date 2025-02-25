@@ -70,7 +70,7 @@ const buttonHover = (v) => {
         drink! I'm always open to connecting with new people. You can contact me
         through
         <BaseButton
-          href="https://linkedin.com/in/your_linkedin"
+          href="https://www.linkedin.com/in/kelava-ivan"
           external
           variant="link"
           >LinkedIn</BaseButton
