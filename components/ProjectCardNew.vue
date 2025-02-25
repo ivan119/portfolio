@@ -24,7 +24,7 @@ defineProps<{
     <NuxtLink
       :to="project.link"
       target="_blank"
-      class="block p-6 flex flex-col flex-1"
+      class="p-6 flex flex-col flex-1"
     >
       <!-- Categories -->
       <div class="flex items-center gap-2 mb-4">
