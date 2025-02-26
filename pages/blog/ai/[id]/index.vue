@@ -1,0 +1,157 @@
+<script setup lang="ts">
+import { computed, ref } from "vue";
+import { useRoute } from "vue-router";
+import aiBlogData from "~/data/aiBlogGenerated.json";
+
+const route = useRoute();
+const postId = route.params.id as string;
+console.log(postId, "postId");
+// Find the post with the matching ID
+const post = computed(() => {
+  return aiBlogData.posts.find((p) => p.id === postId) || null;
+});
+
+// If post not found, show 404
+const notFound = ref(!post.value);
+
+// Format date nicely
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
+
+// Helper to determine content type
+const isHeading = (item: any) => item.type === "heading";
+const isParagraph = (item: any) => item.type === "paragraph";
+const isImage = (item: any) => item.type === "image";
+
+// Get heading level class
+const getHeadingClass = (level: number) => {
+  switch (level) {
+    case 1:
+      return "text-4xl font-bold mb-6";
+    case 2:
+      return "text-3xl font-bold mb-5 mt-8";
+    case 3:
+      return "text-2xl font-bold mb-4 mt-6";
+    default:
+      return "text-xl font-bold mb-3 mt-4";
+  }
+};
+</script>
+
+<template>
+  <div v-if="notFound" class="container mx-auto px-4 py-16 text-center">
+    <h1 class="text-3xl font-bold mb-4">Post Not Found</h1>
+    <p class="mb-8">
+      The blog post you're looking for doesn't exist or has been removed.
+    </p>
+    <NuxtLink to="/blog" class="text-teal-500 hover:text-teal-600">
+      &larr; Back to Blog
+    </NuxtLink>
+  </div>
+
+  <div v-else-if="post" class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <!-- Breadcrumbs -->
+    <Navigation-Breadcrumbs class="mb-8" />
+
+    <!-- Post Header -->
+    <header class="mb-12">
+      <div class="flex flex-wrap gap-2 mb-4">
+        <span
+          v-for="tag in post.tags"
+          :key="tag"
+          class="text-xs font-medium px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300"
+        >
+          {{ tag }}
+        </span>
+      </div>
+
+      <h1
+        class="text-4xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent"
+      >
+        {{ post.title }}
+      </h1>
+
+      <div class="flex items-center gap-4">
+        <div
+          class="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold"
+        >
+          {{ post.author.charAt(0) }}
+        </div>
+        <div>
+          <div class="font-medium text-gray-900 dark:text-white">
+            {{ post.author }}
+          </div>
+          <div class="text-sm text-gray-500">
+            {{ formatDate(post.date) }}
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Post Content -->
+    <article class="prose prose-lg dark:prose-invert max-w-none">
+      <div v-for="(item, index) in post.content" :key="index">
+        <!-- Headings -->
+        <component
+          :is="`h${item.level}`"
+          v-if="isHeading(item)"
+          :class="getHeadingClass(item.level)"
+        >
+          {{ item.content }}
+        </component>
+
+        <!-- Paragraphs -->
+        <p v-else-if="isParagraph(item)" class="mb-6">
+          {{ item.content }}
+        </p>
+
+        <!-- Images -->
+        <figure v-else-if="isImage(item)" class="my-8">
+          <NuxtImg 
+            :src="item.src" 
+            :alt="item.alt" 
+            class="rounded-lg w-full" 
+            format="webp"
+            loading="lazy"
+            :width="1024"
+            :height="576"
+          />
+          <figcaption
+            v-if="item.caption"
+            class="text-center text-gray-500 mt-2"
+          >
+            {{ item.caption }}
+          </figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <!-- Back to Blog -->
+    <div class="mt-16 text-center">
+      <NuxtLink
+        to="/blog"
+        class="inline-flex items-center gap-2 text-teal-500 hover:text-teal-600 transition-colors"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
+          ></path>
+        </svg>
+        Back to Blog
+      </NuxtLink>
+    </div>
+  </div>
+</template>
