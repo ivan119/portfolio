@@ -15,13 +15,17 @@ const { formatDate } = useDevToPosts();
     class="group bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
   >
     <div class="relative aspect-video">
-      <img
+      <NuxtImg
         :src="
           post.cover_image || `https://picsum.photos/seed/${post.id}/800/400`
         "
         :alt="post.title"
         :style="{ 'view-transition-name': `post-image-${post.id}` }"
         class="w-full h-full object-cover"
+        format="webp"
+        loading="lazy"
+        :width="800"
+        :height="400"
       />
     </div>
     <div class="p-6">
@@ -38,10 +42,14 @@ const { formatDate } = useDevToPosts();
         class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400"
       >
         <div class="flex items-center gap-2">
-          <img
+          <NuxtImg
             :src="post.user.profile_image"
             :alt="post.user.name"
             class="w-6 h-6 rounded-full"
+            format="webp"
+            loading="lazy"
+            :width="24"
+            :height="24"
           />
           <span>{{ post.user.name }}</span>
         </div>

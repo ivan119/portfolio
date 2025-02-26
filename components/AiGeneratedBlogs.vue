@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { posts as aiPosts, type AiBlogPost } from "~/data/posts";
+import aiBlogData from "~/data/aiBlogGenerated.json";
 
-const posts = ref<AiBlogPost[]>(aiPosts);
+// Define the type for our AI blog posts based on the JSON structure
+interface AiBlogPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  author: string;
+  category: string;
+  tags: string[];
+  content: any[];
+}
+
+const posts = ref<AiBlogPost[]>(aiBlogData.posts);
 const loading = ref(false);
 const error = ref<string | null>(null);
-
-// Sort posts by date
-posts.value.sort(
-  (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-);
 
 // Format date nicely
 const formatDate = (dateString: string) => {
@@ -19,17 +26,20 @@ const formatDate = (dateString: string) => {
     day: "numeric",
   });
 };
+
+// Get the first image from the content if available
+const getPostImage = (post: AiBlogPost) => {
+  const imageContent = post.content.find(item => item.type === 'image');
+  return imageContent ? imageContent.src : null;
+};
 </script>
 
 <template>
   <div class="space-y-8">
-    <div class="flex items-center justify-between mb-8">
+    <div class="mb-8">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-        AI-Generated Posts
+        Blog
       </h2>
-      <BaseButton to="/blog/generate" variant="primary" class="text-base">
-        Generate New Post
-      </BaseButton>
     </div>
 
     <!-- Loading State -->
@@ -51,7 +61,20 @@ const formatDate = (dateString: string) => {
         :key="post.id"
         class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
       >
-        <NuxtLink :to="`/blog/ai/${post.id}`" class="block">
+        <NuxtLink :to="`/blog/${post.id}`" class="block">
+          <!-- Post Image -->
+          <div v-if="getPostImage(post)" class="aspect-video w-full overflow-hidden">
+            <NuxtImg 
+              :src="getPostImage(post)" 
+              :alt="post.title"
+              class="w-full h-full object-cover"
+              format="webp"
+              loading="lazy"
+              width="600"
+              height="338"
+            />
+          </div>
+          
           <div class="p-6">
             <!-- Tags -->
             <div class="flex flex-wrap gap-2 mb-4">
@@ -71,15 +94,15 @@ const formatDate = (dateString: string) => {
             </h3>
 
             <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-              {{ post.description }}
+              {{ post.excerpt }}
             </p>
 
             <div
               class="flex items-center text-sm text-gray-500 dark:text-gray-400"
             >
-              <span>{{ formatDate(post.createdAt) }}</span>
+              <span>{{ formatDate(post.date) }}</span>
               <span class="mx-2">•</span>
-              <span>AI Generated</span>
+              <span>{{ post.author }}</span>
             </div>
           </div>
         </NuxtLink>

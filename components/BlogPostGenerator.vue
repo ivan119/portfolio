@@ -117,10 +117,14 @@
 
       <!-- Add image preview if post is generated -->
       <div v-if="currentPost" class="mt-6">
-        <img 
+        <NuxtImg 
           :src="currentPost.image" 
           :alt="currentPost.title"
           class="w-full h-48 object-cover rounded-xl shadow-lg"
+          format="webp"
+          loading="lazy"
+          :width="800"
+          :height="192"
         />
       </div>
     </div>

@@ -64,7 +64,7 @@ const links = [
     show: true,
   },
   {
-    to: "/blog-new",
+    to: "/blog",
     text: "Blog",
     icon: BlogIcon,
     show: true,
