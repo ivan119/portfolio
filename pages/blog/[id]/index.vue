@@ -13,7 +13,9 @@ const post = computed(() => {
 
 // If post not found, show 404
 const notFound = ref(!post.value);
-
+definePageMeta({
+  pageTransition: false, // Disable the transition for this page
+});
 // Format date nicely
 const formatDate = (dateString: string) => {
   return new Date(dateString).toLocaleDateString("en-US", {
@@ -112,10 +114,10 @@ const getHeadingClass = (level: number) => {
 
         <!-- Images -->
         <figure v-else-if="isImage(item)" class="my-8">
-          <NuxtImg 
-            :src="item.src" 
-            :alt="item.alt" 
-            class="rounded-lg w-full" 
+          <NuxtImg
+            :src="item.src"
+            :alt="item.alt"
+            class="rounded-lg w-full"
             format="webp"
             loading="lazy"
             :width="1024"

@@ -4,7 +4,7 @@ import aiBlogData from "~/data/aiBlogGenerated.json";
 import AiGeneratedBlogs from "~/components/AiGeneratedBlogs.vue";
 
 definePageMeta({
-  pageTransition: true,
+  pageTransition: false,
 });
 
 // Use the AI-generated blog posts

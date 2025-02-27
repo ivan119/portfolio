@@ -11,7 +11,7 @@ const { formatDate } = useDevToPosts();
 
 <template>
   <NuxtLink
-    :to="`/blog-new/${post.id}`"
+    :to="`/blogLegacy/${post.id}`"
     class="group bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
   >
     <div class="relative aspect-video">
