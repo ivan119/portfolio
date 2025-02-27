@@ -16,10 +16,10 @@ const featuredPost = computed(() => posts.value[0] || null);
 // Get the first image from the content if available
 const getPostImage = (post: any) => {
   // For the AI Agents post, use our custom image
-  if (post.id === 'ai-agents-transforming-digital-landscape') {
+  if (post.id === "ai-agents-transforming-digital-landscape") {
     return "/images/blog/ai-agents/ai-digital-landscape.jpg";
   }
-  
+
   // For other posts, try to find an image in the content
   const imageContent = post.content.find((item: any) => item.type === "image");
   return imageContent ? imageContent.src : "/images/blog/default-cover.jpg";
@@ -43,7 +43,7 @@ const formatDate = (dateString: string) => {
     <div class="grid md:grid-cols-2 gap-12 mb-16 !slide-enter-active">
       <!-- Left: Featured Image -->
       <div v-if="featuredPost" class="relative">
-        <NuxtLink :to="`blog/ai/${featuredPost.id}`" class="block group">
+        <NuxtLink :to="`blog/${featuredPost.id}`" class="block group">
           <div class="relative aspect-video overflow-hidden rounded-2xl">
             <NuxtImg
               :src="getPostImage(featuredPost)"
