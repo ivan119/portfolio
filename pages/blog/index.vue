@@ -16,10 +16,10 @@ const featuredPost = computed(() => posts.value[0] || null);
 // Get the first image from the content if available
 const getPostImage = (post: any) => {
   // For the AI Agents post, use our custom image
-  if (post.id === "ai-agents-transforming-digital-landscape") {
-    return "/images/blog/ai-agents/ai-digital-landscape.jpg";
+  if (post.id === 'ai-agents-transforming-digital-landscape') {
+    return "/images/blog/ai-agents/AI agents transforming the digital landscape..webp";
   }
-
+  
   // For other posts, try to find an image in the content
   const imageContent = post.content.find((item: any) => item.type === "image");
   return imageContent ? imageContent.src : "/images/blog/default-cover.jpg";

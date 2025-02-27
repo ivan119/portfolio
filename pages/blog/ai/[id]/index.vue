@@ -44,11 +44,11 @@ const getHeadingClass = (level: number) => {
 
 // Get the first image from the content if available
 const getMainImage = (): string => {
-  if (!post.value) return '/images/blog/ai-agents/ai-digital-landscape.jpg';
+  if (!post.value) return '/images/blog/ai-agents/AI agents transforming the digital landscape..webp';
   
   // Check if this is the latest post (AI Agents post)
   if (post.value.id === 'ai-agents-transforming-digital-landscape') {
-    return '/images/blog/ai-agents/ai-digital-landscape.jpg';
+    return '/images/blog/ai-agents/AI agents transforming the digital landscape..webp';
   }
   
   // For other posts, try to find an image in the content
@@ -63,14 +63,18 @@ const getCorrectImageSrc = (item: any): string => {
   // If this is the AI Agents post, use our custom images
   if (post.value.id === 'ai-agents-transforming-digital-landscape') {
     // Map the original image paths to our new images
-    if (item.src === '/images/blog/ai-agents/ai-digital-landscape.jpg') {
-      return '/images/blog/ai-agents/ai-digital-landscape.jpg';
-    } else if (item.src === '/images/blog/ai-agents/ai-evolution-timeline.jpg') {
-      return '/images/blog/ai-agents/ai-evolution-timeline.jpg';
-    } else if (item.src === '/images/blog/ai-agents/ai-industry-transformation.jpg') {
-      return '/images/blog/ai-agents/ai-industry-transformation.jpg';
-    } else if (item.src === '/images/blog/ai-agents/ai-future-collaboration.jpg') {
-      return '/images/blog/ai-agents/ai-future-collaboration.jpg';
+    if (item.src === '/images/blog/ai-agents/ai-digital-landscape.jpg' || 
+        item.src === '/images/blog/ai-agents/AI agents transforming the digital landscape..webp') {
+      return '/images/blog/ai-agents/AI agents transforming the digital landscape..webp';
+    } else if (item.src === '/images/blog/ai-agents/ai-evolution-timeline.jpg' || 
+               item.src === '/images/blog/ai-agents/I agents seamlessly integrating into daily life and work..webp') {
+      return '/images/blog/ai-agents/I agents seamlessly integrating into daily life and work..webp';
+    } else if (item.src === '/images/blog/ai-agents/ai-industry-transformation.jpg' || 
+               item.src === '/images/blog/ai-agents/AI agents revolutionizing industries..webp') {
+      return '/images/blog/ai-agents/AI agents revolutionizing industries..webp';
+    } else if (item.src === '/images/blog/ai-agents/ai-future-collaboration.jpg' || 
+               item.src === '/images/blog/ai-agents/Emphasizing human-AI collaboration in various fields..webp') {
+      return '/images/blog/ai-agents/Emphasizing human-AI collaboration in various fields..webp';
     }
   }
   

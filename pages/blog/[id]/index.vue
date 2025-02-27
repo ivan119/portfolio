@@ -56,7 +56,7 @@ const getHeadingClass = (level: number) => {
     </NuxtLink>
   </div>
 
-  <div v-else-if="post" class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+  <div v-else-if="post" class="mx-auto px-4 sm:px-10 py-12">
     <!-- Breadcrumbs -->
     <Navigation-Breadcrumbs class="mb-8" />
 
