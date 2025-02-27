@@ -41,6 +41,42 @@ const getHeadingClass = (level: number) => {
       return "text-xl font-bold mb-3 mt-4";
   }
 };
+
+// Get the first image from the content if available
+const getMainImage = (): string => {
+  if (!post.value) return '/images/blog/ai-agents/ai-digital-landscape.jpg';
+  
+  // Check if this is the latest post (AI Agents post)
+  if (post.value.id === 'ai-agents-transforming-digital-landscape') {
+    return '/images/blog/ai-agents/ai-digital-landscape.jpg';
+  }
+  
+  // For other posts, try to find an image in the content
+  const imageItem = post.value.content.find(item => item.type === 'image');
+  return imageItem && imageItem.src ? imageItem.src : '/images/blog/default-cover.jpg';
+};
+
+// Get the correct image source based on the post and image position
+const getCorrectImageSrc = (item: any): string => {
+  if (!post.value) return item.src || '';
+  
+  // If this is the AI Agents post, use our custom images
+  if (post.value.id === 'ai-agents-transforming-digital-landscape') {
+    // Map the original image paths to our new images
+    if (item.src === '/images/blog/ai-agents/ai-digital-landscape.jpg') {
+      return '/images/blog/ai-agents/ai-digital-landscape.jpg';
+    } else if (item.src === '/images/blog/ai-agents/ai-evolution-timeline.jpg') {
+      return '/images/blog/ai-agents/ai-evolution-timeline.jpg';
+    } else if (item.src === '/images/blog/ai-agents/ai-industry-transformation.jpg') {
+      return '/images/blog/ai-agents/ai-industry-transformation.jpg';
+    } else if (item.src === '/images/blog/ai-agents/ai-future-collaboration.jpg') {
+      return '/images/blog/ai-agents/ai-future-collaboration.jpg';
+    }
+  }
+  
+  // For other posts or if no match, return the original source
+  return item.src || '';
+};
 </script>
 
 <template>
@@ -93,14 +129,27 @@ const getHeadingClass = (level: number) => {
       </div>
     </header>
 
+    <!-- Featured Image -->
+    <div class="mb-12">
+      <NuxtImg 
+        :src="getMainImage()" 
+        :alt="post.title"
+        class="rounded-lg w-full" 
+        format="webp"
+        loading="eager"
+        :width="1200"
+        :height="675"
+      />
+    </div>
+
     <!-- Post Content -->
     <article class="prose prose-lg dark:prose-invert max-w-none">
       <div v-for="(item, index) in post.content" :key="index">
         <!-- Headings -->
         <component
-          :is="`h${item.level}`"
+          :is="`h${item.level || 2}`"
           v-if="isHeading(item)"
-          :class="getHeadingClass(item.level)"
+          :class="getHeadingClass(item.level || 2)"
         >
           {{ item.content }}
         </component>
@@ -113,7 +162,7 @@ const getHeadingClass = (level: number) => {
         <!-- Images -->
         <figure v-else-if="isImage(item)" class="my-8">
           <NuxtImg 
-            :src="item.src" 
+            :src="getCorrectImageSrc(item)" 
             :alt="item.alt" 
             class="rounded-lg w-full" 
             format="webp"

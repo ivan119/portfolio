@@ -2,7 +2,7 @@
 const route = useRoute();
 
 const showBreadcrumbs = computed(() => {
-  return route.path.startsWith('/blog');
+  return route.path.startsWith("/blog");
 });
 
 interface Breadcrumb {
@@ -53,11 +53,7 @@ const formatName = (name: string): string => {
 </script>
 
 <template>
-  <nav 
-    v-if="showBreadcrumbs" 
-    aria-label="Breadcrumb" 
-    class="py-3 px-4 w-full"
-  >
+  <nav v-if="showBreadcrumbs" aria-label="Breadcrumb" class="py-3 w-full">
     <ol class="flex items-center justify-start space-x-2 text-sm">
       <li
         v-for="(crumb, index) in breadcrumbs"
