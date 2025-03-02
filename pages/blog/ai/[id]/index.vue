@@ -6,6 +6,18 @@ import aiBlogData from "~/data/aiBlogGenerated.json";
 const route = useRoute();
 const postId = route.params.id as string;
 console.log(postId, "postId");
+
+definePageMeta({
+  pageTransition: {
+    name: 'page',
+    mode: 'out-in',
+    onBeforeLeave: () => {
+      // This ensures view transitions work properly
+      document.startViewTransition && document.startViewTransition();
+    }
+  },
+});
+
 // Find the post with the matching ID
 const post = computed(() => {
   return aiBlogData.posts.find((p) => p.id === postId) || null;
@@ -99,7 +111,7 @@ const getCorrectImageSrc = (item: any): string => {
     <Navigation-Breadcrumbs class="mb-8" />
 
     <!-- Post Header -->
-    <header class="mb-12">
+    <header class="mb-8">
       <div class="flex flex-wrap gap-2 mb-4">
         <span
           v-for="tag in post.tags"
@@ -112,11 +124,12 @@ const getCorrectImageSrc = (item: any): string => {
 
       <h1
         class="text-4xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent"
+        :style="{ 'view-transition-name': `post-title-${post.id}` }"
       >
         {{ post.title }}
       </h1>
 
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-4 mb-8">
         <div
           class="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold"
         >
@@ -138,6 +151,7 @@ const getCorrectImageSrc = (item: any): string => {
       <NuxtImg 
         :src="getMainImage()" 
         :alt="post.title"
+        :style="{ 'view-transition-name': `post-image-${post.id}` }"
         class="rounded-lg w-full" 
         format="webp"
         loading="eager"

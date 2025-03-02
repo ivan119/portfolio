@@ -8,13 +8,20 @@ const postId = route.params.id as string;
 console.log(postId, "postId");
 // Find the post with the matching ID
 const post = computed(() => {
+  // If the requested post is the latest one, return it
+  if (postId === aiBlogData.latest_post?.id) {
+    return aiBlogData.latest_post;
+  }
+
+  // Otherwise, find it in the posts array
   return aiBlogData.posts.find((p) => p.id === postId) || null;
 });
 
 // If post not found, show 404
 const notFound = ref(!post.value);
+
 definePageMeta({
-  pageTransition: false, // Disable the transition for this page
+  pageTransition: false,
 });
 // Format date nicely
 const formatDate = (dateString: string) => {
@@ -43,6 +50,57 @@ const getHeadingClass = (level: number) => {
       return "text-xl font-bold mb-3 mt-4";
   }
 };
+
+// Get the first image from the content if available
+const getMainImage = (): string => {
+  if (!post.value)
+    return "/images/blog/ai-agents/AI agents transforming the digital landscape..webp";
+  // Check if this is the latest post (AI Agents post)
+
+  // For other posts, try to find an image in the content
+  const imageItem = post.value.content.find((item) => item.type === "image");
+  return imageItem && imageItem.src
+    ? imageItem.src
+    : "/images/blog/default-cover.jpg";
+};
+
+// Get the correct image source based on the post and image position
+const getCorrectImageSrc = (item: any): string => {
+  if (!post.value) return item.src || "";
+
+  // If this is the AI Agents post, use our custom images
+  if (post.value.id === "ai-agents-transforming-digital-landscape") {
+    // Map the original image paths to our new images
+    if (
+      item.src === "/images/blog/ai-agents/ai-digital-landscape.jpg" ||
+      item.src ===
+        "/images/blog/ai-agents/AI agents transforming the digital landscape..webp"
+    ) {
+      return "/images/blog/ai-agents/AI agents transforming the digital landscape..webp";
+    } else if (
+      item.src === "/images/blog/ai-agents/ai-evolution-timeline.jpg" ||
+      item.src ===
+        "/images/blog/ai-agents/I agents seamlessly integrating into daily life and work..webp"
+    ) {
+      return "/images/blog/ai-agents/I agents seamlessly integrating into daily life and work..webp";
+    } else if (
+      item.src === "/images/blog/ai-agents/ai-industry-transformation.jpg" ||
+      item.src ===
+        "/images/blog/ai-agents/AI agents revolutionizing industries..webp"
+    ) {
+      return "/images/blog/ai-agents/AI agents revolutionizing industries..webp";
+    } else if (
+      item.src === "/images/blog/ai-agents/ai-future-collaboration.jpg" ||
+      item.src ===
+        "/images/blog/ai-agents/Emphasizing human-AI collaboration in various fields..webp"
+    ) {
+      return "/images/blog/ai-agents/Emphasizing human-AI collaboration in various fields..webp";
+    }
+  }
+
+  // For other posts or if no match, return the original source
+  return item.src || "";
+};
 </script>
 
 <template>
@@ -56,12 +114,12 @@ const getHeadingClass = (level: number) => {
     </NuxtLink>
   </div>
 
-  <div v-else-if="post" class="mx-auto px-4 sm:px-10 py-12">
+  <div v-else-if="post" class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
     <!-- Breadcrumbs -->
     <Navigation-Breadcrumbs class="mb-8" />
 
     <!-- Post Header -->
-    <header class="mb-12">
+    <header class="mb-8">
       <div class="flex flex-wrap gap-2 mb-4">
         <span
           v-for="tag in post.tags"
@@ -74,11 +132,12 @@ const getHeadingClass = (level: number) => {
 
       <h1
         class="text-4xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent"
+        :style="{ 'view-transition-name': `post-title-${post.id}` }"
       >
         {{ post.title }}
       </h1>
 
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-4 mb-8">
         <div
           class="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold"
         >
@@ -95,14 +154,28 @@ const getHeadingClass = (level: number) => {
       </div>
     </header>
 
+    <!-- Featured Image -->
+    <div class="mb-12">
+      <NuxtImg
+        :src="getMainImage()"
+        :alt="post.title"
+        :style="{ 'view-transition-name': `post-image-${post.id}` }"
+        class="rounded-lg w-full"
+        format="webp"
+        loading="eager"
+        :width="1200"
+        :height="675"
+      />
+    </div>
+
     <!-- Post Content -->
     <article class="prose prose-lg dark:prose-invert max-w-none">
       <div v-for="(item, index) in post.content" :key="index">
         <!-- Headings -->
         <component
-          :is="`h${item.level}`"
+          :is="`h${item.level || 2}`"
           v-if="isHeading(item)"
-          :class="getHeadingClass(item.level)"
+          :class="getHeadingClass(item.level || 2)"
         >
           {{ item.content }}
         </component>
@@ -115,7 +188,7 @@ const getHeadingClass = (level: number) => {
         <!-- Images -->
         <figure v-else-if="isImage(item)" class="my-8">
           <NuxtImg
-            :src="item.src"
+            :src="getCorrectImageSrc(item)"
             :alt="item.alt"
             class="rounded-lg w-full"
             format="webp"

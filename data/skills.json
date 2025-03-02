@@ -1,0 +1,21 @@
+{
+  "preferredSkills": [
+    {
+      "name": "Nuxt.js",
+      "icon": "devicon-nuxtjs-plain",
+      "url": "https://nuxtjs.org/",
+      "slug": "nuxtjs",
+      "expertise": 90,
+      "years": 3,
+      "description": "My framework of choice for building modern web applications with Vue.js.",
+      "projects": [
+        {"name": "Portfolio Site", "url": "/projects/portfolio"},
+        {"name": "Client Dashboard"}
+      ],
+      "content": "## Why I Choose Nuxt.js\n\nNuxt.js provides an incredible developer experience with features like:\n\n- Automatic routing\n- Server-side rendering\n- Static site generation\n- Easy API integration\n\n### My Experience with Nuxt\n\nI've been working with Nuxt.js for 3 years, building everything from small personal projects to large enterprise applications."
+    }
+  ],
+  "experiencedSkills": [
+    // Your experienced skills
+  ]
+} 

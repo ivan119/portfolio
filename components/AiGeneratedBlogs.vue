@@ -67,6 +67,7 @@ const getPostImage = (post: AiBlogPost) => {
             <NuxtImg 
               :src="getPostImage(post)" 
               :alt="post.title"
+              :style="{ 'view-transition-name': `post-image-${post.id}` }"
               class="w-full h-full object-cover"
               format="webp"
               loading="lazy"
@@ -89,6 +90,7 @@ const getPostImage = (post: AiBlogPost) => {
 
             <h3
               class="text-xl font-bold mb-2 text-gray-900 dark:text-white line-clamp-2"
+              :style="{ 'view-transition-name': `post-title-${post.id}` }"
             >
               {{ post.title }}
             </h3>

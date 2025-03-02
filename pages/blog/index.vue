@@ -11,15 +11,15 @@ definePageMeta({
 const posts = computed(() => aiBlogData.posts || []);
 
 // Get the latest/featured post (first post)
-const featuredPost = computed(() => posts.value[0] || null);
+const featuredPost = computed(() => aiBlogData.latest_post || {});
 
 // Get the first image from the content if available
 const getPostImage = (post: any) => {
   // For the AI Agents post, use our custom image
-  if (post.id === 'ai-agents-transforming-digital-landscape') {
+  if (post.id === "ai-agents-transforming-digital-landscape") {
     return "/images/blog/ai-agents/AI agents transforming the digital landscape..webp";
   }
-  
+
   // For other posts, try to find an image in the content
   const imageContent = post.content.find((item: any) => item.type === "image");
   return imageContent ? imageContent.src : "/images/blog/default-cover.jpg";
@@ -48,6 +48,9 @@ const formatDate = (dateString: string) => {
             <NuxtImg
               :src="getPostImage(featuredPost)"
               :alt="featuredPost.title"
+              :style="{
+                'view-transition-name': `post-image-${featuredPost.id}`,
+              }"
               class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
               format="webp"
               loading="lazy"
@@ -68,6 +71,7 @@ const formatDate = (dateString: string) => {
         >
         <h1
           class="text-4xl font-bold mb-3 pb-3 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent"
+          :style="{ 'view-transition-name': `post-title-${featuredPost?.id}` }"
         >
           {{ featuredPost?.title }}
         </h1>
