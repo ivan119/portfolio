@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useRoute } from "#imports";
 
 const transitionMode = ref<"slide" | "fade">("fade");
@@ -40,6 +40,23 @@ const transition = new Object({
       : transitionFade.value,
   mode: "out-in",
 });
+
+// Enable view transitions if browser supports it
+onMounted(() => {
+  if (document.startViewTransition) {
+    const handleNavigation = () => {
+      document.startViewTransition();
+    };
+    
+    // Listen for navigation events
+    window.addEventListener('popstate', handleNavigation);
+    
+    // Clean up
+    onUnmounted(() => {
+      window.removeEventListener('popstate', handleNavigation);
+    });
+  }
+});
 </script>
 
 <template>
@@ -64,3 +81,38 @@ const transition = new Object({
     <ScrollProgress />
   </div>
 </template>
+
+<style>
+/* Enable smoother transitions */
+:root {
+  --view-transition-duration: 300ms;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--view-transition-duration);
+}
+
+/* Apply specific transitions for skill cards */
+::view-transition-old(skill-*),
+::view-transition-new(skill-*) {
+  animation-duration: calc(var(--view-transition-duration) * 1.5);
+}
+
+/* Optional: Add fade effect to page transitions */
+::view-transition-old(root) {
+  animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
+}
+::view-transition-new(root) {
+  animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+</style>

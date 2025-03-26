@@ -46,12 +46,6 @@ const toggleTheme = () => {
 };
 const links = [
   {
-    to: "/about",
-    text: "About",
-    icon: AboutIcon,
-    show: false,
-  },
-  {
     to: "/skills",
     text: "Skills",
     icon: SkillsIcon,

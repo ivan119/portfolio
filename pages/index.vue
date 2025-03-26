@@ -16,25 +16,27 @@ const buttonHover = (v) => {
         <span class="font-extrabold highlighted">Ivan Kelava</span>, <br />
         a senior frontend developer from Osijek, Croatia.
       </h2>
-      <p class="flex items-center gap-2 flex-wrap mt-3">
-        Currently working at
-        <BaseButton href="https://gauss.hr/en" external>
-          <template #icon>
-            <dev-tools-icons-gauss-logo class="w-6 h-6 mr-1" />
-          </template>
-          Gauss
-        </BaseButton>
-      </p>
+      <template v-if="false">
+        <p class="flex items-center gap-2 flex-wrap mt-3">
+          Currently working at
+          <BaseButton href="https://gauss.hr/en" external>
+            <template #icon>
+              <dev-tools-icons-gauss-logo class="w-6 h-6 mr-1" />
+            </template>
+            Gauss
+          </BaseButton>
+        </p>
 
-      <p class="flex items-center gap-2 flex-wrap">
-        Core team lead and maintainer of
-        <BaseButton href="https://gaussbox.com/modules-cms" external>
-          <template #icon>
-            <dev-tools-icons-gauss-logo class="w-6 h-6 mr-1" />
-          </template>
-          Gauss CMS
-        </BaseButton>
-      </p>
+        <p class="flex items-center gap-2 flex-wrap">
+          Core team lead and maintainer of
+          <BaseButton href="https://gaussbox.com/modules-cms" external>
+            <template #icon>
+              <dev-tools-icons-gauss-logo class="w-6 h-6 mr-1" />
+            </template>
+            Gauss CMS
+          </BaseButton>
+        </p>
+      </template>
     </div>
 
     <div class="mt-4 space-y-4">
