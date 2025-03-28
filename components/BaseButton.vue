@@ -20,10 +20,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 const buttonClasses = computed(() => [
   props.variant === "link-old"
-    ? "font-bold underline decoration-2 decoration-gray-400  dark:hover:decoration-yellow-400 dark:decoration-gray-500 hover:decoration-red-800"
+    ? "font-bold decoration-2 decoration-gray-400 dark:decoration-gray-500 hover:underline hover:decoration-red-800 dark:hover:decoration-yellow-400 hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 dark:hover:from-yellow-500 dark:hover:to-amber-400 hover:bg-clip-text hover:text-transparent"
     : "",
   props.variant === "link"
-    ? "font-bold underline decoration-2 decoration-gray-400  dark:decoration-gray-500 hover:decoration-teal-600"
+    ? "font-bold decoration-2 hover:underline hover:decoration-teal-600 hover:bg-gradient-to-r hover:from-teal-500 hover:to-blue-600 hover:bg-clip-text hover:text-transparent"
     : "",
   props.variant === "default"
     ? "font-bold text-sm  py-1 rounded bg-gray-200  px-2 dark:bg-gray-800 hover:bg-gray-[250] dark:hover:bg-gray-700"

@@ -13,7 +13,7 @@ const buttonHover = (v) => {
     <div>
       <h2 class="heading-2">
         Hey, I'm
-        <span class="font-extrabold highlighted">Ivan Kelava</span>, <br />
+        <span class="font-extrabold bg-gradient-to-r from-emerald-500 to-blue-600 dark:from-teal-500 dark:to-blue-600 bg-clip-text text-transparent">Ivan Kelava</span>, <br />
         a senior frontend developer from Osijek, Croatia.
       </h2>
       <template v-if="false">
