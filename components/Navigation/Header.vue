@@ -126,7 +126,7 @@ onUnmounted(() => {
             class="nav-link font-bold relative flex items-center mr-4 text-gray-600 dark:text-gray-300 transition-all duration-300 hover:scale-105"
             :class="{
               'is-navigating': isNavigating && activeLink === link.to,
-              'hover:text-transparent hover:bg-gradient-to-r hover:from-teal-500 hover:to-blue-600 hover:bg-clip-text': !isNavigating || activeLink !== link.to
+              'hover-main-gradient': !isNavigating || activeLink !== link.to
             }"
             aria-label="Navigation link"
           >
@@ -160,7 +160,10 @@ onUnmounted(() => {
 
 <style scoped>
 .nav-link-active {
-  @apply text-transparent bg-gradient-to-r from-teal-500 to-blue-600 bg-clip-text;
+  @apply text-transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: var(--main-gradient);
 }
 
 .nav-link {
@@ -224,11 +227,11 @@ onUnmounted(() => {
 .is-navigating {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(90deg, #0d9488, #2563eb, #0d9488);
-  background-size: 200% auto;
+  color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
-  color: transparent;
+  background-image: var(--main-gradient);
+  background-size: 200% auto;
   animation: text-shift 2s linear infinite;
   transform-origin: center;
 }
@@ -257,7 +260,7 @@ onUnmounted(() => {
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, #0d9488, #2563eb, #0d9488);
+  background-image: var(--main-gradient);
   background-size: 200% auto;
   box-shadow: 0 0 10px rgba(13, 148, 136, 0.8);
   animation: gradient-flow 2s linear infinite;

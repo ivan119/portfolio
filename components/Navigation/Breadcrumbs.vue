@@ -76,10 +76,10 @@ const formatName = (name: string): string => {
         <!-- Breadcrumb Item -->
         <div
           :class="[
-            'flex items-center',
+            'flex items-center breadcrumb-link',
             crumb.isLast
-              ? 'text-teal-500 dark:text-teal-500 font-medium'
-              : 'text-gray-600 dark:text-gray-400 hover:text-teal-600 dark:hover:text-teal-400',
+              ? 'active-crumb'
+              : 'inactive-crumb',
           ]"
         >
           <NuxtLink
@@ -97,23 +97,28 @@ const formatName = (name: string): string => {
 </template>
 
 <style scoped>
-/* Optional: Add hover animation for links */
-a {
+.active-crumb {
+  font-weight: 500;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: var(--main-gradient);
+}
+
+.inactive-crumb {
+  @apply text-gray-600 dark:text-gray-400;
   position: relative;
 }
 
-a::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 1px;
-  bottom: -1px;
-  left: 0;
-  background-color: currentColor;
-  transition: width 0.3s ease-in-out;
+.inactive-crumb:hover {
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: var(--main-gradient);
 }
 
-a:hover::after {
-  width: 100%;
+.breadcrumb-link {
+  position: relative;
+  transition: all 0.369s cubic-bezier(0.4, 0, 0.2, 1);
 }
 </style>

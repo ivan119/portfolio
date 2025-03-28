@@ -3,6 +3,62 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Global Theme Variables */
+:root {
+  /* Primary gradient colors (light mode) */
+  --main-gradient-from: #10b981; /* emerald-500 */
+  --main-gradient-to: #2563eb; /* blue-600 */
+  
+  /* Default gradient settings */
+  --main-gradient: linear-gradient(to right, var(--main-gradient-from), var(--main-gradient-to));
+}
+
+/* Dark mode variables */
+.dark {
+  /* Primary gradient colors (dark mode) */
+  --main-gradient-from: #14b8a6; /* teal-500 */
+  --main-gradient-to: #2563eb; /* blue-600 */
+  
+  /* Default gradient settings remain the same structure */
+}
+
+/* Global utility classes for the gradient text */
+.text-main-gradient {
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: var(--main-gradient);
+}
+
+.text-main-gradient-animated {
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: var(--main-gradient);
+  background-size: 200% auto;
+  animation: gradient-shift 3s ease infinite;
+}
+
+.hover-main-gradient:hover {
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: var(--main-gradient);
+}
+
+/* Gradient animation */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}
+
 /* Header */
 .header {
   @apply h-[88px] flex justify-between p-8 px-5 lg:px-8;

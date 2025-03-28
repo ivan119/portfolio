@@ -1,19 +1,39 @@
 <script setup>
+import { onMounted, ref } from "vue";
+
 const isButtonHovered = ref(false);
+const contentVisible = ref(false);
 
 const buttonHover = (v) => {
   isButtonHovered.value = v;
 };
+
+onMounted(() => {
+  // Show content after a minimal delay
+  setTimeout(() => {
+    contentVisible.value = true;
+  }, 50);
+});
 </script>
 
 <template>
   <article class="flex flex-col gap-6">
-    <h1 class="heading-1">Ivan Kelava</h1>
+    <h1 class="heading-1">
+      <span class="font-extrabold">Ivan Kelava</span>
+    </h1>
 
-    <div>
+    <div
+      class="transform transition-all duration-200"
+      :class="{
+        'opacity-99 translate-y-0': contentVisible,
+        'opacity-0 translate-y-1': !contentVisible,
+      }"
+    >
       <h2 class="heading-2">
         Hey, I'm
-        <span class="font-extrabold bg-gradient-to-r from-emerald-500 to-blue-600 dark:from-teal-500 dark:to-blue-600 bg-clip-text text-transparent">Ivan Kelava</span>, <br />
+        <span class="font-extrabold text-main-gradient-animated"
+          >Ivan Kelava</span
+        >, <br />
         a senior frontend developer from Osijek, Croatia.
       </h2>
       <template v-if="false">
@@ -45,7 +65,7 @@ const buttonHover = (v) => {
         large-scale platforms, I thrive on transforming innovative ideas into
         tangible realities. Explore my portfolio to discover the diverse range
         of projects I've brought to life. You can find my
-        <BaseButton to="/projects" variant="link"
+        <BaseButton to="/projects" variant="link" class="hover-main-gradient"
           >projects list here.</BaseButton
         >
       </p>
@@ -53,7 +73,9 @@ const buttonHover = (v) => {
         Besides frontend development, I have experience with backend
         technologies, making me a versatile full-stack developer. You can
         explore my technical stack
-        <BaseButton variant="link" to="/skills"> here.</BaseButton>
+        <BaseButton variant="link" to="/skills" class="hover-main-gradient">
+          here.</BaseButton
+        >
       </p>
       <p>
         Outside of programming, I have experience producing music and capturing
@@ -63,6 +85,7 @@ const buttonHover = (v) => {
           href="https://instagram.com/your_instagram"
           external
           variant="link"
+          class="hover-main-gradient"
           >Instagram.</BaseButton
         >
       </p>
@@ -75,6 +98,7 @@ const buttonHover = (v) => {
           href="https://www.linkedin.com/in/kelava-ivan"
           external
           variant="link"
+          class="hover-main-gradient"
           >LinkedIn</BaseButton
         >
         or drop me an
@@ -82,9 +106,29 @@ const buttonHover = (v) => {
           href="mailto:ivankelava991@gmail.com"
           external
           variant="link"
+          class="hover-main-gradient"
           >email here.</BaseButton
         >
       </p>
     </div>
   </article>
 </template>
+
+<style scoped>
+.font-extrabold {
+  animation: gradient-shift 3s ease infinite;
+  background-size: 200% auto;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}
+</style>

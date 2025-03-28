@@ -39,7 +39,7 @@ defineProps<{
 
       <!-- Title -->
       <h2
-        class="text-2xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-teal-500 transition-colors ease-linear duration-[369]"
+        class="project-title text-2xl font-bold mb-3 text-gray-900 dark:text-white transition-all ease-linear duration-[369]"
       >
         {{ project.title }}
       </h2>
@@ -64,4 +64,16 @@ defineProps<{
   </article>
 </template>
 
-<style scoped></style>
+<style scoped>
+.project-title {
+  position: relative;
+  transition: all 0.369s linear;
+}
+
+.group:hover .project-title {
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: var(--main-gradient);
+}
+</style>
