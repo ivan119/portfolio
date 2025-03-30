@@ -43,6 +43,11 @@ export default defineNuxtConfig({
     quality: 80,
     format: ["webp"],
   },
+  tres: {
+    devtools: false,
+    glsl: true
+  },
+  ssr: false,
   runtimeConfig: {
     public: {
       quoteApiUrl: "https://api.quotable.io",

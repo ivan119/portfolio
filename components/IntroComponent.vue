@@ -6,7 +6,7 @@ import { useRouter } from "vue-router";
 
 const emit = defineEmits(["update:showMainContent", "showLogo"]);
 const typeWrite = ref(null);
-const del = ref(1);
+const del = ref(0.5);
 const hideNow = ref(false);
 const colorMode = useColorMode();
 const greeting = ref(""); // Reactive greeting message
@@ -101,13 +101,13 @@ const setupTypewriter = () => {
         'Hi <span class="animate-wave">👋</span>, I\'m Ivan\n' +
         "</h1>",
     )
-    .changeDelay(33)
+    .changeDelay(15)
     .typeString(
       '<h2 class="text-2xl md:text-3xl mb-2 text-gray-800 dark:text-gray-300">\n' +
         "I design/develop things for the web\n" +
         "</h2>",
     )
-    .pauseFor(23)
+    .pauseFor(10)
     .typeString(
       '<h3 class="text-2xl md:text-3xl mb-4 text-gray-800 dark:text-gray-300">\n' +
         "Currently working as a frontend team lead developer\n" +
@@ -115,19 +115,19 @@ const setupTypewriter = () => {
     )
     .typeString(
       '<h3 class="text-xl mb-2 text-gray-800 dark:text-gray-300">\n' +
-        'Check out my <span id="portfolio-link" class="cursor-pointer text-blue-green">portfolio</span>\n' +
+        'Check out my <BaseButton id="portfolio-link" variant="link" class="hover-main-gradient cursor-pointer font-bold">portfolio</BaseButton>\n' +
         "</h3>",
     )
-    .pauseFor(3)
+    .pauseFor(1)
     .typeString(
       '<h3 class="text-xl text-gray-800 dark:text-gray-300">\n' +
-        'Or contact <a href="mailto:ivankelava991@gmail.com" class="text-green-blue">me</a>\n' +
+        'Or contact <BaseButton href="mailto:ivankelava991@gmail.com" variant="link" class="hover-main-gradient font-bold">me</BaseButton>\n' +
         "</h3>",
     )
     .callFunction(() => {
       addClickListener();
     })
-    .pauseFor(693)
+    .pauseFor(300)
     .typeString(
       `<p id="greeting" class="mt-12 text-sm text-gray-600 dark:text-gray-400 italic">\n${greeting.value}\n</p>`,
     )

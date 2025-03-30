@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import { useRoute } from "#imports";
+import { useRoute, useColorMode } from "#imports";
+
+const colorMode = useColorMode();
+const isDark = computed(() => colorMode.value === 'dark');
 
 const transitionMode = ref<"slide" | "fade">("fade");
 const transitionSlide = ref("slide-right");
@@ -63,6 +66,12 @@ onMounted(() => {
   <div
     class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto slide-enter-active"
   >
+    <ClientOnly>
+      <BackgroundScene />
+      <template #fallback>
+        <div class="fixed inset-0 w-full h-full z-[-1]" :style="{ backgroundColor: isDark ? '#091a28' : '#ffffff' }"></div>
+      </template>
+    </ClientOnly>
     <IntroComponent
       v-if="!showMainContent"
       class="grow no-animation"
