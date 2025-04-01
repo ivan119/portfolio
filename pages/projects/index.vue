@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import HoverCard from "@/components/HoverCard.vue";
+
 // Define project interface
 interface Tag {
   name: string;
@@ -97,24 +99,101 @@ const allProject = [
     </p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 md:mt-10">
-      <ProjectCardNew
+      <HoverCard
         v-for="project in projects"
         :key="project.title"
-        :project="project"
-      />
+        :category="project.categories[0]"
+        size="lg"
+      >
+        <div class="flex flex-col h-full">
+          <!-- Project Title -->
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-main-gradient transition-colors duration-300">
+            {{ project.title }}
+          </h2>
+
+          <!-- Project Description -->
+          <p class="text-gray-600 dark:text-gray-400 mb-4 flex-grow">
+            {{ project.description }}
+          </p>
+
+          <!-- Tech Stack Tags -->
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span
+              v-for="tag in project.tags"
+              :key="tag.name"
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+            >
+              <i :class="[tag.icon, 'mr-1']"></i>
+              {{ tag.name }}
+            </span>
+          </div>
+
+          <!-- View More Button -->
+          <div class="mt-auto">
+            <BaseButton
+              :href="project.link"
+              variant="ghost"
+              external
+            >
+              View Project
+            </BaseButton>
+          </div>
+        </div>
+      </HoverCard>
     </div>
 
-    <p class="text-gray-600 dark:text-gray-400 mt-8 text-center">
-      More practice projects and experiments can be found on my 
-      <BaseButton 
-        href="https://github.com/ivan119" 
-        variant="link" 
-        external
-        class="inline-flex items-center gap-2"
+    <h2 class="heading-2 mt-16">Other Projects</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+      <HoverCard
+        v-for="project in allProject"
+        :key="project.name"
+        size="md"
       >
-        <i class="devicon-github-original"></i>
-        GitHub
-      </BaseButton>
-    </p>
+        <div class="flex flex-col h-full">
+          <!-- Project Title -->
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-main-gradient transition-colors duration-300">
+            {{ project.name }}
+          </h3>
+
+          <!-- Project Description -->
+          <p class="text-gray-600 dark:text-gray-400 mb-4 flex-grow">
+            {{ project.description }}
+          </p>
+
+          <!-- Tech Stack -->
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span
+              v-for="tech in project.techStack"
+              :key="tech"
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
+            >
+              <i :class="[techStackData[tech]?.icon || '', 'mr-1']"></i>
+              {{ tech }}
+            </span>
+          </div>
+
+          <!-- View More Button -->
+          <div class="mt-auto">
+            <BaseButton
+              :href="project.url"
+              variant="ghost"
+              external
+            >
+              View Project
+            </BaseButton>
+          </div>
+        </div>
+      </HoverCard>
+    </div>
   </article>
 </template>
+
+<style scoped>
+.heading-1 {
+  @apply text-3xl font-bold text-gray-900 dark:text-white;
+}
+
+.heading-2 {
+  @apply text-2xl font-bold text-gray-900 dark:text-white;
+}
+</style>

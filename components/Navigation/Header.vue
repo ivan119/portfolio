@@ -2,6 +2,7 @@
 // Import Sun and Moon components
 import SunIcon from "~/components/devTools/Icons/Sun.vue";
 import MoonIcon from "~/components/devTools/Icons/Moon.vue";
+import BackgroundIcon from "~/components/devTools/Icons/Background.vue";
 import AboutIcon from "~/components/devTools/Icons/About.vue";
 import BlogIcon from "~/components/devTools/Icons/Blog.vue";
 import SkillsIcon from "~/components/devTools/Icons/Skills.vue";
@@ -14,7 +15,13 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  animateBackground: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+const emit = defineEmits(["showIntro", "toggleBackground"]);
 
 watch(
   () => props.showLogo,
@@ -32,7 +39,6 @@ watch(
   { immediate: true },
 );
 
-const emit = defineEmits(["showIntro"]);
 const testFunc = () => {
   const route = useRoute();
   if (route.path === "/") {
@@ -44,6 +50,11 @@ const testFunc = () => {
 const toggleTheme = () => {
   colorMode.preference = colorMode.preference === "dark" ? "light" : "dark";
 };
+
+const toggleBackground = () => {
+  emit("toggleBackground");
+};
+
 const links = [
   {
     to: "/skills",
@@ -147,13 +158,23 @@ onUnmounted(() => {
         </li>
       </transition-group>
 
-      <client-only>
-        <component
-          :is="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
-          class="cursor-pointer sm:ml-6 hover:animate hover:scale-110 transition-transform duration-300"
-          @click.native="toggleTheme"
-        />
-      </client-only>
+      <div class="toggle-container flex items-center gap-x-4">
+        <div class="background-toggle" @click="toggleBackground">
+          <BackgroundIcon 
+            :is-active="props.animateBackground" 
+            class="icon-transition"
+          />
+        </div>
+        
+        <!-- Theme Toggle -->
+        <client-only>
+          <component
+            :is="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
+            class="cursor-pointer hover:animate hover:scale-110 transition-transform duration-300 icon-transition"
+            @click="toggleTheme"
+          />
+        </client-only>
+      </div>
     </div>
   </header>
 </template>
@@ -304,5 +325,40 @@ onUnmounted(() => {
 .nav-leave-to {
   opacity: 0;
   transform: translateY(10px) scale(0.95);
+}
+
+.background-toggle {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.background-toggle::before {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background-color: currentColor;
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.background-toggle:active::before {
+  opacity: 0.1;
+  transform: scale(1);
+}
+
+.icon-transition {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.icon-transition:active {
+  transform: scale(0.9);
 }
 </style>

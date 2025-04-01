@@ -1,12 +1,118 @@
 <script setup>
 import "devicon/devicon.min.css";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStorage } from "@vueuse/core";
 import { useRouter } from "vue-router";
+import BaseButton from "@/components/BaseButton.vue";
+import HoverCard from "@/components/HoverCard.vue";
+import ProjectCardNew from "@/components/ProjectCardNew.vue";
+import ProjectCardV2 from "~/components/ProjectCardV2.vue";
 
 // Persist user preference for version
 const showVersion2 = useStorage("skills-version2-preference", true);
 const router = useRouter();
+
+// Preferred Tech Stack
+const preferredSkills = [
+  {
+    name: "Vue.js",
+    icon: "devicon-vuejs-plain",
+    category: "frontend",
+    proficiency: "Expert",
+    description: "Modern reactive framework for building user interfaces",
+    experience: "4+ years",
+    color: "text-emerald-500",
+  },
+  {
+    name: "Nuxt.js",
+    icon: "devicon-nuxtjs-plain",
+    category: "framework",
+    proficiency: "Expert",
+    description: "Vue.js framework for building full-stack applications",
+    experience: "3+ years",
+    color: "text-green-500",
+  },
+  {
+    name: "TypeScript",
+    icon: "devicon-typescript-plain",
+    category: "language",
+    proficiency: "Expert",
+    description: "Typed superset of JavaScript for scalable applications",
+    experience: "3+ years",
+    color: "text-blue-500",
+  },
+  {
+    name: "Node.js",
+    icon: "devicon-nodejs-plain",
+    category: "backend",
+    proficiency: "Expert",
+    description: "JavaScript runtime for server-side development",
+    experience: "4+ years",
+    color: "text-green-600",
+  },
+  {
+    name: "React",
+    icon: "devicon-react-plain",
+    category: "frontend",
+    proficiency: "Advanced",
+    description: "Library for building user interfaces",
+    experience: "3+ years",
+    color: "text-blue-400",
+  },
+  {
+    name: "Next.js",
+    icon: "devicon-nextjs-plain",
+    category: "framework",
+    proficiency: "Advanced",
+    description: "React framework for production-grade applications",
+    experience: "2+ years",
+    color: "text-gray-800 dark:text-white",
+  },
+  {
+    name: "TailwindCSS",
+    icon: "devicon-tailwindcss-plain",
+    category: "frontend",
+    proficiency: "Expert",
+    description: "Utility-first CSS framework",
+    experience: "3+ years",
+    color: "text-teal-500",
+  },
+  {
+    name: "MongoDB",
+    icon: "devicon-mongodb-plain",
+    category: "database",
+    proficiency: "Advanced",
+    description: "NoSQL database for modern applications",
+    experience: "3+ years",
+    color: "text-green-500",
+  },
+];
+
+// Filter functionality for the enhanced view
+const selectedFilter = ref("all");
+const categories = computed(() => {
+  // Extract unique categories
+  const uniqueCategories = [
+    ...new Set(experiencedSkills.map((skill) => skill.category)),
+  ];
+  return ["all", ...uniqueCategories.sort()];
+});
+
+// Filtered skills based on selected category
+const filteredExperiencedSkills = computed(() => {
+  if (selectedFilter.value === "all") {
+    return experiencedSkills;
+  }
+  return experiencedSkills.filter(
+    (skill) =>
+      skill.category?.toLowerCase() === selectedFilter.value.toLowerCase(),
+  );
+});
+
+// Filter count
+const filterCount = computed(() => {
+  return filteredExperiencedSkills.value.length;
+});
 
 // Original v1 skills data
 const skills = [
@@ -64,11 +170,6 @@ const skills = [
     url: "https://flutter.dev/",
   },
   {
-    name: "MongoDB",
-    icon: "devicon-mongodb-plain",
-    url: "https://www.mongodb.com/",
-  },
-  {
     name: "SQL",
     icon: "devicon-mysql-plain",
     url: "https://www.w3schools.com/sql/",
@@ -92,124 +193,133 @@ const skills = [
   { name: "Figma", icon: "devicon-figma-plain", url: "https://www.figma.com/" },
 ];
 
-// Enhanced skills data with IDs for routing
-const preferredSkills = [
-  {
-    id: "nuxtjs",
-    name: "Nuxt.js",
-    icon: "devicon-nuxtjs-plain",
-    url: "https://nuxtjs.org/",
-  },
-  {
-    id: "vuejs",
-    name: "Vue.js",
-    icon: "devicon-vuejs-plain",
-    url: "https://vuejs.org/",
-  },
-  {
-    id: "javascript",
-    name: "JavaScript",
-    icon: "devicon-javascript-plain",
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
-  },
-  {
-    id: "tailwindcss",
-    name: "Tailwind CSS",
-    icon: "devicon-tailwindcss-plain",
-    url: "https://tailwindcss.com/",
-  },
-];
-
+// Experienced Skills
 const experiencedSkills = [
   {
-    id: "typescript",
-    name: "TypeScript",
-    icon: "devicon-typescript-plain",
-    url: "https://www.typescriptlang.org/",
+    name: "JavaScript",
+    icon: "devicon-javascript-plain",
+    category: "language",
+    proficiency: "Expert",
+    description: "Core language for web development",
+    experience: "5+ years",
+    color: "text-yellow-500",
   },
   {
-    id: "react",
-    name: "React",
-    icon: "devicon-react-original",
-    url: "https://reactjs.org/",
-  },
-  {
-    id: "nextjs",
-    name: "Next.js",
-    icon: "devicon-nextjs-original-wordmark",
-    url: "https://nextjs.org/",
-  },
-  {
-    id: "angular",
-    name: "Angular",
-    icon: "devicon-angularjs-plain",
-    url: "https://angular.io/",
-  },
-  {
-    id: "adonisjs",
-    name: "AdonisJS",
-    icon: "devicon-adonisjs-plain",
-    url: "https://adonisjs.com/",
-  },
-  {
-    id: "bootstrap",
-    name: "Bootstrap",
-    icon: "devicon-bootstrap-plain",
-    url: "https://getbootstrap.com/",
-  },
-  {
-    id: "vuetify",
-    name: "Vuetify",
-    icon: "devicon-vuetify-plain",
-    url: "https://vuetifyjs.com/en/",
-  },
-  {
-    id: "prisma",
-    name: "Prisma ORM",
-    icon: "devicon-prisma-plain",
-    url: "https://www.prisma.io/",
-  },
-  {
-    id: "mongodb",
-    name: "MongoDB",
-    icon: "devicon-mongodb-plain",
-    url: "https://www.mongodb.com/",
-  },
-  {
-    id: "sql",
-    name: "SQL",
-    icon: "devicon-mysql-plain",
-    url: "https://www.w3schools.com/sql/",
-  },
-  {
-    id: "python",
     name: "Python",
     icon: "devicon-python-plain",
-    url: "https://www.python.org/",
+    category: "language",
+    proficiency: "Advanced",
+    description: "Versatile language for backend and automation",
+    experience: "3+ years",
+    color: "text-blue-500",
   },
   {
-    id: "php",
-    name: "PHP",
-    icon: "devicon-php-plain",
-    url: "https://www.php.net/",
+    name: "PostgreSQL",
+    icon: "devicon-postgresql-plain",
+    category: "database",
+    proficiency: "Advanced",
+    description: "Robust relational database system",
+    experience: "3+ years",
+    color: "text-blue-400",
   },
   {
-    id: "flutter",
-    name: "Flutter",
-    icon: "devicon-flutter-plain",
-    url: "https://flutter.dev/",
+    name: "Redis",
+    icon: "devicon-redis-plain",
+    category: "database",
+    proficiency: "Intermediate",
+    description: "In-memory data structure store",
+    experience: "2+ years",
+    color: "text-red-500",
   },
   {
-    id: "adobe-xd",
-    name: "Adobe XD",
-    icon: "devicon-xd-plain",
-    url: "https://www.adobe.com/products/xd.html",
+    name: "Docker",
+    icon: "devicon-docker-plain",
+    category: "backend",
+    proficiency: "Advanced",
+    description: "Container platform for applications",
+    experience: "3+ years",
+    color: "text-blue-500",
   },
   {
-    id: "figma",
+    name: "Git",
+    icon: "devicon-git-plain",
+    category: "backend",
+    proficiency: "Expert",
+    description: "Version control system",
+    experience: "5+ years",
+    color: "text-orange-500",
+  },
+  {
+    name: "Sass",
+    icon: "devicon-sass-plain",
+    category: "frontend",
+    proficiency: "Advanced",
+    description: "CSS preprocessor scripting language",
+    experience: "4+ years",
+    color: "text-pink-500",
+  },
+  {
+    name: "Webpack",
+    icon: "devicon-webpack-plain",
+    category: "frontend",
+    proficiency: "Advanced",
+    description: "Static module bundler",
+    experience: "3+ years",
+    color: "text-blue-500",
+  },
+  {
+    name: "Jest",
+    icon: "devicon-jest-plain",
+    category: "framework",
+    proficiency: "Advanced",
+    description: "JavaScript testing framework",
+    experience: "3+ years",
+    color: "text-red-600",
+  },
+  {
+    name: "GraphQL",
+    icon: "devicon-graphql-plain",
+    category: "backend",
+    proficiency: "Intermediate",
+    description: "API query language",
+    experience: "2+ years",
+    color: "text-pink-600",
+  },
+  {
+    name: "AWS",
+    icon: "devicon-amazonwebservices-plain",
+    category: "backend",
+    proficiency: "Advanced",
+    description: "Cloud computing platform",
+    experience: "3+ years",
+    color: "text-orange-500",
+  },
+  {
     name: "Figma",
     icon: "devicon-figma-plain",
-    url: "https://www.figma.com/",
+    category: "design",
+    proficiency: "Advanced",
+    description: "Design and prototyping tool",
+    experience: "2+ years",
+    color: "text-purple-500",
+  },
+  {
+    name: "Flutter",
+    icon: "devicon-flutter-plain",
+    category: "mobile",
+    proficiency: "Intermediate",
+    description: "UI toolkit for mobile applications",
+    experience: "1+ year",
+    color: "text-blue-400",
+  },
+  {
+    name: "React Native",
+    icon: "devicon-react-plain",
+    category: "mobile",
+    proficiency: "Advanced",
+    description: "Mobile app development framework",
+    experience: "2+ years",
+    color: "text-blue-500",
   },
 ];
 
@@ -248,10 +358,12 @@ const navigateToSkill = (skill) => {
 definePageMeta({
   pageTransition: false,
 });
+
+const cardStyle = ref("v1");
 </script>
 
 <template>
-  <div class="max-w-7xl mx-auto px-4 py-8">
+  <div class="max-w-7xl !p-3 md:p-0">
     <!-- Version toggle -->
     <div class="flex justify-center mb-8">
       <div
@@ -327,87 +439,66 @@ definePageMeta({
     </article>
 
     <!-- VERSION 2 (ENHANCED) -->
-    <div v-show="showVersion2">
-      <!-- Page Header -->
-      <div class="mb-8">
+    <div v-show="showVersion2" class="space-y-3">
+      <!-- Hero Section -->
+      <section class="relative">
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-teal-50 to-transparent dark:from-teal-900/20 dark:to-transparent rounded-3xl -z-10"
+        ></div>
         <h1
-          class="heading-1 font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent"
+          class="heading-1 font-bold bg-gradient-to-r from-teal-500 to-blue-500 dark:from-teal-400 dark:to-blue-400 bg-clip-text text-transparent mb-4"
         >
-          My Technical Skills
+          Technical Skills
         </h1>
-        <p class="text-xl text-gray-600 dark:text-gray-400">
+        <p class="text-lg">
           Technologies and tools I've mastered throughout my journey
         </p>
-      </div>
+      </section>
 
-      <!-- Preferred Tech Stack Section -->
-      <section class="mb-16">
-        <h2 class="heading-2 font-bold mb-3">Preferred Tech Stack</h2>
-        <p class="text-lg mb-8">
+      <!-- Preferred Tech Stack -->
+      <section class="space-y-4">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+          Preferred Tech Stack
+        </h2>
+        <h3 class="text-lg">
           My go-to technologies for modern web development are:
-        </p>
-
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-        >
-          <div
-            v-for="(skill, index) in preferredSkills"
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <ProjectCardV2
+            v-for="skill in preferredSkills"
             :key="skill.name"
-            class="skill-card bg-white dark:bg-gray-800 rounded-xl p-6 flex flex-col items-center justify-between text-center shadow-lg hover:shadow-xl transition-colors duration-300 cursor-pointer h-full"
-            @click="navigateToSkill(skill)"
-          >
-            <!-- Experience level badge -->
-            <div class="absolute top-2 right-2">
-              <dev-tools-icons-star />
-            </div>
-
-            <!-- Main content wrapper -->
-            <div class="flex flex-col items-center flex-grow">
-              <i :class="['devicon text-5xl mb-4', skill.icon, 'colored']"></i>
-              <h3 class="text-lg font-bold">{{ skill.name }}</h3>
-            </div>
-
-            <!-- Learn more link at the bottom -->
-            <NuxtLink
-              :href="skill.url"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="mt-4 text-sm text-teal-600 hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300 transition-colors"
-              @click.stop
-            >
-              Learn more
-            </NuxtLink>
-          </div>
+            :project="{
+              title: skill.name,
+              description: skill.description,
+              link: '#',
+              categories: [skill.category],
+              tags: [{ name: skill.name, icon: skill.icon }],
+            }"
+          />
         </div>
       </section>
 
-      <!-- Experienced With Section -->
-      <section>
-        <h2 class="text-3xl font-bold mb-6">Experienced With</h2>
-        <p class="text-lg mb-8">
+      <!-- Experienced With -->
+      <section class="space-y-4">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+          Experienced With
+        </h2>
+        <h3 class="text-lg">
           Over the years, I have worked with or have experience using a variety
           of frameworks and tools, including:
-        </p>
-
-        <div
-          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
-        >
-          <div
-            v-for="(skill, index) in experiencedSkills"
+        </h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <ProjectCardV2
+            v-for="skill in experiencedSkills"
             :key="skill.name"
-            class="skill-card bg-white dark:bg-gray-800 rounded-xl p-4 flex flex-col items-center justify-between text-center shadow hover:shadow-md transition-colors duration-300 cursor-pointer h-full"
-            @click="navigateToSkill(skill)"
-          >
-            <!-- Main content wrapper -->
-            <div class="flex flex-col items-center">
-              <div class="relative">
-                <i
-                  :class="['devicon text-4xl mb-2', skill.icon, 'colored']"
-                ></i>
-              </div>
-              <h3 class="text-base font-bold mt-3">{{ skill.name }}</h3>
-            </div>
-          </div>
+            :project="{
+              title: skill.name,
+              description: skill.description,
+              link: '#',
+              categories: [skill.category],
+              tags: [{ name: skill.name, icon: skill.icon }],
+            }"
+          />
         </div>
       </section>
     </div>
@@ -415,49 +506,115 @@ definePageMeta({
 </template>
 
 <style scoped>
-.skill-card {
-  backface-visibility: hidden;
+.grid > div {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.grid > div:hover {
+  transform: translateY(-4px);
+}
+
+section {
+  padding: 1rem;
+  border-radius: 1.5rem;
   position: relative;
-  min-height: 132px; /* Ensure minimum height for consistency */
+  overflow: hidden;
 }
 
-.skill-card:hover {
-  transform: translateY(-5px);
+/* Add subtle border on hover */
+.group:hover {
+  border: 1px solid var(--main-gradient-from);
 }
 
-.skill-card:hover i {
-  transform: scale(1.1);
-}
-
-i {
-  transition: transform 0.3s ease;
-}
-
-/* Fancy hover effect for the cards */
-.skill-card::before {
+/* Add glow effect on hover */
+.group:hover::after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(
-    circle,
-    rgba(20, 184, 166, 0.05) 0%,
-    rgba(255, 255, 255, 0) 70%
-  );
+  inset: 0;
   border-radius: inherit;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  padding: 1px;
+  background: linear-gradient(
+    45deg,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
   pointer-events: none;
 }
 
-.skill-card:hover::before {
+/* Add pulse animation for expert level skills */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.group[data-proficiency="Expert"]:hover {
+  animation: pulse 2s infinite;
+}
+
+/* Add shine effect */
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.shine::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: rotate(30deg);
+  animation: shine 6s linear infinite;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.group:hover .shine::before {
   opacity: 1;
 }
 
-/* Add pointer cursor to indicate clickable */
-.skill-card {
-  cursor: pointer;
+@keyframes shine {
+  0% {
+    transform: rotate(30deg) translateX(-100%);
+  }
+  100% {
+    transform: rotate(30deg) translateX(100%);
+  }
+}
+
+/* Add floating animation */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.group:hover {
+  animation: float 3s ease-in-out infinite;
 }
 </style>
