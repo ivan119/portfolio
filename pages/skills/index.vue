@@ -1,12 +1,12 @@
 <script setup>
 import "devicon/devicon.min.css";
-import { ref, computed } from "vue";
 import { useStorage } from "@vueuse/core";
 import { useRouter } from "vue-router";
 import BaseButton from "@/components/BaseButton.vue";
 import HoverCard from "@/components/HoverCard.vue";
 import ProjectCardNew from "@/components/ProjectCardNew.vue";
-import ProjectCardV2 from "~/components/ProjectCardV2.vue";
+import SkillCardV2 from '~/components/SkillCardV2.vue'
+import SkillCardV3 from '~/components/SkillCardV3.vue'
 
 // Persist user preference for version
 const showVersion2 = useStorage("skills-version2-preference", true);
@@ -49,6 +49,24 @@ const preferredSkills = [
     description: "JavaScript runtime for server-side development",
     experience: "4+ years",
     color: "text-green-600",
+  },
+  {
+    name: "WebStorm",
+    icon: "devicon-webstorm-plain",
+    category: "tools",
+    proficiency: "Expert",
+    description: "Powerful JavaScript IDE from JetBrains",
+    experience: "3+ years",
+    color: "text-blue-600",
+  },
+  {
+    name: "Cursor",
+    icon: "devicon-vscode-plain",
+    category: "tools",
+    proficiency: "Expert",
+    description: "Advanced AI-powered code editor",
+    experience: "1+ year",
+    color: "text-blue-500",
   },
   {
     name: "React",
@@ -464,16 +482,19 @@ const cardStyle = ref("v1");
           My go-to technologies for modern web development are:
         </h3>
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          <ProjectCardV2
+          <SkillCardV3
             v-for="skill in preferredSkills"
             :key="skill.name"
-            :project="{
+            :skill="{
               title: skill.name,
               description: skill.description,
               link: '#',
               categories: [skill.category],
               tags: [{ name: skill.name, icon: skill.icon }],
+              proficiency: skill.proficiency,
+              experience: skill.experience
             }"
+            :colored="true"
           />
         </div>
       </section>
@@ -488,16 +509,19 @@ const cardStyle = ref("v1");
           of frameworks and tools, including:
         </h3>
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          <ProjectCardV2
+          <SkillCardV3
             v-for="skill in experiencedSkills"
             :key="skill.name"
-            :project="{
+            :skill="{
               title: skill.name,
               description: skill.description,
               link: '#',
               categories: [skill.category],
               tags: [{ name: skill.name, icon: skill.icon }],
+              proficiency: skill.proficiency,
+              experience: skill.experience
             }"
+            :colored="true"
           />
         </div>
       </section>
