@@ -136,7 +136,7 @@ const getTechColor = (iconClass: string) => {
 // Function to get icon classes with colored option
 const getIconClasses = (icon: string) => {
   // Base class always included
-  const classes = [icon, 'text-2xl transition-all duration-300 group-hover:scale-110'];
+  const classes = [icon, 'text-2xl transition-all duration-500 group-hover:text-4xl'];
   
   // If colored prop is true, add 'colored' class instead of using custom colors
   if (props.colored) {
@@ -241,6 +241,7 @@ const getIconColor = (tag: Tag) => {
               color: getIconColor(skill.tags[0]),
               textShadow: `0 2px 4px ${getIconColor(skill.tags[0])}30`
             }"
+            class="tech-icon"
           ></i>
         </div>
       </div>
@@ -272,7 +273,7 @@ const getIconColor = (tag: Tag) => {
       </div>
 
       <!-- Description -->
-      <p class="text-xs text-gray-600 dark:text-gray-400 px-3 mb-2 flex-grow leading-relaxed">
+      <p class="text-xs text-gray-600 dark:text-gray-400 px-3 mb-2 flex-grow leading-relaxed line-clamp-2 overflow-hidden">
         {{ skill.description }}
       </p>
 
@@ -326,6 +327,8 @@ const getIconColor = (tag: Tag) => {
   transition: all 0.3s ease;
   background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0.1));
   transform-style: preserve-3d;
+  height: 220px; /* Reduced height for better fit */
+  z-index: 1;
 }
 
 .dark .skill-card {
@@ -336,10 +339,40 @@ const getIconColor = (tag: Tag) => {
 .skill-card:hover {
   transform: translateY(-2px) scale(1.02);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
 
 .dark .skill-card:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Adjust floating animation to maintain fixed height */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.02);
+  }
+}
+
+/* Disable card animation to prevent movement affecting layout */
+.skill-card:hover {
+  animation: none;
+}
+
+.skill-card[data-proficiency="Expert"]:hover {
+  animation: none;
+}
+
+/* Add a container to prevent overflow and keep cards at fixed positions */
+.icon-container {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+  height: 40px; /* Reduced height for icon container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Add glow effect on hover */
@@ -381,20 +414,6 @@ const getIconColor = (tag: Tag) => {
   opacity: 1;
 }
 
-/* Add floating animation */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-5px) scale(1.02);
-  }
-}
-
-.skill-card:hover {
-  animation: float 3s ease-in-out infinite;
-}
-
 /* Add pulse animation for expert level skills */
 @keyframes pulse {
   0%, 100% {
@@ -414,11 +433,6 @@ const getIconColor = (tag: Tag) => {
   perspective: 1000px;
 }
 
-.icon-container {
-  transform-style: preserve-3d;
-  transition: transform 0.3s ease;
-}
-
 .rotate-y-12 {
   transform: rotateY(12deg);
 }
@@ -427,5 +441,101 @@ const getIconColor = (tag: Tag) => {
 .backdrop-blur-sm {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+}
+
+/* Logo animations */
+.tech-icon {
+  display: inline-block;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 0.369s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+/* Give all icons a subtle grow pulse effect */
+.group:hover .tech-icon {
+  animation: gentle-pulse 0.369s ease-in-out infinite alternate;
+}
+
+/* Animation keyframes */
+@keyframes gentle-pulse {
+  0% { 
+    transform: scale(1); 
+    filter: drop-shadow(0 0 2px currentColor);
+  }
+  100% { 
+    transform: scale(1.1); 
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+}
+
+/* Remove all other specific icon animations */
+/* Different animation for different icon types */
+.group:hover .tech-icon.devicon-javascript-plain,
+.group:hover .tech-icon.devicon-typescript-plain,
+.group:hover .tech-icon.devicon-python-plain,
+.group:hover .tech-icon.devicon-php-plain,
+.group:hover .tech-icon.devicon-ruby-plain,
+.group:hover .tech-icon.devicon-java-plain,
+.group:hover .tech-icon.devicon-csharp-plain {
+  animation: gentle-pulse 0.369s ease-in-out infinite alternate;
+}
+
+/* Vue and Nuxt get unique wave animation instead of rotation */
+.group:hover .tech-icon.devicon-vuejs-plain,
+.group:hover .tech-icon.devicon-nuxtjs-plain {
+  animation: gentle-pulse 0.369s ease-in-out infinite alternate;
+}
+
+.group:hover .tech-icon.devicon-react-plain,
+.group:hover .tech-icon.devicon-angular-plain,
+.group:hover .tech-icon.devicon-nextjs-plain,
+.group:hover .tech-icon.devicon-svelte-plain {
+  animation: gentle-pulse 0.369s ease-in-out infinite alternate;
+}
+
+.group:hover .tech-icon.devicon-docker-plain,
+.group:hover .tech-icon.devicon-kubernetes-plain,
+.group:hover .tech-icon.devicon-amazonwebservices-plain,
+.group:hover .tech-icon.devicon-googlecloud-plain,
+.group:hover .tech-icon.devicon-azure-plain,
+.group:hover .tech-icon.devicon-firebase-plain {
+  animation: gentle-pulse 0.369s ease-in-out infinite alternate;
+}
+
+.group:hover .tech-icon.devicon-html5-plain,
+.group:hover .tech-icon.devicon-css3-plain,
+.group:hover .tech-icon.devicon-sass-plain,
+.group:hover .tech-icon.devicon-less-plain,
+.group:hover .tech-icon.devicon-tailwindcss-plain,
+.group:hover .tech-icon.devicon-bootstrap-plain {
+  animation: gentle-pulse 0.369s ease-in-out infinite alternate;
+}
+
+.group:hover .tech-icon.devicon-git-plain,
+.group:hover .tech-icon.devicon-github-plain,
+.group:hover .tech-icon.devicon-gitlab-plain {
+  animation: gentle-pulse 0.369s ease-in-out infinite alternate;
+}
+
+.group:hover .tech-icon.devicon-mongodb-plain,
+.group:hover .tech-icon.devicon-mysql-plain,
+.group:hover .tech-icon.devicon-postgresql-plain,
+.group:hover .tech-icon.devicon-sqlite-plain,
+.group:hover .tech-icon.devicon-redis-plain {
+  animation: gentle-pulse 0.369s ease-in-out infinite alternate;
+}
+
+.group:hover .tech-icon.devicon-figma-plain,
+.group:hover .tech-icon.devicon-xd-plain,
+.group:hover .tech-icon.devicon-photoshop-plain,
+.group:hover .tech-icon.devicon-illustrator-plain {
+  animation: gentle-pulse 0.369s ease-in-out infinite alternate;
+}
+
+.group:hover .tech-icon.devicon-vscode-plain,
+.group:hover .tech-icon.devicon-webstorm-plain,
+.group:hover .tech-icon.devicon-intellij-plain,
+.group:hover .tech-icon.devicon-vim-plain {
+  animation: gentle-pulse 0.369s ease-in-out infinite alternate;
 }
 </style> 
