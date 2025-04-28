@@ -30,7 +30,7 @@ const animateBackground = ref(false);
 // Toggle animation background
 const toggleBackground = () => {
   animateBackground.value = !animateBackground.value;
-  
+
   // Store preference in localStorage
   if (process.client) {
     localStorage.setItem('animateBackground', animateBackground.value.toString());
@@ -50,10 +50,10 @@ onMounted(() => {
     const handleNavigation = () => {
       document.startViewTransition();
     };
-    
+
     // Listen for navigation events
     window.addEventListener('popstate', handleNavigation);
-    
+
     // Clean up
     onUnmounted(() => {
       window.removeEventListener('popstate', handleNavigation);
@@ -83,7 +83,7 @@ const transition = new Object({
 </script>
 
 <template>
-  <div 
+  <div
     class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto"
   >
     <!-- Background with transition -->
@@ -91,7 +91,7 @@ const transition = new Object({
       <div v-if="animateBackground" key="animated-bg" class="background-container">
         <BackgroundScene />
       </div>
-      <div v-else key="static-bg" class="background-container static-bg" 
+      <div v-else key="static-bg" class="background-container static-bg"
            :style="{ backgroundColor: isDark ? '#091a28' : '#ffffff' }">
       </div>
     </Transition>
@@ -103,14 +103,14 @@ const transition = new Object({
         @update:show-main-content="(args) => changeState(args)"
         @show-logo="(args) => (showLogo = args)"
       />
-      
-      <navigation-header 
-        :show-logo="showLogo" 
+
+      <navigation-header
+        :show-logo="showLogo"
         :animate-background="animateBackground"
         @show-intro="testFunc"
         @toggle-background="toggleBackground"
       />
-      
+
       <template v-if="showMainContent">
         <div class="flex-1">
           <div class="grow">
@@ -121,7 +121,7 @@ const transition = new Object({
         </div>
         <Footer class="container" />
       </template>
-      
+
       <ScrollProgress />
     </div>
   </div>
