@@ -21,15 +21,15 @@
     "@tresjs/nuxt": "^3.0.8",
     "devicon": "^2.16.0",
     "nanoid": "^5.1.5",
-    "nuxt": "^3.17.0",
+    "nuxt": "^3.17.1",
     "three": "^0.176.0",
-    "typewriter-effect": "^2.21.0"
+    "typewriter-effect": "^2.22.0"
   },
   "volta": {
-    "node": "22.14.0"
+    "node": "22.15.0"
   },
   "devDependencies": {
-    "@types/node": "^22.14.1",
+    "@types/node": "^22.15.3",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.25.1",
     "postcss": "^8.5.3",
