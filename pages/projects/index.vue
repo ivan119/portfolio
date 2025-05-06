@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HoverCard from "@/components/HoverCard.vue";
+import ProjectCardV3 from "@/components/ProjectCardV3.vue";
 
 // Define project interface
 interface Tag {
@@ -13,6 +13,8 @@ interface Project {
   link: string;
   tags: Tag[];
   categories: string[];
+  status: string;
+  year: string;
 }
 
 // Define tech stack with icons and links
@@ -44,7 +46,9 @@ const projects: Project[] = [
       { name: "Tailwind", icon: "devicon-tailwindcss-plain" },
       { name: "AdonisJS", icon: "devicon-adonisjs-original" }
     ],
-    categories: ["CMS", "Enterprise"],
+    categories: ["frontend"],
+    status: "Completed",
+    year: "2023"
   },
   {
     title: "CeleroOne",
@@ -58,142 +62,118 @@ const projects: Project[] = [
       { name: "MongoDB", icon: "devicon-mongodb-plain" },
       { name: "PHP", icon: "devicon-php-plain" }
     ],
-    categories: ["SaaS", "Fintech"],
+    categories: ["fullstack"],
+    status: "Completed",
+    year: "2023"
   },
 ];
+
 // Define projects data
-const allProject = [
+const allProjects: Project[] = [
   {
-    name: "Invest in Croatia",
-    description:
-      "A government-backed platform for investors to explore business opportunities in Croatia. The site provides economic insights, legal frameworks, and available investment projects.",
-    techStack: ["Nuxt.js", "Bootstrap", "JavaScript"],
-    url: "https://investincroatia.hr/",
+    title: "Invest in Croatia",
+    description: "A government-backed platform for investors to explore business opportunities in Croatia. The site provides economic insights, legal frameworks, and available investment projects.",
+    link: "https://investincroatia.hr/",
+    tags: [
+      { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
+      { name: "Bootstrap", icon: "devicon-bootstrap-plain" },
+      { name: "JavaScript", icon: "devicon-javascript-plain" }
+    ],
+    categories: ["frontend"],
+    status: "Completed",
+    year: "2022"
   },
   {
-    name: "Celero One",
-    description:
-      "An advanced logistics platform built for drone delivery management, real-time tracking, and operational efficiency. It helps businesses automate and optimize drone fleets.",
-    techStack: ["Nuxt.js", "Tailwind CSS", "JavaScript"],
-    url: "https://celero-one.com/en/",
-  },
-  {
-    name: "Wine Yard",
-    description:
-      "Wineyard is an expert system that measures humidity, pressure, temperature, and CO2 and manages air conditioning devices in the wine cellar, without the physical presence of the winemaker.",
-    techStack: ["Nuxt.js", "Bootstrap", "JavaScript"],
-    url: "https://wine-yard.net/en/homepage",
+    title: "Wine Yard",
+    description: "Wineyard is an expert system that measures humidity, pressure, temperature, and CO2 and manages air conditioning devices in the wine cellar, without the physical presence of the winemaker.",
+    link: "https://wine-yard.net/en/homepage",
+    tags: [
+      { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
+      { name: "Bootstrap", icon: "devicon-bootstrap-plain" },
+      { name: "JavaScript", icon: "devicon-javascript-plain" }
+    ],
+    categories: ["frontend"],
+    status: "Completed",
+    year: "2022"
   },
 ];
 </script>
 
 <template>
-  <article>
-    <h1 class="heading-1">Projects</h1>
-    <p class="text-lg mt-3">
-      Projects where I served as Team Lead at
-      <BaseButton href="https://gauss.hr/en" variant="link" external>
-        Gauss
-      </BaseButton>
-      , leading development and architecture decisions.
-    </p>
+  <div class="max-w-7xl mx-auto p-6 space-y-8">
+    <!-- Hero Section -->
+    <section class="relative rounded-3xl bg-gray-800/50 p-8 overflow-hidden">
+      <!-- Glow effect -->
+      <div class="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-blue-500/10 to-transparent"></div>
+      <!-- Dots pattern -->
+      <div class="absolute inset-0 opacity-10">
+        <div class="h-full w-full bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]"></div>
+      </div>
+      <!-- Content -->
+      <div class="relative z-10">
+        <h1 class="text-4xl font-bold text-main-gradient-animated mb-4">
+          Projects
+        </h1>
+        <p class="text-lg text-gray-300">
+          Projects where I served as Team Lead at
+          <BaseButton href="https://gauss.hr/en" variant="link" external class="text-teal-400 hover:text-teal-300">
+            Gauss
+          </BaseButton>
+          , leading development and architecture decisions.
+        </p>
+      </div>
+    </section>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 md:mt-10">
-      <HoverCard
-        v-for="project in projects"
-        :key="project.title"
-        :category="project.categories[0]"
-        size="lg"
-      >
-        <div class="flex flex-col h-full">
-          <!-- Project Title -->
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-main-gradient transition-colors duration-300">
-            {{ project.title }}
-          </h2>
+    <!-- Main Projects -->
+    <section class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ProjectCardV3
+          v-for="project in projects"
+          :key="project.title"
+          :project="project"
+          :colored="true"
+        />
+      </div>
+    </section>
 
-          <!-- Project Description -->
-          <p class="text-gray-600 dark:text-gray-400 mb-4 flex-grow">
-            {{ project.description }}
-          </p>
-
-          <!-- Tech Stack Tags -->
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span
-              v-for="tag in project.tags"
-              :key="tag.name"
-              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-            >
-              <i :class="[tag.icon, 'mr-1']"></i>
-              {{ tag.name }}
-            </span>
-          </div>
-
-          <!-- View More Button -->
-          <div class="mt-auto">
-            <BaseButton
-              :href="project.link"
-              variant="ghost"
-              external
-            >
-              View Project
-            </BaseButton>
-          </div>
-        </div>
-      </HoverCard>
-    </div>
-
-    <h2 class="heading-2 mt-16">Other Projects</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-      <HoverCard
-        v-for="project in allProject"
-        :key="project.name"
-        size="md"
-      >
-        <div class="flex flex-col h-full">
-          <!-- Project Title -->
-          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-main-gradient transition-colors duration-300">
-            {{ project.name }}
-          </h3>
-
-          <!-- Project Description -->
-          <p class="text-gray-600 dark:text-gray-400 mb-4 flex-grow">
-            {{ project.description }}
-          </p>
-
-          <!-- Tech Stack -->
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span
-              v-for="tech in project.techStack"
-              :key="tech"
-              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
-            >
-              <i :class="[techStackData[tech]?.icon || '', 'mr-1']"></i>
-              {{ tech }}
-            </span>
-          </div>
-
-          <!-- View More Button -->
-          <div class="mt-auto">
-            <BaseButton
-              :href="project.url"
-              variant="ghost"
-              external
-            >
-              View Project
-            </BaseButton>
-          </div>
-        </div>
-      </HoverCard>
-    </div>
-  </article>
+    <!-- Other Projects -->
+    <section class="space-y-6">
+      <h2 class="text-3xl font-bold text-main-gradient-animated">
+        Other Projects
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <ProjectCardV3
+          v-for="project in allProjects"
+          :key="project.title"
+          :project="project"
+          :colored="true"
+        />
+      </div>
+    </section>
+  </div>
 </template>
 
 <style scoped>
-.heading-1 {
-  @apply text-3xl font-bold text-gray-900 dark:text-white;
+/* Improve scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-.heading-2 {
-  @apply text-2xl font-bold text-gray-900 dark:text-white;
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 20px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: rgba(75, 85, 99, 0.5);
+}
+
+/* Add glow effect to cards on hover */
+.transform:hover {
+  filter: drop-shadow(0 0 8px rgba(45, 212, 191, 0.1));
 }
 </style>
