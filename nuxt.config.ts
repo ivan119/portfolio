@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  // @ts-ignore
   app: {
     pageTransition: {
       name: "page",
@@ -22,18 +23,7 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: false },
   css: ["~/assets/css/main.css"],
-  modules: [
-    "@nuxtjs/tailwindcss",
-    "@nuxtjs/color-mode",
-    "@tresjs/nuxt",
-    "@nuxt/image",
-  ],
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
-  },
+  modules: ["@nuxtjs/color-mode", "@tresjs/nuxt", "@nuxt/image"],
   colorMode: {
     classSuffix: "",
     preference: "dark",
@@ -45,9 +35,15 @@ export default defineNuxtConfig({
   },
   tres: {
     devtools: false,
-    glsl: true
+    glsl: true,
   },
   ssr: false,
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
   runtimeConfig: {
     public: {
       quoteApiUrl: "https://api.quotable.io",

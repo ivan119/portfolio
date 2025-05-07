@@ -1,18 +1,20 @@
 import type { Config } from 'tailwindcss'
-import forms from '@tailwindcss/forms'
-import typography from '@tailwindcss/typography'
 
 export default {
   content: [
-    "./components/**/*.{js,vue,ts}",
-    "./layouts/**/*.vue",
-    "./pages/**/*.vue",
-    "./plugins/**/*.{js,ts}",
-    "./app.vue",
-    "./error.vue",
+    './components/**/*.{js,vue,ts}',
+    './layouts/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.{js,ts}',
+    './app.vue',
+    './error.vue'
   ],
+  darkMode: 'class',
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'],
+      },
       colors: {
         // Chakra Frequency Colors
         "root-chakra": "#C53030", // C - Root (Red) - 256Hz
@@ -56,5 +58,8 @@ export default {
       },
     },
   },
-  plugins: [forms, typography],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+  ],
 } satisfies Config 

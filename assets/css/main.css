@@ -1,8 +1,8 @@
-/* Main Tailwind Style */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Main Tailwind Style */
 /* Global Theme Variables */
 :root {
   /* Primary gradient colors (light mode) */
@@ -61,7 +61,7 @@
 
 /* Header */
 .header {
-  @apply h-[88px] flex justify-between p-8 px-5 lg:px-8;
+  @apply h-[88px] flex justify-between p-8 px-5 lg:px-6;
 }
 .logo {
   @apply lg:fixed;
