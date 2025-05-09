@@ -58,7 +58,9 @@ const techStackData: Record<string, { icon: string; url: string }> = {
 </template>
 
 <style>
-.project-card {
-  @apply items-start text-left p-3;
-}
+  @reference "tailwindcss";
+  
+  .project-card {
+    @apply items-start text-left p-3;
+  }
 </style>

@@ -63,18 +63,20 @@ const navigationItems = [
 ]
 </script>
 
-<style scoped>
-.router-link-active {
-  @apply text-white font-medium;
-}
+<style>
+  @reference "tailwindcss";
+  
+  .router-link-active {
+    @apply text-white font-medium;
+  }
 
-/* Add gradient animation */
-.bg-gradient-to-r {
-  background-size: 200% auto;
-  transition: background-position 0.3s ease-in-out;
-}
+  /* Add gradient animation */
+  .bg-gradient-to-r {
+    background-size: 200% auto;
+    transition: background-position 0.3s ease-in-out;
+  }
 
-.bg-gradient-to-r:hover {
-  background-position: right center;
-}
+  .bg-gradient-to-r:hover {
+    background-position: right center;
+  }
 </style> 

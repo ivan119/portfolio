@@ -227,51 +227,53 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped>
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+<style>
+  @reference "tailwindcss";
+  
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient 3s ease infinite;
-}
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+  }
 
-.prose {
-  @apply text-gray-800 dark:text-gray-200;
-}
+  .prose {
+    @apply text-gray-800 dark:text-gray-200;
+  }
 
-.prose p {
-  @apply mb-4;
-}
+  .prose p {
+    @apply mb-4;
+  }
 
-/* Glass morphism effect */
-.backdrop-blur-md {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
+  /* Glass morphism effect */
+  .backdrop-blur-md {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
 
-/* Enhanced hover shadow */
-.hover\:shadow-3xl:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
+  /* Enhanced hover shadow */
+  .hover\:shadow-3xl:hover {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
 
-/* Add a subtle gradient background to the page */
-:deep(body) {
-  @apply bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen;
-  background-image: 
-    radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 0% 0%, rgba(124, 58, 237, 0.15) 0%, transparent 50%);
-}
+  /* Add a subtle gradient background to the page */
+  :deep(body) {
+    @apply bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 min-h-screen;
+    background-image: 
+      radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 0% 0%, rgba(124, 58, 237, 0.15) 0%, transparent 50%);
+  }
 
-/* Add subtle animation for hover states */
-.transition-all {
-  @apply transform transition duration-200 ease-in-out;
-}
+  /* Add subtle animation for hover states */
+  .transition-all {
+    @apply transform transition duration-200 ease-in-out;
+  }
 
-textarea:focus {
-  @apply shadow-lg scale-[1.02] dark:shadow-purple-500/20;
-}
+  textarea:focus {
+    @apply shadow-lg scale-[1.02] dark:shadow-purple-500/20;
+  }
 </style> 

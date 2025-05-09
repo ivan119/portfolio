@@ -113,55 +113,57 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped>
-.scroll-progress-container {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 2px;
-  height: 33vh;
-  background: rgba(9, 26, 40, 0.1);
-  z-index: 1000;
-  pointer-events: none;
-  opacity: 0;
-  animation: fadeIn 0.3s ease forwards;
-  will-change: opacity;
-  @apply right-4 lg:right-8;
-}
-
-@keyframes fadeIn {
-  from {
+<style>
+  @reference "tailwindcss";
+  
+  .scroll-progress-container {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 33vh;
+    background: rgba(9, 26, 40, 0.1);
+    z-index: 1000;
+    pointer-events: none;
     opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+    will-change: opacity;
+    @apply right-4 lg:right-8;
   }
-  to {
-    opacity: 1;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
-}
 
-.scroll-progress-bar {
-  width: 100%;
-  height: 100%;
-  background: #091a28;
-  transform-origin: top;
-  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
-}
+  .scroll-progress-bar {
+    width: 100%;
+    height: 100%;
+    background: #091a28;
+    transform-origin: top;
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
 
-/* Default (Light) theme */
-html:not(.dark) .scroll-progress-container {
-  background: rgba(9, 26, 40, 0.1);
-}
+  /* Default (Light) theme */
+  html:not(.dark) .scroll-progress-container {
+    background: rgba(9, 26, 40, 0.1);
+  }
 
-html:not(.dark) .scroll-progress-bar {
-  background: #091a28;
-}
+  html:not(.dark) .scroll-progress-bar {
+    background: #091a28;
+  }
 
-/* Dark theme */
-html.dark .scroll-progress-container {
-  background: rgba(235, 244, 241, 0.1);
-}
+  /* Dark theme */
+  html.dark .scroll-progress-container {
+    background: rgba(235, 244, 241, 0.1);
+  }
 
-html.dark .scroll-progress-bar {
-  background: #ebf4f1;
-}
+  html.dark .scroll-progress-bar {
+    background: #ebf4f1;
+  }
 </style>

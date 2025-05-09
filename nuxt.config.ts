@@ -1,3 +1,5 @@
+import tailwindcss from "@tailwindcss/vite";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // @ts-ignore
@@ -38,11 +40,8 @@ export default defineNuxtConfig({
     glsl: true,
   },
   ssr: false,
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
+  vite: {
+    plugins: [tailwindcss()],
   },
   runtimeConfig: {
     public: {

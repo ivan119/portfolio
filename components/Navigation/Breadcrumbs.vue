@@ -96,29 +96,31 @@ const formatName = (name: string): string => {
   </nav>
 </template>
 
-<style scoped>
-.active-crumb {
-  font-weight: 500;
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  background-image: var(--main-gradient);
-}
+<style>
+  @reference "tailwindcss";
+  
+  .active-crumb {
+    font-weight: 500;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: var(--main-gradient);
+  }
 
-.inactive-crumb {
-  @apply text-gray-600 dark:text-gray-400;
-  position: relative;
-}
+  .inactive-crumb {
+    @apply text-gray-600 dark:text-gray-400;
+    position: relative;
+  }
 
-.inactive-crumb:hover {
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  background-image: var(--main-gradient);
-}
+  .inactive-crumb:hover {
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: var(--main-gradient);
+  }
 
-.breadcrumb-link {
-  position: relative;
-  transition: all 0.369s cubic-bezier(0.4, 0, 0.2, 1);
-}
+  .breadcrumb-link {
+    position: relative;
+    transition: all 0.369s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 </style>

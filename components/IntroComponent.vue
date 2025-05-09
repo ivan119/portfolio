@@ -186,157 +186,159 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped>
-/* Custom styles for better spacing and consistent colors */
-::v-deep(.Typewriter__cursor) {
-  @apply text-red-900 font-bold text-3xl text-black dark:text-white hidden;
-}
-
-h2,
-h3,
-p {
-  margin-bottom: 1.5rem; /* Space between lines */
-}
-
-h2 {
-  color: var(--text-color, #111827); /* Dark mode compatible color */
-}
-
-h3,
-p {
-  color: var(
-    --text-secondary-color,
-    #4b5563
-  ); /* Lighter text for readability */
-}
-
-::v-deep(.animate-wave) {
-  display: inline-block;
-  animation: wave 0.9s ease-in-out 2;
-}
-
-@keyframes wave {
-  0%,
-  100% {
-    transform: rotate(0deg);
+<style>
+  @reference "tailwindcss";
+  
+  /* Custom styles for better spacing and consistent colors */
+  ::v-deep(.Typewriter__cursor) {
+    @apply text-red-900 font-bold text-3xl text-black dark:text-white hidden;
   }
-  50% {
-    transform: rotate(20deg);
+
+  h2,
+  h3,
+  p {
+    margin-bottom: 1.5rem; /* Space between lines */
   }
-}
 
-/* Fade-in animation */
-.fade-in {
-  opacity: 0;
-  transform: translateY(33px);
-  animation: fadeIn 3s ease-in-out forwards;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  h2 {
+    color: var(--text-color, #111827); /* Dark mode compatible color */
   }
-}
 
-/* Slide-out-left animation */
-.slide-out-left {
-  animation: slideOutLeft 0.5s forwards;
-}
-
-@keyframes slideOutLeft {
-  from {
-    transform: translateX(0);
-    opacity: 1;
+  h3,
+  p {
+    color: var(
+      --text-secondary-color,
+      #4b5563
+    ); /* Lighter text for readability */
   }
-  to {
-    transform: translateX(-50px);
+
+  ::v-deep(.animate-wave) {
+    display: inline-block;
+    animation: wave 0.9s ease-in-out 2;
+  }
+
+  @keyframes wave {
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(20deg);
+    }
+  }
+
+  /* Fade-in animation */
+  .fade-in {
     opacity: 0;
+    transform: translateY(33px);
+    animation: fadeIn 3s ease-in-out forwards;
   }
-}
 
-.animate-slide {
-  animation: slideOut 1.2s ease-in-out forwards;
-}
-
-.animate-slide > * {
-  animation: slideOut 1.2s ease-in-out forwards;
-}
-
-@keyframes slideOut {
-  0% {
-    transform: translateX(0);
-    opacity: 1;
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-  70% {
-    transform: translateX(10%);
-    opacity: 1;
+
+  /* Slide-out-left animation */
+  .slide-out-left {
+    animation: slideOutLeft 0.5s forwards;
   }
-  100% {
-    transform: translateX(-100%);
-    opacity: 0;
+
+  @keyframes slideOutLeft {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
   }
-}
 
-.typewrite-wrapper {
-  perspective: 1000px;
-  transition: opacity 0.3s ease;
-}
-
-/* Add some depth to the text elements */
-.typewrite-wrapper > * {
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
-}
-
-.hidden {
-  display: none;
-}
-
-.goodbye-message {
-  animation: fadeIn 0.5s ease-in-out forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
+  .animate-slide {
+    animation: slideOut 1.2s ease-in-out forwards;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-.fade-welcome {
-  animation: fadeWelcome 0.6s ease-in-out forwards;
-}
+  .animate-slide > * {
+    animation: slideOut 1.2s ease-in-out forwards;
+  }
 
-.fade-out {
-  animation: fadeOut 0.6s ease-in-out forwards;
-}
+  @keyframes slideOut {
+    0% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    70% {
+      transform: translateX(10%);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+  }
 
-@keyframes fadeWelcome {
-  0% {
-    opacity: 0;
-    transform: scale(0.9);
+  .typewrite-wrapper {
+    perspective: 1000px;
+    transition: opacity 0.3s ease;
   }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
 
-@keyframes fadeOut {
-  0% {
-    opacity: 1;
-    transform: scale(1);
+  /* Add some depth to the text elements */
+  .typewrite-wrapper > * {
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
   }
-  100% {
-    opacity: 0;
-    transform: scale(1.1);
+
+  .hidden {
+    display: none;
   }
-}
+
+  .goodbye-message {
+    animation: fadeIn 0.5s ease-in-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-welcome {
+    animation: fadeWelcome 0.6s ease-in-out forwards;
+  }
+
+  .fade-out {
+    animation: fadeOut 0.6s ease-in-out forwards;
+  }
+
+  @keyframes fadeWelcome {
+    0% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.1);
+    }
+  }
 </style>
 
 <template>

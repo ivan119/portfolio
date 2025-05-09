@@ -179,7 +179,9 @@ onUnmounted(() => {
   </header>
 </template>
 
-<style scoped>
+<style>
+  @reference "tailwindcss";
+  
 .nav-link-active {
   @apply text-transparent;
   background-clip: text;

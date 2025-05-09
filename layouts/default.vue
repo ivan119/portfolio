@@ -128,6 +128,8 @@ const transition = new Object({
 </template>
 
 <style>
+@reference "tailwindcss";
+
 /* Enable smoother transitions */
 :root {
   --view-transition-duration: 300ms;

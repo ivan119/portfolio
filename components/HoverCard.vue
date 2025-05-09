@@ -118,18 +118,20 @@ defineProps({
   </div>
 </template>
 
-<style scoped>
-@keyframes shimmer {
-  100% {
-    transform: translateX(100%);
+<style>
+  @reference "tailwindcss";
+  
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
   }
-}
 
-:deep(.group-hover\:text-main-gradient) {
-  @apply transition-colors duration-300;
-}
+  :deep(.group-hover\:text-main-gradient) {
+    @apply transition-colors duration-300;
+  }
 
-:deep(.group:hover .group-hover\:text-main-gradient) {
-  @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
-}
+  :deep(.group:hover .group-hover\:text-main-gradient) {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+  }
 </style> 
