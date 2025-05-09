@@ -2,17 +2,31 @@
 import { ref, computed, onMounted, onUnmounted, watchEffect } from "vue";
 import { useRoute, useColorMode } from "#imports";
 
+// State management
 const colorMode = useColorMode();
 const isDark = computed(() => colorMode.value === 'dark');
-
-const transitionMode = ref<"slide" | "fade">("fade");
-const transitionSlide = ref("slide-right");
-const transitionFade = ref("page");
-const route = useRoute();
-
 const showIntro = ref(false);
 const showMainContent = computed(() => !showIntro.value);
 const showLogo = ref(true);
+const animateBackground = ref(false);
+
+// Route and transition management
+const route = useRoute();
+const transitionMode = ref<"slide" | "fade">("fade");
+const transitionSlide = ref("slide-right");
+const transitionFade = ref("page");
+
+// Computed properties for transitions
+const transitionSlideDirection = computed(() => {
+  return route.path === "/" ? "slide-left" : "slide-right";
+});
+
+const usePageTransition = computed(() => {
+  const blacklist = ["blog", "projects"];
+  return !blacklist.some((path) => route.path.startsWith(`/${path}`));
+});
+
+// Event handlers
 const changeState = (value: Boolean) => {
   showIntro.value = !value;
 };
@@ -24,20 +38,14 @@ const testFunc = () => {
   }, 693);
 };
 
-// Animation background toggle state
-const animateBackground = ref(false);
-
-// Toggle animation background
 const toggleBackground = () => {
   animateBackground.value = !animateBackground.value;
-
-  // Store preference in localStorage
   if (process.client) {
     localStorage.setItem('animateBackground', animateBackground.value.toString());
   }
 };
 
-// Initialize from localStorage on mount
+// Lifecycle hooks
 onMounted(() => {
   if (process.client) {
     const savedPreference = localStorage.getItem('animateBackground');
@@ -50,42 +58,22 @@ onMounted(() => {
     const handleNavigation = () => {
       document.startViewTransition();
     };
-
-    // Listen for navigation events
     window.addEventListener('popstate', handleNavigation);
-
-    // Clean up
     onUnmounted(() => {
       window.removeEventListener('popstate', handleNavigation);
     });
   }
 });
 
-// Watch route changes for slide direction
-const transitionSlideDirection = computed(() => {
-  return route.path === "/" ? "slide-left" : "slide-right";
-});
-
-// Compute whether to use page transition
-const usePageTransition = computed(() => {
-  const blacklist = ["blog", "projects"];
-  return !blacklist.some((path) => route.path.startsWith(`/${path}`));
-});
-
-// Update transition on route change
-const transition = new Object({
-  name:
-    transitionMode.value === "slide"
-      ? transitionSlideDirection.value
-      : transitionFade.value,
+// Transition configuration
+const transition = computed(() => ({
+  name: transitionMode.value === "slide" ? transitionSlideDirection.value : transitionFade.value,
   mode: "out-in",
-});
+}));
 </script>
 
 <template>
-  <div
-    class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto"
-  >
+  <div class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto">
     <!-- Background with transition -->
     <Transition name="bg-fade" mode="out-in">
       <div v-if="animateBackground" key="animated-bg" class="background-container">
@@ -114,7 +102,7 @@ const transition = new Object({
       <template v-if="showMainContent">
         <div class="flex-1">
           <div class="grow">
-            <Transition name="fade" mode="out-in">
+            <Transition v-bind="transition">
               <slot />
             </Transition>
           </div>
@@ -130,7 +118,7 @@ const transition = new Object({
 <style>
 @reference "tailwindcss";
 
-/* Enable smoother transitions */
+/* View Transitions */
 :root {
   --view-transition-duration: 300ms;
 }
@@ -140,21 +128,20 @@ const transition = new Object({
   animation-duration: var(--view-transition-duration);
 }
 
-/* Apply specific transitions for skill cards */
 ::view-transition-old(skill-*),
 ::view-transition-new(skill-*) {
   animation-duration: calc(var(--view-transition-duration) * 1.5);
 }
 
-/* Optional: Add fade effect to page transitions */
 ::view-transition-old(root) {
   animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
 }
+
 ::view-transition-new(root) {
   animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
 }
 
-/* Content container for proper z-index ordering */
+/* Layout Structure */
 .content-container {
   display: flex;
   flex-direction: column;
@@ -162,7 +149,6 @@ const transition = new Object({
   position: relative;
 }
 
-/* Background transition effects */
 .background-container {
   position: fixed;
   top: 0;
@@ -177,7 +163,7 @@ const transition = new Object({
   transition: background-color 0.5s ease;
 }
 
-/* Transition for background animation toggle */
+/* Transitions */
 .bg-fade-enter-active,
 .bg-fade-leave-active {
   transition: opacity 0.7s ease, transform 0.5s ease;
@@ -199,20 +185,28 @@ const transition = new Object({
   opacity: 0;
 }
 
+/* Animations */
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
 @keyframes fade-out {
   from { opacity: 1; }
   to { opacity: 0; }
 }
 
-:deep(.group-hover\:text-main-gradient) {
-  @apply transition-colors duration-300;
+/* Utility Classes */
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
 
-:deep(.group:hover .group-hover\:text-main-gradient) {
-  @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+.gradient-text {
+  background-image: linear-gradient(to right, rgb(37, 99, 235), rgb(147, 51, 234));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 </style>

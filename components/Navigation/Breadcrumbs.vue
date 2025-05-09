@@ -97,30 +97,76 @@ const formatName = (name: string): string => {
 </template>
 
 <style>
-  @reference "tailwindcss";
-  
-  .active-crumb {
-    font-weight: 500;
-    color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
-    background-image: var(--main-gradient);
-  }
+@reference "tailwindcss";
 
-  .inactive-crumb {
-    @apply text-gray-600 dark:text-gray-400;
-    position: relative;
-  }
+.breadcrumb-text {
+  @apply text-gray-600 dark:text-gray-400;
+}
 
-  .inactive-crumb:hover {
-    color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
-    background-image: var(--main-gradient);
-  }
+.active-crumb {
+  @apply font-medium relative text-transparent bg-clip-text bg-gradient-primary;
+}
 
-  .breadcrumb-link {
-    position: relative;
-    transition: all 0.369s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+.active-crumb::after {
+  content: '';
+  @apply absolute bottom-[-2px] left-0 w-0 h-[2px] transition-all duration-300 ease-in-out bg-gradient-primary;
+}
+
+.active-crumb:hover::after {
+  @apply w-full;
+}
+
+.inactive-crumb {
+  @apply text-gray-600 dark:text-gray-400 relative transition-all duration-300 ease-in-out;
+}
+
+.inactive-crumb:hover {
+  @apply text-transparent bg-clip-text bg-gradient-primary;
+  transform: scale(1.05);
+}
+
+.inactive-crumb::after {
+  content: '';
+  @apply absolute bottom-[-2px] left-0 w-0 h-[2px] transition-all duration-300 ease-in-out bg-gradient-primary;
+}
+
+.inactive-crumb:hover::after {
+  @apply w-full;
+}
+
+.breadcrumb-link {
+  @apply relative transition-all duration-300 ease-in-out;
+}
+
+/* Utility classes for gradients */
+.gradient-text-primary {
+  @apply text-transparent bg-clip-text bg-gradient-primary;
+}
+
+.gradient-text-secondary {
+  @apply text-transparent bg-clip-text bg-gradient-secondary;
+}
+
+.gradient-border-primary {
+  @apply border-2 border-transparent;
+  background: linear-gradient(white, white) padding-box,
+              var(--tw-gradient-primary) border-box;
+}
+
+.gradient-border-secondary {
+  @apply border-2 border-transparent;
+  background: linear-gradient(white, white) padding-box,
+              var(--tw-gradient-secondary) border-box;
+}
+
+/* Dark mode support for gradients */
+.dark .gradient-border-primary {
+  background: linear-gradient(#091a28, #091a28) padding-box,
+              var(--tw-gradient-primary) border-box;
+}
+
+.dark .gradient-border-secondary {
+  background: linear-gradient(#091a28, #091a28) padding-box,
+              var(--tw-gradient-secondary) border-box;
+}
 </style>

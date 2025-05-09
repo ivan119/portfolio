@@ -187,158 +187,130 @@ onUnmounted(() => {
 </script>
 
 <style>
-  @reference "tailwindcss";
-  
-  /* Custom styles for better spacing and consistent colors */
-  ::v-deep(.Typewriter__cursor) {
-    @apply text-red-900 font-bold text-3xl text-black dark:text-white hidden;
-  }
+@reference "tailwindcss";
 
-  h2,
-  h3,
-  p {
-    margin-bottom: 1.5rem; /* Space between lines */
-  }
+/* Custom styles for better spacing and consistent colors */
+::v-deep(.Typewriter__cursor) {
+  @apply text-red-900 font-bold text-3xl text-black dark:text-white hidden;
+}
 
-  h2 {
-    color: var(--text-color, #111827); /* Dark mode compatible color */
-  }
+h2,
+h3,
+p {
+  margin-bottom: 1.5rem; /* Space between lines */
+}
 
-  h3,
-  p {
-    color: var(
-      --text-secondary-color,
-      #4b5563
-    ); /* Lighter text for readability */
-  }
+h2 {
+  @apply text-gray-800 dark:text-gray-200;
+}
 
-  ::v-deep(.animate-wave) {
-    display: inline-block;
-    animation: wave 0.9s ease-in-out 2;
-  }
+h3,
+p {
+  @apply text-gray-600 dark:text-gray-400;
+}
 
-  @keyframes wave {
-    0%,
-    100% {
-      transform: rotate(0deg);
-    }
-    50% {
-      transform: rotate(20deg);
-    }
-  }
+::v-deep(.animate-wave) {
+  display: inline-block;
+  animation: wave 0.9s ease-in-out 2;
+}
 
-  /* Fade-in animation */
-  .fade-in {
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(20deg);
+  }
+}
+
+/* Fade-in animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(33px);
+  animation: fadeIn 3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide-out-left animation */
+.slide-out-left {
+  animation: slideOutLeft 0.5s forwards;
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
     opacity: 0;
-    transform: translateY(33px);
-    animation: fadeIn 3s ease-in-out forwards;
   }
+}
 
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+/* Welcome message animation */
+.fade-welcome {
+  animation: fadeWelcome 0.5s ease-in-out forwards;
+}
 
-  /* Slide-out-left animation */
-  .slide-out-left {
-    animation: slideOutLeft 0.5s forwards;
+@keyframes fadeWelcome {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
   }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
 
-  @keyframes slideOutLeft {
-    from {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(-50px);
-      opacity: 0;
-    }
-  }
+/* Fade out animation */
+.fade-out {
+  animation: fadeOut 0.5s ease-in-out forwards;
+}
 
-  .animate-slide {
-    animation: slideOut 1.2s ease-in-out forwards;
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
   }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
 
-  .animate-slide > * {
-    animation: slideOut 1.2s ease-in-out forwards;
-  }
+/* Typewriter wrapper styles */
+.typewrite-wrapper {
+  @apply min-h-[200px] relative;
+}
 
-  @keyframes slideOut {
-    0% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    70% {
-      transform: translateX(10%);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-  }
+/* Link styles */
+.hover-main-gradient {
+  @apply relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-300;
+}
 
-  .typewrite-wrapper {
-    perspective: 1000px;
-    transition: opacity 0.3s ease;
-  }
+/* Welcome message styles */
+.welcome-message {
+  @apply font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+}
 
-  /* Add some depth to the text elements */
-  .typewrite-wrapper > * {
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
-  }
+/* Component transitions */
+.intro-component-enter-active,
+.intro-component-leave-active {
+  @apply transition-all duration-500 ease-in-out;
+}
 
-  .hidden {
-    display: none;
-  }
-
-  .goodbye-message {
-    animation: fadeIn 0.5s ease-in-out forwards;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .fade-welcome {
-    animation: fadeWelcome 0.6s ease-in-out forwards;
-  }
-
-  .fade-out {
-    animation: fadeOut 0.6s ease-in-out forwards;
-  }
-
-  @keyframes fadeWelcome {
-    0% {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  @keyframes fadeOut {
-    0% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(1.1);
-    }
-  }
+.intro-component-enter-from,
+.intro-component-leave-to {
+  @apply opacity-0 transform -translate-y-4;
+}
 </style>
 
 <template>

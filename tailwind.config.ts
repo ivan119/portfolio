@@ -50,6 +50,10 @@ export default {
         "a-sharp": "#667EEA", // A#/Bb - Blend of Third Eye & Crown
         "b-flat": "#667EEA",
       },
+      backgroundImage: {
+        'gradient-primary': 'linear-gradient(to right, rgb(37, 99, 235), rgb(147, 51, 234))',
+        'gradient-secondary': 'linear-gradient(to right, rgb(16, 185, 129), rgb(6, 182, 212))',
+      },
       transitionProperty: {
         scale: "transform",
         filter: "filter",

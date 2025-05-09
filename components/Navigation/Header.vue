@@ -180,17 +180,37 @@ onUnmounted(() => {
 </template>
 
 <style>
-  @reference "tailwindcss";
-  
+@reference "tailwindcss";
+
+.nav-text {
+  color: transparent;
+}
+
 .nav-link-active {
-  @apply text-transparent;
+  color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
   background-image: var(--main-gradient);
+  position: relative;
+}
+
+.nav-link-active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-image: var(--main-gradient);
+  background-size: 200% auto;
+  box-shadow: 0 0 10px rgba(13, 148, 136, 0.8);
+  animation: gradient-flow 2s linear infinite;
 }
 
 .nav-link {
   transform-origin: center;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
 .nav-link::after {
@@ -200,31 +220,16 @@ onUnmounted(() => {
   left: 0;
   width: 0;
   height: 2px;
-  background-color: currentColor;
-  transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background-image: var(--main-gradient);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  transform: scale(1.05);
 }
 
 .nav-link:hover::after {
   width: 100%;
-}
-
-.nav-link-active::after {
-  width: 100%;
-  background-image: linear-gradient(to right, #0d9488, #2563eb);
-  animation: gradient-shift 3s ease infinite;
-  background-size: 200% auto;
-}
-
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% center;
-  }
-  50% {
-    background-position: 100% center;
-  }
-  100% {
-    background-position: 0% center;
-  }
 }
 
 /* Progress indicator */
@@ -241,7 +246,7 @@ onUnmounted(() => {
 
 .nav-progress-bar {
   height: 100%;
-  background: linear-gradient(to right, #0d9488, #2563eb);
+  background: var(--main-gradient);
   box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
   transition: width 0.05s linear;
 }
