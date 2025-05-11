@@ -81,6 +81,7 @@ definePageMeta({
                   experience: skill.experience,
                 }"
                 :colored="true"
+                :showBgDots="true"
               />
             </div>
           </div>
@@ -115,6 +116,7 @@ definePageMeta({
                   experience: skill.experience,
                 }"
                 :colored="true"
+                :showBgDots="true"
               />
             </div>
           </div>
