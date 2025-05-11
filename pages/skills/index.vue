@@ -1,29 +1,10 @@
 <script setup>
 import "devicon/devicon.min.css";
-import { useStorage } from "@vueuse/core";
-import { useRouter } from "vue-router";
-import BaseButton from "@/components/BaseButton.vue";
-import HoverCard from "@/components/HoverCard.vue";
-import ProjectCardNew from "@/components/ProjectCardNew.vue";
-import SkillCardV2 from "~/components/SkillCardV2.vue";
 import SkillCardV3 from "~/components/SkillCardV3.vue";
 import { useSkills } from "~/composables/skills/useSkills";
 
-// Persist user preferences
-const skillsVersion = useStorage("skills-version-preference", "v3");
-const detailsVersion = useStorage(
-  "skill-details-version-preference",
-  "teleport",
-);
 const router = useRouter();
-// Typewriter effect
-const isTypingDescription = ref(false);
-const isTypingExperience = ref(false);
-const typedDescription = ref("");
-const typedExperience = ref("");
 
-// Selected framework showcase
-const selectedSkill = ref(null);
 const showFrameworkDetails = ref(false);
 
 // Get skills data from composable
