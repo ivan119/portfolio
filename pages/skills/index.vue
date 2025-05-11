@@ -5,7 +5,7 @@ import { useSkills } from "~/composables/skills/useSkills";
 
 const router = useRouter();
 
-const showFrameworkDetails = ref(true);
+const showFrameworkDetails = ref(false);
 
 // Get skills data from composable
 const { preferredSkills, skills, experiencedSkills } = useSkills();
@@ -30,98 +30,91 @@ definePageMeta({
   >
     <!-- Main Skills Content  -->
     <div class="w-full relative">
-      <div class="space-y-3">
+      <div class="space-y-5">
         <UIBanner
           title="Technical Skills"
           description="Technologies and tools I've mastered throughout my journey"
         />
         <!-- Preferred Tech Stack -->
-        <section class="space-y-4">
-          <h2
-            class="text-3xl font-bold bg-gradient-to-r from-teal-500 to-blue-500 dark:from-teal-400 dark:to-blue-400 bg-clip-text text-transparent"
-          >
-            Preferred Tech Stack
-          </h2>
-          <h3 class="text-lg">
-            My go-to technologies for modern web development are:
-          </h3>
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div
-              v-for="skill in preferredSkills"
-              :key="skill.name"
-              @click.prevent="handleSkillClick(skill)"
-              class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
-            >
-              <SkillCardV3
-                :skill="{
-                  title: skill.name,
-                  description: skill.description,
-                  link: '#',
-                  categories: [skill.category],
-                  tags: [{ name: skill.name, icon: skill.icon }],
-                  proficiency: skill.proficiency,
-                  experience: skill.experience,
-                }"
-                :colored="true"
-                :showBgDots="true"
-              />
-            </div>
-          </div>
-        </section>
-
+        <UIBanner
+          title="Preferred Tech Stack"
+          description="My go-to technologies for modern web development are:"
+          :first-tag-is-h1="false"
+        >
+          <template #default>
+            <section class="space-y-4">
+              <div class="skill-card-grid">
+                <div
+                  v-for="skill in preferredSkills"
+                  :key="skill.name"
+                  @click.prevent="handleSkillClick(skill)"
+                  class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
+                >
+                  <SkillCardV3
+                    :skill="{
+                      title: skill.name,
+                      description: skill.description,
+                      link: '#',
+                      categories: [skill.category],
+                      tags: [{ name: skill.name, icon: skill.icon }],
+                      proficiency: skill.proficiency,
+                      experience: skill.experience,
+                    }"
+                    :colored="true"
+                  />
+                </div>
+              </div>
+            </section>
+          </template>
+        </UIBanner>
         <!-- Experienced With -->
-        <section class="space-y-4">
-          <h2
-            class="text-3xl font-bold bg-gradient-to-r from-teal-500 to-blue-500 dark:from-teal-400 dark:to-blue-400 bg-clip-text text-transparent"
-          >
-            Experienced With
-          </h2>
-          <h3 class="text-lg">
-            Over the years, I have worked with or have experience using a
-            variety of frameworks and tools, including:
-          </h3>
-          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div
-              v-for="skill in experiencedSkills"
-              :key="skill.name"
-              @click.prevent="handleSkillClick(skill)"
-              class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
-            >
-              <SkillCardV3
-                :skill="{
-                  title: skill.name,
-                  description: skill.description,
-                  link: '#',
-                  categories: [skill.category],
-                  tags: [{ name: skill.name, icon: skill.icon }],
-                  proficiency: skill.proficiency,
-                  experience: skill.experience,
-                }"
-                :colored="true"
-                :showBgDots="true"
-              />
-            </div>
-          </div>
-        </section>
+        <UIBanner
+          title="Experienced With"
+          description="Over the years, I have worked with or have experience using a variety of frameworks and tools, including:"
+          :first-tag-is-h1="false"
+        >
+          <template #default>
+            <section class="space-y-4">
+              <div class="skill-card-grid">
+                <div
+                  v-for="skill in experiencedSkills"
+                  :key="skill.name"
+                  @click.prevent="handleSkillClick(skill)"
+                  class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
+                >
+                  <SkillCardV3
+                    :skill="{
+                      title: skill.name,
+                      description: skill.description,
+                      link: '#',
+                      categories: [skill.category],
+                      tags: [{ name: skill.name, icon: skill.icon }],
+                      proficiency: skill.proficiency,
+                      experience: skill.experience,
+                    }"
+                    :colored="true"
+                    :showBgDots="false"
+                  />
+                </div>
+              </div>
+            </section>
+          </template>
+        </UIBanner>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.skill-card-grid {
+  @apply grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-4;
+}
 .grid > div {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .grid > div:hover {
   transform: translateY(-4px);
-}
-
-section {
-  padding: 1rem;
-  border-radius: 1.5rem;
-  position: relative;
-  overflow: hidden;
 }
 
 /* Add subtle border on hover */
