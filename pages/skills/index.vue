@@ -5,7 +5,7 @@ import { useSkills } from "~/composables/skills/useSkills";
 
 const router = useRouter();
 
-const showFrameworkDetails = ref(false);
+const showFrameworkDetails = ref(true);
 
 // Get skills data from composable
 const { preferredSkills, skills, experiencedSkills } = useSkills();
@@ -24,7 +24,6 @@ definePageMeta({
 
 <template>
   <div
-    class="transition-all"
     :class="[
       showFrameworkDetails ? '!max-w-7xl' : '!p-3 md:p-0 mx-auto w-full',
     ]"
@@ -32,27 +31,10 @@ definePageMeta({
     <!-- Main Skills Content  -->
     <div class="w-full relative">
       <div class="space-y-3">
-        <!-- Hero Section with enhanced gradients -->
-        <section class="relative">
-          <div
-            class="absolute inset-0 bg-gradient-to-br from-teal-50/80 via-blue-50/50 to-transparent dark:from-teal-900/30 dark:via-blue-900/20 dark:to-transparent rounded-3xl -z-10"
-          ></div>
-          <!-- Light dots pattern -->
-          <div class="absolute inset-0 opacity-10">
-            <div
-              class="h-full w-full bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]"
-            ></div>
-          </div>
-          <h1
-            class="heading-1 font-bold bg-gradient-to-r from-teal-500 to-blue-500 dark:from-teal-400 dark:to-blue-400 bg-clip-text text-transparent mb-4"
-          >
-            Technical Skills
-          </h1>
-          <p class="text-lg">
-            Technologies and tools I've mastered throughout my journey
-          </p>
-        </section>
-
+        <UIBanner
+          title="Technical Skills"
+          description="Technologies and tools I've mastered throughout my journey"
+        />
         <!-- Preferred Tech Stack -->
         <section class="space-y-4">
           <h2
