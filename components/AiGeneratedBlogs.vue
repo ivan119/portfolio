@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import aiBlogData from "~/data/aiBlogGenerated.json";
+import BlogPostCard from "~/components/UI/BlogPostCard.vue";
 
 // Define the type for our AI blog posts based on the JSON structure
 interface AiBlogPost {
@@ -14,7 +15,8 @@ interface AiBlogPost {
   content: any[];
 }
 
-const posts = ref<AiBlogPost[]>(aiBlogData.posts);
+// Use the AI-generated blog posts
+const posts = computed(() => aiBlogData.posts || []);
 const loading = ref(false);
 const error = ref<string | null>(null);
 
@@ -29,86 +31,40 @@ const formatDate = (dateString: string) => {
 
 // Get the first image from the content if available
 const getPostImage = (post: AiBlogPost) => {
-  const imageContent = post.content.find(item => item.type === 'image');
+  const imageContent = post.content.find((item) => item.type === "image");
   return imageContent ? imageContent.src : null;
 };
 </script>
 
 <template>
   <div class="space-y-8">
-    <div class="mb-8">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
-        Blog
-      </h2>
-    </div>
+    <UIBanner title="Blog" description="" :first-tag-is-h1="false">
+      <template #default>
+        <!-- Loading State -->
+        <div v-if="loading" class="flex justify-center py-12">
+          <div
+            class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"
+          ></div>
+        </div>
 
-    <!-- Loading State -->
-    <div v-if="loading" class="flex justify-center py-12">
-      <div
-        class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"
-      ></div>
-    </div>
+        <!-- Error State -->
+        <div v-else-if="error" class="text-center py-12">
+          <p class="text-red-500">{{ error }}</p>
+        </div>
 
-    <!-- Error State -->
-    <div v-else-if="error" class="text-center py-12">
-      <p class="text-red-500">{{ error }}</p>
-    </div>
-
-    <!-- Posts Grid -->
-    <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <article
-        v-for="post in posts"
-        :key="post.id"
-        class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
-      >
-        <NuxtLink :to="`/blog/${post.id}`" class="block">
-          <!-- Post Image -->
-          <div v-if="getPostImage(post)" class="aspect-video w-full overflow-hidden">
-            <NuxtImg 
-              :src="getPostImage(post)" 
-              :alt="post.title"
-              :style="{ 'view-transition-name': `post-image-${post.id}` }"
-              class="w-full h-full object-cover"
-              format="webp"
-              loading="lazy"
-              width="600"
-              height="338"
-            />
-          </div>
-          
-          <div class="p-6">
-            <!-- Tags -->
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span
-                v-for="tag in post.tags"
-                :key="tag"
-                class="text-xs font-medium px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300"
-              >
-                {{ tag }}
-              </span>
-            </div>
-
-            <h3
-              class="text-xl font-bold mb-2 text-gray-900 dark:text-white line-clamp-2"
-              :style="{ 'view-transition-name': `post-title-${post.id}` }"
-            >
-              {{ post.title }}
-            </h3>
-
-            <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-              {{ post.excerpt }}
-            </p>
-
-            <div
-              class="flex items-center text-sm text-gray-500 dark:text-gray-400"
-            >
-              <span>{{ formatDate(post.date) }}</span>
-              <span class="mx-2">•</span>
-              <span>{{ post.author }}</span>
-            </div>
-          </div>
-        </NuxtLink>
-      </article>
-    </div>
+        <!-- Posts Grid -->
+        <div
+          v-else
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        >
+          <BlogPostCard
+            v-for="post in posts"
+            :key="post.id"
+            :post="post"
+            class="!slide-enter-active"
+          />
+        </div>
+      </template>
+    </UIBanner>
   </div>
 </template>
