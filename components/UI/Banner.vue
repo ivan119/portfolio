@@ -31,7 +31,7 @@ const props = defineProps({
     </div>
     <h1
       v-if="firstTagIsH1"
-      class="heading-1 font-bold bg-gradient-to-r from-teal-500 to-blue-500 dark:from-teal-400 dark:to-blue-400 bg-clip-text text-transparent mb-4"
+      class="heading-1 font-bold bg-gradient-to-r from-teal-500 to-blue-500 dark:from-teal-400 dark:to-blue-400 bg-clip-text text-transparent pb-2"
     >
       {{ title }}
     </h1>
