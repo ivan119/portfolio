@@ -41,7 +41,16 @@ const props = defineProps({
     >
       {{ title }}
     </h2>
-    <p class="text-lg">{{ description }}</p>
-    <slot name="default" />
+    <p v-if="description" class="text-lg mb-4">{{ description }}</p>
+    <div class="slot-content">
+      <slot name="default"></slot>
+    </div>
   </section>
 </template>
+
+<style scoped>
+.slot-content {
+  position: relative;
+  z-index: 1;
+}
+</style>
