@@ -210,14 +210,20 @@ const getCorrectImageSrc = (item: any): string => {
     <div class="mt-16 text-center">
       <NuxtLink
         to="/blog"
-        class="inline-flex items-center gap-2 text-teal-500 hover:text-teal-600 transition-colors"
+        class="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-blue-500 dark:from-teal-400 dark:to-blue-400 bg-clip-text font-medium hover:gap-3 transition-all duration-300 ease-in-out group"
       >
         <svg
-          class="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
+          class="w-5 h-5 transform transition-transform duration-300 ease-in-out group-hover:animate-bounce-left"
           viewBox="0 0 24 24"
+          fill="none"
+          stroke="url(#arrow-gradient)"
         >
+          <defs>
+            <linearGradient id="arrow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#14b8a6" />
+              <stop offset="100%" stop-color="#3b82f6" />
+            </linearGradient>
+          </defs>
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -225,8 +231,23 @@ const getCorrectImageSrc = (item: any): string => {
             d="M10 19l-7-7m0 0l7-7m-7 7h18"
           ></path>
         </svg>
-        Back to Blog
+        <span class="text-transparent"> Back To Blog </span>
       </NuxtLink>
     </div>
   </div>
 </template>
+
+<style scoped>
+@keyframes bounce-left {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-4px);
+  }
+}
+
+.animate-bounce-left {
+  animation: bounce-left 1s ease-in-out infinite;
+}
+</style>
