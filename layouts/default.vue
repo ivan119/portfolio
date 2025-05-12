@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watchEffect } from "vue";
 import { useRoute, useColorMode } from "#imports";
+import { useLocalStorage } from "@vueuse/core";
 
 const colorMode = useColorMode();
 const isDark = computed(() => colorMode.value === "dark");
@@ -10,14 +11,14 @@ const transitionSlide = ref("slide-right");
 const transitionFade = ref("page");
 const route = useRoute();
 
-const showIntro = ref(false);
+const showIntro = useLocalStorage("showIntro", true);
 const showMainContent = computed(() => !showIntro.value);
-const showLogo = ref(true);
+const showLogo = ref(!showIntro.value);
 const changeState = (value: Boolean) => {
   showIntro.value = !value;
 };
 
-const testFunc = () => {
+const showIntroComponent = () => {
   showLogo.value = false;
   setTimeout(() => {
     showIntro.value = true;
@@ -113,11 +114,10 @@ const transition = new Object({
         @update:show-main-content="(args) => changeState(args)"
         @show-logo="(args) => (showLogo = args)"
       />
-
       <navigation-header
         :show-logo="showLogo"
         :animate-background="animateBackground"
-        @show-intro="testFunc"
+        @show-intro="showIntroComponent"
         @toggle-background="toggleBackground"
       />
 
