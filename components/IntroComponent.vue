@@ -98,7 +98,7 @@ const setupTypewriter = () => {
     .pauseFor(1)
     .typeString(
       '<h1 class="text-3xl md:text-4xl font-bold mb-4">\n' +
-        'Hi <span class="animate-wave">👋</span>, I\'m Ivan\n' +
+        'Hi <span class="animate-wave">👋</span>, I\'m <span class="text-main-gradient">Ivan</span>\n' +
         "</h1>",
     )
     .changeDelay(15)
@@ -121,7 +121,7 @@ const setupTypewriter = () => {
     .pauseFor(1)
     .typeString(
       '<h3 class="text-xl text-gray-800 dark:text-gray-300">\n' +
-        'Or contact <BaseButton href="mailto:ivankelava991@gmail.com" variant="link" class="hover-main-gradient font-bold">me</BaseButton>\n' +
+        'Or contact <a href="mailto:ivankelava991@gmail.com" class="hover-main-gradient font-bold">me</a>\n' +
         "</h3>",
     )
     .callFunction(() => {
