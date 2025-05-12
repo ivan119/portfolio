@@ -44,6 +44,7 @@
   background-clip: text;
   -webkit-background-clip: text;
   background-image: var(--main-gradient);
+  @apply transition-all duration-[369ms] ease-linear
 }
 
 /* Gradient animation */
