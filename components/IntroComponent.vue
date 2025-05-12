@@ -30,9 +30,9 @@ const updateGreeting = () => {
   const date = new Date();
   const hours = date.getHours();
   greeting.value =
-    hours >= 5 && hours < 17
+    hours >= 5 && hours < 18
       ? "☀️ Have a nice day!"
-      : hours >= 17 && hours <= 19
+      : hours >= 18 && hours <= 20
         ? "✨ Nice evening!"
         : "🌙 Have a good one!";
 };
