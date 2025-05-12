@@ -3,7 +3,7 @@ import { ref, computed, onMounted, onUnmounted, watchEffect } from "vue";
 import { useRoute, useColorMode } from "#imports";
 
 const colorMode = useColorMode();
-const isDark = computed(() => colorMode.value === 'dark');
+const isDark = computed(() => colorMode.value === "dark");
 
 const transitionMode = ref<"slide" | "fade">("fade");
 const transitionSlide = ref("slide-right");
@@ -33,16 +33,19 @@ const toggleBackground = () => {
 
   // Store preference in localStorage
   if (process.client) {
-    localStorage.setItem('animateBackground', animateBackground.value.toString());
+    localStorage.setItem(
+      "animateBackground",
+      animateBackground.value.toString(),
+    );
   }
 };
 
 // Initialize from localStorage on mount
 onMounted(() => {
   if (process.client) {
-    const savedPreference = localStorage.getItem('animateBackground');
+    const savedPreference = localStorage.getItem("animateBackground");
     if (savedPreference !== null) {
-      animateBackground.value = savedPreference === 'true';
+      animateBackground.value = savedPreference === "true";
     }
   }
 
@@ -52,11 +55,11 @@ onMounted(() => {
     };
 
     // Listen for navigation events
-    window.addEventListener('popstate', handleNavigation);
+    window.addEventListener("popstate", handleNavigation);
 
     // Clean up
     onUnmounted(() => {
-      window.removeEventListener('popstate', handleNavigation);
+      window.removeEventListener("popstate", handleNavigation);
     });
   }
 });
@@ -88,12 +91,19 @@ const transition = new Object({
   >
     <!-- Background with transition -->
     <Transition name="bg-fade" mode="out-in">
-      <div v-if="animateBackground" key="animated-bg" class="background-container">
+      <div
+        v-if="animateBackground"
+        key="animated-bg"
+        class="background-container"
+      >
         <BackgroundScene />
       </div>
-      <div v-else key="static-bg" class="background-container static-bg"
-           :style="{ backgroundColor: isDark ? '#091a28' : '#ffffff' }">
-      </div>
+      <div
+        v-else
+        key="static-bg"
+        class="background-container static-bg"
+        :style="{ backgroundColor: isDark ? '#091a28' : '#ffffff' }"
+      ></div>
     </Transition>
 
     <div class="content-container relative z-10">
@@ -122,6 +132,7 @@ const transition = new Object({
         <Footer class="container" />
       </template>
 
+      <Navigation-ScrollProgress />
       <ScrollProgress />
     </div>
   </div>
@@ -178,7 +189,9 @@ const transition = new Object({
 /* Transition for background animation toggle */
 .bg-fade-enter-active,
 .bg-fade-leave-active {
-  transition: opacity 0.7s ease, transform 0.5s ease;
+  transition:
+    opacity 0.7s ease,
+    transform 0.5s ease;
 }
 
 .bg-fade-enter-from,
@@ -198,12 +211,20 @@ const transition = new Object({
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 :deep(.group-hover\:text-main-gradient) {

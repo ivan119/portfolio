@@ -156,10 +156,14 @@
   --c-scrollbar-hover: #bbb;
 }
 
-/* Universal scrollbar styles */
-/* Hide default scrollbar */
-::-webkit-scrollbar {
-  display: none;
+/* Hide scrollbar globally */
+html {
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
+}
+
+html::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari and Opera */
 }
 
 body {

@@ -164,4 +164,14 @@ html.dark .scroll-progress-container {
 html.dark .scroll-progress-bar {
   background: #ebf4f1;
 }
+
+/* Hide scrollbar for Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+  display: none;
+}
 </style>
