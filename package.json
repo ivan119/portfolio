@@ -26,7 +26,7 @@
     "typewriter-effect": "^2.22.0"
   },
   "volta": {
-    "node": "22.15.0"
+    "node": "24.6.0"
   },
   "devDependencies": {
     "@types/node": "^22.15.17",
