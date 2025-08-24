@@ -5,6 +5,7 @@ import AiGeneratedBlogs from "~/components/AiGeneratedBlogs.vue";
 
 definePageMeta({
   pageTransition: false,
+  layoutTransition: false,
 });
 
 // Use the AI-generated blog posts

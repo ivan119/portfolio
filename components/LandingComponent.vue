@@ -43,7 +43,7 @@ const buttonHover = (v) => {
         <p class="flex flex-col gap-2">
           Maintainer of
           <BaseButton
-            href="https://celeronone.eu"
+            href="https://gauss.hr/en/celero-one"
             external
             variant="default"
             class="text-blue-500 hover:underline"

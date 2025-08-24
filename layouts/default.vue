@@ -3,6 +3,7 @@ import { ref, computed, onMounted, onUnmounted, watchEffect } from "vue";
 import { useRoute, useColorMode } from "#imports";
 import { useLocalStorage } from "@vueuse/core";
 
+// Manage color mode and transition states
 const colorMode = useColorMode();
 const isDark = computed(() => colorMode.value === "dark");
 
@@ -28,7 +29,7 @@ const showIntroComponent = () => {
 // Animation background toggle state
 const animateBackground = ref(false);
 
-// Toggle animation background
+// Toggle background animation
 const toggleBackground = () => {
   animateBackground.value = !animateBackground.value;
 
@@ -77,13 +78,13 @@ const usePageTransition = computed(() => {
 });
 
 // Update transition on route change
-const transition = new Object({
+const transition = computed(() => ({
   name:
     transitionMode.value === "slide"
       ? transitionSlideDirection.value
       : transitionFade.value,
   mode: "out-in",
-});
+}));
 </script>
 
 <template>
@@ -114,6 +115,7 @@ const transition = new Object({
         @update:show-main-content="(args) => changeState(args)"
         @show-logo="(args) => (showLogo = args)"
       />
+
       <navigation-header
         :show-logo="showLogo"
         :animate-background="animateBackground"
@@ -124,21 +126,18 @@ const transition = new Object({
       <template v-if="showMainContent">
         <div class="flex-1">
           <div class="grow">
-            <Transition name="fade" mode="out-in">
-              <slot />
-            </Transition>
+            <slot />
           </div>
         </div>
         <Footer class="container" />
       </template>
 
-      <Navigation-ScrollProgress />
       <ScrollProgress />
     </div>
   </div>
 </template>
 
-<style>
+<style scoped>
 /* Enable smoother transitions */
 :root {
   --view-transition-duration: 300ms;
@@ -147,12 +146,6 @@ const transition = new Object({
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: var(--view-transition-duration);
-}
-
-/* Apply specific transitions for skill cards */
-::view-transition-old(skill-*),
-::view-transition-new(skill-*) {
-  animation-duration: calc(var(--view-transition-duration) * 1.5);
 }
 
 /* Optional: Add fade effect to page transitions */
@@ -225,13 +218,5 @@ const transition = new Object({
   to {
     opacity: 0;
   }
-}
-
-:deep(.group-hover\:text-main-gradient) {
-  @apply transition-colors duration-300;
-}
-
-:deep(.group:hover .group-hover\:text-main-gradient) {
-  @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
 }
 </style>

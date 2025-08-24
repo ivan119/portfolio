@@ -11,6 +11,12 @@
   
   /* Default gradient settings */
   --main-gradient: linear-gradient(to right, var(--main-gradient-from), var(--main-gradient-to));
+  
+  /* Theme colors */
+  --bg-light: #f8fafc;
+  --text-light: #1e293b;
+  --bg-dark: #091a28;
+  --text-dark: #ebf4f1;
 }
 
 /* Dark mode variables */
@@ -174,10 +180,10 @@ body {
 }
 /* GLOBAL THEME TEXT AND BODY BACKGROUND! */
 .light > body {
-  @apply bg-white text-[rgba(0,0,0,0.8)];
+  @apply bg-[var(--bg-light)] text-[var(--text-light)];
 }
 .dark > body {
-  @apply bg-[#091a28] text-[#ebf4f1]
+  @apply bg-[var(--bg-dark)] text-[var(--text-dark)];
 }
 .container {
   @apply max-w-3xl mx-auto px-8 py-6 md:py-10;

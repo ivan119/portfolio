@@ -1,10 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
-    pageTransition: {
-      name: "page",
-      mode: "out-in",
-    },
     head: {
       htmlAttrs: { lang: "en" },
       title: "Ivan K",
@@ -45,7 +41,7 @@ export default defineNuxtConfig({
   },
   tres: {
     devtools: false,
-    glsl: true
+    glsl: true,
   },
   ssr: false,
   runtimeConfig: {

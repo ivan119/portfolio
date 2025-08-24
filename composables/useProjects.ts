@@ -58,7 +58,7 @@ export const useProjects = () => {
       title: "CeleroOne",
       description:
         "A comprehensive workforce management solution for mobile teams. Features include real-time planning, process management, team coordination, and integrated communication tools for both office and field workers.",
-      link: "https://celero-one.com/en/",
+      link: "https://gauss.hr/en/celero-one",
       tags: [
         { name: "Vue.js", icon: "devicon-vuejs-plain" },
         { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
@@ -110,4 +110,4 @@ export const useProjects = () => {
     projects,
     allProjects,
   };
-}; 
+};
