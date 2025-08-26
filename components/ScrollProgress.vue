@@ -383,8 +383,8 @@ html.dark .progress-tooltip::after {
   position: fixed;
   right: 1.5rem;
   bottom: 1.5rem;
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.95);
   color: #091a28;
@@ -442,8 +442,8 @@ html.dark .progress-tooltip::after {
 
 /* Arrow icon */
 .back-to-top-icon {
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.25rem;
+  height: 1.25rem;
   transition: transform 0.3s ease;
   position: relative;
   z-index: 2;
@@ -458,13 +458,13 @@ html.dark .progress-tooltip::after {
   .back-to-top-btn {
     right: 2rem;
     bottom: 2rem;
-    width: 4.5rem;
-    height: 4.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
   }
   
   .back-to-top-icon {
-    width: 1.75rem;
-    height: 1.75rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }
 
