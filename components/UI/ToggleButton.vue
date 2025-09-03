@@ -1,9 +1,9 @@
 <template>
-  <div 
+  <div
     class="toggle-button relative group"
     :class="[
       `toggle-button-${variant}`,
-      { 'is-active': isActive, 'is-changing': isChanging }
+      { 'is-active': isActive, 'is-changing': isChanging },
     ]"
     @click="handleClick"
   >
@@ -15,11 +15,7 @@
       :size="tooltipSize"
       :theme="tooltipTheme"
     >
-      <component 
-        :is="icon" 
-        :is-active="isActive"
-        :class="iconClasses"
-      />
+      <component :is="icon" :is-active="isActive" :class="iconClasses" />
     </Tooltip>
 
     <!-- Active indicator -->
@@ -36,16 +32,16 @@
 
 <script setup lang="ts">
 import Tooltip from "~/components/UI/Tooltip.vue";
-
+import { useDebounceFn } from "@vueuse/core";
 interface Props {
   icon: any;
   isActive?: boolean;
   isChanging?: boolean;
-  variant?: 'layout' | 'background' | 'theme';
+  variant?: "layout" | "background" | "theme";
   tooltip?: string;
-  tooltipPosition?: 'top' | 'bottom' | 'left' | 'right';
-  tooltipSize?: 'sm' | 'md' | 'lg';
-  tooltipTheme?: 'dark' | 'light' | 'brand';
+  tooltipPosition?: "top" | "bottom" | "left" | "right";
+  tooltipSize?: "sm" | "md" | "lg";
+  tooltipTheme?: "dark" | "light" | "brand";
   showActiveIndicator?: boolean;
   iconClasses?: string;
 }
@@ -53,19 +49,19 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   isActive: false,
   isChanging: false,
-  variant: 'layout',
-  tooltipPosition: 'top',
-  tooltipSize: 'sm',
-  tooltipTheme: 'dark',
+  variant: "layout",
+  tooltipPosition: "top",
+  tooltipSize: "sm",
+  tooltipTheme: "dark",
   showActiveIndicator: true,
-  iconClasses: 'w-6 h-6 icon-transition'
+  iconClasses: "w-6 h-6 icon-transition",
 });
 
-const emit = defineEmits(['click']);
+const emit = defineEmits(["click"]);
 
-const handleClick = () => {
-  emit('click');
-};
+const handleClick = useDebounceFn(() => {
+  emit("click");
+}, 99);
 </script>
 
 <style scoped>
@@ -131,7 +127,8 @@ const handleClick = () => {
 
 /* Animation keyframes */
 @keyframes toggle-change {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -161,19 +158,28 @@ const handleClick = () => {
 }
 
 @keyframes spin-cw {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spin-ccw {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
 }
 
 /* Keep default hover scaling; no forced transform resets */
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
