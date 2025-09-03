@@ -21,8 +21,8 @@
     "@tresjs/nuxt": "^4.0.0",
     "devicon": "^2.16.0",
     "nanoid": "^5.1.5",
-    "nuxt": "^4.0.3",
-    "three": "^0.179.1",
+    "nuxt": "^4.1.0",
+    "three": "^0.180.0",
     "typewriter-effect": "^2.22.0"
   },
   "volta": {
