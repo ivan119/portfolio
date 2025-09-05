@@ -7,6 +7,8 @@ import AboutIcon from "~/components/devTools/Icons/About.vue";
 import BlogIcon from "~/components/devTools/Icons/Blog.vue";
 import SkillsIcon from "~/components/devTools/Icons/Skills.vue";
 import ProjectsIcon from "~/components/devTools/Icons/Projects.vue";
+import DottedIcon from "~/components/devTools/Icons/Dotted.vue";
+import ToggleButton from "~/components/UI/ToggleButton.vue";
 const colorMode = useColorMode();
 const showLinks = ref(false);
 
@@ -15,13 +17,70 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  activeBg: {
+    type: String,
+    default: "default",
+    validator: (value) => ["default", "dotted", "animated"].includes(value),
+  },
   animateBackground: {
+    type: Boolean,
+    default: false,
+  },
+  dottedBgProp: {
     type: Boolean,
     default: false,
   },
 });
 
-const emit = defineEmits(["showIntro", "toggleBackground"]);
+const emit = defineEmits(["show-intro", "toggle-background", "toggle-layout"]);
+
+// Computed property for active icon state
+const activeIcon = computed(() => {
+  return props.activeBg;
+});
+
+// Layout toggle functionality
+const currentLayout = ref(props.dottedBgProp);
+const isLayoutChanging = ref(false);
+
+// Keep local layout state in sync with prop from parent
+watch(
+  () => props.dottedBgProp,
+  (newValue) => {
+    currentLayout.value = newValue;
+  },
+  { immediate: true },
+);
+
+const toggleLayout = () => {
+  if (isLayoutChanging.value) return;
+
+  isLayoutChanging.value = true;
+
+  // Toggle between default and dotted layouts based on current activeBg
+  const newLayout = props.activeBg === "dotted" ? "default" : "dotted";
+  
+  // Update local state
+  currentLayout.value = newLayout;
+
+  // Emit event to parent component to handle layout change
+  emit("toggle-layout", newLayout);
+
+  // Add visual feedback
+  setTimeout(() => {
+    isLayoutChanging.value = false;
+  }, 500);
+};
+
+const toggleBackground = () => {
+  emit("toggle-background");
+};
+
+const dottedSpinClass = computed(() => {
+  // Spin only during change: cw when enabling dotted, ccw when disabling
+  if (!isLayoutChanging.value) return "";
+  return currentLayout.value === "dotted" ? "icon-spin-cw" : "icon-spin-ccw";
+});
 
 watch(
   () => props.showLogo,
@@ -43,16 +102,21 @@ const testFunc = () => {
   const route = useRoute();
   if (route.path === "/") {
     // TODO: MAKE ON HOVER NO SIGNATURE ANIMATION OR PAUSE + MAKE V-IF ANIMATION WHEN SHOWING/HIDING
-    emit("showIntro");
+    emit("show-intro");
   }
 };
 
-const toggleTheme = () => {
-  colorMode.preference = colorMode.preference === "dark" ? "light" : "dark";
-};
+const isThemeChanging = ref(false);
 
-const toggleBackground = () => {
-  emit("toggleBackground");
+const toggleTheme = () => {
+  if (!isThemeChanging.value) {
+    isThemeChanging.value = true;
+    setTimeout(() => {
+      isThemeChanging.value = false;
+    }, 500);
+  }
+
+  colorMode.preference = colorMode.preference === "dark" ? "light" : "dark";
 };
 
 const links = [
@@ -87,7 +151,7 @@ function handleNavigationClick(link) {
     isNavigating.value = true;
     activeLink.value = link.to;
     progress.value = 0;
-    
+
     // Animate progress
     clearInterval(progressInterval);
     progressInterval = setInterval(() => {
@@ -96,7 +160,7 @@ function handleNavigationClick(link) {
         clearInterval(progressInterval);
       }
     }, 16);
-    
+
     // Reset after navigation completes
     setTimeout(() => {
       isNavigating.value = false;
@@ -122,7 +186,9 @@ onUnmounted(() => {
           to="/"
           class="logo mt-6 relative hover:scale-105 transition-transform duration-300"
         >
-          <dev-tools-signature2 class="w-[120px] h-20 text-gray-800 dark:text-white hover:bg-gradient-to-r hover:from-teal-500 hover:to-blue-600 hover:bg-clip-text hover:text-transparent transition-all duration-300" />
+          <dev-tools-signature2
+            class="w-[120px] h-20 text-gray-800 dark:text-white hover:bg-gradient-to-r hover:from-teal-500 hover:to-blue-600 hover:bg-clip-text hover:text-transparent transition-all duration-300"
+          />
         </NuxtLink>
       </transition>
     </div>
@@ -137,20 +203,20 @@ onUnmounted(() => {
             class="nav-link font-bold relative flex items-center mr-4 text-gray-600 dark:text-gray-300 transition-all duration-300 hover:scale-105"
             :class="{
               'is-navigating': isNavigating && activeLink === link.to,
-              'hover-main-gradient': !isNavigating || activeLink !== link.to
+              'hover-main-gradient': !isNavigating || activeLink !== link.to,
             }"
             aria-label="Navigation link"
           >
             <component :is="link.icon" class="md:hidden" />
             <span class="hidden md:block">{{ link.text }}</span>
-            
+
             <!-- Progress indicator -->
-            <div 
-              v-if="isNavigating && activeLink === link.to" 
+            <div
+              v-if="isNavigating && activeLink === link.to"
               class="nav-progress-container"
             >
-              <div 
-                class="nav-progress-bar" 
+              <div
+                class="nav-progress-bar"
                 :style="{ width: `${progress}%` }"
               ></div>
             </div>
@@ -159,21 +225,44 @@ onUnmounted(() => {
       </transition-group>
 
       <div class="toggle-container flex items-center gap-x-4">
-        <div class="background-toggle" @click="toggleBackground">
-          <BackgroundIcon 
-            :is-active="props.animateBackground" 
-            class="icon-transition"
-          />
-        </div>
-        
-        <!-- Theme Toggle -->
-        <client-only>
-          <component
-            :is="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
-            class="cursor-pointer hover:animate hover:scale-110 transition-transform duration-300 icon-transition"
-            @click="toggleTheme"
-          />
-        </client-only>
+        <!-- Layout Toggle Button -->
+        <ToggleButton
+          :icon="DottedIcon"
+          :is-active="activeIcon === 'dotted'"
+          :is-changing="isLayoutChanging"
+          variant="layout"
+          :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
+          :tooltip="
+            activeIcon === 'dotted'
+              ? 'Switch to Default'
+              : 'Switch to Dotted'
+          "
+          @click="toggleLayout"
+        />
+
+        <!-- Background Toggle Button -->
+        <ToggleButton
+          :icon="BackgroundIcon"
+          :is-active="activeIcon === 'animated'"
+          variant="background"
+          tooltip="Toggle Background Animation"
+          @click="toggleBackground"
+        />
+
+        <!-- Theme Toggle Button -->
+        <ToggleButton
+          :icon="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
+          :is-active="colorMode.preference === 'dark'"
+          :is-changing="isThemeChanging"
+          variant="theme"
+          :show-active-indicator="false"
+          :tooltip="
+            colorMode.preference === 'dark'
+              ? 'Switch to Light'
+              : 'Switch to Dark'
+          "
+          @click="toggleTheme"
+        />
       </div>
     </div>
   </header>
@@ -258,7 +347,7 @@ onUnmounted(() => {
 }
 
 .is-navigating::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: -150%;
@@ -336,7 +425,7 @@ onUnmounted(() => {
 }
 
 .background-toggle::before {
-  content: '';
+  content: "";
   position: absolute;
   border-radius: 50%;
   width: 30px;
@@ -344,7 +433,9 @@ onUnmounted(() => {
   background-color: currentColor;
   opacity: 0;
   transform: scale(0);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .background-toggle:active::before {

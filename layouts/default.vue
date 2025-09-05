@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watchEffect } from "vue";
+import { ref, computed, onUnmounted, onBeforeMount } from "vue";
 import { useRoute, useColorMode } from "#imports";
 import { useLocalStorage } from "@vueuse/core";
 
@@ -15,10 +15,15 @@ const route = useRoute();
 const showIntro = useLocalStorage("showIntro", true);
 const showMainContent = computed(() => !showIntro.value);
 const showLogo = ref(!showIntro.value);
-const changeState = (value: Boolean) => {
+// changeState will update and show main content
+const changeState = (value: boolean) => {
   showIntro.value = !value;
 };
-
+// show logo will be shown as well when introComponent is destroyed
+const updateShowLogo = (value: boolean) => {
+  showLogo.value = value;
+};
+// showIntroComponent -> will show intro again if Logo is clicked on homepage
 const showIntroComponent = () => {
   showLogo.value = false;
   setTimeout(() => {
@@ -26,26 +31,63 @@ const showIntroComponent = () => {
   }, 693);
 };
 
-// Animation background toggle state
+// Background state management
+const activeBg = ref<"default" | "dotted" | "animated">("default");
 const animateBackground = ref(false);
+const toggleDottedBg = ref(false);
 
-// Toggle background animation
-const toggleBackground = () => {
-  animateBackground.value = !animateBackground.value;
-
-  // Store preference in localStorage
-  if (process.client) {
-    localStorage.setItem(
-      "animateBackground",
-      animateBackground.value.toString(),
-    );
-  }
+// Helper function to validate dotted background state
+const isValidDottedBg = (value: string | null): value is "true" | "false" => {
+  return value === "true" || value === "false";
 };
 
-// Initialize from localStorage on mount
-onMounted(() => {
+// Computed property for active background state
+const activeBackgroundState = computed(() => {
+  if (animateBackground.value) return "animated";
+  if (toggleDottedBg.value) return "dotted";
+  return "default";
+});
+
+// Watch activeBg changes and update localStorage and related states
+watch(activeBg, (newValue) => {
   if (process.client) {
+    localStorage.setItem("activeBackground", newValue);
+    // Update related states based on activeBg
+    if (newValue === "animated") {
+      animateBackground.value = true;
+      toggleDottedBg.value = false;
+      localStorage.setItem("animateBackground", "true");
+      localStorage.setItem("dottedBackground", "false");
+    } else if (newValue === "dotted") {
+      toggleDottedBg.value = true;
+      animateBackground.value = false;
+      localStorage.setItem("dottedBackground", "true");
+      localStorage.setItem("animateBackground", "false");
+    } else {
+      animateBackground.value = false;
+      toggleDottedBg.value = false;
+      localStorage.setItem("animateBackground", "false");
+      localStorage.setItem("dottedBackground", "false");
+    }
+  }
+}, { immediate: true });
+
+// Initialize from localStorage on mount
+onBeforeMount(() => {
+  if (process.client) {
+    const savedActiveBg = localStorage.getItem("activeBackground");
     const savedPreference = localStorage.getItem("animateBackground");
+    const isDottedBg = localStorage.getItem("dottedBackground");
+    
+    // Set activeBg from localStorage if valid
+    if (savedActiveBg && ["default", "dotted", "animated"].includes(savedActiveBg)) {
+      activeBg.value = savedActiveBg as "default" | "dotted" | "animated";
+    }
+    
+    // Legacy support for old localStorage keys
+    if (isValidDottedBg(isDottedBg)) {
+      toggleDottedBg.value = isDottedBg === "true";
+    }
     if (savedPreference !== null) {
       animateBackground.value = savedPreference === "true";
     }
@@ -65,6 +107,29 @@ onMounted(() => {
     });
   }
 });
+
+// Computed property for better state management
+const isAnimatedActive = computed(() => activeBg.value === "animated");
+const isDottedActive = computed(() => activeBg.value === "dotted");
+const isDefaultActive = computed(() => activeBg.value === "default");
+
+// Toggle functions for background states with better logic
+const toggleAnimateBackground = () => {
+  if (activeBg.value === "animated") {
+    activeBg.value = "default";
+  } else {
+    activeBg.value = "animated";
+  }
+};
+
+const toggleDottedBackground = (newLayout?: string) => {
+  // Handle both direct calls and event-based calls
+  if (newLayout) {
+    activeBg.value = newLayout === "dotted" ? "dotted" : "default";
+  } else {
+    activeBg.value = activeBg.value === "dotted" ? "default" : "dotted";
+  }
+};
 
 // Watch route changes for slide direction
 const transitionSlideDirection = computed(() => {
@@ -92,35 +157,35 @@ const transition = computed(() => ({
     class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto"
   >
     <!-- Background with transition -->
-    <Transition name="bg-fade" mode="out-in">
-      <div
-        v-if="animateBackground"
+    <Transition name="bg-fade">
+      <BackgroundScene
+        v-if="activeBg === 'animated'"
         key="animated-bg"
         class="background-container"
-      >
-        <BackgroundScene />
-      </div>
-      <div
-        v-else
-        key="static-bg"
-        class="background-container static-bg"
-        :style="{ backgroundColor: isDark ? '#091a28' : '#ffffff' }"
-      ></div>
+      />
+      <layout-components-dotted-layout
+        v-else-if="activeBg === 'dotted'"
+        key="dotted-bg"
+        class="background-container dotted-bg"
+      />
+      <div v-else key="default-bg" class="background-container static-bg"></div>
     </Transition>
 
     <div class="content-container relative z-10">
       <IntroComponent
         v-if="!showMainContent"
         class="grow no-animation"
-        @update:show-main-content="(args) => changeState(args)"
-        @show-logo="(args) => (showLogo = args)"
+        @update:show-main-content="changeState"
+        @show-logo="updateShowLogo"
       />
-
       <navigation-header
         :show-logo="showLogo"
-        :animate-background="animateBackground"
+        :active-bg="activeBg"
+        :animate-background="isAnimatedActive"
+        :dotted-bg-prop="isDottedActive"
         @show-intro="showIntroComponent"
-        @toggle-background="toggleBackground"
+        @toggle-background="toggleAnimateBackground"
+        @toggle-layout="toggleDottedBackground"
       />
 
       <template v-if="showMainContent">
@@ -155,7 +220,9 @@ const transition = computed(() => ({
 ::view-transition-new(root) {
   animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
 }
-
+.mainClass {
+  background: red !important;
+}
 /* Content container for proper z-index ordering */
 .content-container {
   display: flex;
