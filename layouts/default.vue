@@ -2,7 +2,6 @@
 import { ref, computed, onUnmounted, onBeforeMount } from "vue";
 import { useRoute, useColorMode } from "#imports";
 import { useLocalStorage } from "@vueuse/core";
-
 // Manage color mode and transition states
 const colorMode = useColorMode();
 const isDark = computed(() => colorMode.value === "dark");
@@ -32,32 +31,20 @@ const showIntroComponent = () => {
 };
 
 // Background state management
-const activeBg = ref<"default" | "dotted" | "animated">("default");
-const animateBackground = ref(false);
-const toggleDottedBg = ref(false);
+const activeTheme = ref<"default" | "dotted" | "animated">("default");
 
-// Helper function to validate dotted background state
-const isValidDottedBg = (value: string | null): value is "true" | "false" => {
-  return value === "true" || value === "false";
-};
-
-// Computed property for active background state
-const activeBackgroundState = computed(() => {
-  if (animateBackground.value) return "animated";
-  if (toggleDottedBg.value) return "dotted";
-  return "default";
-});
-
-// Initialize from localStorage on mount
-onBeforeMount(() => {
-  if (process.client) {
+// TODO: IMPROVE OPTIMIZE AND CLEANUP / TYPE IT! TS!
+const setupTheme = () => {
+  if (import.meta.client) {
     const themeSettings = localStorage.getItem("themeSettings");
+    console.log(themeSettings);
     if (themeSettings !== null) {
-      activeBg.value = themeSettings;
-      console.log(activeBg.value, "tu");
+      activeTheme.value = themeSettings;
     }
   }
+};
 
+const setupViewTransition = () => {
   if (document.startViewTransition) {
     const handleNavigation = () => {
       document.startViewTransition();
@@ -71,29 +58,17 @@ onBeforeMount(() => {
       window.removeEventListener("popstate", handleNavigation);
     });
   }
+};
+onBeforeMount(() => {
+  setupTheme();
+  setupViewTransition();
 });
-
-// Computed property for better state management
-const isAnimatedActive = computed(() => activeBg.value === "animated");
-const isDottedActive = computed(() => activeBg.value === "dotted");
-const isDefaultActive = computed(() => activeBg.value === "default");
 
 // Toggle functions for background states with better logic
 const toggleAnimateBackground = (v) => {
-  console.log(v);
-  activeBg.value = v;
-  localStorage.setItem("themeSettings", activeBg.value);
-  console.log(activeBg);
-};
-
-const toggleDottedBackground = (newLayout?: string) => {
-  // Handle both direct calls and event-based calls
-  if (newLayout) {
-    activeBg.value = newLayout === "dotted" ? "dotted" : "default";
-  } else {
-    activeBg.value = activeBg.value === "dotted" ? "default" : "dotted";
-  }
-  localStorage.setItem("themeSettings", activeBg.value);
+  activeTheme.value = v;
+  localStorage.setItem("themeSettings", activeTheme.value);
+  console.log(activeTheme, "activeTheme on toggleAnimateBackground");
 };
 
 // Watch route changes for slide direction
@@ -124,12 +99,12 @@ const transition = computed(() => ({
     <!-- Background with transition -->
     <Transition name="bg-fade">
       <BackgroundScene
-        v-if="activeBg === 'animated'"
+        v-if="activeTheme === 'animated'"
         key="animated-bg"
         class="background-container"
       />
       <layout-components-dotted-layout
-        v-else-if="activeBg === 'dotted'"
+        v-else-if="activeTheme === 'dotted'"
         key="dotted-bg"
         class="background-container dotted-bg"
       />
@@ -145,9 +120,7 @@ const transition = computed(() => ({
       />
       <navigation-header
         :show-logo="showLogo"
-        :active-bg="activeBg"
-        :animate-background="isAnimatedActive"
-        :dotted-bg-prop="isDottedActive"
+        :active-theme="activeTheme"
         @show-intro="showIntroComponent"
         @toggle-background="(v) => toggleAnimateBackground(v)"
       />
@@ -194,7 +167,6 @@ const transition = computed(() => ({
   min-height: 100vh;
   position: relative;
 }
-
 /* Background transition effects */
 .background-container {
   position: fixed;

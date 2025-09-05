@@ -8,7 +8,6 @@ import BlogIcon from "~/components/devTools/Icons/Blog.vue";
 import SkillsIcon from "~/components/devTools/Icons/Skills.vue";
 import ProjectsIcon from "~/components/devTools/Icons/Projects.vue";
 import DottedIcon from "~/components/devTools/Icons/Dotted.vue";
-import ToggleButton from "~/components/UI/ToggleButton.vue";
 const colorMode = useColorMode();
 const showLinks = ref(false);
 
@@ -17,71 +16,27 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-  activeBg: {
+  activeTheme: {
     type: String,
     default: "default",
     validator: (value) => ["default", "dotted", "animated"].includes(value),
-  },
-  animateBackground: {
-    type: Boolean,
-    default: false,
-  },
-  dottedBgProp: {
-    type: Boolean,
-    default: false,
   },
 });
 
 const emit = defineEmits(["show-intro", "toggle-background", "toggle-layout"]);
 
-// Computed property for active icon state
-const activeIcon = computed(() => {
-  return props.activeBg;
+// Computed property for active icon/theme state
+const activeTheme = computed(() => {
+  return props.activeTheme;
 });
 
-// Layout toggle functionality
-const currentLayout = ref(props.dottedBgProp);
-const isLayoutChanging = ref(false);
-
-// Keep local layout state in sync with prop from parent
-watch(
-  () => props.dottedBgProp,
-  (newValue) => {
-    currentLayout.value = newValue;
-  },
-  { immediate: true },
-);
-
-const toggleLayout = () => {
-  if (isLayoutChanging.value) return;
-
-  isLayoutChanging.value = true;
-
-  // Toggle between default and dotted layouts based on current activeBg
-  const newLayout = props.activeBg === "dotted" ? "default" : "dotted";
-
-  // Update local state
-  currentLayout.value = newLayout;
-
-  // Emit event to parent component to handle layout change
-  emit("toggle-layout", newLayout);
-
-  // Add visual feedback
-  setTimeout(() => {
-    isLayoutChanging.value = false;
-  }, 500);
-};
-
+// TODO: Improve Save in local storage
 const toggleBackground = (v) => {
-  console.log(23);
-  toggleLayout();
   emit("toggle-background", v);
 };
 
 const dottedSpinClass = computed(() => {
-  // Spin only during change: cw when enabling dotted, ccw when disabling
-  if (!isLayoutChanging.value) return "";
-  return currentLayout.value === "dotted" ? "icon-spin-cw" : "icon-spin-ccw";
+  return activeTheme.value === "dotted" ? "icon-spin-cw" : "icon-spin-ccw";
 });
 
 watch(
@@ -226,39 +181,40 @@ onUnmounted(() => {
         </li>
       </transition-group>
 
-      <div class="toggle-container flex items-center gap-x-4">
-        <!-- Layout Toggle Button -->
-        <ToggleButton
+      <div class="toggle-container flex items-center gap-x-4 animate-icons">
+        <!-- Dotted Theme Button -->
+        <UIThemeButton
           :icon="DottedIcon"
-          :is-active="activeIcon === 'dotted'"
-          :is-changing="isLayoutChanging"
-          variant="layout"
+          :is-active="activeTheme === 'dotted'"
+          variant="dotted"
           :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
           :tooltip="
-            activeIcon === 'dotted' ? 'Switch to Default' : 'Switch to Dotted'
+            activeTheme === 'dotted' ? 'Switch to Default' : 'Switch to Dotted'
           "
           @click="
-            toggleBackground(activeIcon === 'dotted' ? 'default' : 'dotted')
+            toggleBackground(activeTheme === 'dotted' ? 'default' : 'dotted')
           "
         />
 
-        <!-- Background Toggle Button -->
-        <ToggleButton
+        <!-- Animated Theme Button -->
+        <UIThemeButton
           :icon="BackgroundIcon"
-          :is-active="activeIcon === 'animated'"
-          variant="background"
+          :is-active="activeTheme === 'animated'"
+          variant="animated"
           tooltip="Toggle Background Animation"
           @click="
-            toggleBackground(activeIcon === 'animated' ? 'default' : 'animated')
+            toggleBackground(
+              activeTheme === 'animated' ? 'default' : 'animated',
+            )
           "
         />
 
-        <!-- Theme Toggle Button -->
-        <ToggleButton
+        <!-- SunAndMoon Button -->
+        <UIThemeButton
           :icon="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
           :is-active="colorMode.preference === 'dark'"
           :is-changing="isThemeChanging"
-          variant="theme"
+          :variant="colorMode.preference === 'dark' ? 'moon' : 'sun'"
           :show-active-indicator="false"
           :tooltip="
             colorMode.preference === 'dark'
