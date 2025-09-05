@@ -48,48 +48,13 @@ const activeBackgroundState = computed(() => {
   return "default";
 });
 
-// Watch activeBg changes and update localStorage and related states
-watch(activeBg, (newValue) => {
-  if (process.client) {
-    localStorage.setItem("activeBackground", newValue);
-    // Update related states based on activeBg
-    if (newValue === "animated") {
-      animateBackground.value = true;
-      toggleDottedBg.value = false;
-      localStorage.setItem("animateBackground", "true");
-      localStorage.setItem("dottedBackground", "false");
-    } else if (newValue === "dotted") {
-      toggleDottedBg.value = true;
-      animateBackground.value = false;
-      localStorage.setItem("dottedBackground", "true");
-      localStorage.setItem("animateBackground", "false");
-    } else {
-      animateBackground.value = false;
-      toggleDottedBg.value = false;
-      localStorage.setItem("animateBackground", "false");
-      localStorage.setItem("dottedBackground", "false");
-    }
-  }
-}, { immediate: true });
-
 // Initialize from localStorage on mount
 onBeforeMount(() => {
   if (process.client) {
-    const savedActiveBg = localStorage.getItem("activeBackground");
-    const savedPreference = localStorage.getItem("animateBackground");
-    const isDottedBg = localStorage.getItem("dottedBackground");
-    
-    // Set activeBg from localStorage if valid
-    if (savedActiveBg && ["default", "dotted", "animated"].includes(savedActiveBg)) {
-      activeBg.value = savedActiveBg as "default" | "dotted" | "animated";
-    }
-    
-    // Legacy support for old localStorage keys
-    if (isValidDottedBg(isDottedBg)) {
-      toggleDottedBg.value = isDottedBg === "true";
-    }
-    if (savedPreference !== null) {
-      animateBackground.value = savedPreference === "true";
+    const themeSettings = localStorage.getItem("themeSettings");
+    if (themeSettings !== null) {
+      activeBg.value = themeSettings;
+      console.log(activeBg.value, "tu");
     }
   }
 
@@ -114,12 +79,11 @@ const isDottedActive = computed(() => activeBg.value === "dotted");
 const isDefaultActive = computed(() => activeBg.value === "default");
 
 // Toggle functions for background states with better logic
-const toggleAnimateBackground = () => {
-  if (activeBg.value === "animated") {
-    activeBg.value = "default";
-  } else {
-    activeBg.value = "animated";
-  }
+const toggleAnimateBackground = (v) => {
+  console.log(v);
+  activeBg.value = v;
+  localStorage.setItem("themeSettings", activeBg.value);
+  console.log(activeBg);
 };
 
 const toggleDottedBackground = (newLayout?: string) => {
@@ -129,6 +93,7 @@ const toggleDottedBackground = (newLayout?: string) => {
   } else {
     activeBg.value = activeBg.value === "dotted" ? "default" : "dotted";
   }
+  localStorage.setItem("themeSettings", activeBg.value);
 };
 
 // Watch route changes for slide direction
@@ -184,8 +149,7 @@ const transition = computed(() => ({
         :animate-background="isAnimatedActive"
         :dotted-bg-prop="isDottedActive"
         @show-intro="showIntroComponent"
-        @toggle-background="toggleAnimateBackground"
-        @toggle-layout="toggleDottedBackground"
+        @toggle-background="(v) => toggleAnimateBackground(v)"
       />
 
       <template v-if="showMainContent">

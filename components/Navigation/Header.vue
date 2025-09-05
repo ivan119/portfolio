@@ -59,7 +59,7 @@ const toggleLayout = () => {
 
   // Toggle between default and dotted layouts based on current activeBg
   const newLayout = props.activeBg === "dotted" ? "default" : "dotted";
-  
+
   // Update local state
   currentLayout.value = newLayout;
 
@@ -72,8 +72,10 @@ const toggleLayout = () => {
   }, 500);
 };
 
-const toggleBackground = () => {
-  emit("toggle-background");
+const toggleBackground = (v) => {
+  console.log(23);
+  toggleLayout();
+  emit("toggle-background", v);
 };
 
 const dottedSpinClass = computed(() => {
@@ -233,11 +235,11 @@ onUnmounted(() => {
           variant="layout"
           :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
           :tooltip="
-            activeIcon === 'dotted'
-              ? 'Switch to Default'
-              : 'Switch to Dotted'
+            activeIcon === 'dotted' ? 'Switch to Default' : 'Switch to Dotted'
           "
-          @click="toggleLayout"
+          @click="
+            toggleBackground(activeIcon === 'dotted' ? 'default' : 'dotted')
+          "
         />
 
         <!-- Background Toggle Button -->
@@ -246,7 +248,9 @@ onUnmounted(() => {
           :is-active="activeIcon === 'animated'"
           variant="background"
           tooltip="Toggle Background Animation"
-          @click="toggleBackground"
+          @click="
+            toggleBackground(activeIcon === 'animated' ? 'default' : 'animated')
+          "
         />
 
         <!-- Theme Toggle Button -->
