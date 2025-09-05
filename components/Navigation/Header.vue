@@ -412,4 +412,47 @@ onUnmounted(() => {
 .icon-transition:active {
   transform: scale(0.9);
 }
+
+/* Toggle container animation */
+.toggle-container {
+  position: relative;
+}
+
+.toggle-container > * {
+  transition:
+    transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    filter 0.25s ease;
+}
+
+/* Staggered mount-in for icons */
+.toggle-container.animate-icons > * {
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  animation: icons-pop-in 0.42s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.toggle-container.animate-icons > *:nth-child(1) {
+  animation-delay: 0.06s;
+}
+
+.toggle-container.animate-icons > *:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.toggle-container.animate-icons > *:nth-child(3) {
+  animation-delay: 0.18s;
+}
+
+@keyframes icons-pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Hover effects removed per request; only mount animation remains */
 </style>
