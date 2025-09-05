@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import Tooltip from "~/components/UI/Tooltip.vue";
-import { useDebounceFn } from "@vueuse/core";
+import { useThrottleFn } from "@vueuse/core";
 interface Props {
   icon: any;
   isActive?: boolean;
@@ -59,9 +59,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(["click"]);
 
-const handleClick = useDebounceFn(() => {
+const handleClick = useThrottleFn(() => {
   emit("click");
-}, 99);
+}, 369);
 </script>
 
 <style scoped>
