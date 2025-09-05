@@ -1,10 +1,7 @@
 <template>
   <div
     class="toggle-button relative group"
-    :class="[
-      `toggle-button-${variant}`,
-      { 'is-active': isActive, 'is-changing': isChanging },
-    ]"
+    :class="[`toggle-button-${variant}`, { 'is-active': isActive }]"
     @click="handleClick"
   >
     <!-- Icon with optional tooltip -->
@@ -36,8 +33,7 @@ import { useThrottleFn } from "@vueuse/core";
 interface Props {
   icon: any;
   isActive?: boolean;
-  isChanging?: boolean;
-  variant?: "layout" | "background" | "theme";
+  variant?: "animated" | "dotted" | "sun" | "moon";
   tooltip?: string;
   tooltipPosition?: "top" | "bottom" | "left" | "right";
   tooltipSize?: "sm" | "md" | "lg";
@@ -48,8 +44,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   isActive: false,
-  isChanging: false,
-  variant: "layout",
+  variant: "dotted",
   tooltipPosition: "top",
   tooltipSize: "sm",
   tooltipTheme: "dark",
@@ -107,13 +102,13 @@ const handleClick = useThrottleFn(() => {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-.active-indicator-layout {
+.active-indicator-dotted {
   top: -4px;
   right: -4px;
   background-color: #10b981; /* emerald-500 */
 }
 
-.active-indicator-background {
+.active-indicator-animated {
   top: -4px;
   right: -4px;
   background-color: #3b82f6; /* blue-500 */
