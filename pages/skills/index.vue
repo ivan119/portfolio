@@ -12,8 +12,26 @@ const { preferredSkills, skills, experiencedSkills } = useSkills();
 
 // Navigate to skill detail page
 const navigateToSkill = (skill) => {
-  const slug = skill.id || skill.name.toLowerCase().replace(/\s+/g, "-");
-  router.push(`/skills/${slug}`);
+  const slug = (skill.id || skill.name.toLowerCase().replace(/\s+/g, "-")).toLowerCase();
+  const hasDetailPage = [
+    "nuxtjs",
+    "javascript",
+    "vuejs",
+    "tailwindcss",
+  ].includes(slug);
+
+  if (hasDetailPage) {
+    router.push(`/skills/${slug}`);
+  } else if (skill.url) {
+    window.open(skill.url, "_blank");
+  }
+};
+
+// Always open official site for experienced skills
+const openOfficial = (skill) => {
+  if (skill?.url) {
+    window.open(skill.url, "_blank");
+  }
 };
 
 // Disable page transitions
@@ -43,25 +61,22 @@ definePageMeta({
       <template #default>
         <section class="space-y-4">
           <div class="skill-card-grid">
-            <div
+            <SkillCardV3
               v-for="skill in preferredSkills"
               :key="skill.name"
-              @click.prevent="handleSkillClick(skill)"
+              @click.prevent="navigateToSkill(skill)"
               class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
-            >
-              <SkillCardV3
-                :skill="{
-                  title: skill.name,
-                  description: skill.description,
-                  link: '#',
-                  categories: [skill.category],
-                  tags: [{ name: skill.name, icon: skill.icon }],
-                  proficiency: skill.proficiency,
-                  experience: skill.experience,
-                }"
-                :colored="true"
-              />
-            </div>
+              :skill="{
+                title: skill.name,
+                description: skill.description,
+                link: '#',
+                categories: [skill.category],
+                tags: [{ name: skill.name, icon: skill.icon }],
+                proficiency: skill.proficiency,
+                experience: skill.experience,
+              }"
+              :colored="true"
+            />
           </div>
         </section>
       </template>
@@ -75,26 +90,23 @@ definePageMeta({
       <template #default>
         <section class="space-y-4">
           <div class="skill-card-grid">
-            <div
+            <SkillCardV3
               v-for="skill in experiencedSkills"
               :key="skill.name"
-              @click.prevent="handleSkillClick(skill)"
+              @click.prevent="openOfficial(skill)"
               class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
-            >
-              <SkillCardV3
-                :skill="{
-                  title: skill.name,
-                  description: skill.description,
-                  link: '#',
-                  categories: [skill.category],
-                  tags: [{ name: skill.name, icon: skill.icon }],
-                  proficiency: skill.proficiency,
-                  experience: skill.experience,
-                }"
-                :colored="true"
-                :showBgDots="false"
-              />
-            </div>
+              :skill="{
+                title: skill.name,
+                description: skill.description,
+                link: '#',
+                categories: [skill.category],
+                tags: [{ name: skill.name, icon: skill.icon }],
+                proficiency: skill.proficiency,
+                experience: skill.experience,
+              }"
+              :colored="true"
+              :showBgDots="false"
+            />
           </div>
         </section>
       </template>
