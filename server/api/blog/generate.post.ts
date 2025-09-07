@@ -3,6 +3,8 @@ import type { BlogPost, GeneratePostPayload, SavePostResponse } from '~/types/bl
 import { nanoid } from 'nanoid'
 import { loadPosts, savePost } from '~/server/utils/fileSystem'
 import { AIService } from '~/server/services/ai'
+import path from 'node:path'
+import { ImageAIService } from '~/server/services/imageAi'
 
 const PLACEHOLDER_IMAGES = [
   'https://placehold.co/600x400/2563eb/ffffff?text=AI+Tech+Blog',
@@ -49,7 +51,22 @@ export default defineEventHandler(async (event): Promise<SavePostResponse> => {
       content: generated.content,
       image: getRandomPlaceholder(),
       createdAt: new Date().toISOString(),
-      slug
+      slug,
+      excerpt: (generated as any).excerpt,
+      tags: (generated as any).tags,
+      category: (generated as any).category,
+      coverPrompt: (generated as any).coverPrompt
+    }
+
+    // Try to generate a cover image if we have a prompt and credentials
+    if ((generated as any).coverPrompt) {
+      try {
+        const out = path.join(process.cwd(), 'public/images/blog', newPost.slug, 'hero.webp')
+        await ImageAIService.generateCover((generated as any).coverPrompt, out)
+        newPost.image = `/images/blog/${newPost.slug}/hero.webp`
+      } catch (e) {
+        console.warn('Cover generation failed, using placeholder')
+      }
     }
 
     const posts = await loadPosts()

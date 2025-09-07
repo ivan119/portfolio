@@ -5,6 +5,10 @@ export interface BlogPost {
   image: string
   createdAt: string
   slug: string
+  excerpt?: string
+  tags?: string[]
+  category?: string
+  coverPrompt?: string
 }
 
 export interface GeneratePostPayload {

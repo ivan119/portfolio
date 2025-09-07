@@ -197,18 +197,16 @@ const generatePost = async () => {
   startLoadingProgress()
   
   try {
-    const { data } = await useFetch('/api/blog/generate', {
+    const res = await $fetch('/api/blog/generate', {
       method: 'POST',
-      body: {
-        prompt: prompt.value
-      }
+      body: { prompt: prompt.value }
     })
 
-    if (data.value?.success && data.value?.post) {
-      currentPost.value = data.value.post
-      generatedContent.value = data.value.post.content
+    if (res?.success && res?.post) {
+      currentPost.value = res.post
+      generatedContent.value = res.post.content
     } else {
-      error.value = data.value?.error || 'Failed to generate blog post'
+      error.value = (res as any)?.error || 'Failed to generate blog post'
     }
   } catch (err) {
     console.error('Error generating blog post:', err)

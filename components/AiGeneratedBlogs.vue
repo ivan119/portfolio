@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from "vue";
-import aiBlogData from "~/data/aiBlogGenerated.json";
+import { ref, computed } from "vue";
 import BlogPostCard from "~/components/UI/BlogPostCard.vue";
 
 // Define the type for our AI blog posts based on the JSON structure
@@ -15,8 +14,9 @@ interface AiBlogPost {
   content: any[];
 }
 
-// Use the AI-generated blog posts
-const posts = computed(() => aiBlogData.posts || []);
+// Accept posts from parent; fallback to empty array
+const props = defineProps<{ posts?: AiBlogPost[] }>();
+const posts = computed(() => props.posts || []);
 const loading = ref(false);
 const error = ref<string | null>(null);
 
