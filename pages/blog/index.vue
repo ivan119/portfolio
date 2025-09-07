@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import aiBlogData from "~/data/aiBlogGenerated.json";
 import AiGeneratedBlogs from "~/components/AiGeneratedBlogs.vue";
 
 definePageMeta({
@@ -8,21 +7,23 @@ definePageMeta({
   layoutTransition: false,
 });
 
-// Use the AI-generated blog posts
-const posts = computed(() => aiBlogData.posts || []);
+// Fetch posts from server API (SSR-friendly + cached)
+const { data } = await useFetch("/api/blog/ai/posts", {
+  server: true,
+  lazy: false,
+  default: () => ({ posts: [], latest_post: null }),
+});
 
-// Get the latest/featured post (first post)
-const featuredPost = computed(() => aiBlogData.latest_post || {});
+const posts = computed(() => data.value?.posts || []);
+const featuredPost = computed(() => data.value?.latest_post || null);
 
 // Get the first image from the content if available
 const getPostImage = (post: any) => {
-  // For the AI Agents post, use our custom image
+  if (!post) return "/images/blog/default-cover.jpg";
   if (post.id === "ai-agents-transforming-digital-landscape") {
     return "/images/blog/ai-agents/AI agents transforming the digital landscape..webp";
   }
-
-  // For other posts, try to find an image in the content
-  const imageContent = post.content.find((item: any) => item.type === "image");
+  const imageContent = post.content?.find((item: any) => item.type === "image");
   return imageContent ? imageContent.src : "/images/blog/default-cover.jpg";
 };
 </script>
@@ -41,7 +42,7 @@ const getPostImage = (post: any) => {
 
     <!-- Blog Posts Section -->
     <div class="mb-16">
-      <AiGeneratedBlogs />
+      <AiGeneratedBlogs :posts="posts" />
     </div>
   </div>
 </template>

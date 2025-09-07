@@ -1,24 +1,19 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
-import aiBlogData from "~/data/aiBlogGenerated.json";
 
 const route = useRoute();
 const postId = route.params.id as string;
-console.log(postId, "postId");
-// Find the post with the matching ID
-const post = computed(() => {
-  // If the requested post is the latest one, return it
-  if (postId === aiBlogData.latest_post?.id) {
-    return aiBlogData.latest_post;
-  }
 
-  // Otherwise, find it in the posts array
-  return aiBlogData.posts.find((p) => p.id === postId) || null;
+// Fetch single post from server API (SSR-friendly)
+const { data, error } = await useFetch(() => `/api/blog/ai/post/${postId}`, {
+  server: true,
+  lazy: false,
+  default: () => ({ post: null }),
 });
 
-// If post not found, show 404
-const notFound = ref(!post.value);
+const post = computed(() => data.value?.post || null);
+const notFound = computed(() => !post.value || !!error.value);
 
 definePageMeta({
   pageTransition: false,
