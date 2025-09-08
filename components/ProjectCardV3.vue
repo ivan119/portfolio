@@ -123,7 +123,7 @@ const getIconColor = (tag) => {
 
       <!-- Description -->
       <p
-        class="text-xs text-gray-600 dark:text-gray-400 px-3 mb-2 flex-grow leading-relaxed"
+        class="text-xs text-gray-600 dark:text-gray-400 px-3 mb-2 leading-relaxed"
       >
         {{ project.description }}
       </p>
