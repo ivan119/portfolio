@@ -2,7 +2,7 @@ import { defineEventHandler } from 'h3'
 import fs from 'node:fs'
 import path from 'node:path'
 
-const DATA_FILE = path.join(process.cwd(), 'data/aiBlogGenerated.json')
+const DATA_FILE = path.join(process.cwd(), 'server/data/aiBlogGenerated.json')
 
 export default defineEventHandler(async () => {
   try {

@@ -1,8 +1,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { sanitizeFilePath } from './security'
 
-export const POSTS_DIR = path.join(process.cwd(), 'data')
+export const POSTS_DIR = path.join(process.cwd(), 'server/data')
 export const POSTS_FILE = path.join(POSTS_DIR, 'posts.json')
 
 export async function ensureDataDir() {

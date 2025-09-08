@@ -3,7 +3,7 @@ import type { BlogPost } from '~/types/blog'
 import fs from 'node:fs'
 import path from 'node:path'
 
-const POSTS_FILE = path.join(process.cwd(), 'data/posts.json')
+const POSTS_FILE = path.join(process.cwd(), 'server/data/posts.json')
 
 export default defineEventHandler(async () => {
   try {

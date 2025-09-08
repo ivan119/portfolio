@@ -4,8 +4,7 @@ import { useProjects } from "~/composables/useProjects";
 
 const showFrameworkDetails = ref(false);
 
-// Get projects data from composable
-const { techStackData, projects, allProjects } = useProjects();
+const { techStackData, projects, allProjects, error, pending, refresh } = await useProjects();
 </script>
 
 <template>
@@ -33,11 +32,13 @@ const { techStackData, projects, allProjects } = useProjects();
         </p>
       </template>
     </UIBanner>
-    <!-- Main Projects -->
+    <!-- Loading / Error States for Main Projects -->
     <UIBanner title="Main Projects" description="" :first-tag-is-h1="false">
       <template #default>
         <section class="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div v-if="pending" class="text-sm text-slate-500 dark:text-slate-400">Loading projects…</div>
+          <div v-else-if="error" class="text-sm text-red-600 dark:text-red-400">Failed to load projects. <button class="underline" @click="refresh()">Retry</button></div>
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <ProjectCardV3
               v-for="project in projects"
               :key="project.title"
@@ -53,7 +54,9 @@ const { techStackData, projects, allProjects } = useProjects();
     <UIBanner title="Other Projects" description="" :first-tag-is-h1="false">
       <template #default>
         <section class="space-y-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div v-if="pending" class="text-sm text-slate-500 dark:text-slate-400">Loading projects…</div>
+          <div v-else-if="error" class="text-sm text-red-600 dark:text-red-400">Failed to load projects. <button class="underline" @click="refresh()">Retry</button></div>
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <ProjectCardV3
               v-for="project in allProjects"
               :key="project.title"

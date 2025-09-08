@@ -204,6 +204,15 @@ export const useSkills = () => {
       url: "https://isocpp.org/",
     },
     {
+      name: "Python",
+      icon: "devicon-python-plain",
+      category: "language",
+      proficiency: "Advanced",
+      description: "Versatile language for backend and automation",
+      color: "text-blue-500",
+      url: "https://www.python.org/",
+    },
+    {
       name: "Vuetify",
       icon: "devicon-vuetify-plain",
       category: "framework",
@@ -240,6 +249,15 @@ export const useSkills = () => {
       url: "https://nextjs.org/",
     },
     {
+      name: "Angular",
+      icon: "devicon-angularjs-plain",
+      category: "frontend",
+      proficiency: "Advanced",
+      description: "Application framework for building scalable web apps",
+      color: "text-red-600",
+      url: "https://angular.io/",
+    },
+    {
       name: "MySQL",
       icon: "devicon-mysql-plain",
       category: "database",
@@ -258,6 +276,15 @@ export const useSkills = () => {
       url: "https://nodejs.org/",
     },
     {
+      name: "Prisma ORM",
+      icon: "devicon-prisma-plain",
+      category: "tools",
+      proficiency: "Advanced",
+      description: "Type-safe ORM for Node.js and TypeScript",
+      color: "text-indigo-500",
+      url: "https://www.prisma.io/",
+    },
+    {
       name: "Figma",
       icon: "devicon-figma-plain",
       category: "design",
@@ -274,15 +301,6 @@ export const useSkills = () => {
       description: "UI/UX design and prototyping",
       color: "text-pink-500",
       url: "https://www.adobe.com/products/xd.html",
-    },
-    {
-      name: "Python",
-      icon: "devicon-python-plain",
-      category: "language",
-      proficiency: "Advanced",
-      description: "Versatile language for backend and automation",
-      color: "text-blue-500",
-      url: "https://www.python.org/",
     },
     {
       name: "PHP",

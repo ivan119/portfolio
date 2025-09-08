@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-const AI_POSTS_FILE = path.join(process.cwd(), 'data/aiBlogGenerated.json')
+const AI_POSTS_FILE = path.join(process.cwd(), 'server/data/aiBlogGenerated.json')
 
 export default defineCachedEventHandler(async () => {
   try {
