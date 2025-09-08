@@ -7,8 +7,8 @@ const router = useRouter();
 
 const showFrameworkDetails = ref(false);
 
-// Get skills data from composable
-const { preferredSkills, skills, experiencedSkills } = useSkills();
+// Get skills data from composable (server-side)
+const { preferredSkills, skills, experiencedSkills } = await useSkills();
 
 // Navigate to skill detail page
 const navigateToSkill = (skill) => {

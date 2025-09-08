@@ -1,30 +1,40 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
-import { getSkillBySlug } from "~/data/skills";
 
 const route = useRoute();
 const router = useRouter();
-const skillId = computed(() => route.params.id);
+const skillId = computed(() => route.params.id as string);
 const skill = ref(null);
 const isLoading = ref(true);
-const error = ref(null);
+const error = ref<string | null>(null);
 
-// Fetch the skill data
-onMounted(() => {
+// Fetch the skill data (SSR-friendly)
+const fetchSkill = async () => {
   try {
     isLoading.value = true;
-    skill.value = getSkillBySlug(skillId.value);
+    const { data, error: fetchError } = await useFetch(`/api/skills/${skillId.value}`, {
+      key: `skill-${skillId.value}`,
+      server: true,
+      default: () => ({ skill: null }),
+    });
 
+    if (fetchError.value) {
+      throw fetchError.value;
+    }
+
+    skill.value = data.value?.skill || null;
     if (!skill.value) {
       error.value = `Skill "${skillId.value}" not found`;
     }
-  } catch (err) {
-    error.value = err.message || "An error occurred loading this skill";
+  } catch (err: any) {
+    error.value = err?.message || "An error occurred loading this skill";
     console.error(err);
   } finally {
     isLoading.value = false;
   }
-});
+};
+
+onMounted(fetchSkill);
 
 // Calculate years of experience
 const yearsOfExperience = computed(() => {
