@@ -4,28 +4,28 @@ const props = defineProps({
     type: Object,
     required: true,
     default: () => ({
-      title: '',
-      description: '',
-      link: '#',
+      title: "",
+      description: "",
+      link: "#",
       categories: [],
-      tags: []
-    })
+      tags: [],
+    }),
   },
   colored: {
     type: Boolean,
-    default: false
-  }
-})
+    default: false,
+  },
+});
 
 // Function to get category colors
 const getCategoryColor = (category) => {
   const colors = {
-    'frontend': '#3B82F6',
-    'backend': '#10B981',
-    'fullstack': '#6366F1',
-    'mobile': '#06B6D4',
-    'design': '#F43F5E',
-    'default': '#6B7280'
+    frontend: "#3B82F6",
+    backend: "#10B981",
+    fullstack: "#6366F1",
+    mobile: "#06B6D4",
+    design: "#F43F5E",
+    default: "#6B7280",
   };
   return colors[category] || colors.default;
 };
@@ -33,12 +33,12 @@ const getCategoryColor = (category) => {
 // Function to get gradient colors
 const getGradientColors = (category) => {
   const colors = {
-    'frontend': ['#3B82F6', '#60A5FA'],
-    'backend': ['#10B981', '#34D399'],
-    'fullstack': ['#6366F1', '#818CF8'],
-    'mobile': ['#06B6D4', '#22D3EE'],
-    'design': ['#F43F5E', '#FB7185'],
-    'default': ['#6B7280', '#9CA3AF']
+    frontend: ["#3B82F6", "#60A5FA"],
+    backend: ["#10B981", "#34D399"],
+    fullstack: ["#6366F1", "#818CF8"],
+    mobile: ["#06B6D4", "#22D3EE"],
+    design: ["#F43F5E", "#FB7185"],
+    default: ["#6B7280", "#9CA3AF"],
   };
   return colors[category] || colors.default;
 };
@@ -46,20 +46,22 @@ const getGradientColors = (category) => {
 // Function to get tech icon color
 const getIconColor = (tag) => {
   const techColors = {
-    'devicon-vuejs': '#4FC08D',
-    'devicon-nuxtjs': '#00DC82',
-    'devicon-typescript': '#3178C6',
-    'devicon-tailwindcss': '#38B2AC',
-    'devicon-bootstrap': '#7952B3',
-    'devicon-javascript': '#F7DF1E',
-    'devicon-postgresql': '#336791',
-    'devicon-mongodb': '#47A248',
-    'devicon-php': '#777BB4',
-    'devicon-adonisjs': '#220052'
+    "devicon-vuejs": "#4FC08D",
+    "devicon-nuxtjs": "#00DC82",
+    "devicon-typescript": "#3178C6",
+    "devicon-tailwindcss": "#38B2AC",
+    "devicon-bootstrap": "#7952B3",
+    "devicon-javascript": "#F7DF1E",
+    "devicon-postgresql": "#336791",
+    "devicon-mongodb": "#47A248",
+    "devicon-php": "#777BB4",
+    "devicon-adonisjs": "#220052",
   };
-  
-  const baseIconClass = tag.icon.split(' ')[0];
-  return techColors[baseIconClass] || getCategoryColor(props.project.categories[0]);
+
+  const baseIconClass = tag.icon?.split(" ")[0];
+  return (
+    techColors[baseIconClass] || getCategoryColor(props.project.categories[0])
+  );
 };
 </script>
 
@@ -69,12 +71,12 @@ const getIconColor = (tag) => {
     :style="{
       '--category-color': getCategoryColor(project.categories[0]),
       '--gradient-from': getGradientColors(project.categories[0])[0],
-      '--gradient-to': getGradientColors(project.categories[0])[1]
+      '--gradient-to': getGradientColors(project.categories[0])[1],
     }"
     tabindex="0"
   >
     <!-- Dotted Decoration removed from here -->
-    <a
+    <NuxtLink
       :href="project.link"
       target="_blank"
       rel="noopener noreferrer"
@@ -83,17 +85,25 @@ const getIconColor = (tag) => {
     >
       <!-- Icon/Logo Area with 3D and pulse effect -->
       <div class="relative p-3 perspective-1000">
-        <div 
+        <div
           class="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           :style="{
-            background: project.tags[0] ? 
-              `linear-gradient(135deg, ${getIconColor(project.tags[0])}20, transparent)` : 
-              `linear-gradient(135deg, ${getCategoryColor(project.categories[0])}20, transparent)`
+            background: project.tags[0]
+              ? `linear-gradient(135deg, ${getIconColor(project.tags[0])}20, transparent)`
+              : `linear-gradient(135deg, ${getCategoryColor(project.categories[0])}20, transparent)`,
           }"
         ></div>
-        <div class="icon-container transform-gpu transition-transform duration-500 group-hover:rotate-y-12">
-          <i 
-            v-if="project.tags[0]?.icon"
+        <div
+          class="icon-container transform-gpu transition-transform duration-500 group-hover:rotate-y-12"
+        >
+          <dev-tools-icons-gauss-logo
+            v-if="project.gaussCMSlogo"
+            :rotate-animation="true"
+            class="tech-icon w-8 h-8 md:w-8 h-8"
+          />
+
+          <i
+            v-else-if="project.tags[0]?.icon"
             :class="[project.tags[0].icon, 'tech-icon', 'colored']"
           ></i>
         </div>
@@ -101,10 +111,10 @@ const getIconColor = (tag) => {
 
       <!-- Title -->
       <div class="px-3 mb-1">
-        <h2 
+        <h2
           class="text-base font-semibold text-gray-900 dark:text-white transition-all duration-300 group-hover:translate-x-1"
           :style="{
-            color: project.tags[0] ? getIconColor(project.tags[0]) : 'inherit'
+            color: project.tags[0] ? getIconColor(project.tags[0]) : 'inherit',
           }"
         >
           {{ project.title }}
@@ -112,7 +122,9 @@ const getIconColor = (tag) => {
       </div>
 
       <!-- Description -->
-      <p class="text-xs text-gray-600 dark:text-gray-400 px-3 mb-2 flex-grow leading-relaxed">
+      <p
+        class="text-xs text-gray-600 dark:text-gray-400 px-3 mb-2 flex-grow leading-relaxed"
+      >
         {{ project.description }}
       </p>
 
@@ -125,23 +137,26 @@ const getIconColor = (tag) => {
           :style="{
             background: `${getIconColor(tag)}15`,
             borderColor: `${getIconColor(tag)}40`,
-            boxShadow: `0 1px 4px ${getIconColor(tag)}20`
+            boxShadow: `0 1px 4px ${getIconColor(tag)}20`,
           }"
         >
-          <i 
-            :class="[tag.icon, 'text-xs', 'colored']"
-          ></i>
+          <dev-tools-icons-gauss-logo
+            v-if="tag.gaussCMSlogo"
+            :rotate-animation="true"
+            class="w-4 h-4"
+          />
+          <i v-else :class="[tag.icon, 'text-xs', 'colored']"></i>
           {{ tag.name }}
         </span>
       </div>
 
       <!-- Bottom Gradient Bar -->
-      <div 
+      <div
         class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         :style="{
-          background: project.tags[0] ? 
-            `linear-gradient(to right, transparent, ${getIconColor(project.tags[0])}, transparent)` :
-            'linear-gradient(to right, transparent, var(--gradient-from), transparent)'
+          background: project.tags[0]
+            ? `linear-gradient(to right, transparent, ${getIconColor(project.tags[0])}, transparent)`
+            : 'linear-gradient(to right, transparent, var(--gradient-from), transparent)',
         }"
       ></div>
 
@@ -149,7 +164,7 @@ const getIconColor = (tag) => {
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <div class="shine"></div>
       </div>
-    </a>
+    </NuxtLink>
   </article>
 </template>
 
@@ -157,7 +172,11 @@ const getIconColor = (tag) => {
 .project-card {
   border: 1px solid rgba(0, 0, 0, 0.05);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  background: linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(255,255,255,0.12));
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.12)
+  );
   transform-style: preserve-3d;
   z-index: 1;
   outline: none;
@@ -165,29 +184,39 @@ const getIconColor = (tag) => {
 }
 
 .project-card::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.10;
+  opacity: 0.1;
   pointer-events: none;
   background: radial-gradient(#3b82f6 1px, transparent 1px);
   background-size: 16px 16px;
 }
 
 .dark .project-card {
-  background: linear-gradient(to bottom, rgba(31,41,55,0.6), rgba(31,41,55,0.12));
+  background: linear-gradient(
+    to bottom,
+    rgba(31, 41, 55, 0.6),
+    rgba(31, 41, 55, 0.12)
+  );
   border-color: rgba(255, 255, 255, 0.05);
 }
 
-.project-card:hover, .project-card:focus-within {
+.project-card:hover,
+.project-card:focus-within {
   transform: translateY(-4px) scale(1.025);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0,0,0,0.10);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.16),
+    0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
 
-.dark .project-card:hover, .dark .project-card:focus-within {
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28), 0 2px 8px rgba(0,0,0,0.18);
+.dark .project-card:hover,
+.dark .project-card:focus-within {
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.28),
+    0 2px 8px rgba(0, 0, 0, 0.18);
 }
 
 .icon-container {
@@ -199,15 +228,20 @@ const getIconColor = (tag) => {
   justify-content: center;
 }
 
-.project-card:hover::after, .project-card:focus-within::after {
-  content: '';
+.project-card:hover::after,
+.project-card:focus-within::after {
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   padding: 1.5px;
   background: linear-gradient(45deg, var(--gradient-from), var(--gradient-to));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
@@ -228,11 +262,14 @@ const getIconColor = (tag) => {
     transparent
   );
   transform: rotate(30deg);
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
+  transition:
+    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.4s;
   opacity: 0;
 }
 
-.group:hover .shine, .group:focus-within .shine {
+.group:hover .shine,
+.group:focus-within .shine {
   transform: rotate(30deg) translateX(100%);
   opacity: 1;
 }
@@ -258,19 +295,20 @@ const getIconColor = (tag) => {
   font-size: 2rem;
 }
 
-.group:hover .tech-icon, .group:focus-within .tech-icon {
+.group:hover .tech-icon,
+.group:focus-within .tech-icon {
   animation: gentle-pulse 0.45s ease-in-out infinite alternate;
   font-size: 2.5rem;
 }
 
 @keyframes gentle-pulse {
-  0% { 
-    transform: scale(1); 
+  0% {
+    transform: scale(1);
     filter: drop-shadow(0 0 2px currentColor);
   }
-  100% { 
-    transform: scale(1.13); 
+  100% {
+    transform: scale(1.13);
     filter: drop-shadow(0 0 12px currentColor);
   }
 }
-</style> 
+</style>

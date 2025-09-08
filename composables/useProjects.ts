@@ -1,12 +1,15 @@
 interface Tag {
   name: string;
-  icon: string;
+  icon?: string;
+  gaussCMSlogo?: boolean;
+  color?: string;
 }
 
 interface Project {
   title: string;
   description: string;
   link: string;
+  gaussCMSlogo?: boolean;
   tags: Tag[];
   categories: string[];
   status: string;
@@ -60,7 +63,6 @@ export const useProjects = () => {
         "A comprehensive workforce management solution for mobile teams. Features include real-time planning, process management, team coordination, and integrated communication tools for both office and field workers.",
       link: "https://gauss.hr/en/celero-one",
       tags: [
-        { name: "Vue.js", icon: "devicon-vuejs-plain" },
         { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
         { name: "Bootstrap", icon: "devicon-bootstrap-plain" },
         { name: "PostgreSQL", icon: "devicon-postgresql-plain" },
@@ -75,6 +77,26 @@ export const useProjects = () => {
 
   // Other projects
   const allProjects: Project[] = [
+    {
+      title: "Delmerion Webshop",
+      description:
+        "CMS webshop built with GaussCMS featuring product catalog, brand highlights, promotions, and a responsive UI. Frontend built with Nuxt, Tailwind CSS, and JavaScript.",
+      link: "https://www.delmerion.hr/",
+      gaussCMSlogo: true,
+      tags: [
+        {
+          name: "GaussCMS",
+          gaussCMSlogo: true,
+          color: "#00C2A8",
+        },
+        { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
+        { name: "Tailwind CSS", icon: "devicon-tailwindcss-plain" },
+        { name: "JavaScript", icon: "devicon-javascript-plain" },
+      ],
+      categories: ["frontend"],
+      status: "Completed",
+      year: "2023",
+    },
     {
       title: "Invest in Croatia",
       description:
