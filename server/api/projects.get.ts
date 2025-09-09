@@ -1,13 +1,16 @@
-import { defineEventHandler } from 'h3'
-import { projects, allProjects, techStackData } from '~/server/data/projects'
-import type { ProjectsResponse } from '~/types/project'
+import { projects, allProjects, techStackData } from "~/server/data/projects";
+import type { ProjectsResponse } from "~/types/project";
 
-export default defineEventHandler((): ProjectsResponse => {
-  return {
-    techStackData,
-    projects,
-    allProjects,
-  }
-})
-
-
+export default defineCachedEventHandler(
+  (): ProjectsResponse => {
+    return {
+      techStackData,
+      projects,
+      allProjects,
+    };
+  },
+  {
+    maxAge: 60 * 5,
+    swr: true,
+  },
+);
