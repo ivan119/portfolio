@@ -3,7 +3,7 @@ import path from "node:path";
 
 const AI_POSTS_FILE = path.join(
   process.cwd(),
-  "server/data/aiBlogGeneratedd.json",
+  "server/data/aiBlogGenerated.json",
 );
 
 export default defineCachedEventHandler(
