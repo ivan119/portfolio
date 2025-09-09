@@ -38,14 +38,21 @@ const { techStackData, projects, allProjects, error, pending, refresh } = await 
         <section class="space-y-6">
           <div v-if="pending" class="text-sm text-slate-500 dark:text-slate-400">Loading projects…</div>
           <div v-else-if="error" class="text-sm text-red-600 dark:text-red-400">Failed to load projects. <button class="underline" @click="refresh()">Retry</button></div>
-          <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ProjectCardV3
-              v-for="project in projects"
-              :key="project.title"
-              :project="project"
-              :colored="true"
+          <template v-else>
+            <UIEmptyState
+              v-if="projects.length === 0"
+              title="No projects yet"
+              description="Projects will appear here once available."
             />
-          </div>
+            <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <ProjectCardV3
+                v-for="project in projects"
+                :key="project.title"
+                :project="project"
+                :colored="true"
+              />
+            </div>
+          </template>
         </section>
       </template>
     </UIBanner>
@@ -56,14 +63,21 @@ const { techStackData, projects, allProjects, error, pending, refresh } = await 
         <section class="space-y-6">
           <div v-if="pending" class="text-sm text-slate-500 dark:text-slate-400">Loading projects…</div>
           <div v-else-if="error" class="text-sm text-red-600 dark:text-red-400">Failed to load projects. <button class="underline" @click="refresh()">Retry</button></div>
-          <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ProjectCardV3
-              v-for="project in allProjects"
-              :key="project.title"
-              :project="project"
-              :colored="true"
+          <template v-else>
+            <UIEmptyState
+              v-if="allProjects.length === 0"
+              title="No projects to show"
+              description="Other projects will appear here once available."
             />
-          </div>
+            <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <ProjectCardV3
+                v-for="project in allProjects"
+                :key="project.title"
+                :project="project"
+                :colored="true"
+              />
+            </div>
+          </template>
         </section>
       </template>
     </UIBanner>

@@ -32,17 +32,27 @@ const getPostImage = (post: any) => {
   <div class="!max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <Navigation-Breadcrumbs class="max-w-7xl mx-auto" />
 
-    <UIFeaturedPost
-      v-if="featuredPost"
-      :post="featuredPost"
-      :image-url="getPostImage(featuredPost)"
-      :use-bg-dots="true"
-      class="mb-16 mt-3 !slide-enter-active"
-    />
+    <template v-if="posts.length > 0">
+      <UIFeaturedPost
+        v-if="featuredPost"
+        :post="featuredPost"
+        :image-url="getPostImage(featuredPost)"
+        :use-bg-dots="true"
+        class="mb-16 mt-3 !slide-enter-active"
+      />
 
-    <!-- Blog Posts Section -->
-    <div class="mb-16">
-      <AiGeneratedBlogs :posts="posts" />
-    </div>
+      <!-- Blog Posts Section -->
+      <div class="mb-16">
+        <AiGeneratedBlogs :posts="posts" />
+      </div>
+    </template>
+    <template v-else>
+      <UIEmptyState
+        title="No blog posts yet"
+        description="AI-generated posts will appear here once available. Please check back soon."
+      >
+        <BaseButton variant="primary" @click="$router.push('/')">Go Home</BaseButton>
+      </UIEmptyState>
+    </template>
   </div>
 </template>

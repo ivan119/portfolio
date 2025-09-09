@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import type { DetailedSkill } from "~/types/skills";
 
 const route = useRoute();
 const router = useRouter();
 const skillId = computed(() => route.params.id as string);
-const skill = ref(null);
+const skill = ref<DetailedSkill | null>(null);
 const isLoading = ref(true);
 const error = ref<string | null>(null);
 
@@ -12,14 +13,14 @@ const error = ref<string | null>(null);
 const fetchSkill = async () => {
   try {
     isLoading.value = true;
-    const { data, error: fetchError } = await useFetch(`/api/skills/${skillId.value}`, {
+    const { data, error: fetchError } = await useFetch<{ skill: DetailedSkill | null }>(`/api/skills/${skillId.value}`, {
       key: `skill-${skillId.value}`,
       server: true,
       default: () => ({ skill: null }),
     });
 
     if (fetchError.value) {
-      throw fetchError.value;
+      throw fetchError.value as any;
     }
 
     skill.value = data.value?.skill || null;
@@ -40,7 +41,7 @@ onMounted(fetchSkill);
 const yearsOfExperience = computed(() => {
   if (!skill.value?.yearStarted) return null;
   const currentYear = new Date().getFullYear();
-  return currentYear - skill.value.yearStarted;
+  return currentYear - (skill.value?.yearStarted ?? currentYear);
 });
 
 // Format experience text
@@ -79,34 +80,12 @@ definePageMeta({
       v-else-if="error"
       class="min-h-screen flex items-center justify-center p-4"
     >
-      <div class="max-w-md text-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-16 w-16 mx-auto text-red-500"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-          />
-        </svg>
-        <h1 class="mt-4 text-2xl font-bold text-gray-900 dark:text-white">
-          {{ error }}
-        </h1>
-        <p class="mt-2 text-gray-600 dark:text-gray-400">
-          We couldn't find the skill information you're looking for.
-        </p>
-        <button
-          @click="goBack"
-          class="mt-6 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
-        >
-          Return to Skills
-        </button>
-      </div>
+      <UIEmptyState
+        :title="error || 'Skill not found'"
+        description="We couldn't find the skill information you're looking for."
+      >
+        <BaseButton variant="primary" @click="goBack">Return to Skills</BaseButton>
+      </UIEmptyState>
     </div>
 
     <!-- Skill content -->

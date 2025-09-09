@@ -2,15 +2,38 @@
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 
+interface AiContentItem {
+  type: string;
+  level?: number;
+  content?: string;
+  src?: string;
+  alt?: string;
+  caption?: string;
+}
+
+interface AiBlogPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  author: string;
+  category: string;
+  tags: string[];
+  content: AiContentItem[];
+}
+
 const route = useRoute();
 const postId = route.params.id as string;
 
 // Fetch single post from server API (SSR-friendly)
-const { data, error } = await useFetch(() => `/api/blog/ai/post/${postId}`, {
-  server: true,
-  lazy: false,
-  default: () => ({ post: null }),
-});
+const { data, error } = await useFetch<{ post: AiBlogPost | null }>(
+  () => `/api/blog/ai/post/${postId}`,
+  {
+    server: true,
+    lazy: false,
+    default: () => ({ post: null }),
+  },
+);
 
 const post = computed(() => data.value?.post || null);
 const notFound = computed(() => !post.value || !!error.value);
@@ -53,14 +76,14 @@ const getMainImage = (): string => {
   // Check if this is the latest post (AI Agents post)
 
   // For other posts, try to find an image in the content
-  const imageItem = post.value.content.find((item) => item.type === "image");
+  const imageItem = post.value.content.find((item: AiContentItem) => item.type === "image");
   return imageItem && imageItem.src
     ? imageItem.src
     : "/images/blog/default-cover.jpg";
 };
 
 // Get the correct image source based on the post and image position
-const getCorrectImageSrc = (item: any): string => {
+const getCorrectImageSrc = (item: AiContentItem): string => {
   if (!post.value) return item.src || "";
 
   // If this is the AI Agents post, use our custom images
@@ -99,14 +122,13 @@ const getCorrectImageSrc = (item: any): string => {
 </script>
 
 <template>
-  <div v-if="notFound" class="container mx-auto px-4 py-16 text-center">
-    <h1 class="text-3xl font-bold mb-4">Post Not Found</h1>
-    <p class="mb-8">
-      The blog post you're looking for doesn't exist or has been removed.
-    </p>
-    <NuxtLink to="/blog" class="text-teal-500 hover:text-teal-600">
-      &larr; Back to Blog
-    </NuxtLink>
+  <div v-if="notFound" class="container mx-auto px-4 py-16">
+    <UIEmptyState
+      title="Post not found"
+      description="The blog post you're looking for doesn't exist or has been removed."
+    >
+      <BaseButton variant="primary" @click="$router.push('/blog')">Back to Blog</BaseButton>
+    </UIEmptyState>
   </div>
 
   <div v-else-if="post" class="max-w-4xl mx-auto px-4 sm:px-6 py-12">

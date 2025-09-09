@@ -60,7 +60,12 @@ definePageMeta({
     >
       <template #default>
         <section class="space-y-4">
-          <div class="skill-card-grid">
+          <UIEmptyState
+            v-if="preferredSkills.length === 0"
+            title="No preferred skills yet"
+            description="They will appear here once available."
+          />
+          <div v-else class="skill-card-grid">
             <SkillCardV3
               v-for="skill in preferredSkills"
               :key="skill.name"
@@ -89,7 +94,12 @@ definePageMeta({
     >
       <template #default>
         <section class="space-y-4">
-          <div class="skill-card-grid">
+          <UIEmptyState
+            v-if="experiencedSkills.length === 0"
+            title="No experienced skills yet"
+            description="They will appear here once available."
+          />
+          <div v-else class="skill-card-grid">
             <SkillCardV3
               v-for="skill in experiencedSkills"
               :key="skill.name"
