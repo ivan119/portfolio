@@ -78,6 +78,26 @@ export const allProjects: ProjectItem[] = [
     year: "2023",
   },
   {
+    title: "Sonic Pills",
+    description:
+      "GaussCMS webshop for Sonic Pills, a sound-therapy brand using binaural beats to entrain brainwaves (gamma–delta); EEG testing (ABR clinic) showed reduced high‑beta stress and increased alpha relaxation.",
+    link: "https://sonicpills.com/",
+    gaussCMSlogo: true,
+    tags: [
+      {
+        name: "GaussCMS",
+        gaussCMSlogo: true,
+        color: "#00C2A8",
+      },
+      { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
+      { name: "Tailwind CSS", icon: "devicon-tailwindcss-plain" },
+      { name: "JavaScript", icon: "devicon-javascript-plain" },
+    ],
+    categories: ["frontend"],
+    status: "Completed",
+    year: "2023",
+  },
+  {
     title: "Invest in Croatia",
     description:
       "A government-backed platform for investors to explore business opportunities in Croatia. The site provides economic insights, legal frameworks, and available investment projects.",
