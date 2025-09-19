@@ -65,13 +65,35 @@
   background-repeat: no-repeat;
 }
 
+.hover-main-gradient {
+    position: relative;
+    display: inline-block; /* needed for the ::after underline */
+}
+
+.hover-main-gradient::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px; /* thickness of underline */
+    width: 100%;
+    background-image: var(--main-gradient);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 369ms linear;
+}
+
 .hover-main-gradient:hover {
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: var(--main-gradient);
-  @apply transition-all duration-[369ms] ease-linear;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: var(--main-gradient);
+}
+
+.hover-main-gradient:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 /* Gradient animation */
