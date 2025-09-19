@@ -257,7 +257,11 @@ onUnmounted(() => {
 
 .nav-link-active::after {
   width: 100%;
-  background-image: linear-gradient(to right, #0d9488, #2563eb);
+  background-image: linear-gradient(
+    to right,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
   animation: gradient-shift 3s ease infinite;
   background-size: 200% auto;
 }
@@ -288,8 +292,12 @@ onUnmounted(() => {
 
 .nav-progress-bar {
   height: 100%;
-  background: linear-gradient(to right, #0d9488, #2563eb);
-  box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
+  background: linear-gradient(
+    to right,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
+  box-shadow: 0 0 10px var(--main-gradient);
   transition: width 0.05s linear;
 }
 
