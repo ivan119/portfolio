@@ -20,7 +20,7 @@ const { techStackData, projects, allProjects, error, pending, refresh } =
     <!-- Banner Section -->
     <UIBanner title="Projects" description="">
       <template #default>
-        <p class="text-lg text-gray-300">
+        <p class="text-lg">
           Projects where I served as Team Lead at
           <BaseButton
             href="https://gauss.hr/en"
