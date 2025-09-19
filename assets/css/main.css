@@ -8,10 +8,14 @@
   /* Primary gradient colors (light mode) */
   --main-gradient-from: #10b981; /* emerald-500 */
   --main-gradient-to: #2563eb; /* blue-600 */
-  
+
   /* Default gradient settings */
-  --main-gradient: linear-gradient(to right, var(--main-gradient-from), var(--main-gradient-to));
-  
+  --main-gradient: linear-gradient(
+    to right,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
+
   /* Theme colors */
   --bg-light: #f8fafc;
   --text-light: #1e293b;
@@ -23,9 +27,23 @@
 .dark {
   /* Primary gradient colors (dark mode) */
   --main-gradient-from: #14b8a6; /* teal-500 */
-  --main-gradient-to: #2563eb; /* blue-600 */
-  
+    --main-gradient-via:  #2563eb; /* blue-600 */
+  --main-gradient-to: #1d4ed8; /* blue-600 */
+
   /* Default gradient settings remain the same structure */
+}
+
+/* Light mode variables (optional override) */
+.light {
+  /* Override these to whatever you want for white theme */
+    --main-gradient-from: #dc2626; /* red-600 */
+    --main-gradient-via:  #2563eb; /* blue-600 */
+    --main-gradient-to:   #1d4ed8; /* blue-700 */
+  --main-gradient: linear-gradient(
+    to right,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
 }
 
 /* Global utility classes for the gradient text */
@@ -33,24 +51,29 @@
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-image: var(--main-gradient);
+  background-repeat: no-repeat;
 }
 
 .text-main-gradient-animated {
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
-  background-image: var(--main-gradient);
+  -webkit-text-fill-color: transparent;
   background-size: 200% auto;
   animation: gradient-shift 3s ease infinite;
+  background-image: var(--main-gradient);
+  background-repeat: no-repeat;
 }
 
 .hover-main-gradient:hover {
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-image: var(--main-gradient);
-  @apply transition-all duration-[369ms] ease-linear
+  @apply transition-all duration-[369ms] ease-linear;
 }
 
 /* Gradient animation */
@@ -196,28 +219,28 @@ body {
   border: 2px solid transparent;
   border-radius: 0.75rem; /* Ensures rounded corners */
   background:
-          linear-gradient(white, white) padding-box,
-          linear-gradient(45deg, #e2e8f0, #e2e8f0) border-box;
+    linear-gradient(white, white) padding-box,
+    linear-gradient(45deg, #e2e8f0, #e2e8f0) border-box;
   transition:
-          background 0.369s ease-in-out,
-          box-shadow 0.369s ease-in-out;
+    background 0.369s ease-in-out,
+    box-shadow 0.369s ease-in-out;
 }
 
 .skill-card:hover {
   background:
-          linear-gradient(white, white) padding-box,
-          linear-gradient(45deg, #2196f3, #4caf50) border-box;
+    linear-gradient(white, white) padding-box,
+    linear-gradient(45deg, #2196f3, #4caf50) border-box;
   box-shadow: 0 0 15px rgba(33, 150, 243, 0.5); /* Soft glowing effect */
 }
 .dark .skill-card {
   background:
-          linear-gradient(#091a28, #091a28) padding-box,
-          linear-gradient(45deg, #e2e8f0, #e2e8f0) border-box;
+    linear-gradient(#091a28, #091a28) padding-box,
+    linear-gradient(45deg, #e2e8f0, #e2e8f0) border-box;
 }
 .dark .skill-card:hover {
   background:
-          linear-gradient(#091a28, #091a28) padding-box,
-          linear-gradient(45deg, #2196f3, #4caf50) border-box;
+    linear-gradient(#091a28, #091a28) padding-box,
+    linear-gradient(45deg, #2196f3, #4caf50) border-box;
   box-shadow: 0 0 15px rgba(33, 150, 243, 0.5); /* Soft glowing effect */
 }
 
