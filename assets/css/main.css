@@ -27,7 +27,7 @@
 .dark {
   /* Primary gradient colors (dark mode) */
   --main-gradient-from: #14b8a6; /* teal-500 */
-    --main-gradient-via:  #2563eb; /* blue-600 */
+  --main-gradient-via: #2563eb; /* blue-600 */
   --main-gradient-to: #1d4ed8; /* blue-600 */
 
   /* Default gradient settings remain the same structure */
@@ -36,9 +36,9 @@
 /* Light mode variables (optional override) */
 .light {
   /* Override these to whatever you want for white theme */
-    --main-gradient-from: #dc2626; /* red-600 */
-    --main-gradient-via:  #2563eb; /* blue-600 */
-    --main-gradient-to:   #1d4ed8; /* blue-700 */
+  --main-gradient-from: #dc2626; /* red-600 */
+  --main-gradient-via: #2563eb; /* blue-600 */
+  --main-gradient-to: #1d4ed8; /* blue-700 */
   --main-gradient: linear-gradient(
     to right,
     var(--main-gradient-from),
@@ -48,12 +48,10 @@
 
 /* Global utility classes for the gradient text */
 .text-main-gradient {
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-image: var(--main-gradient);
-  background-repeat: no-repeat;
+    @apply font-bold bg-gradient-to-r
+    from-red-600 via-blue-600 to-blue-700 /* light mode: higher contrast using red→blue */
+    dark:from-teal-400 dark:to-blue-400
+    bg-clip-text text-transparent;
 }
 
 .text-main-gradient-animated {
