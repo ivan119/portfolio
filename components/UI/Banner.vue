@@ -51,7 +51,7 @@ const props = defineProps({
     <h1 v-if="firstTagIsH1" class="heading-1 text-main-gradient pb-2">
       {{ title }}
     </h1>
-    <h2 v-else class="heading-1 text-main-gradient mb-4">
+    <h2 v-else class="heading-1 text-main-gradient pb-2">
       {{ title }}
     </h2>
     <p v-if="description" class="text-lg mb-4">{{ description }}</p>
