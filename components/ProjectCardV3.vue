@@ -68,11 +68,6 @@ const getIconColor = (tag) => {
 <template>
   <article
     class="project-card relative bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group focus-within:ring-2 focus-within:ring-main-500"
-    :style="{
-      '--category-color': getCategoryColor(project.categories[0]),
-      '--gradient-from': getGradientColors(project.categories[0])[0],
-      '--gradient-to': getGradientColors(project.categories[0])[1],
-    }"
     tabindex="0"
   >
     <!-- Dotted Decoration removed from here -->
@@ -227,28 +222,30 @@ const getIconColor = (tag) => {
   align-items: center;
   justify-content: center;
 }
-
-.project-card:hover::after,
-.project-card:focus-within::after {
+.project-card::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 1.5px;
-  background: linear-gradient(45deg, var(--gradient-from), var(--gradient-to));
+  padding: 1.5px; /* border thickness */
+  background: linear-gradient(
+    45deg,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
   -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
-  opacity: 0.7;
-  transition: opacity 0.4s;
+  opacity: 0;
 }
 
+.project-card:hover::after,
+.project-card:focus-within::after {
+  opacity: 1;
+}
 .shine {
   position: absolute;
   top: -50%;

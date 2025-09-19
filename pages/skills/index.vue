@@ -12,7 +12,9 @@ const { preferredSkills, skills, experiencedSkills } = await useSkills();
 
 // Navigate to skill detail page
 const navigateToSkill = (skill) => {
-  const slug = (skill.id || skill.name.toLowerCase().replace(/\s+/g, "-")).toLowerCase();
+  const slug = (
+    skill.id || skill.name.toLowerCase().replace(/\s+/g, "-")
+  ).toLowerCase();
   const hasDetailPage = [
     "nuxtjs",
     "javascript",
@@ -136,18 +138,13 @@ definePageMeta({
   transform: translateY(-4px);
 }
 
-/* Add subtle border on hover */
-.group:hover {
-  border: 1px solid var(--main-gradient-from);
-}
-
 /* Add glow effect on hover */
-.group:hover::after {
+.skill-card:hover::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  padding: 1px;
+  padding: 1.5px;
   background: linear-gradient(
     45deg,
     var(--main-gradient-from),

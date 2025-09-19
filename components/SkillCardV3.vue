@@ -425,7 +425,11 @@ const getIconColor = (tag: Tag) => {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(45deg, var(--gradient-from), var(--gradient-to));
+  background: linear-gradient(
+    45deg,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
