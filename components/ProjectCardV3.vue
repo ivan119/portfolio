@@ -107,10 +107,7 @@ const getIconColor = (tag) => {
       <!-- Title -->
       <div class="px-3 mb-1">
         <h2
-          class="text-base font-semibold text-gray-900 dark:text-white transition-all duration-300 group-hover:translate-x-1"
-          :style="{
-            color: project.tags[0] ? getIconColor(project.tags[0]) : 'inherit',
-          }"
+          class="text-base font-semibold text-main-gradient transition-all duration-300 group-hover:translate-x-1"
         >
           {{ project.title }}
         </h2>
