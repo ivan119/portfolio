@@ -16,6 +16,9 @@
     var(--main-gradient-to)
   );
 
+  /* Single-color glow derived from the gradient */
+  --main-glow: color-mix(in srgb, var(--main-gradient-from) 50%, var(--main-gradient-to) 50%);
+
   /* Theme colors */
   --bg-light: #f8fafc;
   --text-light: #1e293b;

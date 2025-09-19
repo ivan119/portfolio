@@ -303,7 +303,7 @@ onUnmounted(() => {
     var(--main-gradient-from),
     var(--main-gradient-to)
   );
-  box-shadow: 0 0 10px var(--main-gradient);
+  box-shadow: 0 0 12px var(--main-glow);
   transition: width 0.05s linear;
 }
 
@@ -346,8 +346,10 @@ onUnmounted(() => {
   height: 2px;
   background-image: var(--main-gradient);
   background-size: 200% auto;
-  box-shadow: 0 0 10px rgba(13, 148, 136, 0.8);
+  box-shadow: 0 0 12px var(--main-glow);
   animation: gradient-flow 2s linear infinite;
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 @keyframes text-shift {
