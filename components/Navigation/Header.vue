@@ -245,18 +245,24 @@ onUnmounted(() => {
   position: absolute;
   bottom: -2px;
   left: 0;
-  width: 0;
+  width: 100%;
   height: 2px;
-  background-color: currentColor;
-  transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background-image: var(--main-gradient);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.369s linear;
 }
 
-.nav-link:hover::after {
-  width: 100%;
+.nav-link:hover::after,
+.nav-link:focus::after,
+.nav-link:active::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .nav-link-active::after {
-  width: 100%;
+  transform: scaleX(1);
+  transform-origin: left;
   background-image: linear-gradient(
     to right,
     var(--main-gradient-from),
