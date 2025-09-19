@@ -83,7 +83,7 @@ const getPostImage = (post: Post) => {
       <!-- Content -->
       <div class="p-6">
         <h3
-          class="heading-3 font-bold mb-2 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent group-hover:from-teal-500 group-hover:to-blue-500 dark:group-hover:from-teal-400 dark:group-hover:to-blue-400 transition-all duration-300"
+          class="heading-3 font-bold mb-2 text-main-gradient"
         >
           {{ post.title }}
         </h3>
