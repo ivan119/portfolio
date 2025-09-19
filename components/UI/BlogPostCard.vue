@@ -45,7 +45,7 @@ const getPostImage = (post: Post) => {
     class="block group"
   >
     <article
-      class="relative rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl border border-gray-200/50 dark:border-gray-700/50 backdrop-blur-sm"
+      class="relative rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl backdrop-blur-sm"
     >
       <!-- Dotted Background -->
       <div v-if="showBgDots" class="absolute inset-0 opacity-10">
@@ -100,14 +100,24 @@ const getPostImage = (post: Post) => {
 article {
   transition: all 0.3s ease;
   background: transparent;
+  /* Inset base border (light) to avoid halo on hover */
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
 .dark article {
   background: transparent;
+  /* Inset base border (dark) */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-article:hover {
+article:hover,
+article:focus-within {
   transform: translateY(-4px);
+  /* Hide inset border while gradient border shows */
+  box-shadow:
+    inset 0 0 0 1px transparent,
+    0 8px 24px rgba(0, 0, 0, 0.16),
+    0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Shine effect */
@@ -135,14 +145,18 @@ article:hover {
   opacity: 1;
 }
 
-/* Gradient border effect */
+/* Gradient border effect (matches ProjectCardV3) */
 article::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
   padding: 1.5px;
-  background: linear-gradient(45deg, #0ea5e9, #14b8a6);
+  background: linear-gradient(
+    45deg,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
@@ -154,9 +168,11 @@ article::after {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s;
+  will-change: opacity;
 }
 
-article:hover::after {
-  opacity: 0.7;
+article:hover::after,
+article:focus-within::after {
+  opacity: 1;
 }
 </style>
