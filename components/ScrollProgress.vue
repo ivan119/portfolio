@@ -1,7 +1,7 @@
 <template>
   <!-- Side Scroll Progress Indicator -->
-  <div 
-    v-show="isScrollable" 
+  <div
+    v-show="isScrollable"
     class="scroll-progress-container"
     @click="handleProgressClick"
     @mouseenter="showProgressTooltip = true"
@@ -11,21 +11,18 @@
       class="scroll-progress-bar"
       :style="{ transform: `scaleY(${progress})` }"
     ></div>
-    
+
     <!-- Interactive hover indicator -->
-    <div 
+    <div
       v-if="showProgressTooltip"
       class="progress-tooltip"
       :style="{ top: `${hoverProgress * 100}%` }"
     >
       {{ Math.round(hoverProgress * 100) }}%
     </div>
-    
+
     <!-- Click target overlay -->
-    <div 
-      class="progress-click-area"
-      @mousemove="handleProgressHover"
-    ></div>
+    <div class="progress-click-area" @mousemove="handleProgressHover"></div>
   </div>
 
   <!-- Back to Top Button with Circular Progress Indicator -->
@@ -38,12 +35,7 @@
     >
       <!-- Circular Progress Ring -->
       <svg class="progress-ring" viewBox="0 0 100 100">
-        <circle
-          class="progress-ring-background"
-          cx="50"
-          cy="50"
-          r="45"
-        />
+        <circle class="progress-ring-background" cx="50" cy="50" r="45" />
         <circle
           class="progress-ring-progress"
           cx="50"
@@ -52,7 +44,7 @@
           :style="{ strokeDashoffset: progressOffset }"
         />
       </svg>
-      
+
       <!-- Arrow Icon -->
       <svg
         class="back-to-top-icon"
@@ -88,7 +80,7 @@ let lastScrollTime = 0;
 // Calculate circular progress offset
 const progressOffset = computed(() => {
   const circumference = 2 * Math.PI * 45; // radius = 45
-  return circumference - (progress.value * circumference);
+  return circumference - progress.value * circumference;
 });
 
 // Handle progress bar click to jump to position
@@ -96,13 +88,13 @@ const handleProgressClick = (event) => {
   const rect = event.currentTarget.getBoundingClientRect();
   const clickY = event.clientY - rect.top;
   const clickProgress = Math.max(0, Math.min(1, clickY / rect.height));
-  
+
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
   const targetScroll = clickProgress * maxScroll;
-  
+
   window.scrollTo({
     top: targetScroll,
-    behavior: 'smooth'
+    behavior: "smooth",
   });
 };
 
@@ -139,16 +131,16 @@ const handleScroll = () => {
     const height =
       document.documentElement.scrollHeight -
       document.documentElement.clientHeight;
-    
+
     if (height > 0) {
       progress.value = Math.min(winScroll / height, 1);
       // Show back to top button when scrolled down 10%
-      showBackToTop.value = (winScroll / height) > 0.1;
+      showBackToTop.value = winScroll / height > 0.1;
     } else {
       progress.value = 0;
       showBackToTop.value = false;
     }
-    
+
     scrollRAF = null;
   });
 };
@@ -282,7 +274,11 @@ onUnmounted(() => {
 .scroll-progress-bar {
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, #0d9488, #2563eb);
+  background: linear-gradient(
+    180deg,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
   transform-origin: top;
   transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
@@ -321,7 +317,7 @@ onUnmounted(() => {
 }
 
 .progress-tooltip::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   right: -4px;
@@ -350,7 +346,11 @@ html:not(.dark) .scroll-progress-container {
 }
 
 html:not(.dark) .scroll-progress-bar {
-  background: linear-gradient(180deg, #0d9488, #2563eb);
+  background: linear-gradient(
+    180deg,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
   box-shadow: 0 0 8px rgba(13, 148, 136, 0.25);
 }
 
@@ -365,7 +365,11 @@ html.dark .scroll-progress-container:hover {
 }
 
 html.dark .scroll-progress-bar {
-  background: linear-gradient(180deg, #14b8a6, #3b82f6);
+  background: linear-gradient(
+    180deg,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
   box-shadow: 0 0 8px rgba(20, 184, 166, 0.3);
 }
 
@@ -395,7 +399,7 @@ html.dark .progress-tooltip::after {
   justify-content: center;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(15px);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.1),
     0 2px 8px rgba(0, 0, 0, 0.05);
   z-index: 1001;
@@ -404,7 +408,7 @@ html.dark .progress-tooltip::after {
 
 .back-to-top-btn:hover {
   transform: translateY(-3px) scale(1.05);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(13, 148, 136, 0.2),
     0 4px 16px rgba(0, 0, 0, 0.1);
   background: rgba(255, 255, 255, 1);
@@ -461,7 +465,7 @@ html.dark .progress-tooltip::after {
     width: 3.5rem;
     height: 3.5rem;
   }
-  
+
   .back-to-top-icon {
     width: 1.5rem;
     height: 1.5rem;
@@ -487,14 +491,14 @@ html.dark .progress-tooltip::after {
 html.dark .back-to-top-btn {
   background: rgba(9, 26, 40, 0.95);
   color: #ebf4f1;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.3),
     0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 html.dark .back-to-top-btn:hover {
   background: rgba(9, 26, 40, 1);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(20, 184, 166, 0.3),
     0 4px 16px rgba(0, 0, 0, 0.2);
 }
@@ -505,7 +509,7 @@ html.dark .progress-ring-background {
 
 /* Add gradient definition */
 .back-to-top-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -513,9 +517,17 @@ html.dark .progress-ring-background {
   bottom: 0;
   border-radius: 50%;
   padding: 3px;
-  background: linear-gradient(135deg, #0d9488, #2563eb, #7c3aed);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  background: linear-gradient(
+    180deg,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
@@ -529,13 +541,8 @@ html.dark .progress-ring-background {
 
 /* Custom gradient for progress ring */
 .progress-ring-progress {
-  stroke: #0d9488;
-  filter: drop-shadow(0 0 4px rgba(13, 148, 136, 0.4));
-}
-
-html.dark .progress-ring-progress {
-  stroke: #14b8a6;
-  filter: drop-shadow(0 0 4px rgba(20, 184, 166, 0.4));
+  stroke: var(--main-gradient-from);
+  filter: drop-shadow(0 0 4px var(--main-gradient));
 }
 
 /* Pulse animation when progress is complete */
@@ -544,9 +551,15 @@ html.dark .progress-ring-progress {
 }
 
 @keyframes completePulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Hide scrollbar for Firefox */
