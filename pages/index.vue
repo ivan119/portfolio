@@ -65,7 +65,7 @@ onMounted(() => {
         large-scale platforms, I thrive on transforming innovative ideas into
         tangible realities. Explore my portfolio to discover the diverse range
         of projects I've brought to life. You can find my
-        <BaseButton to="/projects" variant="link" class="hover-main-gradient"
+        <BaseButton to="/projects" variant="link"
           >projects list here.</BaseButton
         >
       </p>
@@ -73,9 +73,7 @@ onMounted(() => {
         Besides frontend development, I have experience with backend
         technologies, making me a versatile full-stack developer. You can
         explore my technical stack
-        <BaseButton variant="link" to="/skills" class="hover-main-gradient">
-          here.</BaseButton
-        >
+        <BaseButton variant="link" to="/skills"> here.</BaseButton>
       </p>
       <p>
         Outside of programming, I have experience producing music and capturing
@@ -85,7 +83,6 @@ onMounted(() => {
           href="https://instagram.com/your_instagram"
           external
           variant="link"
-          class="hover-main-gradient"
           >Instagram.</BaseButton
         >
       </p>
@@ -98,7 +95,6 @@ onMounted(() => {
           href="https://www.linkedin.com/in/kelava-ivan"
           external
           variant="link"
-          class="hover-main-gradient"
           >LinkedIn</BaseButton
         >
         or drop me an
@@ -106,7 +102,6 @@ onMounted(() => {
           href="mailto:ivankelava991@gmail.com"
           external
           variant="link"
-          class="hover-main-gradient"
           >email here.</BaseButton
         >
       </p>
