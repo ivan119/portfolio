@@ -83,7 +83,9 @@
     transition: transform 369ms linear;
 }
 
-.hover-main-gradient:hover {
+.hover-main-gradient:hover,
+.hover-main-gradient:focus,
+.hover-main-gradient:active {
     color: transparent;
     background-clip: text;
     -webkit-background-clip: text;

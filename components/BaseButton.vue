@@ -19,15 +19,17 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const buttonClasses = computed(() => [
+  // Link variants: avoid color transitions to prevent flicker when hover ends
   props.variant === "link-old"
     ? "font-bold decoration-2 decoration-gray-400 dark:decoration-gray-500 hover:underline hover:decoration-red-800 dark:hover:decoration-yellow-400 hover:bg-gradient-to-r hover:from-red-500 hover:to-orange-500 dark:hover:from-yellow-500 dark:hover:to-amber-400 hover:bg-clip-text hover:text-transparent"
     : "",
   props.variant === "link" ? "font-bold hover-main-gradient" : "",
+  // Button variants: keep color transitions
   props.variant === "default"
-    ? "font-bold text-sm  py-1 rounded bg-gray-200  px-2 dark:bg-gray-800 hover:bg-gray-[250] dark:hover:bg-gray-700"
+    ? "font-bold text-sm  py-1 rounded bg-gray-200  px-2 dark:bg-gray-800 hover:bg-gray-[250] dark:hover:bg-gray-700 transition-colors ease-linear duration-[369]"
     : "",
   props.variant === "primary"
-    ? "text-2xl text-teal-500 hover:text-teal-600"
+    ? "text-2xl text-teal-500 hover:text-teal-600 transition-colors ease-linear duration-[369]"
     : "",
 ]);
 
@@ -44,7 +46,7 @@ const component = computed(() => {
     :href="href"
     :target="external ? '_blank' : undefined"
     :rel="external ? 'opener referrer' : undefined"
-    class="transition-colors ease-linear duration-[369] inline-flex items-center hover:text-teal-600"
+    class="inline-flex items-center"
     :class="buttonClasses"
   >
     <slot name="icon" />
