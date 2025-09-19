@@ -26,61 +26,51 @@ const doImageEffect = ref(false);
 </script>
 
 <template>
-  <NuxtLink :to="`blog/${post.id}`" class="block group">
-    <div
-      class="relative p-4 md:p-8 transition-transform duration-500 hover:scale-[1.02] rounded-3xl"
-    >
+  <NuxtLink :to="`blog/${post.id}`" class="group featured-link">
+    <div class="featured-container">
       <!-- Dotted Background -->
-      <div v-if="useBgDots" class="absolute inset-0 opacity-10 rounded-3xl">
-        <div
-          class="h-full w-full bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] rounded-3xl"
-        ></div>
+      <div v-if="useBgDots" class="featured-dots">
+        <div class="featured-dots-inner"></div>
       </div>
 
       <!-- Gradient Background -->
-      <div
-        class="absolute inset-0 bg-gradient-to-br from-teal-50/80 via-blue-50/50 to-transparent dark:from-teal-900/30 dark:via-blue-900/20 dark:to-transparent rounded-3xl -z-10"
-      ></div>
+      <div class="featured-gradient"></div>
 
       <!-- Shine Effect -->
-      <div class="absolute inset-0 overflow-hidden rounded-3xl">
+      <div class="featured-shine-wrap">
         <div class="shine"></div>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-12 relative">
+      <div class="featured-grid">
         <!-- Left: Featured Image -->
-        <div class="relative">
-          <div class="relative aspect-video overflow-hidden rounded-2xl">
+        <div class="featured-image">
+          <div class="featured-image-wrap">
             <NuxtImg
               :src="imageUrl"
               :alt="post.title"
               :style="{
                 'view-transition-name': `post-image-${post.id}`,
               }"
-              class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
+              class="featured-image-img"
               format="webp"
               loading="lazy"
               width="800"
               height="450"
             />
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            ></div>
+            <div class="featured-image-overlay"></div>
           </div>
         </div>
 
         <!-- Right: Featured Post Content -->
-        <div class="flex flex-col justify-center">
-          <span class="text-teal-500 dark:text-teal-400 font-medium mb-4"
-            >Latest Post</span
-          >
+        <div class="featured-content">
+          <span class="featured-badge">Latest Post</span>
           <h1
-            class="heading-1 font-bold mb-3 pb-3 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent group-hover:from-teal-500 group-hover:to-blue-500 dark:group-hover:from-teal-400 dark:group-hover:to-blue-400 transition-all duration-300"
+            class="heading-1 featured-title text-main-gradient"
             :style="{ 'view-transition-name': `post-title-${post.id}` }"
           >
             {{ post.title }}
           </h1>
-          <p class="text-gray-600 dark:text-gray-400 text-lg mb-6 line-clamp-3">
+          <p class="featured-excerpt">
             {{ post.excerpt }}
           </p>
           <UISignatureLogo :author="post.author" :date="post.date" size="md" />
@@ -117,5 +107,66 @@ const doImageEffect = ref(false);
   opacity: 1;
 }
 
-/* Remove the gradient border effect since we don't want it */
+/* Structure + theming via @apply */
+.featured-link {
+  @apply block;
+}
+
+.featured-container {
+  @apply relative p-4 md:p-8 transition-transform duration-500 rounded-3xl;
+}
+.featured-container:hover {
+  transform: scale(1.02);
+}
+
+.featured-dots {
+  @apply absolute inset-0 opacity-20 rounded-3xl;
+}
+.featured-dots-inner {
+  @apply h-full w-full rounded-3xl bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px];
+}
+
+.featured-gradient {
+  @apply absolute inset-0 rounded-3xl -z-10 bg-gradient-to-br from-red-200/80 via-blue-200/60 to-transparent dark:from-teal-900/30 dark:via-blue-900/20 dark:to-transparent;
+}
+
+.featured-shine-wrap {
+  @apply absolute inset-0 overflow-hidden rounded-3xl;
+}
+
+.featured-grid {
+  @apply grid md:grid-cols-2 gap-12 relative;
+}
+
+.featured-image {
+  @apply relative;
+}
+.featured-image-wrap {
+  @apply relative aspect-video overflow-hidden rounded-2xl;
+}
+.featured-image-img {
+  @apply w-full h-full object-cover transform transition-transform duration-500;
+}
+.group:hover .featured-image-img {
+  @apply scale-105;
+}
+.featured-image-overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent opacity-0 transition-opacity duration-300;
+}
+.group:hover .featured-image-overlay {
+  @apply opacity-100;
+}
+
+.featured-content {
+  @apply flex flex-col justify-center;
+}
+.featured-badge {
+  @apply font-medium mb-4;
+}
+.featured-title {
+  @apply font-bold mb-3 pb-3;
+}
+.featured-excerpt {
+  @apply text-gray-600 dark:text-gray-400 text-lg mb-6 line-clamp-3;
+}
 </style>
