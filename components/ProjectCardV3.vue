@@ -90,11 +90,12 @@ const getIconColor = (tag) => {
         ></div>
         <div
           class="icon-container transform-gpu transition-transform duration-500 group-hover:rotate-y-12"
+          :class="{ 'gauss-scale': project.gaussCMSlogo }"
         >
           <dev-tools-icons-gauss-logo
             v-if="project.gaussCMSlogo"
             :rotate-animation="true"
-            class="tech-icon w-8 h-8 md:w-8 h-8"
+            class="tech-icon preserve-animation w-8 h-8 md:w-8"
           />
 
           <i
@@ -162,7 +163,8 @@ const getIconColor = (tag) => {
 
 <style scoped>
 .project-card {
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  /* Use inset shadow as base border to avoid hover halo */
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   background: linear-gradient(
     to bottom,
@@ -173,12 +175,15 @@ const getIconColor = (tag) => {
   z-index: 1;
   outline: none;
   position: relative;
+  /* Ensure inner content doesn't overlap border mask corners */
+  border-radius: 0.5rem; /* match rounded-lg */
 }
 
 .project-card::before {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   z-index: 0;
   opacity: 0.1;
   pointer-events: none;
@@ -192,13 +197,14 @@ const getIconColor = (tag) => {
     rgba(31, 41, 55, 0.6),
     rgba(31, 41, 55, 0.12)
   );
-  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 .project-card:hover,
 .project-card:focus-within {
   transform: translateY(-4px) scale(1.025);
   box-shadow:
+    inset 0 0 0 1px transparent,
     0 8px 24px rgba(0, 0, 0, 0.16),
     0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 10;
@@ -207,6 +213,7 @@ const getIconColor = (tag) => {
 .dark .project-card:hover,
 .dark .project-card:focus-within {
   box-shadow:
+    inset 0 0 0 1px transparent,
     0 8px 24px rgba(0, 0, 0, 0.28),
     0 2px 8px rgba(0, 0, 0, 0.18);
 }
@@ -218,6 +225,10 @@ const getIconColor = (tag) => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.group:hover .gauss-scale,
+.group:focus-within .gauss-scale {
+  transform: rotateY(12deg) scale(1.13);
 }
 .project-card::after {
   content: "";
@@ -233,10 +244,15 @@ const getIconColor = (tag) => {
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
   opacity: 0;
+  /* Prevent subpixel bleed by aligning to physical pixels */
+  will-change: transform, opacity;
 }
 
 .project-card:hover::after,
@@ -289,8 +305,8 @@ const getIconColor = (tag) => {
   font-size: 2rem;
 }
 
-.group:hover .tech-icon,
-.group:focus-within .tech-icon {
+.group:hover .tech-icon:not(.preserve-animation),
+.group:focus-within .tech-icon:not(.preserve-animation) {
   animation: gentle-pulse 0.45s ease-in-out infinite alternate;
   font-size: 2.5rem;
 }
