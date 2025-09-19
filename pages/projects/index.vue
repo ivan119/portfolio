@@ -22,12 +22,7 @@ const { techStackData, projects, allProjects, error, pending, refresh } =
       <template #default>
         <p class="text-lg">
           Projects where I served as Team Lead at
-          <BaseButton
-            href="https://gauss.hr/en"
-            variant="link"
-            external
-            class="text-teal-400 hover:text-teal-300"
-          >
+          <BaseButton href="https://gauss.hr/en" variant="link" external>
             Gauss
           </BaseButton>
           , leading development and architecture decisions.
