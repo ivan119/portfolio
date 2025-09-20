@@ -3,16 +3,22 @@
     class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-emerald-900/20 relative overflow-hidden"
   >
     <!-- Dotted Background Pattern -->
-    <div class="absolute inset-0 opacity-5 dark:opacity-10">
+    <div class="absolute inset-0 opacity-20 dark:opacity-10">
       <div
-        class="absolute inset-0 animate-grid-move"
+        class="absolute inset-0 dotted-mask"
         style="
-          background-image: radial-gradient(
-            circle at 1px 1px,
-            currentColor 1px,
-            transparent 0
-          );
-          background-size: 40px 40px;
+          /* Use gradient background and mask it with dots */
+          background-image: var(--main-gradient);
+          background-size: 200% auto;
+          -webkit-mask-image: radial-gradient(circle at var(--dot-radius) var(--dot-radius), #000 var(--dot-radius), transparent 0);
+          mask-image: radial-gradient(circle at var(--dot-radius) var(--dot-radius), #000 var(--dot-radius), transparent 0);
+          -webkit-mask-size: var(--dot-gap) var(--dot-gap);
+          mask-size: var(--dot-gap) var(--dot-gap);
+          /* Run both grid movement and gradient shift */
+          will-change: -webkit-mask-position, mask-position, --dot-gap, --dot-radius;
+          -webkit-mask-position: 0 0;
+          mask-position: 0 0;
+          animation: grid-move 20s linear infinite, gradient-shift 4s ease-in-out infinite, dot-wave 8s ease-in-out infinite;
         "
       ></div>
     </div>
@@ -34,25 +40,29 @@
         <div
           v-for="i in 20"
           :key="i"
-          class="absolute w-1 h-1 bg-emerald-400/30 dark:bg-emerald-500/30 rounded-full animate-float"
+          class="absolute w-1 h-1 rounded-full animate-float"
           :style="{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
             animationDelay: `${Math.random() * 3}s`,
             animationDuration: `${3 + Math.random() * 2}s`,
+            backgroundColor: 'color-mix(in srgb, var(--main-gradient-from) 35%, transparent)'
           }"
         ></div>
       </div>
 
       <!-- Glowing orbs -->
       <div
-        class="absolute top-1/4 left-1/3 w-2 h-2 bg-emerald-400 rounded-full animate-ping"
+        class="absolute top-1/4 left-1/3 w-2 h-2 rounded-full animate-ping"
+        style="background: var(--main-glow);"
       ></div>
       <div
-        class="absolute top-3/4 right-1/4 w-1.5 h-1.5 bg-blue-400 rounded-full animate-ping delay-1000"
+        class="absolute top-3/4 right-1/4 w-1.5 h-1.5 rounded-full animate-ping delay-1000"
+        style="background: var(--main-glow);"
       ></div>
       <div
-        class="absolute top-1/2 left-1/2 w-1 h-1 bg-emerald-300 rounded-full animate-ping delay-2000"
+        class="absolute top-1/2 left-1/2 w-1 h-1 rounded-full animate-ping delay-2000"
+        style="background: var(--main-glow);"
       ></div>
     </div>
 
@@ -64,6 +74,50 @@
 </template>
 
 <style scoped>
+/* Dot spacing variables (scoped-safe) */
+.dotted-mask {
+  --dot-gap: 20px; /* denser for light theme */
+  --dot-radius: 1px; /* small, crisp dots */
+}
+:global(.dark) .dotted-mask {
+  --dot-gap: 40px; /* more airy on dark theme */
+  --dot-radius: 1px;
+}
+
+/* Wave animation for mask spacing + position */
+@keyframes dot-wave {
+  0% {
+    --dot-gap: 20px;
+    --dot-radius: 1px;
+    -webkit-mask-position: 0% 0%;
+            mask-position: 0% 0%;
+  }
+  25% {
+    --dot-gap: 22px;
+    --dot-radius: 1.25px;
+    -webkit-mask-position: 25% 10%;
+            mask-position: 25% 10%;
+  }
+  50% {
+    --dot-gap: 24px;
+    --dot-radius: 1.5px;
+    -webkit-mask-position: 50% 0%;
+            mask-position: 50% 0%;
+  }
+  75% {
+    --dot-gap: 22px;
+    --dot-radius: 1.25px;
+    -webkit-mask-position: 75% -10%;
+            mask-position: 75% -10%;
+  }
+  100% {
+    --dot-gap: 20px;
+    --dot-radius: 1px;
+    -webkit-mask-position: 100% 0%;
+            mask-position: 100% 0%;
+  }
+}
+
 /* Grid movement animation */
 @keyframes grid-move {
   0% {
