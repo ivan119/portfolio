@@ -26,7 +26,7 @@
     "typewriter-effect": "^2.22.0"
   },
   "volta": {
-    "node": "24.7.0"
+    "node": "24.8.0"
   },
   "devDependencies": {
     "@types/node": "^24.5.2",
@@ -34,5 +34,8 @@
     "eslint": "^9.36.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3"
+  },
+  "overrides": {
+    "@tresjs/core": "^4.3.0"
   }
 }
