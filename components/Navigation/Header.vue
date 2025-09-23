@@ -8,6 +8,7 @@ import BlogIcon from "~/components/devTools/Icons/Blog.vue";
 import SkillsIcon from "~/components/devTools/Icons/Skills.vue";
 import ProjectsIcon from "~/components/devTools/Icons/Projects.vue";
 import DottedIcon from "~/components/devTools/Icons/Dotted.vue";
+import Tooltip from "~/components/UI/Tooltip.vue";
 const colorMode = useColorMode();
 const showLinks = ref(false);
 
@@ -80,18 +81,21 @@ const links = [
   {
     to: "/skills",
     text: "Skills",
+    tooltipText: "Tech Stack",
     icon: SkillsIcon,
     show: true,
   },
   {
     to: "/projects",
     text: "Projects",
+    tooltipText: "Projects",
     icon: ProjectsIcon,
     show: true,
   },
   {
     to: "/blog",
     text: "Blog",
+    tooltipText: "AI-Powered Blog",
     icon: BlogIcon,
     show: true,
   },
@@ -157,32 +161,35 @@ onUnmounted(() => {
           :key="link.to"
           v-show="showLinks"
         >
-          <NuxtLink
-            v-show="link.show"
-            :to="link.to"
-            @click="handleNavigationClick(link)"
-            exact-active-class="nav-link-active"
-            class="nav-link font-bold relative flex items-center mr-4 text-gray-600 dark:text-gray-300 transition-all duration-300 hover:scale-105"
-            :class="{
-              'is-navigating': isNavigating && activeLink === link.to,
-              'md:hover-main-gradient': !isNavigating || activeLink !== link.to,
-            }"
-            aria-label="Navigation link"
-          >
-            <component :is="link.icon" class="md:hidden" />
-            <span class="hidden md:block">{{ link.text }}</span>
-
-            <!-- Progress indicator -->
-            <div
-              v-if="isNavigating && activeLink === link.to"
-              class="nav-progress-container"
+          <Tooltip :text="link.tooltipText" size="sm">
+            <NuxtLink
+              v-show="link.show"
+              :to="link.to"
+              @click="handleNavigationClick(link)"
+              exact-active-class="nav-link-active"
+              class="nav-link font-bold relative flex items-center mr-4 text-gray-600 dark:text-gray-300 transition-all duration-300 hover:scale-105"
+              :class="{
+                'is-navigating': isNavigating && activeLink === link.to,
+                'md:hover-main-gradient':
+                  !isNavigating || activeLink !== link.to,
+              }"
+              aria-label="Navigation link"
             >
+              <component :is="link.icon" class="md:hidden" />
+              <span class="hidden md:block">{{ link.text }}</span>
+
+              <!-- Progress indicator -->
               <div
-                class="nav-progress-bar"
-                :style="{ width: `${progress}%` }"
-              ></div>
-            </div>
-          </NuxtLink>
+                v-if="isNavigating && activeLink === link.to"
+                class="nav-progress-container"
+              >
+                <div
+                  class="nav-progress-bar"
+                  :style="{ width: `${progress}%` }"
+                ></div>
+              </div>
+            </NuxtLink>
+          </Tooltip>
         </li>
       </transition-group>
 
@@ -221,8 +228,8 @@ onUnmounted(() => {
           :show-active-indicator="false"
           :tooltip="
             colorMode.preference === 'dark'
-              ? 'Bring the Light'
-              : 'Let there be Dark'
+              ? 'Return to Light'
+              : 'Embrace Darkness'
           "
           @click="toggleTheme"
         />
