@@ -155,45 +155,6 @@ definePageMeta({
   animation: pulse 2s infinite;
 }
 
-/* Add shine effect */
-.shine {
-  position: relative;
-  overflow: hidden;
-}
-
-.shine::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.1),
-    transparent
-  );
-  transform: rotate(30deg);
-  animation: shine 6s linear infinite;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.group:hover .shine::before {
-  opacity: 1;
-}
-
-@keyframes shine {
-  0% {
-    transform: rotate(30deg) translateX(-100%);
-  }
-  100% {
-    transform: rotate(30deg) translateX(100%);
-  }
-}
-
 /* Add floating animation */
 @keyframes float {
   0%,

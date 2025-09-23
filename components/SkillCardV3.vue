@@ -441,30 +441,6 @@ const getIconColor = (tag: Tag) => {
   pointer-events: none;
   opacity: 0.5;
 }
-
-/* Add shine effect */
-.shine {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transform: rotate(30deg);
-  transition: transform 0.6s ease;
-  opacity: 0;
-}
-
-.group:hover .shine {
-  transform: rotate(30deg) translateX(100%);
-  opacity: 1;
-}
-
 /* Add pulse animation for expert level skills */
 @keyframes pulse {
   0%,

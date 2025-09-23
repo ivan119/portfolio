@@ -46,7 +46,7 @@ const doImageEffect = ref(false);
 
       <!-- Shine Effect -->
       <div class="featured-shine-wrap">
-        <div class="shine"></div>
+        <div class="shine-featured"></div>
       </div>
 
       <div class="featured-grid">
@@ -108,7 +108,7 @@ const doImageEffect = ref(false);
 
 <style scoped>
 /* Shine effect */
-.shine {
+.shine-featured {
   position: absolute;
   top: -100%;
   left: -100%;
@@ -128,7 +128,7 @@ const doImageEffect = ref(false);
   pointer-events: none;
 }
 
-.group:hover .shine {
+.group:hover .shine-featured {
   transform: rotate(30deg) translateX(50%);
   opacity: 1;
 }

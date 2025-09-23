@@ -24,7 +24,6 @@ const formatDate = (dateString: string) => {
     day: "numeric",
   });
 };
-
 </script>
 
 <template>
@@ -112,32 +111,6 @@ article:focus-within {
     0 8px 24px rgba(0, 0, 0, 0.16),
     0 2px 8px rgba(0, 0, 0, 0.1);
 }
-
-/* Shine effect */
-.shine {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.25),
-    transparent
-  );
-  transform: rotate(30deg);
-  transition:
-    transform 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.4s;
-  opacity: 0;
-}
-
-.group:hover .shine {
-  transform: rotate(30deg) translateX(100%);
-  opacity: 1;
-}
-
 /* Gradient border effect (matches ProjectCardV3) */
 article::after {
   content: "";

@@ -269,6 +269,29 @@ body {
   box-shadow: 0 0 15px rgba(33, 150, 243, 0.5); /* Soft glowing effect */
 }
 
+/* Add shine effect */
+.shine {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+            to right,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            transparent
+    );
+    transform: rotate(30deg);
+    transition: transform 0.6s ease;
+    opacity: 0;
+}
+
+.group:hover .shine {
+    transform: rotate(30deg) translateX(100%);
+    opacity: 1;
+}
+
 .slide-enter-active,
 .slide-leave-active {
   transition: transform 0.963s;
