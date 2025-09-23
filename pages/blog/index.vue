@@ -18,8 +18,10 @@ const allPosts = computed(() => posts.value);
 </script>
 
 <template>
-  <div class="!max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <Navigation-Breadcrumbs class="max-w-7xl mx-auto" />
+  <div
+    class="!max-w-7xl !p-3 md:p-0 mx-auto mx-auto px-4 sm:px-6 lg:px-8 py-12"
+  >
+    <Navigation-Breadcrumbs class="max-w-7xl px-3 sm:px-0 mx-auto" />
     <template v-if="allPosts.length > 0">
       <UIFeaturedPost
         v-if="featuredPost"

@@ -54,7 +54,7 @@ const getHeadingClass = (level: number) => {
     case 1:
       return "text-4xl font-bold mb-6";
     case 2:
-      return "text-3xl font-bold mb-5 mt-8";
+      return "text-3xl font-bold mb-5 mt-8 text-main-gradient";
     case 3:
       return "text-2xl font-bold mb-4 mt-6";
     default:
@@ -77,120 +77,125 @@ const getHeadingClass = (level: number) => {
   </div>
 
   <!-- Loaded State -->
-  <div v-else class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+  <div v-else class="max-w-4xl mx-auto !px-3">
     <!-- Breadcrumbs -->
-    <Navigation-Breadcrumbs class="mb-8" />
-
-    <!-- Post Header -->
-    <header class="mb-8">
-      <div class="flex flex-wrap gap-2 mb-4">
-        <span
-          v-for="tag in post?.tags || []"
-          :key="tag"
-          class="text-xs font-medium px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300"
-        >
-          {{ tag }}
-        </span>
-      </div>
-
-      <h1
-        class="text-4xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent"
-        :style="{ 'view-transition-name': `post-title-${post?.id || postId}` }"
-      >
-        {{ post?.title }}
-      </h1>
-
-      <div class="flex items-center gap-4 mb-8">
-        <div
-          class="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold"
-        >
-          {{ post?.author?.charAt(0) }}
-        </div>
-        <div>
-          <div class="font-medium text-gray-900 dark:text-white">
-            {{ post?.author }}
-          </div>
-          <div class="text-sm text-gray-500">
-            {{ formatDate(post?.date) }}
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- Featured Image -->
-    <div class="mb-12">
-      <NuxtImg
-        :src="post?.coverImage || ''"
-        :alt="post?.title || ''"
-        :style="{ 'view-transition-name': `post-image-${post?.id || postId}` }"
-        class="rounded-lg w-full"
-        format="webp"
-        loading="eager"
-        :width="1200"
-        :height="675"
-        fetchpriority="high"
-      />
-    </div>
-
-    <!-- Post Content -->
-    <article class="prose prose-lg dark:prose-invert max-w-none">
-      <div v-for="(item, index) in post?.content || []" :key="index">
-        <!-- Headings -->
-        <component
-          :is="`h${item.level || 2}`"
-          v-if="isHeading(item)"
-          :class="getHeadingClass(item.level || 2)"
-        >
-          {{ item.content }}
-        </component>
-
-        <!-- Paragraphs -->
-        <p v-else-if="isParagraph(item)" class="mb-6">
-          {{ item.content }}
-        </p>
-
-        <!-- Images -->
-        <figure v-else-if="isImage(item)" class="my-8">
-          <NuxtImg
-            :src="item.src"
-            :alt="item.alt"
-            class="rounded-lg w-full"
-            format="webp"
-            loading="eager"
-            :width="1024"
-            :height="576"
-            fetchpriority="high"
-          />
-          <figcaption
-            v-if="item.caption"
-            class="text-center text-gray-500 mt-2"
+    <Navigation-Breadcrumbs class="mb-8 px-3" />
+    <UIBanner title="" description="" class="-mx-0 md:-mx-6">
+      <!-- Post Header -->
+      <header class="mb-8">
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span
+            v-for="tag in post?.tags || []"
+            :key="tag"
+            class="text-xs font-medium px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300"
           >
-            {{ item.caption }}
-          </figcaption>
-        </figure>
-      </div>
-    </article>
+            {{ tag }}
+          </span>
+        </div>
 
-    <!-- Back to Blog -->
-    <div class="mt-16 text-center">
-      <NuxtLink
-        to="/blog"
-        class="inline-flex items-center gap-2 font-medium hover:gap-3 transition-all duration-300 ease-in-out group text-main-gradient"
-      >
-        <svg
-          class="w-5 h-5 text-main-gradient group-hover:text-blue-500 transform transition-transform duration-300 ease-in-out group-hover:animate-bounce-left"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+        <h1
+          class="text-4xl font-bold pb-6 text-main-gradient"
+          :style="{
+            'view-transition-name': `post-title-${post?.id || postId}`,
+          }"
         >
-          <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-        <span>Back To Blog</span>
-      </NuxtLink>
-    </div>
+          {{ post?.title }}
+        </h1>
+
+        <div class="flex items-center gap-4 mb-8">
+          <div
+            class="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold"
+          >
+            {{ post?.author?.charAt(0) }}
+          </div>
+          <div>
+            <div class="font-medium text-gray-900 dark:text-white">
+              {{ post?.author }}
+            </div>
+            <div class="text-sm text-gray-500">
+              {{ formatDate(post?.date) }}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Featured Image -->
+      <div class="mb-12">
+        <NuxtImg
+          :src="post?.coverImage || ''"
+          :alt="post?.title || ''"
+          :style="{
+            'view-transition-name': `post-image-${post?.id || postId}`,
+          }"
+          class="rounded-lg w-full"
+          format="webp"
+          loading="eager"
+          :width="1200"
+          :height="675"
+          fetchpriority="high"
+        />
+      </div>
+
+      <!-- Post Content -->
+      <article class="prose prose-lg dark:prose-invert max-w-none">
+        <div v-for="(item, index) in post?.content || []" :key="index">
+          <!-- Headings -->
+          <component
+            :is="`h${item.level || 2}`"
+            v-if="isHeading(item)"
+            :class="getHeadingClass(item.level || 2)"
+          >
+            {{ item.content }}
+          </component>
+
+          <!-- Paragraphs -->
+          <p v-else-if="isParagraph(item)" class="mb-6">
+            {{ item.content }}
+          </p>
+
+          <!-- Images -->
+          <figure v-else-if="isImage(item)" class="my-8">
+            <NuxtImg
+              :src="item.src"
+              :alt="item.alt"
+              class="rounded-lg w-full"
+              format="webp"
+              loading="eager"
+              :width="1024"
+              :height="576"
+              fetchpriority="high"
+            />
+            <figcaption
+              v-if="item.caption"
+              class="text-center text-gray-500 mt-2"
+            >
+              {{ item.caption }}
+            </figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- Back to Blog -->
+      <div class="mt-16 text-center">
+        <NuxtLink
+          to="/blog"
+          class="inline-flex items-center gap-2 font-medium hover:gap-3 transition-all duration-300 ease-in-out group text-main-gradient"
+        >
+          <svg
+            class="w-5 h-5 text-main-gradient group-hover:text-blue-500 transform transition-transform duration-300 ease-in-out group-hover:animate-bounce-left"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          <span>Back To Blog</span>
+        </NuxtLink>
+      </div>
+    </UIBanner>
   </div>
 </template>
 
