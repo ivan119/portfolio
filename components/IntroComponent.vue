@@ -367,9 +367,6 @@ onUnmounted(() => {
 </style>
 
 <template>
-  <!-- All markup exists immediately (prevents CLS). Each element has data-typer,
-       one element (the "Or contact ..." h3) has data-attach used to attach portfolio listener
-  -->
   <article
     class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-10 pt-8"
     :class="{ 'fade-in': fadeInClass, hidden: hideNow }"
