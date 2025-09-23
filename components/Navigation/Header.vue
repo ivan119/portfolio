@@ -165,7 +165,7 @@ onUnmounted(() => {
             class="nav-link font-bold relative flex items-center mr-4 text-gray-600 dark:text-gray-300 transition-all duration-300 hover:scale-105"
             :class="{
               'is-navigating': isNavigating && activeLink === link.to,
-              'hover-main-gradient': !isNavigating || activeLink !== link.to,
+              'md:hover-main-gradient': !isNavigating || activeLink !== link.to,
             }"
             aria-label="Navigation link"
           >
@@ -233,7 +233,7 @@ onUnmounted(() => {
 
 <style scoped>
 .nav-link-active {
-  @apply text-transparent;
+  @apply md:text-transparent;
   background-clip: text;
   -webkit-background-clip: text;
   background-image: var(--main-gradient);
