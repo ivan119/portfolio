@@ -151,7 +151,12 @@ onUnmounted(() => {
     </div>
     <div class="flex items-center justify-center">
       <transition-group name="nav" tag="ul" class="flex">
-        <li v-for="link in links" :key="link.to" v-show="showLinks">
+        <li
+          class="flex"
+          v-for="link in links"
+          :key="link.to"
+          v-show="showLinks"
+        >
           <NuxtLink
             v-show="link.show"
             :to="link.to"
