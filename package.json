@@ -17,8 +17,7 @@
     "@nuxtjs/tailwindcss": "6.14.0",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.18",
-    "@tresjs/cientos": "^4.3.0",
-    "@tresjs/nuxt": "^4.0.0",
+    "@vueuse/nuxt": "^13.9.0",
     "devicon": "^2.16.0",
     "mongoose": "^8.18.1",
     "nanoid": "^5.1.5",
@@ -35,8 +34,5 @@
     "eslint": "^9.36.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3"
-  },
-  "overrides": {
-    "@tresjs/core": "^4.3.0"
   }
 }

@@ -21,8 +21,8 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
-    "@tresjs/nuxt",
     "@nuxt/image",
+    "@vueuse/nuxt",
   ],
   postcss: {
     plugins: {
@@ -55,9 +55,9 @@ export default defineNuxtConfig({
       MONGODB_URI: process.env.MONGODB_URI,
     },
   },
-  nitro : {
-    plugins: ['~/server/index.ts']
-  }
+  nitro: {
+    plugins: ["~/server/index.ts"],
+  },
   /*
   nitro: {
     routeRules: {
