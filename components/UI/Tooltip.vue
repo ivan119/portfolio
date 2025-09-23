@@ -44,6 +44,7 @@ interface Props {
   theme?: "dark" | "light" | "brand";
   delay?: number;
   customStyles?: Record<string, string>;
+  autoHideMs?: number; // auto-hide after shown
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -52,6 +53,7 @@ const props = withDefaults(defineProps<Props>(), {
   theme: "dark",
   delay: 200,
   customStyles: () => ({}),
+  autoHideMs: 3690,
 });
 
 const showTooltip = ref(false);
@@ -60,6 +62,10 @@ const currentPosition = ref(props.position);
 const isTouch = ref(false);
 const touchStartTime = ref(0);
 const adjustedStyles = ref<Record<string, string>>({});
+const hideTimer = ref<number | null>(null);
+const lastInteractionType = ref<"hover" | "click" | "touch" | "programmatic">(
+  "programmatic",
+);
 
 // Combine custom styles with adjusted positioning styles
 const tooltipStyles = computed(() => ({
@@ -69,6 +75,7 @@ const tooltipStyles = computed(() => ({
 
 const handleMouseEnter = () => {
   if (!isTouch.value) {
+    lastInteractionType.value = "hover";
     showTooltip.value = true;
   }
 };
@@ -85,6 +92,7 @@ const handleClick = (e: MouseEvent) => {
     e.preventDefault();
     return;
   }
+  lastInteractionType.value = "click";
   toggleTooltip();
 };
 
@@ -100,6 +108,7 @@ const handleTouchEnd = (e: TouchEvent) => {
   // Only toggle tooltip if it was a quick tap (not a scroll)
   // And don't prevent default - let button clicks work
   if (touchDuration < 300) {
+    lastInteractionType.value = "touch";
     toggleTooltip();
   }
 
@@ -115,6 +124,22 @@ const toggleTooltip = () => {
 
 const hideTooltip = () => {
   showTooltip.value = false;
+};
+
+const clearHideTimer = () => {
+  if (hideTimer.value !== null) {
+    clearTimeout(hideTimer.value);
+    hideTimer.value = null;
+  }
+};
+
+const scheduleHide = () => {
+  clearHideTimer();
+  if ((props.autoHideMs || 0) > 0) {
+    hideTimer.value = window.setTimeout(() => {
+      hideTooltip();
+    }, props.autoHideMs);
+  }
 };
 
 // Improved viewport positioning
@@ -212,6 +237,12 @@ watch(showTooltip, (val) => {
     nextTick(() => {
       adjustTooltipPosition();
     });
+    // Only auto-hide when not hovered (desktop hover should control visibility)
+    if (lastInteractionType.value !== "hover") {
+      scheduleHide();
+    }
+  } else {
+    clearHideTimer();
   }
 });
 
@@ -225,6 +256,7 @@ onUnmounted(() => {
   document.removeEventListener("click", onClickOutside, true);
   document.removeEventListener("touchend", onClickOutside, true);
   document.removeEventListener("keydown", onEscapeKey);
+  clearHideTimer();
 });
 </script>
 
