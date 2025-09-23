@@ -188,9 +188,7 @@ onUnmounted(() => {
           :is-active="activeTheme === 'dotted'"
           variant="dotted"
           :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
-          :tooltip="
-            activeTheme === 'dotted' ? 'Switch to Default' : 'Switch to Dotted'
-          "
+          tooltip="Toggle Background Animation"
           @click="
             toggleBackground(activeTheme === 'dotted' ? 'default' : 'dotted')
           "
@@ -218,8 +216,8 @@ onUnmounted(() => {
           :show-active-indicator="false"
           :tooltip="
             colorMode.preference === 'dark'
-              ? 'Switch to Light'
-              : 'Switch to Dark'
+              ? 'Bring the Light'
+              : 'Let there be Dark'
           "
           @click="toggleTheme"
         />
