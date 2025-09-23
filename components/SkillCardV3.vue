@@ -1,4 +1,13 @@
 <script setup lang="ts">
+useHead({
+  link: [
+    {
+      rel: "stylesheet",
+      type: "text/css",
+      href: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css",
+    },
+  ],
+});
 interface Tag {
   name: string;
   icon: string;

@@ -1,4 +1,13 @@
-<script setup>
+<script setup lang="ts">
+useHead({
+  link: [
+    {
+      rel: "stylesheet",
+      type: "text/css",
+      href: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css",
+    },
+  ],
+});
 const props = defineProps({
   project: {
     type: Object,

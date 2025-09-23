@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import ProjectCardV3 from "@/components/ProjectCardV3.vue";
 import { useProjects } from "~/composables/useProjects";
-import "devicon/devicon.min.css";
 
 const showFrameworkDetails = ref(false);
 
-const { techStackData, projects, allProjects, error, pending, refresh } =
-  await useProjects();
+const { projects, allProjects, error, pending, refresh } = await useProjects();
 </script>
 
 <template>

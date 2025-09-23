@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import SkillCardV3 from "~/components/SkillCardV3.vue";
 import { useSkills } from "~/composables/skills/useSkills";
 
