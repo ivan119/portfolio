@@ -5,13 +5,21 @@ interface Post {
   excerpt: string;
   author: string;
   date: string;
+  coverImage?: string; // 👈 include this since you’re now storing image URLs
 }
 
-const props = defineProps<{
-  post: Post;
-  imageUrl: string;
-  useBgDots?: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    post: Post;
+    imageUrl: string;
+    useBgDots?: boolean;
+    loading?: boolean;
+  }>(),
+  {
+    useBgDots: false,
+    loading: false,
+  },
+);
 
 // Format date nicely
 const formatDate = (dateString: string) => {
@@ -26,7 +34,7 @@ const doImageEffect = ref(false);
 </script>
 
 <template>
-  <NuxtLink :to="`blog/${post.id}`" class="group featured-link">
+  <NuxtLink :to="`/blog/${post.id}`" class="group featured-link">
     <div class="featured-container">
       <!-- Dotted Background -->
       <div v-if="useBgDots" class="featured-dots">
@@ -45,18 +53,27 @@ const doImageEffect = ref(false);
         <!-- Left: Featured Image -->
         <div class="featured-image">
           <div class="featured-image-wrap">
-            <NuxtImg
-              :src="imageUrl"
-              :alt="post.title"
-              :style="{
-                'view-transition-name': `post-image-${post.id}`,
-              }"
-              class="featured-image-img"
-              format="webp"
-              loading="lazy"
-              width="800"
-              height="450"
-            />
+            <template v-if="!props.loading">
+              <NuxtImg
+                v-if="post"
+                :src="imageUrl || post.coverImage"
+                :alt="post.title"
+                :style="{
+                  'view-transition-name': `post-image-${post.id}`,
+                }"
+                class="featured-image-img"
+                format="webp"
+                loading="lazy"
+                width="800"
+                height="450"
+              />
+            </template>
+            <template v-else>
+              <!-- Skeleton, no view-transition-name to avoid errors -->
+              <div
+                class="w-full h-full bg-gray-200 dark:bg-gray-700 animate-pulse"
+              ></div>
+            </template>
             <div class="featured-image-overlay"></div>
           </div>
         </div>
@@ -64,12 +81,21 @@ const doImageEffect = ref(false);
         <!-- Right: Featured Post Content -->
         <div class="featured-content">
           <span class="featured-badge">Latest Post</span>
-          <h1
-            class="heading-1 featured-title text-main-gradient"
-            :style="{ 'view-transition-name': `post-title-${post.id}` }"
-          >
-            {{ post.title }}
-          </h1>
+          <template v-if="!props.loading">
+            <h1
+              v-if="post"
+              class="heading-1 featured-title text-main-gradient"
+              :style="{ 'view-transition-name': `post-title-${post.id}` }"
+            >
+              {{ post.title }}
+            </h1>
+          </template>
+          <template v-else>
+            <!-- Skeleton, no view-transition-name -->
+            <div
+              class="h-10 w-3/4 rounded bg-gray-200 dark:bg-gray-700 animate-pulse mb-3"
+            ></div>
+          </template>
           <p class="featured-excerpt">
             {{ post.excerpt }}
           </p>

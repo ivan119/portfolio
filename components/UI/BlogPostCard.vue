@@ -5,6 +5,7 @@ interface Post {
   excerpt: string;
   author: string;
   date: string;
+  coverImage?: string;
   content: any[];
 }
 
@@ -24,22 +25,11 @@ const formatDate = (dateString: string) => {
   });
 };
 
-// Get the first image from the content if available
-const getPostImage = (post: Post) => {
-  // For the AI Agents post, use our custom image
-  if (post.id === "ai-agents-transforming-digital-landscape") {
-    return "/images/blog/ai-agents/AI agents transforming the digital landscape..webp";
-  }
-
-  // For other posts, try to find an image in the content
-  const imageContent = post.content.find((item: any) => item.type === "image");
-  return imageContent ? imageContent.src : "/images/blog/default-cover.jpg";
-};
 </script>
 
 <template>
   <NuxtLink
-    :to="`blog/${post.id}`"
+    :to="`/blog/${post.id}`"
     @mouseover="doImageEffect = true"
     @mouseleave="doImageEffect = false"
     class="block group"
@@ -62,8 +52,10 @@ const getPostImage = (post: Post) => {
       <!-- Image Container -->
       <div class="relative aspect-video overflow-hidden">
         <NuxtImg
-          :src="getPostImage(post)"
+          v-if="post.coverImage"
+          :src="post.coverImage"
           :alt="post.title"
+          :style="{ 'view-transition-name': `post-image-${post.id}` }"
           class="w-full h-full object-cover transform transition-transform duration-500"
           :class="{ 'scale-105': doImageEffect }"
           format="webp"
@@ -84,6 +76,7 @@ const getPostImage = (post: Post) => {
       <div class="p-6">
         <h3
           class="heading-3 font-bold mb-2 text-main-gradient"
+          :style="{ 'view-transition-name': `post-title-${post.id}` }"
         >
           {{ post.title }}
         </h3>

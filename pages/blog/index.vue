@@ -1,49 +1,37 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import AiGeneratedBlogs from "~/components/AiGeneratedBlogs.vue";
+import { usePosts } from "~/composables/usePosts";
 
 definePageMeta({
   pageTransition: false,
   layoutTransition: false,
 });
 
-// Fetch posts from server API (SSR-friendly + cached)
-const { data } = await useFetch("/api/blog/ai/posts", {
-  server: true,
-  lazy: false,
-  default: () => ({ posts: [], latest_post: null }),
-});
+const { posts, latestPost, fetchPosts } = usePosts();
 
-const posts = computed(() => data.value?.posts || []);
-const featuredPost = computed(() => data.value?.latest_post || null);
+// Ensure posts are available (SSR + client)
+await fetchPosts();
 
-// Get the first image from the content if available
-const getPostImage = (post: any) => {
-  if (!post) return "/images/blog/default-cover.jpg";
-  if (post.id === "ai-agents-transforming-digital-landscape") {
-    return "/images/blog/ai-agents/AI agents transforming the digital landscape..webp";
-  }
-  const imageContent = post.content?.find((item: any) => item.type === "image");
-  return imageContent ? imageContent.src : "/images/blog/default-cover.jpg";
-};
+const featuredPost = computed(() => latestPost.value);
+const allPosts = computed(() => posts.value);
 </script>
 
 <template>
   <div class="!max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <Navigation-Breadcrumbs class="max-w-7xl mx-auto" />
-
-    <template v-if="posts.length > 0">
+    <template v-if="allPosts.length > 0">
       <UIFeaturedPost
         v-if="featuredPost"
         :post="featuredPost"
-        :image-url="getPostImage(featuredPost)"
+        :image-url="featuredPost.coverImage"
         :use-bg-dots="true"
         class="mb-16 mt-3 !slide-enter-active"
       />
 
       <!-- Blog Posts Section -->
       <div class="mb-16">
-        <AiGeneratedBlogs :posts="posts" />
+        <AiGeneratedBlogs :posts="allPosts" />
       </div>
     </template>
     <template v-else>
@@ -51,7 +39,9 @@ const getPostImage = (post: any) => {
         title="No blog posts yet"
         description="AI-generated posts will appear here once available. Please check back soon."
       >
-        <BaseButton variant="primary" @click="$router.push('/')">Go Home</BaseButton>
+        <BaseButton variant="primary" @click="$router.push('/')"
+          >Go Home</BaseButton
+        >
       </UIEmptyState>
     </template>
   </div>

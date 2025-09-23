@@ -52,8 +52,12 @@ export default defineNuxtConfig({
       githubApiUrl: "https://api.github.com",
       blogGenerationEnabled: process.env.BLOG_GENERATION_ENABLED === "true",
       maxBlogTokens: Number(process.env.MAX_BLOG_TOKENS) || 1500,
+      MONGODB_URI: process.env.MONGODB_URI,
     },
   },
+  nitro : {
+    plugins: ['~/server/index.ts']
+  }
   /*
   nitro: {
     routeRules: {

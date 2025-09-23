@@ -20,6 +20,7 @@
     "@tresjs/cientos": "^4.3.0",
     "@tresjs/nuxt": "^4.0.0",
     "devicon": "^2.16.0",
+    "mongoose": "^8.18.1",
     "nanoid": "^5.1.5",
     "nuxt": "^4.1.2",
     "three": "^0.180.0",

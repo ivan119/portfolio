@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
+
+import { usePosts } from "~/composables/usePosts";
 
 interface AiContentItem {
   type: string;
@@ -19,30 +20,22 @@ interface AiBlogPost {
   author: string;
   category: string;
   tags: string[];
+  coverImage: string;
   content: AiContentItem[];
 }
 
 const route = useRoute();
 const postId = route.params.id as string;
 
-// Fetch single post from server API (SSR-friendly)
-const { data, error } = await useFetch<{ post: AiBlogPost | null }>(
-  () => `/api/blog/ai/post/${postId}`,
-  {
-    server: true,
-    lazy: false,
-    default: () => ({ post: null }),
-  },
-);
-
-const post = computed(() => data.value?.post || null);
-const notFound = computed(() => !post.value || !!error.value);
+const { fetchPostById } = usePosts();
+const post = await fetchPostById(route.params.id as string);
 
 definePageMeta({
   pageTransition: false,
 });
 // Format date nicely
-const formatDate = (dateString: string) => {
+const formatDate = (dateString: string | undefined) => {
+  if (!dateString) return "";
   return new Date(dateString).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -68,70 +61,23 @@ const getHeadingClass = (level: number) => {
       return "text-xl font-bold mb-3 mt-4";
   }
 };
-
-// Get the first image from the content if available
-const getMainImage = (): string => {
-  if (!post.value)
-    return "/images/blog/ai-agents/AI agents transforming the digital landscape..webp";
-  // Check if this is the latest post (AI Agents post)
-
-  // For other posts, try to find an image in the content
-  const imageItem = post.value.content.find((item: AiContentItem) => item.type === "image");
-  return imageItem && imageItem.src
-    ? imageItem.src
-    : "/images/blog/default-cover.jpg";
-};
-
-// Get the correct image source based on the post and image position
-const getCorrectImageSrc = (item: AiContentItem): string => {
-  if (!post.value) return item.src || "";
-
-  // If this is the AI Agents post, use our custom images
-  if (post.value.id === "ai-agents-transforming-digital-landscape") {
-    // Map the original image paths to our new images
-    if (
-      item.src === "/images/blog/ai-agents/ai-digital-landscape.jpg" ||
-      item.src ===
-        "/images/blog/ai-agents/AI agents transforming the digital landscape..webp"
-    ) {
-      return "/images/blog/ai-agents/AI agents transforming the digital landscape..webp";
-    } else if (
-      item.src === "/images/blog/ai-agents/ai-evolution-timeline.jpg" ||
-      item.src ===
-        "/images/blog/ai-agents/I agents seamlessly integrating into daily life and work..webp"
-    ) {
-      return "/images/blog/ai-agents/I agents seamlessly integrating into daily life and work..webp";
-    } else if (
-      item.src === "/images/blog/ai-agents/ai-industry-transformation.jpg" ||
-      item.src ===
-        "/images/blog/ai-agents/AI agents revolutionizing industries..webp"
-    ) {
-      return "/images/blog/ai-agents/AI agents revolutionizing industries..webp";
-    } else if (
-      item.src === "/images/blog/ai-agents/ai-future-collaboration.jpg" ||
-      item.src ===
-        "/images/blog/ai-agents/Emphasizing human-AI collaboration in various fields..webp"
-    ) {
-      return "/images/blog/ai-agents/Emphasizing human-AI collaboration in various fields..webp";
-    }
-  }
-
-  // For other posts or if no match, return the original source
-  return item.src || "";
-};
 </script>
 
 <template>
-  <div v-if="notFound" class="container mx-auto px-4 py-16">
+  <!-- Not Found State -->
+  <div v-if="post.length === 0" class="container mx-auto px-4 py-16">
     <UIEmptyState
       title="Post not found"
       description="The blog post you're looking for doesn't exist or has been removed."
     >
-      <BaseButton variant="primary" @click="$router.push('/blog')">Back to Blog</BaseButton>
+      <BaseButton variant="primary" @click="$router.push('/blog')"
+        >Back to Blog</BaseButton
+      >
     </UIEmptyState>
   </div>
 
-  <div v-else-if="post" class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+  <!-- Loaded State -->
+  <div v-else class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
     <!-- Breadcrumbs -->
     <Navigation-Breadcrumbs class="mb-8" />
 
@@ -139,7 +85,7 @@ const getCorrectImageSrc = (item: AiContentItem): string => {
     <header class="mb-8">
       <div class="flex flex-wrap gap-2 mb-4">
         <span
-          v-for="tag in post.tags"
+          v-for="tag in post?.tags || []"
           :key="tag"
           class="text-xs font-medium px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300"
         >
@@ -149,23 +95,23 @@ const getCorrectImageSrc = (item: AiContentItem): string => {
 
       <h1
         class="text-4xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent"
-        :style="{ 'view-transition-name': `post-title-${post.id}` }"
+        :style="{ 'view-transition-name': `post-title-${post?.id || postId}` }"
       >
-        {{ post.title }}
+        {{ post?.title }}
       </h1>
 
       <div class="flex items-center gap-4 mb-8">
         <div
           class="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold"
         >
-          {{ post.author.charAt(0) }}
+          {{ post?.author?.charAt(0) }}
         </div>
         <div>
           <div class="font-medium text-gray-900 dark:text-white">
-            {{ post.author }}
+            {{ post?.author }}
           </div>
           <div class="text-sm text-gray-500">
-            {{ formatDate(post.date) }}
+            {{ formatDate(post?.date) }}
           </div>
         </div>
       </div>
@@ -174,9 +120,9 @@ const getCorrectImageSrc = (item: AiContentItem): string => {
     <!-- Featured Image -->
     <div class="mb-12">
       <NuxtImg
-        :src="getMainImage()"
-        :alt="post.title"
-        :style="{ 'view-transition-name': `post-image-${post.id}` }"
+        :src="post?.coverImage || ''"
+        :alt="post?.title || ''"
+        :style="{ 'view-transition-name': `post-image-${post?.id || postId}` }"
         class="rounded-lg w-full"
         format="webp"
         loading="eager"
@@ -187,7 +133,7 @@ const getCorrectImageSrc = (item: AiContentItem): string => {
 
     <!-- Post Content -->
     <article class="prose prose-lg dark:prose-invert max-w-none">
-      <div v-for="(item, index) in post.content" :key="index">
+      <div v-for="(item, index) in post?.content || []" :key="index">
         <!-- Headings -->
         <component
           :is="`h${item.level || 2}`"
@@ -205,7 +151,7 @@ const getCorrectImageSrc = (item: AiContentItem): string => {
         <!-- Images -->
         <figure v-else-if="isImage(item)" class="my-8">
           <NuxtImg
-            :src="getCorrectImageSrc(item)"
+            :src="item.src"
             :alt="item.alt"
             class="rounded-lg w-full"
             format="webp"
@@ -227,28 +173,20 @@ const getCorrectImageSrc = (item: AiContentItem): string => {
     <div class="mt-16 text-center">
       <NuxtLink
         to="/blog"
-        class="inline-flex items-center gap-2 bg-gradient-to-r from-teal-500 to-blue-500 dark:from-teal-400 dark:to-blue-400 bg-clip-text font-medium hover:gap-3 transition-all duration-300 ease-in-out group"
+        class="inline-flex items-center gap-2 font-medium hover:gap-3 transition-all duration-300 ease-in-out group text-main-gradient"
       >
         <svg
-          class="w-5 h-5 transform transition-transform duration-300 ease-in-out group-hover:animate-bounce-left"
+          class="w-5 h-5 text-main-gradient group-hover:text-blue-500 transform transition-transform duration-300 ease-in-out group-hover:animate-bounce-left"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="url(#arrow-gradient)"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
         >
-          <defs>
-            <linearGradient id="arrow-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#14b8a6" />
-              <stop offset="100%" stop-color="#3b82f6" />
-            </linearGradient>
-          </defs>
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M10 19l-7-7m0 0l7-7m-7 7h18"
-          ></path>
+          <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
-        <span class="text-transparent"> Back To Blog </span>
+        <span>Back To Blog</span>
       </NuxtLink>
     </div>
   </div>
@@ -256,7 +194,8 @@ const getCorrectImageSrc = (item: AiContentItem): string => {
 
 <style scoped>
 @keyframes bounce-left {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
   50% {
