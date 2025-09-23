@@ -359,7 +359,7 @@ onUnmounted(() => {
 /* hidden toggle */
 
 [data-typer] {
-  white-space: pre-wrap; /* keeps consistent wrapping */
+  @apply whitespace-normal md:whitespace-pre;
 }
 .hidden {
   display: none;
