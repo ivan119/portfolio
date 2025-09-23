@@ -134,7 +134,7 @@ const transition = computed(() => ({
         <Footer class="container" />
       </template>
 
-      <ScrollProgress />
+      <ScrollProgress :visibility="showMainContent" />
     </div>
   </div>
 </template>

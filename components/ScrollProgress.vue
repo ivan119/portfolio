@@ -1,7 +1,7 @@
 <template>
   <!-- Side Scroll Progress Indicator -->
   <div
-    v-show="isScrollable"
+    v-show="isScrollable && visibility"
     class="scroll-progress-container"
     @click="handleProgressClick"
     @mouseenter="showProgressTooltip = true"
@@ -28,7 +28,7 @@
   <!-- Back to Top Button with Circular Progress Indicator -->
   <Transition name="slide-fade">
     <button
-      v-if="showBackToTop"
+      v-if="showBackToTop && visibility"
       @click="scrollToTop"
       class="back-to-top-btn"
       aria-label="Back to top"
@@ -70,6 +70,13 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 const progress = ref(0);
 const isScrollable = ref(false);
+
+const props = defineProps({
+  visibility: {
+    type: Boolean,
+    default: true,
+  },
+});
 const showBackToTop = ref(false);
 const showProgressTooltip = ref(false);
 const hoverProgress = ref(0);
