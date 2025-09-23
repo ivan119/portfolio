@@ -142,7 +142,7 @@ const transition = computed(() => ({
 <style scoped>
 /* Enable smoother transitions */
 :root {
-  --view-transition-duration: 300ms;
+  --view-transition-duration: 369ms;
 }
 
 ::view-transition-old(root),
@@ -156,9 +156,6 @@ const transition = computed(() => ({
 }
 ::view-transition-new(root) {
   animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
-}
-.mainClass {
-  background: red !important;
 }
 /* Content container for proper z-index ordering */
 .content-container {
