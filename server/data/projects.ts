@@ -1,4 +1,4 @@
-import type { ProjectItem } from "~/types/project";
+   import type { ProjectItem } from "~/types/project";
 
 export interface TechStackEntry {
   icon: string;

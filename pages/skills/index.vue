@@ -3,31 +3,10 @@ import "devicon/devicon.min.css";
 import SkillCardV3 from "~/components/SkillCardV3.vue";
 import { useSkills } from "~/composables/skills/useSkills";
 
-const router = useRouter();
-
 const showFrameworkDetails = ref(false);
 
 // Get skills data from composable (server-side)
 const { preferredSkills, skills, experiencedSkills } = await useSkills();
-
-// Navigate to skill detail page
-const navigateToSkill = (skill) => {
-  const slug = (
-    skill.id || skill.name.toLowerCase().replace(/\s+/g, "-")
-  ).toLowerCase();
-  const hasDetailPage = [
-    "nuxtjs",
-    "javascript",
-    "vuejs",
-    "tailwindcss",
-  ].includes(slug);
-
-  if (hasDetailPage) {
-    router.push(`/skills/${slug}`);
-  } else if (skill.url) {
-    window.open(skill.url, "_blank");
-  }
-};
 
 // Always open official site for experienced skills
 const openOfficial = (skill) => {
@@ -71,7 +50,7 @@ definePageMeta({
             <SkillCardV3
               v-for="skill in preferredSkills"
               :key="skill.name"
-              @click.prevent="navigateToSkill(skill)"
+              @click.prevent="openOfficial(skill)"
               class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
               :skill="{
                 title: skill.name,

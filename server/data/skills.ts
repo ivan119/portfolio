@@ -1,4 +1,8 @@
-import type { BasicSkill, DetailedSkill, SkillsListResponse } from "~/types/skills";
+import type {
+  BasicSkill,
+  DetailedSkill,
+  SkillsListResponse,
+} from "~/types/skills";
 
 export const preferredSkills: BasicSkill[] = [
   {
@@ -310,19 +314,8 @@ export const experiencedSkills: BasicSkill[] = [
   },
 ];
 
-// Detailed skills come from existing data file to keep content DRY
-// We import from ~/data/skills and map by id
-import { getAllSkills, getSkillBySlug } from "~/data/skills";
-
 export const listSkills = (): SkillsListResponse => ({
   preferredSkills,
   experiencedSkills,
   skills,
 });
-
-export const findSkillById = (slug: string): DetailedSkill | null => {
-  const skill = getSkillBySlug(slug);
-  return skill || null;
-};
-
-
