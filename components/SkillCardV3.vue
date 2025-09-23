@@ -26,9 +26,7 @@ type TechColorMap = {
 };
 
 // Type for category colors mapping
-type CategoryColorMap = {
-  [key: string]: string[];
-};
+type CategoryColorMap = Record<string, [string, string]>;
 
 // Type for proficiency colors mapping
 type ProficiencyColorMap = {
@@ -131,7 +129,10 @@ const getTechColor = (iconClass: string) => {
   // Extract the base name of the icon from classes like "devicon-react plain" or "devicon-react"
   const baseIconClass = iconClass.split(" ")[0];
 
-  return techColors[baseIconClass] || getCategoryColor(props.skill.categories);
+  return (
+    techColors[baseIconClass as keyof typeof techColors] ||
+    getCategoryColor(props.skill.categories)
+  );
 };
 
 // Function to get icon classes with colored option
@@ -163,7 +164,7 @@ const getCategoryColor = (categories: string[]) => {
   return "#6B7280";
 };
 
-const getGradientColors = (categories: string[]) => {
+const getGradientColors = (categories: string[]): [string, string] => {
   const baseColor = getCategoryColor(categories);
   const colors: CategoryColorMap = {
     Frontend: ["#3B82F6", "#60A5FA"],
@@ -178,8 +179,10 @@ const getGradientColors = (categories: string[]) => {
     default: ["#6B7280", "#9CA3AF"],
   };
 
-  const category = categories[0]?.toLowerCase() || "default";
-  return colors[category as keyof typeof colors] || colors.default;
+  const category = (categories[0]?.toLowerCase() ||
+    "default") as keyof typeof colors;
+  const pair = colors[category] ?? colors.default;
+  return pair as [string, string];
 };
 
 const getProficiencyColor = (proficiency?: string) => {
@@ -367,6 +370,9 @@ const getIconColor = (tag: Tag) => {
   transform-style: preserve-3d;
   height: 220px; /* Reduced height for better fit */
   z-index: 1;
+  /* Improve initial rendering: skip offscreen painting and layout until needed */
+  content-visibility: auto;
+  contain-intrinsic-size: 220px;
 }
 
 .dark .skill-card {
@@ -440,6 +446,78 @@ const getIconColor = (tag: Tag) => {
   mask-composite: exclude;
   pointer-events: none;
   opacity: 0.5;
+}
+
+/* Add glow effect on hover */
+.skill-card:hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(
+    45deg,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Add pulse animation for expert level skills */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.group[data-proficiency="Expert"]:hover {
+  animation: pulse 2s infinite;
+}
+
+/* Add floating animation */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.group:hover {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Framework showcase animation */
+.translate-x-0 {
+  transform: translateX(0);
+}
+
+.translate-x-full {
+  transform: translateX(100%);
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 /* Add pulse animation for expert level skills */
 @keyframes pulse {

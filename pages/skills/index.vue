@@ -1,12 +1,11 @@
 <script setup>
-import "devicon/devicon.min.css";
 import SkillCardV3 from "~/components/SkillCardV3.vue";
 import { useSkills } from "~/composables/skills/useSkills";
 
 const showFrameworkDetails = ref(false);
 
 // Get skills data from composable (server-side)
-const { preferredSkills, skills, experiencedSkills } = await useSkills();
+const { preferredSkills, experiencedSkills } = await useSkills();
 
 // Always open official site for experienced skills
 const openOfficial = (skill) => {
@@ -115,95 +114,5 @@ definePageMeta({
 
 .grid > div:hover {
   transform: translateY(-4px);
-}
-
-/* Add glow effect on hover */
-.skill-card:hover::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1.5px;
-  background: linear-gradient(
-    45deg,
-    var(--main-gradient-from),
-    var(--main-gradient-to)
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-/* Add pulse animation for expert level skills */
-@keyframes pulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-.group[data-proficiency="Expert"]:hover {
-  animation: pulse 2s infinite;
-}
-
-/* Add floating animation */
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-.group:hover {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* Framework showcase animation */
-.translate-x-0 {
-  transform: translateX(0);
-}
-
-.translate-x-full {
-  transform: translateX(100%);
-}
-
-/* Improve scrollbars */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.5);
-  border-radius: 20px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background-color: rgba(75, 85, 99, 0.5);
-}
-
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
 }
 </style>
