@@ -77,9 +77,7 @@ const formatName = (name: string): string => {
         <div
           :class="[
             'flex items-center breadcrumb-link',
-            crumb.isLast
-              ? 'active-crumb'
-              : 'inactive-crumb',
+            crumb.isLast ? 'active-crumb' : 'inactive-crumb',
           ]"
         >
           <NuxtLink
