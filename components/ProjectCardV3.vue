@@ -177,6 +177,9 @@ const getIconColor = (tag) => {
   position: relative;
   /* Ensure inner content doesn't overlap border mask corners */
   border-radius: 0.5rem; /* match rounded-lg */
+  /* Improve initial rendering: skip offscreen painting and layout until needed */
+  content-visibility: auto;
+  contain-intrinsic-size: 220px;
 }
 
 .project-card::before {
