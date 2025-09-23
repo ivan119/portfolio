@@ -84,6 +84,33 @@ let scrollRAF = null;
 let checkTimeout = null;
 let lastScrollTime = 0;
 
+// Cross-browser scroll metrics (handles iOS Safari address bar and Android UI)
+const getScrollMetrics = () => {
+  const docEl = document.documentElement;
+  const body = document.body;
+  const scrollEl = document.scrollingElement || docEl;
+
+  const scrollTop =
+    window.pageYOffset !== undefined
+      ? window.pageYOffset
+      : scrollEl.scrollTop || docEl.scrollTop || body.scrollTop || 0;
+
+  const viewportHeight =
+    (window.visualViewport && window.visualViewport.height) ||
+    window.innerHeight ||
+    docEl.clientHeight;
+
+  const totalHeight = Math.max(
+    docEl.scrollHeight,
+    body.scrollHeight,
+    scrollEl.scrollHeight,
+  );
+
+  const maxScroll = Math.max(totalHeight - viewportHeight, 0);
+
+  return { scrollTop, maxScroll, viewportHeight, totalHeight };
+};
+
 // Calculate circular progress offset
 const progressOffset = computed(() => {
   const circumference = 2 * Math.PI * 45; // radius = 45
@@ -96,7 +123,7 @@ const handleProgressClick = (event) => {
   const clickY = event.clientY - rect.top;
   const clickProgress = Math.max(0, Math.min(1, clickY / rect.height));
 
-  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const { maxScroll } = getScrollMetrics();
   const targetScroll = clickProgress * maxScroll;
 
   window.scrollTo({
@@ -114,10 +141,8 @@ const handleProgressHover = (event) => {
 
 const checkScrollable = () => {
   nextTick(() => {
-    const height =
-      document.documentElement.scrollHeight -
-      document.documentElement.clientHeight;
-    isScrollable.value = height > 10;
+    const { maxScroll } = getScrollMetrics();
+    isScrollable.value = maxScroll > 10;
     handleScroll();
   });
 };
@@ -134,15 +159,12 @@ const handleScroll = () => {
   }
 
   scrollRAF = requestAnimationFrame(() => {
-    const winScroll = window.pageYOffset || document.documentElement.scrollTop;
-    const height =
-      document.documentElement.scrollHeight -
-      document.documentElement.clientHeight;
+    const { scrollTop, maxScroll } = getScrollMetrics();
 
-    if (height > 0) {
-      progress.value = Math.min(winScroll / height, 1);
+    if (maxScroll > 0) {
+      progress.value = Math.min(scrollTop / maxScroll, 1);
       // Show back to top button when scrolled down 10%
-      showBackToTop.value = winScroll / height > 0.1;
+      showBackToTop.value = scrollTop / maxScroll > 0.1;
     } else {
       progress.value = 0;
       showBackToTop.value = false;
@@ -212,6 +234,19 @@ const observer = ref(null);
 onMounted(() => {
   window.addEventListener("scroll", handleScroll, { passive: true });
 
+  // React to viewport height changes due to mobile browser UI
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", checkScrollable, {
+      passive: true,
+    });
+    window.visualViewport.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+  }
+  window.addEventListener("orientationchange", checkScrollable, {
+    passive: true,
+  });
+
   observer.value = new ResizeObserver(debouncedCheck);
   observer.value.observe(document.body);
 
@@ -221,6 +256,11 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
+  if (window.visualViewport) {
+    window.visualViewport.removeEventListener("resize", checkScrollable);
+    window.visualViewport.removeEventListener("scroll", handleScroll);
+  }
+  window.removeEventListener("orientationchange", checkScrollable);
   if (observer.value) {
     observer.value.disconnect();
   }
