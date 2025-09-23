@@ -128,6 +128,7 @@ const getHeadingClass = (level: number) => {
         loading="eager"
         :width="1200"
         :height="675"
+        fetchpriority="high"
       />
     </div>
 
@@ -155,9 +156,10 @@ const getHeadingClass = (level: number) => {
             :alt="item.alt"
             class="rounded-lg w-full"
             format="webp"
-            loading="lazy"
+            loading="eager"
             :width="1024"
             :height="576"
+            fetchpriority="high"
           />
           <figcaption
             v-if="item.caption"

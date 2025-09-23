@@ -58,7 +58,8 @@ const formatDate = (dateString: string) => {
           class="w-full h-full object-cover transform transition-transform duration-500"
           :class="{ 'scale-105': doImageEffect }"
           format="webp"
-          loading="lazy"
+          loading="eager"
+          fetchpriority="high"
           width="600"
           height="338"
         />

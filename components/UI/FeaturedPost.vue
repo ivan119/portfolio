@@ -63,7 +63,8 @@ const doImageEffect = ref(false);
                 }"
                 class="featured-image-img"
                 format="webp"
-                loading="lazy"
+                loading="eager"
+                fetchpriority="high"
                 width="800"
                 height="450"
               />
