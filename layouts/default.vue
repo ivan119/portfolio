@@ -37,7 +37,6 @@ const activeTheme = ref<"default" | "dotted" | "animated">("default");
 const setupTheme = () => {
   if (import.meta.client) {
     const themeSettings = localStorage.getItem("themeSettings");
-    console.log(themeSettings);
     if (themeSettings !== null) {
       activeTheme.value = themeSettings;
     }
@@ -68,7 +67,6 @@ onBeforeMount(() => {
 const toggleAnimateBackground = (v) => {
   activeTheme.value = v;
   localStorage.setItem("themeSettings", activeTheme.value);
-  console.log(activeTheme, "activeTheme on toggleAnimateBackground");
 };
 
 // Watch route changes for slide direction

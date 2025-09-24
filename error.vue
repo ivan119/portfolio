@@ -108,9 +108,6 @@ const showContent = ref(false);
 const countdown = ref(5);
 
 onMounted(() => {
-  // Debug navigation links
-  console.log("Navigation links:", navigationLinks);
-
   // Staggered animation entrance
   setTimeout(() => {
     isVisible.value = true;
@@ -236,10 +233,10 @@ onUnmounted(() => {
               style="text-shadow: 0 0 50px rgba(16, 185, 129, 0.3)"
             >
               {{ errorCode }}
-        </h1>
+            </h1>
 
             <!-- Floating holographic overlay content -->
-        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="absolute inset-0 flex items-center justify-center">
               <div class="text-center relative z-20">
                 <!-- Glowing title with advanced effects -->
                 <h3
@@ -313,8 +310,8 @@ onUnmounted(() => {
                             class="absolute bottom-0 left-1/2 w-1 h-1 bg-red-400 rounded-full transform -translate-x-1/2 translate-y-1/2"
                           ></div>
                         </div>
-        </div>
-      </div>
+                      </div>
+                    </div>
 
                     <!-- Border Loader Animation -->
                     <div class="relative w-24 h-24 mx-auto mb-4">
@@ -343,7 +340,7 @@ onUnmounted(() => {
                           </div>
                         </div>
                       </div>
-        </div>
+                    </div>
 
                     <!-- Status text -->
                     <p
@@ -648,7 +645,7 @@ onUnmounted(() => {
 @keyframes particle-float {
   0%,
   100% {
-     transform: translateY(0px) scale(1);
+    transform: translateY(0px) scale(1);
     opacity: 0.3;
   }
   50% {
