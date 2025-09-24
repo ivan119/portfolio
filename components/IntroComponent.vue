@@ -368,7 +368,7 @@ onUnmounted(() => {
 
 <template>
   <article
-    class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-10 pt-8"
+    class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-8"
     :class="{ 'fade-in': fadeInClass, hidden: hideNow }"
     ref="typeWrite"
   >
@@ -382,7 +382,7 @@ onUnmounted(() => {
     </h2>
 
     <h3 data-typer class="text-2xl md:text-3xl mb-4">
-      Currently working as a frontend team lead developer
+      Experienced as a frontend team lead developer
     </h3>
 
     <h3 data-typer class="text-xl mb-2">
