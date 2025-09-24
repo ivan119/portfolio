@@ -7,7 +7,8 @@ export default async (_nitroApp: Nitro) => {
     await mongoose.connect(mongo_url as string, {
       dbName: "blog", // 👈 database name
     });
+    console.log("Connected to Mongo DB");
   } catch (error) {
-    console.log(error);
+    console.log(error, "Connection fails to MongoDB");
   }
 };
