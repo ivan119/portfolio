@@ -77,20 +77,12 @@ onMounted(() => {
       </p>
       <p>
         Outside of programming, I have experience producing music and capturing
-        the beauty of nature through photography. Some of my photos can be found
-        on my
-        <BaseButton
-          href="https://instagram.com/your_instagram"
-          external
-          variant="link"
-          >Instagram.</BaseButton
-        >
+        the beauty of nature through photography.
       </p>
 
       <p>
         Feel free to reach out if you'd like to collaborate, or just grab a
-        drink! I'm always open to connecting with new people. You can contact me
-        through
+        drink! You can contact me through
         <BaseButton
           href="https://www.linkedin.com/in/kelava-ivan"
           external
