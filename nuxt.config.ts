@@ -45,6 +45,7 @@ export default defineNuxtConfig({
   },
   ssr: false,
   runtimeConfig: {
+    MONGODB_URI: process.env.MONGODB_URI,
     public: {
       quoteApiUrl: "https://api.quotable.io",
       techNewsApiUrl: "https://api.spaceflightnewsapi.net",
@@ -52,7 +53,6 @@ export default defineNuxtConfig({
       githubApiUrl: "https://api.github.com",
       blogGenerationEnabled: process.env.BLOG_GENERATION_ENABLED === "true",
       maxBlogTokens: Number(process.env.MAX_BLOG_TOKENS) || 1500,
-      MONGODB_URI: process.env.MONGODB_URI,
     },
   },
   nitro: {
