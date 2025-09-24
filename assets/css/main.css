@@ -294,7 +294,7 @@ body {
 
 .slide-enter-active,
 .slide-leave-active {
-  transition: transform 0.963s;
+  transition: transform 0.2s;
 }
 
 .slide-enter,
@@ -305,7 +305,7 @@ body {
 /* Page Transitions */
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.369s;
+  transition: all 0.2s;
 }
 .page-enter-from,
 .page-leave-to {
@@ -338,7 +338,7 @@ body {
 
 /* Content Animations */
 .slide-enter-active > *:not(.no-animation) {
-  animation: slide-in 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slide-in 0.693s cubic-bezier(0.4, 0, 0.2, 1);
   animation-fill-mode: backwards;
 }
 

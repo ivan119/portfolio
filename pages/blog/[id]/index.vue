@@ -28,7 +28,9 @@ const route = useRoute();
 const postId = route.params.id as string;
 
 const { fetchPostById } = usePosts();
-const post = (await fetchPostById(route.params.id as string)) as AiBlogPost | null;
+const post = (await fetchPostById(
+  route.params.id as string,
+)) as AiBlogPost | null;
 
 definePageMeta({
   pageTransition: false,
@@ -66,9 +68,12 @@ const getHeadingClass = (level: number) => {
 const seoTitle = post?.title
   ? `${post.title} — Blog | Ivan Kelava`
   : "Blog Post — Ivan Kelava";
-const seoDescription = post?.excerpt || "Read the latest article by Ivan Kelava.";
+const seoDescription =
+  post?.excerpt || "Read the latest article by Ivan Kelava.";
 const seoImage = post?.coverImage || "/favicon-square-512x512.png";
-const seoImageAlt = post?.title ? `${post.title} cover image` : "Blog post cover image";
+const seoImageAlt = post?.title
+  ? `${post.title} cover image`
+  : "Blog post cover image";
 
 usePageSeo({
   title: seoTitle,
@@ -118,7 +123,11 @@ usePageSeo({
           {{ post?.title }}
         </h1>
 
-        <UISignatureLogo :author="post?.author || ''" :date="post?.date || ''" size="md" />
+        <UISignatureLogo
+          :author="post?.author || ''"
+          :date="post?.date || ''"
+          size="md"
+        />
       </header>
 
       <!-- Featured Image -->

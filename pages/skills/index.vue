@@ -35,7 +35,7 @@ definePageMeta({
     :class="[
       showFrameworkDetails
         ? '!max-w-7xl'
-        : '!p-3 md:p-0 mx-auto w-full space-y-5',
+        : '!p-3 md:p-0 mx-auto w-full space-y-5 slide-enter-active',
     ]"
   >
     <UIBanner
