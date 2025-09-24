@@ -28,7 +28,7 @@ const route = useRoute();
 const postId = route.params.id as string;
 
 const { fetchPostById } = usePosts();
-const post = await fetchPostById(route.params.id as string);
+const post = (await fetchPostById(route.params.id as string)) as AiBlogPost | null;
 
 definePageMeta({
   pageTransition: false,
@@ -61,11 +61,27 @@ const getHeadingClass = (level: number) => {
       return "text-xl font-bold mb-3 mt-4";
   }
 };
+
+// SEO for single post
+const seoTitle = post?.title
+  ? `${post.title} — Blog | Ivan Kelava`
+  : "Blog Post — Ivan Kelava";
+const seoDescription = post?.excerpt || "Read the latest article by Ivan Kelava.";
+const seoImage = post?.coverImage || "/favicon-square-512x512.png";
+const seoImageAlt = post?.title ? `${post.title} cover image` : "Blog post cover image";
+
+usePageSeo({
+  title: seoTitle,
+  description: seoDescription,
+  image: seoImage,
+  imageAlt: seoImageAlt,
+  lang: "en",
+});
 </script>
 
 <template>
   <!-- Not Found State -->
-  <div v-if="post.length === 0" class="container mx-auto px-4 py-16">
+  <div v-if="!post" class="container mx-auto px-4 py-16">
     <UIEmptyState
       title="Post not found"
       description="The blog post you're looking for doesn't exist or has been removed."
@@ -102,7 +118,7 @@ const getHeadingClass = (level: number) => {
           {{ post?.title }}
         </h1>
 
-        <UISignatureLogo :author="post.author" :date="post.date" size="md" />
+        <UISignatureLogo :author="post?.author || ''" :date="post?.date || ''" size="md" />
       </header>
 
       <!-- Featured Image -->

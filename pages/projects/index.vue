@@ -5,6 +5,15 @@ import { useProjects } from "~/composables/useProjects";
 const showFrameworkDetails = ref(false);
 
 const { projects, allProjects, error, pending, refresh } = await useProjects();
+
+usePageSeo({
+  title: "Projects — Ivan Kelava",
+  description:
+    "Selected projects and case studies led by Ivan Kelava, showcasing frontend engineering and architecture.",
+  image: "/favicon-square-512x512.png",
+  imageAlt: "Ivan Kelava favicon",
+  lang: "en",
+});
 </script>
 
 <template>

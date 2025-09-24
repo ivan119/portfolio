@@ -7,8 +7,18 @@ const showFrameworkDetails = ref(false);
 // Get skills data from composable (server-side)
 const { preferredSkills, experiencedSkills } = await useSkills();
 
+usePageSeo({
+  title: "Skills — Ivan Kelava",
+  description:
+    "Technical skills, tools, and frameworks Ivan Kelava uses for modern web development.",
+  image: "/favicon-square-512x512.png",
+  imageAlt: "Ivan Kelava favicon",
+  lang: "en",
+});
+
 // Always open official site for experienced skills
-const openOfficial = (skill) => {
+import type { BasicSkill } from "~/types/skills";
+const openOfficial = (skill: BasicSkill) => {
   if (skill?.url) {
     window.open(skill.url, "_blank");
   }
@@ -53,12 +63,12 @@ definePageMeta({
               class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
               :skill="{
                 title: skill.name,
-                description: skill.description,
+                description: skill.description || '',
                 link: '#',
-                categories: [skill.category],
+                categories: [skill.category || ''],
                 tags: [{ name: skill.name, icon: skill.icon }],
-                proficiency: skill.proficiency,
-                experience: skill.experience,
+                proficiency: skill.proficiency || '',
+                experience: skill.experience || '',
               }"
               :colored="true"
             />
@@ -87,12 +97,12 @@ definePageMeta({
               class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
               :skill="{
                 title: skill.name,
-                description: skill.description,
+                description: skill.description || '',
                 link: '#',
-                categories: [skill.category],
+                categories: [skill.category || ''],
                 tags: [{ name: skill.name, icon: skill.icon }],
-                proficiency: skill.proficiency,
-                experience: skill.experience,
+                proficiency: skill.proficiency || '',
+                experience: skill.experience || '',
               }"
               :colored="true"
               :showBgDots="false"
