@@ -17,7 +17,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <article class="flex flex-col gap-6">
+  <article class="flex flex-col gap-6 slide-enter-active">
     <h1 class="heading-1">
       <span class="font-extrabold">Ivan Kelava</span>
     </h1>
@@ -59,7 +59,7 @@ onMounted(() => {
       </template>
     </div>
 
-    <div class="mt-4 space-y-4">
+    <div class="mt-4 space-y-4 slide-enter-active">
       <p>
         With over 5 years of experience in crafting user-friendly websites and
         large-scale platforms, I thrive on transforming innovative ideas into
