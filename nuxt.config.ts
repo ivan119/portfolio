@@ -3,13 +3,13 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: "en" },
-      title: "Ivan K",
+      title: "Ivan Kelava",
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "description", content: "Ivan K Portfolio" },
+        { name: "description", content: "Ivan Kelava Portfolio" },
       ],
-      link: [{ rel: "icon", type: "image/png", href: "/logo32x32.png" }],
+      link: [{ rel: "icon", type: "image/png", href: "/favicon-32x32.png" }],
     },
   },
   compatibilityDate: "2024-04-03",
@@ -38,10 +38,6 @@ export default defineNuxtConfig({
   image: {
     quality: 80,
     format: ["webp"],
-  },
-  tres: {
-    devtools: false,
-    glsl: true,
   },
   ssr: false,
   runtimeConfig: {
