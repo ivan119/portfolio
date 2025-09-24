@@ -1,4 +1,4 @@
-   import type { ProjectItem } from "~/types/project";
+import type { ProjectItem } from "~/types/project";
 
 export interface TechStackEntry {
   icon: string;
@@ -26,7 +26,7 @@ export const projects: ProjectItem[] = [
     title: "GaussCMS",
     description:
       "A powerful Content Management System for creating, editing, and publishing content on websites and E-commerce platforms. Features include SEO optimization, multisite management, and multilingual support.",
-    link: "https://gaussbox.com/modules-cms",
+    link: "https://gauss.hr/en/blog/cms-everything-you-need-to-know",
     tags: [
       { name: "Vue.js", icon: "devicon-vuejs-plain" },
       { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
@@ -126,5 +126,3 @@ export const allProjects: ProjectItem[] = [
     year: "2022",
   },
 ];
-
-
