@@ -102,21 +102,7 @@ const getHeadingClass = (level: number) => {
           {{ post?.title }}
         </h1>
 
-        <div class="flex items-center gap-4 mb-8">
-          <div
-            class="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold"
-          >
-            {{ post?.author?.charAt(0) }}
-          </div>
-          <div>
-            <div class="font-medium text-gray-900 dark:text-white">
-              {{ post?.author }}
-            </div>
-            <div class="text-sm text-gray-500">
-              {{ formatDate(post?.date) }}
-            </div>
-          </div>
-        </div>
+        <UISignatureLogo :author="post.author" :date="post.date" size="md" />
       </header>
 
       <!-- Featured Image -->
