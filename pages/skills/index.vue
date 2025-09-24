@@ -11,8 +11,8 @@ usePageSeo({
   title: "Skills — Ivan Kelava",
   description:
     "Technical skills, tools, and frameworks Ivan Kelava uses for modern web development.",
-  image: "/favicon-square-512x512.png",
-  imageAlt: "Ivan Kelava favicon",
+  image: "/logo.png",
+  imageAlt: "Ivan Kelava",
   lang: "en",
 });
 

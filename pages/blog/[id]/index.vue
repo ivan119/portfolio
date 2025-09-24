@@ -70,7 +70,7 @@ const seoTitle = post?.title
   : "Blog Post — Ivan Kelava";
 const seoDescription =
   post?.excerpt || "Read the latest article by Ivan Kelava.";
-const seoImage = post?.coverImage || "/favicon-square-512x512.png";
+const seoImage = post?.coverImage || "/logo.png";
 const seoImageAlt = post?.title
   ? `${post.title} cover image`
   : "Blog post cover image";

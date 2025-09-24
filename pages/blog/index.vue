@@ -58,7 +58,7 @@ usePageSeo({
   description:
     post?.excerpt ||
     "Latest articles and insights on web development, Vue, Nuxt, and more.",
-  image: post?.coverImage || "/favicon-512x512.png",
+  image: post?.coverImage || "/logo.png",
   imageAlt: post?.title ? `${post.title} cover image` : "Blog cover image",
   lang: "en",
 });
@@ -71,7 +71,7 @@ usePageSeo({
       <UIFeaturedPost
         v-if="featuredPost"
         :post="featuredPost as any"
-        :image-url="featuredPost.coverImage || '/favicon-512x512.png'"
+        :image-url="featuredPost.coverImage || '/logo.png'"
         :use-bg-dots="true"
         class="mb-16 mt-3 !slide-enter-active"
       />
