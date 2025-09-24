@@ -11,11 +11,14 @@ import DottedIcon from "~/components/devTools/Icons/Dotted.vue";
 import Tooltip from "~/components/UI/Tooltip.vue";
 const colorMode = useColorMode();
 const showLinks = ref(false);
-
 const props = defineProps({
   showLogo: {
     type: Boolean,
     default: true,
+  },
+  showMainContent: {
+    type: Boolean,
+    default: false,
   },
   activeTheme: {
     type: String,
@@ -23,7 +26,6 @@ const props = defineProps({
     validator: (value) => ["default", "dotted", "animated"].includes(value),
   },
 });
-
 const emit = defineEmits(["show-intro", "toggle-background", "toggle-layout"]);
 
 // Computed property for active icon/theme state
@@ -39,7 +41,21 @@ const toggleBackground = (v) => {
 const dottedSpinClass = computed(() => {
   return activeTheme.value === "dotted" ? "icon-spin-cw" : "icon-spin-ccw";
 });
-
+watch(
+  () => props.showMainContent,
+  (newValue) => {
+    if (newValue) {
+      setTimeout(() => {
+        showLinks.value = true;
+      }, 369);
+    } else {
+      setTimeout(() => {
+        showLinks.value = false;
+      }, 693);
+    }
+  },
+  { immediate: true },
+);
 watch(
   () => props.showLogo,
   (newValue) => {

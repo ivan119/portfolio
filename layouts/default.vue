@@ -121,6 +121,7 @@ const transition = computed(() => ({
       <navigation-header
         :show-logo="showLogo"
         :active-theme="activeTheme"
+        :show-main-content="showMainContent"
         @show-intro="showIntroComponent"
         @toggle-background="(v) => toggleAnimateBackground(v)"
       />
