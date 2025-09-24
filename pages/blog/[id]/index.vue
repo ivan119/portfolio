@@ -179,10 +179,10 @@ const getHeadingClass = (level: number) => {
       <div class="mt-16 text-center">
         <NuxtLink
           to="/blog"
-          class="inline-flex items-center gap-2 font-medium hover:gap-3 transition-all duration-300 ease-in-out group text-main-gradient"
+          class="inline-flex items-center gap-2 font-medium hover:gap-3 transition-all duration-300 ease-in-out group"
         >
           <svg
-            class="w-5 h-5 text-main-gradient group-hover:text-blue-500 transform transition-transform duration-300 ease-in-out group-hover:animate-bounce-left"
+            class="w-5 h-5 text-gray-600 dark:text-gray-300 group-hover:text-blue-500 transform transition-transform duration-300 ease-in-out group-hover:animate-bounce-left"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -192,7 +192,7 @@ const getHeadingClass = (level: number) => {
           >
             <path d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
-          <span>Back To Blog</span>
+          <span class="text-main-gradient">Back To Blog</span>
         </NuxtLink>
       </div>
     </UIBanner>
