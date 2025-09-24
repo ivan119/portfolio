@@ -54,7 +54,7 @@ const aiPosts = computed<BlogListCard[]>(() =>
 // SEO: use latest post data for meta
 const post = featuredPost.value as any;
 usePageSeo({
-  title: post?.title ? `${post.title} — Blog | Ivan Kelava` : "Blog — Ivan Kelava",
+  title: "Blog — Ivan Kelava",
   description:
     post?.excerpt ||
     "Latest articles and insights on web development, Vue, Nuxt, and more.",

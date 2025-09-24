@@ -15,7 +15,7 @@ const greeting = ref("");
 
 // SEO (same as homepage)
 usePageSeo({
-  title: "Ivan Kelava — Senior Frontend Developer",
+  title: "Ivan Kelava",
   description:
     "Senior frontend developer from Osijek, Croatia. Over 5 years building user-friendly websites and platforms. Explore projects, skills, and get in touch.",
   image: "/favicon-square-512x512.png",
