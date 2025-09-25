@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { getQuery } from "h3";
-
+import { connectToMongoDb } from "~/server/utils/connectToMongoDb";
 // Destructure from default import
 const { Schema, model, connection } = mongoose;
 
@@ -25,10 +25,8 @@ export default defineCachedEventHandler(
   async (event) => {
     // Check Mongo connection
     if (connection.readyState !== 1) {
-      throw createError({
-        statusCode: 503,
-        statusMessage: "MongoDB is not connected",
-      });
+      console.log("MongoDB connection lost, reconnecting...");
+      await connectToMongoDb();
     }
 
     const query = getQuery(event);

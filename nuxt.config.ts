@@ -49,9 +49,6 @@ export default defineNuxtConfig({
       maxBlogTokens: Number(process.env.MAX_BLOG_TOKENS) || 1500,
     },
   },
-  nitro: {
-    plugins: ["~/server/index.ts"],
-  },
   /*
   nitro: {
     routeRules: {
