@@ -28,7 +28,14 @@ definePageMeta({
 const { posts, latestPost, fetchPosts } = usePosts();
 
 // Ensure posts are available (SSR + client)
-await fetchPosts();
+let postsFetched = ref(false);
+
+try {
+  await fetchPosts();
+  postsFetched.value = true;
+} catch (err) {
+  console.error("Failed to fetch posts:", err);
+}
 
 const featuredPost = computed<BlogPost | null>(
   () => latestPost.value as unknown as BlogPost | null,
@@ -51,17 +58,29 @@ const aiPosts = computed<BlogListCard[]>(() =>
   })),
 );
 
-// SEO: use latest post data for meta
-const post = featuredPost.value as any;
-usePageSeo({
-  title: "Blog — Ivan Kelava",
-  description:
-    post?.excerpt ||
-    "Latest articles and insights on web development, Vue, Nuxt, and more.",
-  image: post?.coverImage || "/logo.png",
-  imageAlt: post?.title ? `${post.title} cover image` : "Blog cover image",
-  lang: "en",
-});
+if (import.meta.server && postsFetched && latestPost.value) {
+  const post = latestPost.value;
+
+  usePageSeo({
+    title: "Blog — Ivan Kelava",
+    description:
+      post.excerpt ||
+      "Latest articles and insights on web development, Vue, Nuxt, and more.",
+    image: post.coverImage || "/logo.png",
+    imageAlt: post.title ? `${post.title} cover image` : "Blog cover image",
+    lang: "en",
+  });
+} else if (import.meta.server) {
+  // Fallback SEO for when posts can't be loaded
+  usePageSeo({
+    title: "Blog — Ivan Kelava",
+    description:
+      "Latest articles and insights on web development, Vue, Nuxt, and more.",
+    image: "/logo.png",
+    imageAlt: "Blog cover image",
+    lang: "en",
+  });
+}
 </script>
 
 <template>

@@ -1,14 +1,24 @@
 import * as mongoose from "mongoose";
 import type { Nitro } from "nitropack";
+let isConnected = false;
+
 export default async (_nitroApp: Nitro) => {
+  if (isConnected) return; // reuse existing connection
+
   const config = useRuntimeConfig();
-  const mongo_url = config.MONGODB_URI;
+  const mongoUrl = config.MONGODB_URI;
+
   try {
-    await mongoose.connect(mongo_url as string, {
-      dbName: "blog", // 👈 database name
+    await mongoose.connect(mongoUrl as string, {
+      dbName: "blog",
+      // optional:
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true,
     });
-    console.log("Connected to Mongo DB");
-  } catch (error) {
-    console.log(error, "Connection fails to MongoDB");
+    isConnected = true;
+    console.log("✅ Connected to MongoDB");
+  } catch (err) {
+    console.error("❌ MongoDB connection failed:", err);
+    throw err;
   }
 };
