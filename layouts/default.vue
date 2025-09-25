@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onUnmounted, onBeforeMount } from "vue";
+import { ref, computed, onUnmounted, onBeforeMount, watch } from "vue";
 import { useRoute, useColorMode } from "#imports";
 import { useLocalStorage } from "@vueuse/core";
 // Manage color mode and transition states
@@ -88,6 +88,22 @@ const transition = computed(() => ({
       : transitionFade.value,
   mode: "out-in",
 }));
+const handleShowContent = () => {
+  if (route.path !== "/" && showIntro.value) {
+    showIntro.value = false;
+    updateShowLogo(true);
+  }
+};
+watch(
+  () => route.path,
+  () => {
+    handleShowContent();
+  },
+  { immediate: true },
+);
+const onIndexPage = computed(
+  () => route.name === "index" || route.path === "/",
+);
 </script>
 
 <template>
@@ -111,7 +127,7 @@ const transition = computed(() => ({
 
     <div class="content-container relative z-10">
       <IntroComponent
-        v-if="!showMainContent"
+        v-if="!showMainContent && onIndexPage"
         class="grow no-animation"
         @update:show-main-content="changeState"
         @show-logo="updateShowLogo"
@@ -124,15 +140,12 @@ const transition = computed(() => ({
         @toggle-background="(v) => toggleAnimateBackground(v)"
       />
 
-      <template v-if="showMainContent">
-        <div class="flex-1">
-          <div class="grow">
-            <slot />
-          </div>
+      <div class="flex-1" v-show="showMainContent">
+        <div class="grow">
+          <slot />
         </div>
-        <Footer class="container" />
-      </template>
-
+      </div>
+      <Footer class="container" v-show="showMainContent" />
       <ScrollProgress :visibility="showMainContent" />
     </div>
   </div>
