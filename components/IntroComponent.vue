@@ -75,16 +75,6 @@ const quotes = [
 ];
 const getRandomQuote = () => quotes[Math.floor(Math.random() * quotes.length)];
 
-// Router navigation guard (blocks navigation while intro active)
-const router = useRouter();
-const navigationGuard = router.beforeEach((to, from, next) => {
-  if (isIntroActive.value) {
-    next(false);
-    return;
-  }
-  next();
-});
-
 // Greeting based on time of day
 const updateGreeting = () => {
   const hours = new Date().getHours();
@@ -276,11 +266,6 @@ watch(
 
 onMounted(() => {
   resetComponent();
-});
-
-onUnmounted(() => {
-  // remove router guard
-  navigationGuard();
 });
 </script>
 
