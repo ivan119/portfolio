@@ -7,9 +7,7 @@ export default defineNuxtConfig({
       meta: [
         { charset: "utf-8" },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { name: "description", content: "Ivan Kelava Portfolio" },
       ],
-      link: [{ rel: "icon", type: "image/png", href: "/favicon-32x32.png" }],
     },
   },
   compatibilityDate: "2024-04-03",
