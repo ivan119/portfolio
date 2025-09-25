@@ -110,28 +110,36 @@ const onIndexPage = computed(
   <div
     class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto"
   >
-    <!-- Background with transition -->
-    <Transition name="bg-fade">
-      <BackgroundScene
-        v-if="activeTheme === 'animated'"
-        key="animated-bg"
-        class="background-container"
-      />
-      <layout-components-dotted-layout
-        v-else-if="activeTheme === 'dotted'"
-        key="dotted-bg"
-        class="background-container dotted-bg"
-      />
-      <div v-else key="default-bg" class="background-container static-bg"></div>
-    </Transition>
+    <ClientOnly>
+      <!-- Background with transition -->
+      <Transition name="bg-fade">
+        <BackgroundScene
+          v-if="activeTheme === 'animated'"
+          key="animated-bg"
+          class="background-container"
+        />
+        <layout-components-dotted-layout
+          v-else-if="activeTheme === 'dotted'"
+          key="dotted-bg"
+          class="background-container dotted-bg"
+        />
+        <div
+          v-else
+          key="default-bg"
+          class="background-container static-bg"
+        ></div>
+      </Transition>
+    </ClientOnly>
 
     <div class="content-container relative z-10">
-      <IntroComponent
-        v-if="!showMainContent && onIndexPage"
-        class="grow no-animation"
-        @update:show-main-content="changeState"
-        @show-logo="updateShowLogo"
-      />
+      <ClientOnly>
+        <IntroComponent
+          v-if="!showMainContent && onIndexPage"
+          class="grow no-animation"
+          @update:show-main-content="changeState"
+          @show-logo="updateShowLogo"
+        />
+      </ClientOnly>
       <navigation-header
         :show-logo="showLogo"
         :active-theme="activeTheme"
@@ -139,7 +147,6 @@ const onIndexPage = computed(
         @show-intro="showIntroComponent"
         @toggle-background="(v) => toggleAnimateBackground(v)"
       />
-
       <div class="flex-1" v-show="showMainContent">
         <div class="grow">
           <slot />

@@ -155,19 +155,21 @@ onUnmounted(() => {
 <template>
   <header class="header animate">
     <div class="flex items-center gap-8">
-      <transition name="page">
-        <NuxtLink
-          aria-label="homepage-intro-link"
-          v-if="props.showLogo"
-          @click="testFunc"
-          to="/"
-          class="logo mt-6 relative hover:scale-105 transition-transform duration-300"
-        >
-          <dev-tools-signature2
-            class="w-[120px] h-20 text-gray-800 dark:text-white hover:bg-gradient-to-r hover:from-teal-500 hover:to-blue-600 hover:bg-clip-text hover:text-transparent transition-all duration-300"
-          />
-        </NuxtLink>
-      </transition>
+      <ClientOnly>
+        <transition name="page">
+          <NuxtLink
+            aria-label="homepage-intro-link"
+            v-if="props.showLogo"
+            @click="testFunc"
+            to="/"
+            class="logo mt-6 relative hover:scale-105 transition-transform duration-300"
+          >
+            <dev-tools-signature2
+              class="w-[120px] h-20 text-gray-800 dark:text-white hover:bg-gradient-to-r hover:from-teal-500 hover:to-blue-600 hover:bg-clip-text hover:text-transparent transition-all duration-300"
+            />
+          </NuxtLink>
+        </transition>
+      </ClientOnly>
     </div>
     <div class="flex items-center justify-center">
       <transition-group name="nav" tag="ul" class="flex">
@@ -210,45 +212,47 @@ onUnmounted(() => {
       </transition-group>
 
       <div class="toggle-container flex items-center gap-x-4 animate-icons">
-        <!-- Dotted Theme Button -->
-        <UIThemeButton
-          :icon="DottedIcon"
-          :is-active="activeTheme === 'dotted'"
-          variant="dotted"
-          :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
-          tooltip="Toggle Background Animation"
-          @click="
-            toggleBackground(activeTheme === 'dotted' ? 'default' : 'dotted')
-          "
-        />
+        <ClientOnly>
+          <!-- Dotted Theme Button -->
+          <UIThemeButton
+            :icon="DottedIcon"
+            :is-active="activeTheme === 'dotted'"
+            variant="dotted"
+            :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
+            tooltip="Toggle Background Animation"
+            @click="
+              toggleBackground(activeTheme === 'dotted' ? 'default' : 'dotted')
+            "
+          />
 
-        <!-- Animated Theme Button -->
-        <UIThemeButton
-          :icon="BackgroundIcon"
-          :is-active="activeTheme === 'animated'"
-          variant="animated"
-          tooltip="Toggle Background Animation"
-          @click="
-            toggleBackground(
-              activeTheme === 'animated' ? 'default' : 'animated',
-            )
-          "
-        />
+          <!-- Animated Theme Button -->
+          <UIThemeButton
+            :icon="BackgroundIcon"
+            :is-active="activeTheme === 'animated'"
+            variant="animated"
+            tooltip="Toggle Background Animation"
+            @click="
+              toggleBackground(
+                activeTheme === 'animated' ? 'default' : 'animated',
+              )
+            "
+          />
 
-        <!-- SunAndMoon Button -->
-        <UIThemeButton
-          :icon="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
-          :is-active="colorMode.preference === 'dark'"
-          :is-changing="isThemeChanging"
-          :variant="colorMode.preference === 'dark' ? 'moon' : 'sun'"
-          :show-active-indicator="false"
-          :tooltip="
-            colorMode.preference === 'dark'
-              ? 'Return to Light'
-              : 'Embrace Darkness'
-          "
-          @click="toggleTheme"
-        />
+          <!-- SunAndMoon Button -->
+          <UIThemeButton
+            :icon="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
+            :is-active="colorMode.preference === 'dark'"
+            :is-changing="isThemeChanging"
+            :variant="colorMode.preference === 'dark' ? 'moon' : 'sun'"
+            :show-active-indicator="false"
+            :tooltip="
+              colorMode.preference === 'dark'
+                ? 'Return to Light'
+                : 'Embrace Darkness'
+            "
+            @click="toggleTheme"
+          />
+        </ClientOnly>
       </div>
     </div>
   </header>

@@ -31,87 +31,90 @@ definePageMeta({
 </script>
 
 <template>
-  <div
-    :class="[
-      showFrameworkDetails
-        ? '!max-w-7xl'
-        : '!p-3 md:p-0 mx-auto w-full space-y-5 slide-enter-active',
-    ]"
-  >
-    <UIBanner
-      title="Technical Skills"
-      description="Technologies and tools I've mastered throughout my journey"
-    />
-    <!-- Preferred Tech Stack -->
-    <UIBanner
-      title="Preferred Tech Stack"
-      description="My go-to technologies for modern web development are:"
-      :first-tag-is-h1="false"
+  <ClientOnly>
+    <div
+      :class="[
+        showFrameworkDetails
+          ? '!max-w-7xl'
+          : '!p-3 md:p-0 mx-auto w-full space-y-5 slide-enter-active',
+      ]"
     >
-      <template #default>
-        <section class="space-y-4">
-          <UIEmptyState
-            v-if="preferredSkills.length === 0"
-            title="No preferred skills yet"
-            description="They will appear here once available."
-          />
-          <div v-else class="skill-card-grid">
-            <SkillCardV3
-              v-for="skill in preferredSkills"
-              :key="skill.name"
-              @click.prevent="openOfficial(skill)"
-              class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
-              :skill="{
-                title: skill.name,
-                description: skill.description || '',
-                link: '#',
-                categories: [skill.category || ''],
-                tags: [{ name: skill.name, icon: skill.icon }],
-                proficiency: skill.proficiency || '',
-                experience: skill.experience || '',
-              }"
-              :colored="true"
+      <UIBanner
+        title="Technical Skills"
+        description="Technologies and tools I've mastered throughout my journey"
+      />
+
+      <!-- Preferred Tech Stack -->
+      <UIBanner
+        title="Preferred Tech Stack"
+        description="My go-to technologies for modern web development are:"
+        :first-tag-is-h1="false"
+      >
+        <template #default>
+          <section class="space-y-4">
+            <UIEmptyState
+              v-if="preferredSkills.length === 0"
+              title="No preferred skills yet"
+              description="They will appear here once available."
             />
-          </div>
-        </section>
-      </template>
-    </UIBanner>
-    <!-- Experienced With -->
-    <UIBanner
-      title="Experienced With"
-      description="Over the years, I have worked with or have experience using a variety of frameworks and tools, including:"
-      :first-tag-is-h1="false"
-    >
-      <template #default>
-        <section class="space-y-4">
-          <UIEmptyState
-            v-if="experiencedSkills.length === 0"
-            title="No experienced skills yet"
-            description="They will appear here once available."
-          />
-          <div v-else class="skill-card-grid">
-            <SkillCardV3
-              v-for="skill in experiencedSkills"
-              :key="skill.name"
-              @click.prevent="openOfficial(skill)"
-              class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
-              :skill="{
-                title: skill.name,
-                description: skill.description || '',
-                link: '#',
-                categories: [skill.category || ''],
-                tags: [{ name: skill.name, icon: skill.icon }],
-                proficiency: skill.proficiency || '',
-                experience: skill.experience || '',
-              }"
-              :colored="true"
-              :showBgDots="false"
+            <div v-else class="skill-card-grid">
+              <SkillCardV3
+                v-for="skill in preferredSkills"
+                :key="skill.name"
+                @click.prevent="openOfficial(skill)"
+                class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
+                :skill="{
+                  title: skill.name,
+                  description: skill.description || '',
+                  link: '#',
+                  categories: [skill.category || ''],
+                  tags: [{ name: skill.name, icon: skill.icon }],
+                  proficiency: skill.proficiency || '',
+                  experience: skill.experience || '',
+                }"
+                :colored="true"
+              />
+            </div>
+          </section>
+        </template>
+      </UIBanner>
+      <!-- Experienced With -->
+      <UIBanner
+        title="Experienced With"
+        description="Over the years, I have worked with or have experience using a variety of frameworks and tools, including:"
+        :first-tag-is-h1="false"
+      >
+        <template #default>
+          <section class="space-y-4">
+            <UIEmptyState
+              v-if="experiencedSkills.length === 0"
+              title="No experienced skills yet"
+              description="They will appear here once available."
             />
-          </div>
-        </section>
-      </template>
-    </UIBanner>
-  </div>
+            <div v-else class="skill-card-grid">
+              <SkillCardV3
+                v-for="skill in experiencedSkills"
+                :key="skill.name"
+                @click.prevent="openOfficial(skill)"
+                class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
+                :skill="{
+                  title: skill.name,
+                  description: skill.description || '',
+                  link: '#',
+                  categories: [skill.category || ''],
+                  tags: [{ name: skill.name, icon: skill.icon }],
+                  proficiency: skill.proficiency || '',
+                  experience: skill.experience || '',
+                }"
+                :colored="true"
+                :showBgDots="false"
+              />
+            </div>
+          </section>
+        </template>
+      </UIBanner>
+    </div>
+  </ClientOnly>
 </template>
 
 <style scoped>

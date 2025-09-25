@@ -37,7 +37,7 @@ export default defineNuxtConfig({
     quality: 80,
     format: ["webp"],
   },
-  ssr: false,
+  ssr: true,
   runtimeConfig: {
     MONGODB_URI: process.env.MONGODB_URI,
     public: {
