@@ -44,7 +44,6 @@ const getHeadingClass = (level: number) => {
     >
       {{ props.post?.title }}
     </h1>
-
     <UISignatureLogo
       :author="props.post?.author || ''"
       :date="props.post?.date || ''"
@@ -106,7 +105,14 @@ const getHeadingClass = (level: number) => {
       </figure>
     </div>
   </article>
-
+  <!-- Author Signature -->
+  <div v-if="false" class="mt-10">
+    <UISignatureLogo
+      :author="props.post?.author || ''"
+      :date="props.post?.date || ''"
+      size="md"
+    />
+  </div>
   <!-- Back to Blog -->
   <div class="mt-16 text-center">
     <NuxtLink
