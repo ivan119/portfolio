@@ -67,7 +67,6 @@ const getPostImage = (post: AiBlogPost) => {
             :key="post.id"
             :post="post"
             :is-odd-index="index % 2 === 1"
-            class="!slide-enter-active"
           />
         </div>
       </template>
