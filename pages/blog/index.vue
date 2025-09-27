@@ -25,59 +25,20 @@ definePageMeta({
   layoutTransition: false,
 });
 
-const { posts, latestPost, fetchPosts } = usePosts();
-
-// Ensure posts are available (SSR + client)
-let postsFetched = ref(false);
-
-try {
-  await fetchPosts();
-  postsFetched.value = true;
-} catch (err) {
-  console.error("Failed to fetch posts:", err);
-}
-
-const featuredPost = computed<BlogPost | null>(
-  () => latestPost.value as unknown as BlogPost | null,
-);
-const allPosts = computed<BlogPost[]>(
-  () => posts.value as unknown as BlogPost[],
-);
-
-const aiPosts = computed<BlogListCard[]>(() =>
-  (posts.value as unknown as Partial<BlogListCard>[]).map((p) => ({
-    id: p.id as string,
-    title: p.title as string,
-    excerpt: (p as any).excerpt || "",
-    author: (p as any).author || "",
-    date: (p as any).date || "",
-    coverImage: p.coverImage,
-    category: (p as any).category || "",
-    tags: Array.isArray((p as any).tags) ? (p as any).tags : [],
-    content: Array.isArray((p as any).content) ? (p as any).content : [],
-  })),
-);
-
-if (import.meta.server && postsFetched && latestPost.value) {
-  const post = latestPost.value;
-
+const { fetchPosts, posts, featuredPost } = usePosts();
+await fetchPosts();
+// SEO (SSR only)
+if (import.meta.server) {
+  const seoPost = featuredPost.value;
   usePageSeo({
     title: "Blog — Ivan Kelava",
     description:
-      post.excerpt ||
+      seoPost?.excerpt ||
       "Latest articles and insights on web development, Vue, Nuxt, and more.",
-    image: post.coverImage || "/logo.png",
-    imageAlt: post.title ? `${post.title} cover image` : "Blog cover image",
-    lang: "en",
-  });
-} else if (import.meta.server) {
-  // Fallback SEO for when posts can't be loaded
-  usePageSeo({
-    title: "Blog — Ivan Kelava",
-    description:
-      "Latest articles and insights on web development, Vue, Nuxt, and more.",
-    image: "/logo.png",
-    imageAlt: "Blog cover image",
+    image: seoPost?.coverImage || "/logo.png",
+    imageAlt: seoPost?.title
+      ? `${seoPost.title} cover image`
+      : "Blog cover image",
     lang: "en",
   });
 }
@@ -86,18 +47,16 @@ if (import.meta.server && postsFetched && latestPost.value) {
 <template>
   <div class="!max-w-7xl !p-3 md:p-0 mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <Navigation-Breadcrumbs class="max-w-7xl px-3 sm:px-0 mx-auto" />
-    <template v-if="allPosts.length > 0">
+    <template v-if="featuredPost && posts?.length > 0">
       <UIFeaturedPost
-        v-if="featuredPost"
-        :post="featuredPost as any"
+        :post="featuredPost"
         :image-url="featuredPost.coverImage || '/logo.png'"
         :use-bg-dots="true"
         class="mb-16 mt-3 !slide-enter-active"
       />
 
-      <!-- Blog Posts Section -->
       <div class="mb-16">
-        <AiGeneratedBlogs :posts="aiPosts" />
+        <AiGeneratedBlogs :posts="posts" />
       </div>
     </template>
     <template v-else>
@@ -105,9 +64,9 @@ if (import.meta.server && postsFetched && latestPost.value) {
         title="No blog posts yet"
         description="AI-generated posts will appear here once available. Please check back soon."
       >
-        <BaseButton variant="primary" @click="$router.push('/')"
-          >Go Home</BaseButton
-        >
+        <BaseButton variant="primary" @click="$router.push('/')">
+          Go Home
+        </BaseButton>
       </UIEmptyState>
     </template>
   </div>

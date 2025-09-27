@@ -1,42 +1,38 @@
-import { useState } from "#app";
-// This is implemented to keep api-view-transition present for blog/blog:id
 export function usePosts() {
-  const posts = ref([]);
-  const latestPost = ref(null);
-  const singlePost = ref(null);
-  // Fetch all posts (SSR will also run this)
+  const posts = ref([]); // State to store all posts
+  const featuredPost = ref(null); // State to store the latest post
+  const post = ref(null); // State to store the single post fetched by slug
+
+  // Fetch all posts
   const fetchPosts = async () => {
-    if (posts.value.length === 0) {
+    try {
       const { data } = await useFetch("/api/blog/posts", {
         default: () => ({ posts: [], latest_post: null }),
       });
-      posts.value = data.value.posts || [];
-      latestPost.value = data.value.latest_post || null;
+      posts.value = data?.value?.posts as never;
+      featuredPost.value = data?.value?.latest_post as never;
+    } catch (error) {
+      console.error("Error fetching posts:", error);
     }
   };
 
   // Fetch single post by slug/id
   const fetchPostById = async (slug: string) => {
-    // Try from memory first
-    let post = singlePost?.value?.id === slug ? singlePost.value : null;
-
-    if (!post) {
+    try {
       const { data } = await useFetch(`/api/blog/posts?slug=${slug}`, {
         default: () => null,
       });
-      post = data.value;
-
-      if (post) {
-        return post;
-      }
+      post.value = data.value as never;
+    } catch (error) {
+      console.error("Error fetching post:", error);
+      return null;
     }
-
-    return post;
   };
 
   return {
     posts,
-    latestPost,
+    featuredPost,
+    post,
     fetchPosts,
     fetchPostById,
   };
