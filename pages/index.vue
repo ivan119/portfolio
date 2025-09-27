@@ -78,7 +78,7 @@ usePageSeo({
         >
         or drop me an
         <BaseButton
-          href="mailto:ivankelava991@gmail.com"
+          href="mailto:contacts_reQuests@proton.me"
           external
           variant="link"
           >email here.</BaseButton

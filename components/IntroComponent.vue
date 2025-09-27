@@ -1,7 +1,6 @@
 <script setup>
 import { ref, watch, nextTick, onMounted, onUnmounted } from "vue";
-import Typewriter from "typewriter-effect/dist/core";
-import { useRouter } from "vue-router";
+let TypewriterLib = null;
 
 const emit = defineEmits(["update:showMainContent", "showLogo"]);
 const typeWrite = ref(null);
@@ -13,6 +12,16 @@ const isIntroActive = ref(true);
 const colorMode = useColorMode();
 const greeting = ref("");
 
+// Preload critical images to prevent layout shift
+const preloadImages = () => {
+  if (import.meta.browser) {
+    const img = new Image();
+    img.src = "/waving-hand_40x40.webp";
+    img.width = 40;
+    img.height = 40;
+  }
+};
+
 // SEO (same as homepage)
 usePageSeo({
   title: "Ivan Kelava",
@@ -23,7 +32,7 @@ usePageSeo({
   lang: "en",
 });
 
-// Quotes array
+// Quotes array - moved to computed for potential future filtering
 const quotes = [
   {
     text: "A ship in a harbour is safe but that is not what ships are built for.",
@@ -38,7 +47,7 @@ const quotes = [
     author: "John Johnson",
   },
   {
-    text: "Code is like humor. When you have to explain it, it’s bad.",
+    text: "Code is like humor. When you have to explain it, it's bad.",
     author: "Cory House",
   },
   {
@@ -63,7 +72,7 @@ const quotes = [
   },
   { text: "Simplicity is the soul of efficiency.", author: "Austin Freeman" },
   {
-    text: "It’s not a bug, it’s an undocumented feature.",
+    text: "It's not a bug, it's an undocumented feature.",
     author: "Anonymous",
   },
   { text: "Programmers are the poets of our time.", author: "Anonymous" },
@@ -73,6 +82,7 @@ const quotes = [
   },
   { text: "Stay hungry, stay foolish.", author: "Steve Jobs" },
 ];
+
 const getRandomQuote = () => quotes[Math.floor(Math.random() * quotes.length)];
 
 // Greeting based on time of day
@@ -85,7 +95,9 @@ const updateGreeting = () => {
         ? "✨ Nice evening!"
         : "✨ Have a good one!";
 };
+
 updateGreeting();
+
 watch(colorMode, () => {
   updateGreeting();
   // keep greeting DOM in sync if it exists
@@ -100,9 +112,35 @@ const visibleCharCount = (html) => {
   return tmp.textContent ? tmp.textContent.length : 0;
 };
 
+// Improved element sizing to prevent CLS
+const preserveElementLayout = (el) => {
+  // Use computed styles instead of getBoundingClientRect for more accurate sizing
+  const computedStyle = window.getComputedStyle(el);
+  const rect = el.getBoundingClientRect();
+
+  // Set explicit dimensions based on current layout
+  el.style.minHeight = `${Math.ceil(rect.height)}px`;
+  el.style.minWidth = `${Math.ceil(rect.width)}px`;
+
+  // Preserve margins and padding
+  el.style.marginBottom = computedStyle.marginBottom;
+  el.style.marginTop = computedStyle.marginTop;
+};
+
+const releaseElementLayout = (el) => {
+  // Remove sizing constraints after typing completes
+  requestAnimationFrame(() => {
+    el.style.minHeight = "";
+    el.style.minWidth = "";
+    el.style.marginBottom = "";
+    el.style.marginTop = "";
+  });
+};
+
 // Add portfolio click listener (trigger quote + slide + content)
 const addClickListener = () => {
   if (!import.meta.browser) return;
+  if (!TypewriterLib) return;
   const portfolioBtn = document.getElementById("portfolio-link");
   const wrapper = document.querySelector(".typewrite-wrapper");
 
@@ -111,7 +149,8 @@ const addClickListener = () => {
   // ensure it runs only once
   portfolioBtn.addEventListener(
     "click",
-    () => {
+    (e) => {
+      e.preventDefault(); // Prevent any default behavior
       wrapper.classList.add("animate-slide");
 
       setTimeout(() => {
@@ -122,7 +161,12 @@ const addClickListener = () => {
         const quoteDiv = wrapper.querySelector(".welcome-message");
 
         // quote typing (fast as original)
-        const quoteTw = new Typewriter(quoteDiv, { loop: false, delay: 11 });
+        const quoteTw = new TypewriterLib(quoteDiv, {
+          loop: false,
+          delay: 11,
+          cursor: "", // Remove cursor for cleaner look
+        });
+
         quoteTw
           .typeString(
             `<div class="text-2xl md:text-3xl text-gray-600 dark:text-gray-400 italic mb-2">"${quote.text}"</div>`,
@@ -146,6 +190,8 @@ const addClickListener = () => {
             }, 1369);
           })
           .start();
+
+        typewriterInstances.push(quoteTw);
       }, 1386);
     },
     { once: true },
@@ -154,11 +200,18 @@ const addClickListener = () => {
 
 // Core: set up typing but with all elements in DOM (prevents CLS)
 const setupTypewriter = () => {
+  if (!import.meta.browser) return;
+  if (!TypewriterLib) return;
   if (!typeWrite.value) return;
+
   const targets = Array.from(typeWrite.value.querySelectorAll("[data-typer]"));
+
   // stop previous instances
   if (typewriterInstances.length) {
-    typewriterInstances.forEach((tw) => tw.stop && tw.stop());
+    typewriterInstances.forEach((tw) => {
+      if (tw.stop) tw.stop();
+      if (tw.destroy) tw.destroy();
+    });
     typewriterInstances = [];
   }
 
@@ -170,10 +223,10 @@ const setupTypewriter = () => {
     const fullHTML = el.innerHTML;
     // compute visible chars for timing
     const chars = visibleCharCount(fullHTML);
-    // Reserve space to prevent CLS by locking current size before typing
-    const rect = el.getBoundingClientRect();
-    el.style.minHeight = `${Math.ceil(rect.height)}px`;
-    el.style.minWidth = `${Math.ceil(rect.width)}px`;
+
+    // Improved layout preservation
+    preserveElementLayout(el);
+
     // clear the element so it stays in layout but has to be typed into
     el.innerHTML = "";
 
@@ -182,17 +235,11 @@ const setupTypewriter = () => {
     // - subsequent lines emulate changeDelay(15)
     const elementDelay = idx === 0 ? Number(del.value) : 15;
 
-    const tw = new Typewriter(el, { loop: false, delay: elementDelay });
-
-    // Apply element-specific small pauses that original used
-    // mapping from original sequence:
-    // idx 0 -> h1 ("Hi ... Ivan")
-    // idx 1 -> h2 ("I design/develop things for the web")  => pauseFor(10) after
-    // idx 2 -> h3 ("Currently working ...")
-    // idx 3 -> h3 ("Check out my ... portfolio") => pauseFor(1) after
-    // idx 4 -> h3 ("Or contact ...") => call addClickListener after finishing, then pauseFor(300) before greeting
-    // idx 5 -> p greeting
-    // idx 6 -> p cya
+    const tw = new TypewriterLib(el, {
+      loop: false,
+      delay: elementDelay,
+      cursor: "", // Hide cursor for cleaner look
+    });
 
     tw.pauseFor(totalDelay).typeString(fullHTML);
 
@@ -206,34 +253,47 @@ const setupTypewriter = () => {
 
     // After typing finishes for this element, release size locks
     tw.callFunction(() => {
-      el.style.minHeight = "";
-      el.style.minWidth = "";
+      releaseElementLayout(el);
     });
+
     tw.start();
     typewriterInstances.push(tw);
 
     // estimate how long the typing will take (visible chars * delay)
-    const estTypingMs = (chars || 1) * elementDelay;
+    const estTypingMs = Math.max(chars * elementDelay, 100); // Minimum 100ms
 
     // increment totalDelay for next element
     totalDelay += estTypingMs;
 
-    // add original small pauses
-    if (idx === 0) {
-      // after h1 there was a changeDelay(15) in original - we already set elementDelay accordingly for next items
-      // we can add a small default gap
-      totalDelay += 1; // original had .pauseFor(1) before first type
-    } else if (idx === 1) {
-      totalDelay += 10; // original .pauseFor(10)
-    } else if (idx === 3) {
-      totalDelay += 1; // original .pauseFor(1)
-    } else if (idx === 4) {
-      // after the "Or contact" line original called addClickListener and then pauseFor(300) before greeting
-      totalDelay += 300;
-    } else {
-      totalDelay += defaultPostPause; // make nice breathing room by default
+    // add original small pauses with better timing
+    switch (idx) {
+      case 0:
+        totalDelay += 1;
+        break;
+      case 1:
+        totalDelay += 10;
+        break;
+      case 3:
+        totalDelay += 1;
+        break;
+      case 4:
+        totalDelay += 300;
+        break;
+      default:
+        totalDelay += defaultPostPause;
     }
   });
+};
+
+// Cleanup function to prevent memory leaks
+const cleanup = () => {
+  if (typewriterInstances.length) {
+    typewriterInstances.forEach((tw) => {
+      if (tw.stop) tw.stop();
+      if (tw.destroy) tw.destroy();
+    });
+    typewriterInstances = [];
+  }
 };
 
 // reset and re-run typing
@@ -246,17 +306,12 @@ const resetComponent = () => {
   const wrapper = document.querySelector(".typewrite-wrapper");
   if (wrapper) {
     wrapper.classList.remove("animate-slide", "fade-welcome", "fade-out");
-    // restore original markup (we render full HTML in template, so re-mount that markup by forcing a re-render)
   }
 
-  if (typewriterInstances.length) {
-    typewriterInstances.forEach((tw) => tw.stop && tw.stop());
-    typewriterInstances = [];
-  }
+  cleanup();
 
   nextTick(() => {
     fadeInClass.value = true;
-    // re-populate template DOM is already present (we rely on the template elements)
     setupTypewriter();
   });
 };
@@ -273,8 +328,22 @@ watch(
   },
 );
 
-onMounted(() => {
+onMounted(async () => {
+  preloadImages();
+  if (import.meta.client) {
+    try {
+      const mod = await import("typewriter-effect/dist/core");
+      TypewriterLib = mod.default || mod;
+    } catch (e) {
+      // If the typewriter library fails to load, skip typing effects
+      TypewriterLib = null;
+    }
+  }
   resetComponent();
+});
+
+onUnmounted(() => {
+  cleanup();
 });
 </script>
 
@@ -284,10 +353,21 @@ onMounted(() => {
   @apply hidden;
 }
 
-::v-deep(.animate-wave) {
-  display: inline-block;
-  animation: wave 0.9s ease-in-out 2;
+/* Waving hand animation - optimized for performance */
+.wave-container {
+  @apply inline-flex items-center justify-center;
+  width: 40px;
+  height: 40px;
+  /* Ensure consistent dimensions */
 }
+
+.animate-wave {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: wave 0.9s ease-in-out 2;
+  will-change: transform; /* Optimize for animation */
+}
+
 @keyframes wave {
   0%,
   100% {
@@ -298,12 +378,14 @@ onMounted(() => {
   }
 }
 
-/* Fade-in: keep original longish fade so the intro feels the same */
+/* Fade-in: optimized for better performance */
 .fade-in {
   opacity: 0;
   transform: translateY(33px);
   animation: fadeIn 3s ease-in-out forwards;
+  will-change: opacity, transform;
 }
+
 @keyframes fadeIn {
   to {
     opacity: 1;
@@ -311,125 +393,232 @@ onMounted(() => {
   }
 }
 
-/* Slide-out animation used on portfolio click */
+/* Slide-out animation - hardware accelerated */
 .animate-slide {
   animation: slideOut 1.2s ease-in-out forwards;
+  will-change: transform, opacity;
 }
+
 .animate-slide > * {
   animation: slideOut 1.2s ease-in-out forwards;
+  will-change: transform, opacity;
 }
+
 @keyframes slideOut {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
   70% {
-    transform: translateX(10%);
+    transform: translate3d(10%, 0, 0);
     opacity: 1;
   }
   100% {
-    transform: translateX(-100%);
+    transform: translate3d(-100%, 0, 0);
     opacity: 0;
   }
 }
 
-/* fade-out used after quote typed */
+/* fade-out used after quote typed - hardware accelerated */
 .fade-out {
   animation: fadeOut 0.6s ease-in-out forwards;
+  will-change: opacity, transform;
 }
+
 @keyframes fadeOut {
   0% {
     opacity: 1;
-    transform: scale(1);
+    transform: scale3d(1, 1, 1);
   }
   100% {
     opacity: 0;
-    transform: scale(1.1);
+    transform: scale3d(1.1, 1.1, 1);
   }
 }
 
-/* Reserve vertical space to avoid any tiny layout shifts */
+/* Improved container sizing to prevent CLS */
 .typewrite-wrapper {
   min-height: 460px;
   perspective: 1000px;
   transition: opacity 0.3s ease;
+  /* Create a new stacking context */
+  isolation: isolate;
 }
 
-/* ensure 3D text painting is stable */
+/* Optimize for 3D transforms */
 .typewrite-wrapper > * {
   backface-visibility: hidden;
   transform-style: preserve-3d;
+  /* Prevent subpixel rendering issues */
+  transform: translateZ(0);
 }
-/* hidden toggle */
 
+/* Improved typography spacing */
 [data-typer] {
   @apply whitespace-normal md:whitespace-pre;
+  /* Prevent text from jumping during typing */
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
+
+/* Better hiding mechanism */
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+/* Improve image container to prevent CLS */
+.image-container {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  .animate-wave {
+    animation: none;
+  }
+
+  .fade-in {
+    animation-duration: 0.3s;
+  }
+
+  .animate-slide {
+    animation-duration: 0.3s;
+  }
+
+  .fade-out {
+    animation-duration: 0.3s;
+  }
 }
 </style>
 
 <template>
-  <article
-    class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-8"
-    :class="{ 'fade-in': fadeInClass, hidden: hideNow }"
-    ref="typeWrite"
-  >
-    <h1 data-typer class="text-3xl md:text-4xl font-bold mb-4">
-      Hi
-      <div class="animate-wave relative w-10 h-10">
-        <div class="absolute mt-2">
-          <NuxtImg
-            alt="waving-hand"
-            src="/waving-hand_40x40.webp"
-            width="40"
-            height="40"
-            loading="eager"
-            fetchpriority="high"
-            :placeholder="false"
-            decoding="async"
-            sizes="40px"
-          />
+  <ClientOnly>
+    <article
+      class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-8"
+      :class="{ 'fade-in': fadeInClass, hidden: hideNow }"
+      ref="typeWrite"
+    >
+      <h1
+        data-typer
+        class="text-3xl md:text-4xl font-bold mb-4 flex items-center flex-wrap gap-2"
+      >
+        Hi
+        <div class="wave-container">
+          <div class="animate-wave image-container">
+            <NuxtImg
+              alt="waving hand emoji"
+              src="/waving-hand_40x40.webp"
+              :width="40"
+              :height="40"
+              loading="eager"
+              fetchpriority="high"
+              :placeholder="false"
+              decoding="async"
+              sizes="40px"
+              class="w-10 h-10 object-contain"
+            />
+          </div>
         </div>
-      </div>
-      , I'm
-      <span class="text-main-gradient">Ivan</span>
-    </h1>
+        , I'm
+        <span class="text-main-gradient">Ivan</span>
+      </h1>
 
-    <h2 data-typer class="text-2xl md:text-3xl mb-2">
-      I design/develop things for the web
-    </h2>
+      <h2 data-typer class="text-2xl md:text-3xl mb-2">
+        I design/develop things for the web
+      </h2>
 
-    <h3 data-typer class="text-2xl md:text-3xl mb-4">
-      Experienced as a frontend team lead developer
-    </h3>
+      <h3 data-typer class="text-2xl md:text-3xl mb-4">
+        Experienced as a frontend team lead developer
+      </h3>
 
-    <h3 data-typer class="text-xl mb-2">
-      Check out my
-      <BaseButton
-        id="portfolio-link"
-        variant="link"
-        class="hover-main-gradient cursor-pointer font-bold whitespace-nowrap"
+      <h3 data-typer class="text-xl mb-2">
+        Check out my
+        <BaseButton
+          id="portfolio-link"
+          variant="link"
+          class="hover-main-gradient cursor-pointer font-bold whitespace-nowrap"
+          :aria-label="'View Ivan Kelava portfolio'"
+        >
+          portfolio
+        </BaseButton>
+      </h3>
+
+      <!-- this is the element after which addClickListener is called -->
+      <h3 data-typer data-attach="portfolio-hook" class="text-xl">
+        Or contact
+        <a
+          href="mailto:contacts_reQuests@proton.me"
+          class="hover-main-gradient font-bold"
+          aria-label="Email Ivan Kelava at contacts_reQuests@proton.me"
+        >
+          me
+        </a>
+      </h3>
+
+      <p data-typer id="greeting" class="mt-12 text-sm italic">
+        {{ greeting }}
+      </p>
+
+      <p data-typer class="text-sm italic mt-2">cya</p>
+    </article>
+
+    <template #fallback>
+      <article
+        class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-8"
       >
-        portfolio
-      </BaseButton>
-    </h3>
+        <h1
+          class="text-3xl md:text-4xl font-bold mb-4 flex items-center flex-wrap gap-2"
+        >
+          Hi
+          <div class="wave-container">
+            <div class="image-container">
+              <NuxtImg
+                alt="waving hand emoji"
+                src="/waving-hand_40x40.webp"
+                :width="40"
+                :height="40"
+                loading="eager"
+                fetchpriority="high"
+                :placeholder="false"
+                decoding="async"
+                sizes="40px"
+                class="w-10 h-10 object-contain"
+              />
+            </div>
+          </div>
+          , I'm
+          <span class="text-main-gradient">Ivan</span>
+        </h1>
 
-    <!-- this is the element after which addClickListener is called -->
-    <h3 data-typer data-attach="portfolio-hook" class="text-xl">
-      Or contact
-      <a
-        href="mailto:ivankelava991@gmail.com"
-        class="hover-main-gradient font-bold"
-        >me</a
-      >
-    </h3>
+        <h2 class="text-2xl md:text-3xl mb-2">
+          I design/develop things for the web
+        </h2>
 
-    <p data-typer id="greeting" class="mt-12 text-sm italic">
-      {{ greeting }}
-    </p>
+        <h3 class="text-2xl md:text-3xl mb-4">
+          Experienced as a frontend team lead developer
+        </h3>
 
-    <p data-typer class="text-sm italic mt-2">cya</p>
-  </article>
+        <h3 class="text-xl mb-2">
+          Check out my
+          <span class="hover-main-gradient font-bold whitespace-nowrap"
+            >portfolio</span
+          >
+        </h3>
+
+        <h3 class="text-xl">
+          Or contact
+          <span class="hover-main-gradient font-bold">me</span>
+        </h3>
+
+        <p id="greeting" class="mt-12 text-sm italic">{{ greeting }}</p>
+
+        <p class="text-sm italic mt-2">cya</p>
+      </article>
+    </template>
+  </ClientOnly>
 </template>

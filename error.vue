@@ -534,8 +534,8 @@ onUnmounted(() => {
             >
               Need help? Feel free to reach out via
               <a
-                href="mailto:ivankelava991@gmail.com"
-                class="underline hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors font-semibold"
+                  href="mailto:contacts_reQuests@proton.me"
+                  class="underline hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors font-semibold"
               >
                 email
               </a>
