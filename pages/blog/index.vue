@@ -47,7 +47,6 @@ if (import.meta.server) {
     :class="{ 'slide-enter-active': isActiveClass }"
     class="!max-w-7xl !p-3 md:p-0 mx-auto px-4 sm:px-6 lg:px-8 py-12"
   >
-    <pre>{{ isActiveClass }}</pre>
     <Navigation-Breadcrumbs class="px-8 mb-3" />
     <template v-if="featuredPost && posts?.length > 0">
       <UIFeaturedPost
