@@ -4,12 +4,10 @@ import { useLocalStorage } from "@vueuse/core";
 // Manage color mode and transition states
 const colorMode = useColorMode();
 const isDark = computed(() => colorMode.value === "dark");
-
 const transitionMode = ref<"slide" | "fade">("fade");
 const transitionSlide = ref("slide-right");
 const transitionFade = ref("page");
 const route = useRoute();
-
 const showIntro = useLocalStorage("showIntro", true);
 const showMainContent = computed(() => !showIntro.value);
 const showLogo = ref(!showIntro.value);
@@ -28,10 +26,8 @@ const showIntroComponent = () => {
     showIntro.value = true;
   }, 693);
 };
-
 // Background state management
 const activeTheme = ref<"default" | "dotted" | "animated">("default");
-
 // TODO: IMPROVE OPTIMIZE AND CLEANUP / TYPE IT! TS!
 const setupTheme = () => {
   if (import.meta.client) {
@@ -41,16 +37,13 @@ const setupTheme = () => {
     }
   }
 };
-
 const setupViewTransition = () => {
   if (document.startViewTransition) {
     const handleNavigation = () => {
       document.startViewTransition();
     };
-
     // Listen for navigation events
     window.addEventListener("popstate", handleNavigation);
-
     // Clean up
     onUnmounted(() => {
       window.removeEventListener("popstate", handleNavigation);
@@ -61,7 +54,6 @@ onBeforeMount(() => {
   setupTheme();
   setupViewTransition();
 });
-
 // Toggle functions for background states with better logic
 const toggleAnimateBackground = (v) => {
   activeTheme.value = v;
@@ -72,13 +64,6 @@ const toggleAnimateBackground = (v) => {
 const transitionSlideDirection = computed(() => {
   return route.path === "/" ? "slide-left" : "slide-right";
 });
-
-// Compute whether to use page transition
-const usePageTransition = computed(() => {
-  const blacklist = ["blog", "projects"];
-  return !blacklist.some((path) => route.path.startsWith(`/${path}`));
-});
-
 // Update transition on route change
 const transition = computed(() => ({
   name:
