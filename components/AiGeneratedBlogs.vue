@@ -38,7 +38,12 @@ const getPostImage = (post: AiBlogPost) => {
 
 <template>
   <div class="space-y-8">
-    <UIBanner title="Blog" description="" :first-tag-is-h1="false">
+    <UIBanner
+      class="md:pb-12"
+      title="Blog"
+      description=""
+      :first-tag-is-h1="false"
+    >
       <template #default>
         <!-- Loading State -->
         <div v-if="loading" class="flex justify-center py-12">
@@ -55,12 +60,13 @@ const getPostImage = (post: AiBlogPost) => {
         <!-- Posts Grid -->
         <div
           v-else
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-10"
         >
           <BlogPostCard
-            v-for="post in posts"
+            v-for="(post, index) in posts"
             :key="post.id"
             :post="post"
+            :is-odd-index="index % 2 === 1"
             class="!slide-enter-active"
           />
         </div>

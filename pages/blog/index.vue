@@ -46,16 +46,16 @@ if (import.meta.server) {
 
 <template>
   <div class="!max-w-7xl !p-3 md:p-0 mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <Navigation-Breadcrumbs class="max-w-7xl px-3 sm:px-0 mx-auto" />
+    <Navigation-Breadcrumbs class="px-8 mb-3" />
     <template v-if="featuredPost && posts?.length > 0">
       <UIFeaturedPost
         :post="featuredPost"
         :image-url="featuredPost.coverImage || '/logo.png'"
         :use-bg-dots="true"
-        class="mb-16 mt-3 !slide-enter-active"
+        class="mb-12 !slide-enter-active"
       />
 
-      <div class="mb-16">
+      <div class="mb-12">
         <AiGeneratedBlogs :posts="posts" />
       </div>
     </template>

@@ -105,7 +105,7 @@ export const posts = [
   {
     id: "quantum-computing-ai-next-frontier",
     title: "Quantum Computing and AI: The Next Frontier",
-    date: "2024-07-10",
+    date: "2024-08-05",
     author: "Ivan Kelava",
     category: "Technology",
     tags: ["AI", "Quantum Computing", "Machine Learning", "Future Tech"],
@@ -222,7 +222,7 @@ export const posts = [
   },
   {
     title: "Federated Learning: The Rise of Privacy-Preserving AI",
-    date: "2024-08-05",
+    date: "2024-07-10",
     author: "Ivan Kelava",
     category: "Technology",
     tags: [

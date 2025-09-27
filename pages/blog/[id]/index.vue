@@ -56,8 +56,8 @@ usePageSeo({
 
   <div class="max-w-4xl mx-auto !px-3">
     <!-- Breadcrumbs -->
-    <Navigation-Breadcrumbs class="mb-5 px-3" />
-    <UIBanner v-if="post" title="" description="" class="-mx-0 md:-mx-6 -mt-3">
+    <Navigation-Breadcrumbs class="px-3" />
+    <UIBanner v-if="post" title="" description="" class="-mx-0 md:-mx-6 mt-2">
       <UISingleBlogPost :post="post" />
     </UIBanner>
     <!-- Not Found State -->
