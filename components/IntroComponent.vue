@@ -373,7 +373,7 @@ onMounted(() => {
         <div class="absolute mt-2">
           <NuxtImg
             alt="waving-hand"
-            src="/waving-hand.png"
+            src="/waving-hand_40x40.webp"
             width="40"
             height="40"
             loading="eager"
