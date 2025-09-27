@@ -179,7 +179,11 @@ onUnmounted(() => {
           :key="link.to"
           v-show="showLinks"
         >
-          <Tooltip :text="link.tooltipText" size="sm">
+          <Tooltip
+            :text="link.tooltipText"
+            size="sm"
+            :custom-styles="link.to === '/projects' ? { left: '0', transform: 'translateX(0)' } : {}"
+          >
             <NuxtLink
               v-show="link.show"
               :to="link.to"
