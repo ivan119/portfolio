@@ -32,7 +32,7 @@ const props = defineProps({
 }
 
 .ui-banner-dots-container {
-  @apply h-full w-full bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px];
+  @apply h-full w-full bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] rounded-3xl;
 }
 
 .slot-content {
@@ -42,16 +42,16 @@ const props = defineProps({
 </style>
 
 <template>
-  <section class="relative p-4 md:p-8">
+  <section class="relative p-4 md:p-8 md:pt-5">
     <div class="ui-banner"></div>
     <!-- Light dots pattern -->
     <div class="ui-banner-dots">
       <div class="ui-banner-dots-container"></div>
     </div>
-    <h1 v-if="firstTagIsH1" class="heading-1 text-main-gradient pb-2">
+    <h1 v-if="firstTagIsH1 && title" class="heading-1 text-main-gradient pb-2">
       {{ title }}
     </h1>
-    <h2 v-else class="heading-1 text-main-gradient pb-2">
+    <h2 v-else-if="title" class="heading-1 text-main-gradient pb-2">
       {{ title }}
     </h2>
     <p v-if="description" class="text-lg mb-4">{{ description }}</p>

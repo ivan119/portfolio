@@ -49,7 +49,7 @@ const formatName = (name: string): string => {
 </script>
 
 <template>
-  <nav aria-label="Breadcrumb" class="py-3 w-full">
+  <nav aria-label="Breadcrumb" class="py-3 w-full mb-1">
     <ol class="flex items-center justify-start space-x-2 text-sm">
       <li
         v-for="(crumb, index) in breadcrumbs"
