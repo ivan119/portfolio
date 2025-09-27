@@ -2,6 +2,7 @@
 import { useRoute } from "vue-router";
 
 import { usePosts } from "~/composables/usePosts";
+import { isActiveClass } from "~/composables/useActiveClass";
 
 interface AiContentItem {
   type: string;
@@ -29,7 +30,7 @@ const postId = route.params.id as string;
 const { fetchPostById, post } = usePosts();
 await fetchPostById(postId);
 definePageMeta({
-  pageTransition: false,
+  middleware: ["blog-active"],
 });
 
 // SEO for single post
@@ -54,7 +55,10 @@ usePageSeo({
 <template>
   <!-- Loaded State -->
 
-  <div class="max-w-4xl mx-auto !px-3">
+  <div
+    :class="{ 'slide-enter-active': isActiveClass }"
+    class="max-w-4xl mx-auto !px-3"
+  >
     <!-- Breadcrumbs -->
     <Navigation-Breadcrumbs class="px-3" />
     <UIBanner v-if="post" title="" description="" class="-mx-0 md:-mx-6 mt-2">
