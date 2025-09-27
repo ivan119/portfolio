@@ -153,7 +153,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <header class="header animate">
+  <header class="header-class animate">
     <div class="flex items-center gap-8">
       <ClientOnly>
         <transition name="page">
