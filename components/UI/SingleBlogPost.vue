@@ -60,11 +60,9 @@ const getHeadingClass = (level: number) => {
       :style="{
         'view-transition-name': `post-image-${props.post?.id}`,
       }"
-      class="rounded-lg w-full"
+      class="rounded-lg w-full max-h-[420px] object-cover"
       format="webp"
       loading="eager"
-      :width="1200"
-      :height="675"
       fetchpriority="high"
     />
   </div>
