@@ -166,23 +166,23 @@ const setupTypewriter = () => {
   const defaultPostPause = 400; // general pause between lines (ms) - keeps flow readable
 
   targets.forEach((el, idx) => {
-    // capture HTML before clearing, but skip H1 (renders immediately for LCP)
-    const isH1 = el.tagName === "H1";
+    // capture HTML before clearing
     const fullHTML = el.innerHTML;
     // compute visible chars for timing
     const chars = visibleCharCount(fullHTML);
-    // clear for typing unless it's the H1
-    if (!isH1) {
-      el.innerHTML = "";
-    }
+    // Reserve space to prevent CLS by locking current size before typing
+    const rect = el.getBoundingClientRect();
+    el.style.minHeight = `${Math.ceil(rect.height)}px`;
+    el.style.minWidth = `${Math.ceil(rect.width)}px`;
+    // clear the element so it stays in layout but has to be typed into
+    el.innerHTML = "";
 
     // choose delay per original behaviour:
     // - first line uses `del.value` (fast)
     // - subsequent lines emulate changeDelay(15)
-    // idx 0 is now the h1 which renders immediately and is not typed
-    const elementDelay = idx === 0 ? 15 : 15;
+    const elementDelay = idx === 0 ? Number(del.value) : 15;
 
-    const tw = isH1 ? null : new Typewriter(el, { loop: false, delay: elementDelay });
+    const tw = new Typewriter(el, { loop: false, delay: elementDelay });
 
     // Apply element-specific small pauses that original used
     // mapping from original sequence:
@@ -194,25 +194,26 @@ const setupTypewriter = () => {
     // idx 5 -> p greeting
     // idx 6 -> p cya
 
-    if (!isH1) {
-      tw.pauseFor(totalDelay).typeString(fullHTML);
-    }
+    tw.pauseFor(totalDelay).typeString(fullHTML);
 
     // attach portfolio click binding at the right moment (after "Or contact ..." completes)
-    if (!isH1 && el.dataset.attach === "portfolio-hook") {
+    if (el.dataset.attach === "portfolio-hook") {
       tw.callFunction(() => {
         // Attach click listener after the element finishes typing
         addClickListener();
       });
     }
 
-    if (!isH1) {
-      tw.start();
-      typewriterInstances.push(tw);
-    }
+    // After typing finishes for this element, release size locks
+    tw.callFunction(() => {
+      el.style.minHeight = "";
+      el.style.minWidth = "";
+    });
+    tw.start();
+    typewriterInstances.push(tw);
 
     // estimate how long the typing will take (visible chars * delay)
-    const estTypingMs = isH1 ? 0 : (chars || 1) * elementDelay;
+    const estTypingMs = (chars || 1) * elementDelay;
 
     // increment totalDelay for next element
     totalDelay += estTypingMs;
@@ -221,7 +222,7 @@ const setupTypewriter = () => {
     if (idx === 0) {
       // after h1 there was a changeDelay(15) in original - we already set elementDelay accordingly for next items
       // we can add a small default gap
-      totalDelay += 1; // tiny gap
+      totalDelay += 1; // original had .pauseFor(1) before first type
     } else if (idx === 1) {
       totalDelay += 10; // original .pauseFor(10)
     } else if (idx === 3) {
@@ -299,15 +300,11 @@ onMounted(() => {
 
 /* Fade-in: keep original longish fade so the intro feels the same */
 .fade-in {
-  opacity: 1;
-  transform: translateY(14px);
-  animation: fadeIn 600ms ease-out forwards;
+  opacity: 0;
+  transform: translateY(33px);
+  animation: fadeIn 3s ease-in-out forwards;
 }
 @keyframes fadeIn {
-  from {
-    opacity: 1;
-    transform: translateY(14px);
-  }
   to {
     opacity: 1;
     transform: translateY(0);
@@ -353,7 +350,7 @@ onMounted(() => {
 
 /* Reserve vertical space to avoid any tiny layout shifts */
 .typewrite-wrapper {
-  min-height: 420px;
+  min-height: 460px;
   perspective: 1000px;
   transition: opacity 0.3s ease;
 }
@@ -379,7 +376,7 @@ onMounted(() => {
     :class="{ 'fade-in': fadeInClass, hidden: hideNow }"
     ref="typeWrite"
   >
-    <h1 class="text-3xl md:text-4xl font-bold mb-4">
+    <h1 data-typer class="text-3xl md:text-4xl font-bold mb-4">
       Hi
       <div class="animate-wave relative w-10 h-10">
         <div class="absolute mt-2">
@@ -390,6 +387,9 @@ onMounted(() => {
             height="40"
             loading="eager"
             fetchpriority="high"
+            :placeholder="false"
+            decoding="async"
+            sizes="40px"
           />
         </div>
       </div>
