@@ -61,7 +61,7 @@ const doImageEffect = ref(false);
                 :style="{
                   'view-transition-name': `post-image-${post.id}`,
                 }"
-                class="featured-image-img"
+                class="featured-image-img rounded-lg"
                 format="webp"
                 loading="eager"
                 fetchpriority="high"
