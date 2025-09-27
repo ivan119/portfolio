@@ -10,7 +10,7 @@ export function usePosts() {
         default: () => ({ posts: [], latest_post: null }),
       });
       posts.value = data?.value?.posts as never;
-      featuredPost.value = data?.value?.latest_post as never;
+      featuredPost.value = data?.value?.featured_Post as never;
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
