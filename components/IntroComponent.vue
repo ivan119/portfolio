@@ -170,6 +170,10 @@ const setupTypewriter = () => {
     const fullHTML = el.innerHTML;
     // compute visible chars for timing
     const chars = visibleCharCount(fullHTML);
+    // Reserve space to prevent CLS by locking current size before typing
+    const rect = el.getBoundingClientRect();
+    el.style.minHeight = `${Math.ceil(rect.height)}px`;
+    el.style.minWidth = `${Math.ceil(rect.width)}px`;
     // clear the element so it stays in layout but has to be typed into
     el.innerHTML = "";
 
@@ -200,6 +204,11 @@ const setupTypewriter = () => {
       });
     }
 
+    // After typing finishes for this element, release size locks
+    tw.callFunction(() => {
+      el.style.minHeight = "";
+      el.style.minWidth = "";
+    });
     tw.start();
     typewriterInstances.push(tw);
 
@@ -341,7 +350,7 @@ onMounted(() => {
 
 /* Reserve vertical space to avoid any tiny layout shifts */
 .typewrite-wrapper {
-  min-height: 420px;
+  min-height: 460px;
   perspective: 1000px;
   transition: opacity 0.3s ease;
 }
@@ -378,6 +387,9 @@ onMounted(() => {
             height="40"
             loading="eager"
             fetchpriority="high"
+            :placeholder="false"
+            decoding="async"
+            sizes="40px"
           />
         </div>
       </div>
