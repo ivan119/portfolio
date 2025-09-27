@@ -39,7 +39,6 @@ export default defineNuxtConfig({
   },
   ssr: true,
   runtimeConfig: {
-    MONGODB_URI: process.env.MONGODB_URI,
     public: {
       quoteApiUrl: "https://api.quotable.io",
       techNewsApiUrl: "https://api.spaceflightnewsapi.net",
