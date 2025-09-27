@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, computed, onUnmounted, onBeforeMount, watch } from "vue";
 import { useRoute, useColorMode } from "#imports";
 import { useLocalStorage } from "@vueuse/core";
 // Manage color mode and transition states
@@ -98,6 +97,21 @@ watch(
   () => route.path,
   () => {
     handleShowContent();
+  },
+  { immediate: true },
+);
+// Handle case where we
+watch(
+  [() => route.path, showIntro],
+  () => {
+    if (route.path !== "/" && showIntro.value) {
+      const router = useRouter();
+      console.log("alpha_go");
+      router.push({ path: "/" });
+      setTimeout(() => {
+        showLogo.value = false;
+      }, 369);
+    }
   },
   { immediate: true },
 );
