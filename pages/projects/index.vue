@@ -17,101 +17,93 @@ usePageSeo({
 </script>
 
 <template>
-  <ClientOnly>
-    <div
-      :class="[
-        showFrameworkDetails
-          ? '!max-w-7xl'
-          : '!p-3 md:p-0 mx-auto w-full space-y-5 slide-enter-active',
-      ]"
-    >
-      <!-- Banner Section -->
-      <UIBanner title="Projects" description="">
-        <template #default>
-          <p class="text-lg">
-            Projects where I served as Team Lead at
-            <BaseButton href="https://gauss.hr/en" variant="link" external>
-              Gauss
-            </BaseButton>
-            , leading development and architecture decisions.
-          </p>
-        </template>
-      </UIBanner>
+  <div
+    :class="[
+      showFrameworkDetails
+        ? '!max-w-7xl'
+        : '!p-3 md:p-0 mx-auto w-full space-y-5 slide-enter-active',
+    ]"
+  >
+    <!-- Banner Section -->
+    <UIBanner title="Projects" description="">
+      <template #default>
+        <p class="text-lg">
+          Projects where I served as Team Lead at
+          <BaseButton href="https://gauss.hr/en" variant="link" external>
+            Gauss
+          </BaseButton>
+          , leading development and architecture decisions.
+        </p>
+      </template>
+    </UIBanner>
 
-      <!-- Loading / Error States for Main Projects -->
-      <UIBanner title="Main Projects" description="" :first-tag-is-h1="false">
-        <template #default>
-          <section class="space-y-6">
-            <div
-              v-if="pending"
-              class="text-sm text-slate-500 dark:text-slate-400"
-            >
-              Loading projects…
-            </div>
-            <div
-              v-else-if="error"
-              class="text-sm text-red-600 dark:text-red-400"
-            >
-              Failed to load projects.
-              <button class="underline" @click="refresh()">Retry</button>
-            </div>
-            <template v-else>
-              <UIEmptyState
-                v-if="projects.length === 0"
-                title="No projects yet"
-                description="Projects will appear here once available."
+    <!-- Loading / Error States for Main Projects -->
+    <UIBanner title="Main Projects" description="" :first-tag-is-h1="false">
+      <template #default>
+        <section class="space-y-6">
+          <div
+            v-if="pending"
+            class="text-sm text-slate-500 dark:text-slate-400"
+          >
+            Loading projects…
+          </div>
+          <div v-else-if="error" class="text-sm text-red-600 dark:text-red-400">
+            Failed to load projects.
+            <button class="underline" @click="refresh()">Retry</button>
+          </div>
+          <template v-else>
+            <UIEmptyState
+              v-if="projects.length === 0"
+              title="No projects yet"
+              description="Projects will appear here once available."
+            />
+            <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <ProjectCardV3
+                v-for="project in projects"
+                :key="project.title"
+                :project="project"
+                :colored="true"
               />
-              <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ProjectCardV3
-                  v-for="project in projects"
-                  :key="project.title"
-                  :project="project"
-                  :colored="true"
-                />
-              </div>
-            </template>
-          </section>
-        </template>
-      </UIBanner>
+            </div>
+          </template>
+        </section>
+      </template>
+    </UIBanner>
 
-      <!-- Other Projects -->
-      <UIBanner title="Other Projects" description="" :first-tag-is-h1="false">
-        <template #default>
-          <section class="space-y-6">
-            <div
-              v-if="pending"
-              class="text-sm text-slate-500 dark:text-slate-400"
-            >
-              Loading projects…
-            </div>
-            <div
-              v-else-if="error"
-              class="text-sm text-red-600 dark:text-red-400"
-            >
-              Failed to load projects.
-              <button class="underline" @click="refresh()">Retry</button>
-            </div>
-            <template v-else>
-              <UIEmptyState
-                v-if="allProjects.length === 0"
-                title="No projects to show"
-                description="Other projects will appear here once available."
+    <!-- Other Projects -->
+    <UIBanner title="Other Projects" description="" :first-tag-is-h1="false">
+      <template #default>
+        <section class="space-y-6">
+          <div
+            v-if="pending"
+            class="text-sm text-slate-500 dark:text-slate-400"
+          >
+            Loading projects…
+          </div>
+          <div v-else-if="error" class="text-sm text-red-600 dark:text-red-400">
+            Failed to load projects.
+            <button class="underline" @click="refresh()">Retry</button>
+          </div>
+          <template v-else>
+            <UIEmptyState
+              v-if="allProjects.length === 0"
+              title="No projects to show"
+              description="Other projects will appear here once available."
+            />
+            <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <ProjectCardV3
+                v-for="project in allProjects"
+                :key="project.title"
+                :project="project"
+                :colored="true"
               />
-              <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ProjectCardV3
-                  v-for="project in allProjects"
-                  :key="project.title"
-                  :project="project"
-                  :colored="true"
-                />
-              </div>
-            </template>
-          </section>
-          <UIGithubLink class="mt-5 md:mt-10" />
-        </template>
-      </UIBanner>
-    </div>
-  </ClientOnly>
+            </div>
+          </template>
+        </section>
+        <UIGithubLink class="mt-5 md:mt-10" />
+      </template>
+    </UIBanner>
+  </div>
 </template>
 
 <style scoped>
