@@ -4,11 +4,6 @@ export const useThemeButtons = () => {
     watch: true, // keep it reactive
     sameSite: "lax",
   });
-  const themeWasActivated = useCookie<boolean>("themeWasActivated", {
-    default: () => false,
-    watch: true, // keep it reactive
-    sameSite: "lax",
-  });
   const isThemeChanging = ref(false);
   const colorMode = useColorMode();
   const toggleTheme = () => {
@@ -22,9 +17,6 @@ export const useThemeButtons = () => {
   };
   const toggleBackground = (v: string) => {
     activeTheme.value = v;
-    if (!themeWasActivated.value) {
-      themeWasActivated.value = true;
-    }
   };
   const dottedSpinClass = computed(() => {
     return activeTheme.value === "dotted" ? "icon-spin-cw" : "icon-spin-ccw";
@@ -35,7 +27,6 @@ export const useThemeButtons = () => {
     colorMode,
     dottedSpinClass,
     isThemeChanging,
-    themeWasActivated,
     toggleTheme,
     toggleBackground,
   };
