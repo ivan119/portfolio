@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import AiGeneratedBlogs from "~/components/AiGeneratedBlogs.vue";
 import { usePosts } from "~/composables/usePosts";
 import { isActiveClass } from "~/composables/useActiveClass";
@@ -22,7 +22,7 @@ type BlogListCard = BlogPost & {
 definePageMeta({
   middleware: ["blog-active"],
 });
-
+const invisible = ref(true);
 const { fetchPosts, posts, featuredPost } = usePosts();
 await fetchPosts();
 // SEO (SSR only)
@@ -40,6 +40,13 @@ if (import.meta.server) {
     lang: "en",
   });
 }
+onMounted(async () => {
+  // jumping breadcrumbs on routing bug fix
+  // probably cause because of animations collide
+  setTimeout(() => {
+    invisible.value = false;
+  }, 0);
+});
 </script>
 
 <template>
@@ -47,7 +54,10 @@ if (import.meta.server) {
     :class="{ 'slide-enter-active': isActiveClass }"
     class="!max-w-7xl !p-3 md:p-0 mx-auto px-4 sm:px-6 lg:px-8 py-12"
   >
-    <Navigation-Breadcrumbs class="px-8 mb-3" />
+    <Navigation-Breadcrumbs
+      :class="{ invisible: invisible }"
+      class="visible px-4 md:px-8 mb-3"
+    />
     <template v-if="featuredPost && posts?.length > 0">
       <UIFeaturedPost
         :post="featuredPost"

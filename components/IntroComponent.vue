@@ -2,7 +2,10 @@
 import { ref, watch, nextTick, onMounted, onUnmounted } from "vue";
 import Typewriter from "typewriter-effect/dist/core";
 import { useRouter } from "vue-router";
-
+import { useThemeButtons } from "~/composables/UI/useThemeButtons";
+import SunIcon from "~/components/devTools/Icons/Sun.vue";
+import MoonIcon from "~/components/devTools/Icons/Moon.vue";
+import ThemeButtons from "~/components/UI/ThemeButtons.vue";
 const emit = defineEmits(["update:showMainContent", "showLogo"]);
 const typeWrite = ref(null);
 const del = ref(6); // initial typing speed (ms per char) for the first line — tweak this if you want it faster/slower
@@ -10,9 +13,9 @@ const hideNow = ref(false);
 const fadeInClass = ref(false);
 let typewriterInstances = []; // to stop on reset
 const isIntroActive = ref(true);
-const colorMode = useColorMode();
+const { colorMode, activeTheme } = useThemeButtons();
 const { greeting, updateGreeting, getRandomQuote } = useIntroFunctions();
-
+const showSunAndMoonIcon = ref(false);
 // SEO (same as homepage)
 usePageSeo({
   title: "Ivan Kelava",
@@ -50,41 +53,43 @@ const addClickListener = () => {
   portfolioBtn.addEventListener(
     "click",
     () => {
-      wrapper.classList.add("animate-slide");
-
+      showSunAndMoonIcon.value = false;
       setTimeout(() => {
-        // replace content with quote container
-        wrapper.classList.remove("animate-slide");
-        wrapper.innerHTML = `<div class="welcome-message text-center"></div>`;
-        const quote = getRandomQuote();
-        const quoteDiv = wrapper.querySelector(".welcome-message");
+        wrapper.classList.add("animate-slide");
+        setTimeout(() => {
+          // replace content with quote container
+          wrapper.classList.remove("animate-slide");
+          wrapper.innerHTML = `<div class="welcome-message text-center"></div>`;
+          const quote = getRandomQuote();
+          const quoteDiv = wrapper.querySelector(".welcome-message");
 
-        // quote typing (fast as original)
-        const quoteTw = new Typewriter(quoteDiv, { loop: false, delay: 11 });
-        quoteTw
-          .typeString(
-            `<div class="text-2xl md:text-3xl text-gray-600 dark:text-gray-400 italic mb-2">"${quote.text}"</div>`,
-          )
-          .pauseFor(639)
-          .typeString(
-            `<div class="text-sm text-gray-500 dark:text-gray-500">- ${quote.author}</div>`,
-          )
-          .callFunction(() => {
-            // after quote typed: fade-out -> show logo -> show main content
-            setTimeout(() => {
-              wrapper.classList.add("fade-out");
+          // quote typing (fast as original)
+          const quoteTw = new Typewriter(quoteDiv, { loop: false, delay: 11 });
+          quoteTw
+            .typeString(
+              `<div class="text-2xl md:text-3xl text-gray-600 dark:text-gray-400 italic mb-2">"${quote.text}"</div>`,
+            )
+            .pauseFor(639)
+            .typeString(
+              `<div class="text-sm text-gray-500 dark:text-gray-500">- ${quote.author}</div>`,
+            )
+            .callFunction(() => {
+              // after quote typed: fade-out -> show logo -> show main content
               setTimeout(() => {
-                emit("showLogo", true);
-                hideNow.value = true;
+                wrapper.classList.add("fade-out");
                 setTimeout(() => {
-                  emit("update:showMainContent", true);
-                }, 693);
-                isIntroActive.value = false;
-              }, 369);
-            }, 1369);
-          })
-          .start();
-      }, 1386);
+                  emit("showLogo", true);
+                  hideNow.value = true;
+                  setTimeout(() => {
+                    emit("update:showMainContent", true);
+                  }, 693);
+                  isIntroActive.value = false;
+                }, 369);
+              }, 1369);
+            })
+            .start();
+        }, 1386);
+      }, 369);
     },
     { once: true },
   );
@@ -214,8 +219,86 @@ watch(
 onMounted(() => {
   resetComponent();
 });
+setTimeout(() => {
+  showSunAndMoonIcon.value = true;
+}, 3369);
 </script>
 
+<template>
+  <article
+    class="h-dvh typewrite-wrapper relative flex flex-col transition-all duration-300 p-6 sm:p-8 fade-enter-from"
+    :class="{ 'fade-in': fadeInClass, hidden: hideNow }"
+    ref="typeWrite"
+  >
+    <h1 data-typer class="text-3xl md:text-4xl font-bold mb-4">
+      Hi
+      <div class="animate-wave relative w-10 h-10">
+        <div class="absolute mt-2">
+          <NuxtImg
+            alt="waving-hand"
+            src="/waving-hand_40x40.webp"
+            width="40"
+            height="40"
+            loading="eager"
+            fetchpriority="high"
+            :placeholder="false"
+            decoding="async"
+            sizes="40px"
+          />
+        </div>
+      </div>
+      , I'm
+      <span class="text-main-gradient">Ivan</span>
+    </h1>
+
+    <h2 data-typer class="text-2xl md:text-3xl mb-2">
+      I design/develop things for the web
+    </h2>
+
+    <h3 data-typer class="text-2xl md:text-3xl mb-4">
+      Experienced as a frontend team lead developer
+    </h3>
+
+    <h3 data-typer class="text-xl mb-2">
+      Check out my
+      <a
+        id="portfolio-link"
+        variant="link"
+        class="hover-main-gradient cursor-pointer font-bold whitespace-nowrap"
+      >
+        portfolio
+      </a>
+    </h3>
+
+    <!-- this is the element after which addClickListener is called -->
+    <h3 data-typer data-attach="portfolio-hook" class="text-xl">
+      Or contact
+      <a
+        href="mailto:KelavaIvan@proton.me"
+        class="hover-main-gradient font-bold"
+        >me</a
+      >
+    </h3>
+
+    <p data-typer id="greeting" class="mt-12 text-sm italic">
+      {{ greeting }}
+    </p>
+
+    <p data-typer class="text-sm italic mt-2">cya</p>
+    <Transition
+      enter-active-class="transition transform duration-300"
+      enter-from-class="translate-y-8 opacity-0"
+      enter-to-class="translate-y-0 opacity-100"
+      leave-active-class="transition transform duration-300"
+      leave-from-class="translate-y-0 opacity-100"
+      leave-to-class="translate-y-8 opacity-0"
+    >
+      <div v-if="showSunAndMoonIcon" class="right-8 bottom-8 absolute">
+        <theme-buttons :hide-theme-buttons="activeTheme === 'default'" />
+      </div>
+    </Transition>
+  </article>
+</template>
 <style scoped>
 /* keep original visual behaviour: cursor hidden, fade-in, slide, fade-out, etc. */
 ::v-deep(.Typewriter__cursor) {
@@ -307,67 +390,3 @@ onMounted(() => {
   display: none;
 }
 </style>
-
-<template>
-  <article
-    class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-8 fade-enter-from"
-    :class="{ 'fade-in': fadeInClass, hidden: hideNow }"
-    ref="typeWrite"
-  >
-    <h1 data-typer class="text-3xl md:text-4xl font-bold mb-4">
-      Hi
-      <div class="animate-wave relative w-10 h-10">
-        <div class="absolute mt-2">
-          <NuxtImg
-            alt="waving-hand"
-            src="/waving-hand_40x40.webp"
-            width="40"
-            height="40"
-            loading="eager"
-            fetchpriority="high"
-            :placeholder="false"
-            decoding="async"
-            sizes="40px"
-          />
-        </div>
-      </div>
-      , I'm
-      <span class="text-main-gradient">Ivan</span>
-    </h1>
-
-    <h2 data-typer class="text-2xl md:text-3xl mb-2">
-      I design/develop things for the web
-    </h2>
-
-    <h3 data-typer class="text-2xl md:text-3xl mb-4">
-      Experienced as a frontend team lead developer
-    </h3>
-
-    <h3 data-typer class="text-xl mb-2">
-      Check out my
-      <a
-        id="portfolio-link"
-        variant="link"
-        class="hover-main-gradient cursor-pointer font-bold whitespace-nowrap"
-      >
-        portfolio
-      </a>
-    </h3>
-
-    <!-- this is the element after which addClickListener is called -->
-    <h3 data-typer data-attach="portfolio-hook" class="text-xl">
-      Or contact
-      <a
-        href="mailto:contacts_reQuests@proton.me"
-        class="hover-main-gradient font-bold"
-        >me</a
-      >
-    </h3>
-
-    <p data-typer id="greeting" class="mt-12 text-sm italic">
-      {{ greeting }}
-    </p>
-
-    <p data-typer class="text-sm italic mt-2">cya</p>
-  </article>
-</template>
