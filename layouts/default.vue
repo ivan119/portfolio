@@ -114,26 +114,24 @@ const onIndexPage = computed(
     class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto"
   >
     <ClientOnly>
-      <div v-if="activeTheme !== 'default'">
-        <!-- Background with transition -->
-        <Transition name="bg-fade">
-          <BackgroundScene
-            v-if="activeTheme === 'animated'"
-            key="animated-bg"
-            class="background-container"
-          />
-          <layout-components-dotted-layout
-            v-else-if="activeTheme === 'dotted'"
-            key="dotted-bg"
-            class="background-container dotted-bg"
-          />
-          <div
-            v-else
-            key="default-bg"
-            class="background-container static-bg"
-          ></div>
-        </Transition>
-      </div>
+      <!-- Background with transition -->
+      <Transition name="bg-fade">
+        <BackgroundScene
+          v-if="activeTheme === 'animated'"
+          key="animated-bg"
+          class="background-container"
+        />
+        <layout-components-dotted-layout
+          v-else-if="activeTheme === 'dotted'"
+          key="dotted-bg"
+          class="background-container dotted-bg"
+        />
+        <div
+          v-else
+          key="default-bg"
+          class="background-container static-bg"
+        ></div>
+      </Transition>
     </ClientOnly>
     <div class="content-container relative z-10">
       <IntroComponent
