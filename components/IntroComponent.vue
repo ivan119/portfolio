@@ -287,8 +287,6 @@ setTimeout(() => {
       {{ greeting }}
     </p>
     <p data-typer class="text-sm italic mt-2">cya</p>
-    <pre>{{ hideThemeButtons }}</pre>
-
     <Transition
       enter-active-class="transition transform duration-300"
       enter-from-class="translate-y-8 opacity-0"
