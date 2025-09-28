@@ -406,7 +406,6 @@ onMounted(() => {
       <h3 data-typer class="text-xl mb-2">
         Check out my
         <BaseButton
-          id="portfolio-link"
           variant="link"
           class="hover-main-gradient cursor-pointer font-bold whitespace-nowrap"
         >
