@@ -39,6 +39,7 @@ const props = defineProps({
 });
 
 onMounted(() => {
+  hideThemeButtons.value = activeTheme.value === "default";
   if (props.typwriterMode) {
     // meanse we are back beacuse click on logo on index page
     // we use typwriter fully there

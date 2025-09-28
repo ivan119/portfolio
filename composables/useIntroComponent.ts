@@ -36,7 +36,6 @@ export const useIntroComponent = () => {
     hideNow.value = false;
     fadeInClass.value = true;
     isIntroActive.value = true;
-    hideThemeButtons.value = opts.activeTheme === "default";
 
     if (import.meta.browser) {
       const delay = opts.showIconsDelayMs ?? 3369;
