@@ -89,6 +89,7 @@ const formatName = (name: string): string => {
                   ? 'breadcrumb-link hover-main-gradient'
                   : 'hover-main-gradient',
           ]"
+          :style="{ 'view-transition-name': `breadcrumb-name-${crumb.name}` }"
         >
           <NuxtLink
             v-if="!crumb.isLast"
