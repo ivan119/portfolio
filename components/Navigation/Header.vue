@@ -42,21 +42,6 @@ const dottedSpinClass = computed(() => {
   return activeTheme.value === "dotted" ? "icon-spin-cw" : "icon-spin-ccw";
 });
 watch(
-  () => props.showMainContent,
-  (newValue) => {
-    if (newValue) {
-      setTimeout(() => {
-        showLinks.value = true;
-      }, 369);
-    } else {
-      setTimeout(() => {
-        showLinks.value = false;
-      }, 693);
-    }
-  },
-  { immediate: true },
-);
-watch(
   () => props.showLogo,
   (newValue) => {
     if (newValue) {
@@ -77,6 +62,9 @@ const testFunc = () => {
   if (route.path === "/") {
     // TODO: MAKE ON HOVER NO SIGNATURE ANIMATION OR PAUSE + MAKE V-IF ANIMATION WHEN SHOWING/HIDING
     emit("show-intro");
+    setTimeout(() => {
+      showLinks.value = false;
+    }, 200);
   }
 };
 
