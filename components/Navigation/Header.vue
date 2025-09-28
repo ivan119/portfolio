@@ -9,16 +9,13 @@ import SkillsIcon from "~/components/devTools/Icons/Skills.vue";
 import ProjectsIcon from "~/components/devTools/Icons/Projects.vue";
 import DottedIcon from "~/components/devTools/Icons/Dotted.vue";
 import Tooltip from "~/components/UI/Tooltip.vue";
+import ThemeButtons from "~/components/UI/ThemeButtons.vue";
 const colorMode = useColorMode();
 const showLinks = ref(false);
 const props = defineProps({
   showLogo: {
     type: Boolean,
     default: true,
-  },
-  showMainContent: {
-    type: Boolean,
-    default: false,
   },
   activeTheme: {
     type: String,
@@ -28,19 +25,6 @@ const props = defineProps({
 });
 const emit = defineEmits(["show-intro", "toggle-background", "toggle-layout"]);
 
-// Computed property for active icon/theme state
-const activeTheme = computed(() => {
-  return props.activeTheme;
-});
-
-// TODO: Improve Save in local storage
-const toggleBackground = (v) => {
-  emit("toggle-background", v);
-};
-
-const dottedSpinClass = computed(() => {
-  return activeTheme.value === "dotted" ? "icon-spin-cw" : "icon-spin-ccw";
-});
 watch(
   () => props.showLogo,
   (newValue) => {
@@ -57,7 +41,7 @@ watch(
   { immediate: true },
 );
 
-const testFunc = () => {
+const showIntroAgain = () => {
   const route = useRoute();
   if (route.path === "/") {
     // TODO: MAKE ON HOVER NO SIGNATURE ANIMATION OR PAUSE + MAKE V-IF ANIMATION WHEN SHOWING/HIDING
@@ -66,19 +50,6 @@ const testFunc = () => {
       showLinks.value = false;
     }, 200);
   }
-};
-
-const isThemeChanging = ref(false);
-
-const toggleTheme = () => {
-  if (!isThemeChanging.value) {
-    isThemeChanging.value = true;
-    setTimeout(() => {
-      isThemeChanging.value = false;
-    }, 500);
-  }
-
-  colorMode.preference = colorMode.preference === "dark" ? "light" : "dark";
 };
 
 const links = [
@@ -148,7 +119,7 @@ onUnmounted(() => {
           <NuxtLink
             aria-label="homepage-intro-link"
             v-if="props.showLogo"
-            @click="testFunc"
+            @click="showIntroAgain"
             to="/"
             class="logo mt-6 relative hover:scale-105 transition-transform duration-300"
           >
@@ -206,48 +177,7 @@ onUnmounted(() => {
           </Tooltip>
         </li>
       </transition-group>
-
-      <div class="toggle-container flex items-center gap-x-4 animate-icons">
-        <ClientOnly>
-          <!-- Dotted Theme Button -->
-          <UIThemeButton
-            :icon="DottedIcon"
-            :is-active="activeTheme === 'dotted'"
-            variant="dotted"
-            :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
-            tooltip="Toggle Background Animation"
-            @click="
-              toggleBackground(activeTheme === 'dotted' ? 'default' : 'dotted')
-            "
-          />
-          <!-- Animated Theme Button -->
-          <UIThemeButton
-            :icon="BackgroundIcon"
-            :is-active="activeTheme === 'animated'"
-            variant="animated"
-            tooltip="Toggle Background Animation"
-            @click="
-              toggleBackground(
-                activeTheme === 'animated' ? 'default' : 'animated',
-              )
-            "
-          />
-          <!-- SunAndMoon Button -->
-          <UIThemeButton
-            :icon="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
-            :is-active="colorMode.preference === 'dark'"
-            :is-changing="isThemeChanging"
-            :variant="colorMode.preference === 'dark' ? 'moon' : 'sun'"
-            :show-active-indicator="false"
-            :tooltip="
-              colorMode.preference === 'dark'
-                ? 'Return to Light'
-                : 'Embrace Darkness'
-            "
-            @click="toggleTheme"
-          />
-        </ClientOnly>
-      </div>
+      <theme-buttons />
     </div>
   </header>
 </template>

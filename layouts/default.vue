@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useRoute, useColorMode } from "#imports";
-import { useLocalStorage } from "@vueuse/core";
+import { useThemeButtons } from "~/composables/UI/useThemeButtons";
 // Manage color mode and transition states
 const colorMode = useColorMode();
+const { activeTheme } = useThemeButtons();
+
 const isDark = computed(() => colorMode.value === "dark");
 const transitionMode = ref<"slide" | "fade">("fade");
 const transitionSlide = ref("slide-right");
@@ -30,17 +32,7 @@ const showIntroComponent = () => {
     showIntro.value = true;
   }, 693);
 };
-// Background state management
-const activeTheme = ref<"default" | "dotted" | "animated">("default");
-// TODO: IMPROVE OPTIMIZE AND CLEANUP / TYPE IT! TS!
-const setupTheme = () => {
-  if (import.meta.client) {
-    const themeSettings = localStorage.getItem("themeSettings");
-    if (themeSettings !== null) {
-      activeTheme.value = themeSettings;
-    }
-  }
-};
+
 const setupViewTransition = () => {
   if (document.startViewTransition) {
     const handleNavigation = () => {
@@ -55,14 +47,8 @@ const setupViewTransition = () => {
   }
 };
 onBeforeMount(() => {
-  setupTheme();
   setupViewTransition();
 });
-// Toggle functions for background states with better logic
-const toggleAnimateBackground = (v) => {
-  activeTheme.value = v;
-  localStorage.setItem("themeSettings", activeTheme.value);
-};
 
 // Watch route changes for slide direction
 const transitionSlideDirection = computed(() => {
@@ -142,8 +128,6 @@ const onIndexPage = computed(
       <navigation-header
         v-if="showMainContent"
         :show-logo="showLogo"
-        :active-theme="activeTheme"
-        :show-main-content="showMainContent"
         @show-intro="showIntroComponent"
         @toggle-background="(v: boolean) => toggleAnimateBackground(v)"
       />
