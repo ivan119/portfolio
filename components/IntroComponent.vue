@@ -371,124 +371,65 @@ onMounted(() => {
 </style>
 
 <template>
-  <div>
-    <!--FOR SSR META-->
-    <article class="hidden p-6 sm:p-8">
-      <h1 data-typer class="text-3xl md:text-4xl font-bold mb-4">
-        Hi
-        <div class="animate-wave relative w-10 h-10">
-          <div class="absolute mt-2">
-            <NuxtImg
-              alt="waving-hand"
-              src="/waving-hand_40x40.webp"
-              width="40"
-              height="40"
-              loading="eager"
-              fetchpriority="high"
-              :placeholder="false"
-              decoding="async"
-              sizes="40px"
-            />
-          </div>
+  <article
+    class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-8"
+    :class="{ 'fade-in': fadeInClass, hidden: hideNow }"
+    ref="typeWrite"
+  >
+    <h1 data-typer class="text-3xl md:text-4xl font-bold mb-4">
+      Hi
+      <div class="animate-wave relative w-10 h-10">
+        <div class="absolute mt-2">
+          <NuxtImg
+            alt="waving-hand"
+            src="/waving-hand_40x40.webp"
+            width="40"
+            height="40"
+            loading="eager"
+            fetchpriority="high"
+            :placeholder="false"
+            decoding="async"
+            sizes="40px"
+          />
         </div>
-        , I'm
-        <span class="text-main-gradient">Ivan</span>
-      </h1>
+      </div>
+      , I'm
+      <span class="text-main-gradient">Ivan</span>
+    </h1>
 
-      <h2 data-typer class="text-2xl md:text-3xl mb-2">
-        I design/develop things for the web
-      </h2>
+    <h2 data-typer class="text-2xl md:text-3xl mb-2">
+      I design/develop things for the web
+    </h2>
 
-      <h3 data-typer class="text-2xl md:text-3xl mb-4">
-        Experienced as a frontend team lead developer
-      </h3>
+    <h3 data-typer class="text-2xl md:text-3xl mb-4">
+      Experienced as a frontend team lead developer
+    </h3>
 
-      <h3 data-typer class="text-xl mb-2">
-        Check out my
-        <BaseButton
-          variant="link"
-          class="hover-main-gradient cursor-pointer font-bold whitespace-nowrap"
-        >
-          portfolio
-        </BaseButton>
-      </h3>
+    <h3 data-typer class="text-xl mb-2">
+      Check out my
+      <BaseButton
+        id="portfolio-link"
+        variant="link"
+        class="hover-main-gradient cursor-pointer font-bold whitespace-nowrap"
+      >
+        portfolio
+      </BaseButton>
+    </h3>
 
-      <!-- this is the element after which addClickListener is called -->
-      <h3 data-typer data-attach="portfolio-hook" class="text-xl">
-        Or contact
-        <a
-          href="mailto:ivankelava991@gmail.com"
-          class="hover-main-gradient font-bold"
-          >me</a
-        >
-      </h3>
+    <!-- this is the element after which addClickListener is called -->
+    <h3 data-typer data-attach="portfolio-hook" class="text-xl">
+      Or contact
+      <a
+        href="mailto:contacts_reQuests@proton.me"
+        class="hover-main-gradient font-bold"
+        >me</a
+      >
+    </h3>
 
-      <p data-typer id="greeting" class="mt-12 text-sm italic">
-        {{ greeting }}
-      </p>
+    <p data-typer id="greeting" class="mt-12 text-sm italic">
+      {{ greeting }}
+    </p>
 
-      <p data-typer class="text-sm italic mt-2">cya</p>
-    </article>
-    <article
-      class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-8"
-      :class="{ 'fade-in': fadeInClass, hidden: hideNow }"
-      ref="typeWrite"
-    >
-      <h1 data-typer class="text-3xl md:text-4xl font-bold mb-4">
-        Hi
-        <div class="animate-wave relative w-10 h-10">
-          <div class="absolute mt-2">
-            <NuxtImg
-              alt="waving-hand"
-              src="/waving-hand_40x40.webp"
-              width="40"
-              height="40"
-              loading="eager"
-              fetchpriority="high"
-              :placeholder="false"
-              decoding="async"
-              sizes="40px"
-            />
-          </div>
-        </div>
-        , I'm
-        <span class="text-main-gradient">Ivan</span>
-      </h1>
-
-      <h2 data-typer class="text-2xl md:text-3xl mb-2">
-        I design/develop things for the web
-      </h2>
-
-      <h3 data-typer class="text-2xl md:text-3xl mb-4">
-        Experienced as a frontend team lead developer
-      </h3>
-
-      <h3 data-typer class="text-xl mb-2">
-        Check out my
-        <BaseButton
-          id="portfolio-link"
-          variant="link"
-          class="hover-main-gradient cursor-pointer font-bold whitespace-nowrap"
-        >
-          portfolio
-        </BaseButton>
-      </h3>
-
-      <!-- this is the element after which addClickListener is called -->
-      <h3 data-typer data-attach="portfolio-hook" class="text-xl">
-        Or contact
-        <a
-          href="mailto:ivankelava991@gmail.com"
-          class="hover-main-gradient font-bold"
-          >me</a
-        >
-      </h3>
-
-      <p data-typer id="greeting" class="mt-12 text-sm italic">
-        {{ greeting }}
-      </p>
-
-      <p data-typer class="text-sm italic mt-2">cya</p>
-    </article>
-  </div>
+    <p data-typer class="text-sm italic mt-2">cya</p>
+  </article>
 </template>
