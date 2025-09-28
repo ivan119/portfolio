@@ -6,7 +6,6 @@ export const useThemeButtons = () => {
   });
   const isThemeChanging = ref(false);
   const colorMode = useColorMode();
-
   const toggleTheme = () => {
     if (!isThemeChanging.value) {
       isThemeChanging.value = true;
@@ -22,12 +21,13 @@ export const useThemeButtons = () => {
   const dottedSpinClass = computed(() => {
     return activeTheme.value === "dotted" ? "icon-spin-cw" : "icon-spin-ccw";
   });
+
   return {
     activeTheme,
-    isThemeChanging,
     colorMode,
+    dottedSpinClass,
+    isThemeChanging,
     toggleTheme,
     toggleBackground,
-    dottedSpinClass,
   };
 };

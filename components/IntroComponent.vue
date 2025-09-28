@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, nextTick, onMounted, onUnmounted } from "vue";
+import { ref, watch, nextTick, onMounted, onUnmounted, computed } from "vue";
 import Typewriter from "typewriter-effect/dist/core";
 import { useRouter } from "vue-router";
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
@@ -11,6 +11,7 @@ const typeWrite = ref(null);
 const del = ref(6); // initial typing speed (ms per char) for the first line — tweak this if you want it faster/slower
 const hideNow = ref(false);
 const fadeInClass = ref(false);
+const hideThemeButtons = ref(true);
 let typewriterInstances = []; // to stop on reset
 const isIntroActive = ref(true);
 const { colorMode, activeTheme } = useThemeButtons();
@@ -25,7 +26,6 @@ usePageSeo({
   imageAlt: "Ivan Kelava favicon",
   lang: "en",
 });
-
 updateGreeting();
 watch(colorMode, () => {
   updateGreeting();
@@ -218,6 +218,9 @@ watch(
 
 onMounted(() => {
   resetComponent();
+  if (activeTheme.value !== "default") {
+    hideThemeButtons.value = false;
+  }
 });
 setTimeout(() => {
   showSunAndMoonIcon.value = true;
@@ -283,7 +286,6 @@ setTimeout(() => {
     <p data-typer id="greeting" class="mt-12 text-sm italic">
       {{ greeting }}
     </p>
-
     <p data-typer class="text-sm italic mt-2">cya</p>
     <Transition
       enter-active-class="transition transform duration-300"
@@ -294,7 +296,7 @@ setTimeout(() => {
       leave-to-class="translate-y-8 opacity-0"
     >
       <div v-if="showSunAndMoonIcon" class="right-8 bottom-8 absolute">
-        <theme-buttons :hide-theme-buttons="activeTheme === 'default'" />
+        <theme-buttons :hide-theme-buttons="hideThemeButtons" />
       </div>
     </Transition>
   </article>
