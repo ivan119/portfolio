@@ -310,7 +310,7 @@ onMounted(() => {
 
 <template>
   <article
-    class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-8"
+    class="typewrite-wrapper relative transition-all duration-300 p-6 sm:p-8 fade-enter-from"
     :class="{ 'fade-in': fadeInClass, hidden: hideNow }"
     ref="typeWrite"
   >
@@ -345,13 +345,13 @@ onMounted(() => {
 
     <h3 data-typer class="text-xl mb-2">
       Check out my
-      <BaseButton
+      <a
         id="portfolio-link"
         variant="link"
         class="hover-main-gradient cursor-pointer font-bold whitespace-nowrap"
       >
         portfolio
-      </BaseButton>
+      </a>
     </h3>
 
     <!-- this is the element after which addClickListener is called -->
