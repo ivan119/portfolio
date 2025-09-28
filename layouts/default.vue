@@ -8,7 +8,11 @@ const transitionMode = ref<"slide" | "fade">("fade");
 const transitionSlide = ref("slide-right");
 const transitionFade = ref("page");
 const route = useRoute();
-const showIntro = useLocalStorage("showIntro", true);
+const showIntro = useCookie<boolean>("showIntro", {
+  default: () => true,
+  watch: true, // keep it reactive
+  sameSite: "lax",
+});
 const showMainContent = computed(() => !showIntro.value);
 const showLogo = ref(!showIntro.value);
 // changeState will update and show main content
@@ -110,50 +114,45 @@ const onIndexPage = computed(
     class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto"
   >
     <ClientOnly>
-      <div v-if="activeTheme !== 'default'">
-        <!-- Background with transition -->
-        <Transition name="bg-fade">
-          <BackgroundScene
-            v-if="activeTheme === 'animated'"
-            key="animated-bg"
-            class="background-container"
-          />
-          <layout-components-dotted-layout
-            v-else-if="activeTheme === 'dotted'"
-            key="dotted-bg"
-            class="background-container dotted-bg"
-          />
-          <div
-            v-else
-            key="default-bg"
-            class="background-container static-bg"
-          ></div>
-        </Transition>
-      </div>
-    </ClientOnly>
-
-    <div class="content-container relative z-10">
-      <ClientOnly>
-        <IntroComponent
-          v-if="!showMainContent && onIndexPage"
-          class="grow no-animation"
-          @update:show-main-content="changeState"
-          @show-logo="updateShowLogo"
+      <!-- Background with transition -->
+      <Transition name="bg-fade">
+        <BackgroundScene
+          v-if="activeTheme === 'animated'"
+          key="animated-bg"
+          class="background-container"
         />
-      </ClientOnly>
+        <layout-components-dotted-layout
+          v-else-if="activeTheme === 'dotted'"
+          key="dotted-bg"
+          class="background-container dotted-bg"
+        />
+        <div
+          v-else
+          key="default-bg"
+          class="background-container static-bg"
+        ></div>
+      </Transition>
+    </ClientOnly>
+    <div class="content-container relative z-10">
+      <IntroComponent
+        v-if="showIntro && onIndexPage"
+        @update:show-main-content="changeState"
+        @show-logo="updateShowLogo"
+      />
       <navigation-header
+        v-if="showMainContent"
         :show-logo="showLogo"
         :active-theme="activeTheme"
         :show-main-content="showMainContent"
         @show-intro="showIntroComponent"
-        @toggle-background="(v) => toggleAnimateBackground(v)"
+        @toggle-background="(v: boolean) => toggleAnimateBackground(v)"
       />
       <div class="flex-1" v-show="showMainContent">
         <div class="grow">
           <slot />
         </div>
       </div>
-      <Footer class="container" v-show="showMainContent" />
+      <Footer class="container" v-if="showMainContent" />
       <ScrollProgress :visibility="showMainContent" />
     </div>
   </div>

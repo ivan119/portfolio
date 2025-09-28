@@ -221,33 +221,29 @@ onUnmounted(() => {
 
       <div class="toggle-container flex items-center gap-x-4 animate-icons">
         <ClientOnly>
-          <template v-if="showLogo">
-            <!-- Dotted Theme Button -->
-            <UIThemeButton
-              :icon="DottedIcon"
-              :is-active="activeTheme === 'dotted'"
-              variant="dotted"
-              :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
-              tooltip="Toggle Background Animation"
-              @click="
-                toggleBackground(
-                  activeTheme === 'dotted' ? 'default' : 'dotted',
-                )
-              "
-            />
-            <!-- Animated Theme Button -->
-            <UIThemeButton
-              :icon="BackgroundIcon"
-              :is-active="activeTheme === 'animated'"
-              variant="animated"
-              tooltip="Toggle Background Animation"
-              @click="
-                toggleBackground(
-                  activeTheme === 'animated' ? 'default' : 'animated',
-                )
-              "
-            />
-          </template>
+          <!-- Dotted Theme Button -->
+          <UIThemeButton
+            :icon="DottedIcon"
+            :is-active="activeTheme === 'dotted'"
+            variant="dotted"
+            :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
+            tooltip="Toggle Background Animation"
+            @click="
+              toggleBackground(activeTheme === 'dotted' ? 'default' : 'dotted')
+            "
+          />
+          <!-- Animated Theme Button -->
+          <UIThemeButton
+            :icon="BackgroundIcon"
+            :is-active="activeTheme === 'animated'"
+            variant="animated"
+            tooltip="Toggle Background Animation"
+            @click="
+              toggleBackground(
+                activeTheme === 'animated' ? 'default' : 'animated',
+              )
+            "
+          />
           <!-- SunAndMoon Button -->
           <UIThemeButton
             :icon="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
