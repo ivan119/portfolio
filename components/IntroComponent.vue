@@ -13,7 +13,7 @@ const hideNow = ref(false);
 const fadeInClass = ref(false);
 let typewriterInstances = []; // to stop on reset
 const isIntroActive = ref(true);
-const { colorMode, activeTheme } = useThemeButtons();
+const { colorMode, themeWasActivated } = useThemeButtons();
 const { greeting, updateGreeting, getRandomQuote } = useIntroFunctions();
 const showSunAndMoonIcon = ref(false);
 // SEO (same as homepage)
@@ -25,7 +25,6 @@ usePageSeo({
   imageAlt: "Ivan Kelava favicon",
   lang: "en",
 });
-
 updateGreeting();
 watch(colorMode, () => {
   updateGreeting();
@@ -283,7 +282,6 @@ setTimeout(() => {
     <p data-typer id="greeting" class="mt-12 text-sm italic">
       {{ greeting }}
     </p>
-
     <p data-typer class="text-sm italic mt-2">cya</p>
     <Transition
       enter-active-class="transition transform duration-300"
@@ -294,7 +292,7 @@ setTimeout(() => {
       leave-to-class="translate-y-8 opacity-0"
     >
       <div v-if="showSunAndMoonIcon" class="right-8 bottom-8 absolute">
-        <theme-buttons :hide-theme-buttons="activeTheme === 'default'" />
+        <theme-buttons :hide-theme-buttons="!themeWasActivated" />
       </div>
     </Transition>
   </article>
