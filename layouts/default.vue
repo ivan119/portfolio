@@ -10,6 +10,7 @@ const transitionMode = ref<"slide" | "fade">("fade");
 const transitionSlide = ref("slide-right");
 const transitionFade = ref("page");
 const route = useRoute();
+const typeWriterMode = ref(false);
 const showIntro = useCookie<boolean>("showIntro", {
   default: () => true,
   watch: true, // keep it reactive
@@ -28,6 +29,7 @@ const updateShowLogo = (value: boolean) => {
 // showIntroComponent -> will show intro again if Logo is clicked on homepage
 const showIntroComponent = () => {
   showLogo.value = false;
+  typeWriterMode.value = true;
   setTimeout(() => {
     showIntro.value = true;
   }, 693);
@@ -47,6 +49,7 @@ const setupViewTransition = () => {
   }
 };
 onBeforeMount(() => {
+  typeWriterMode.value = false;
   setupViewTransition();
 });
 
@@ -122,6 +125,7 @@ const onIndexPage = computed(
     <div class="content-container relative z-10">
       <IntroComponent
         v-if="showIntro && onIndexPage"
+        :typwriter-mode="typeWriterMode"
         @update:show-main-content="changeState"
         @show-logo="updateShowLogo"
       />
