@@ -182,7 +182,11 @@ onUnmounted(() => {
           <Tooltip
             :text="link.tooltipText"
             size="sm"
-            :custom-styles="link.to === '/projects' ? { left: '0', transform: 'translateX(0)' } : {}"
+            :custom-styles="
+              link.to === '/projects'
+                ? { left: '0', transform: 'translateX(0)' }
+                : {}
+            "
           >
             <NuxtLink
               v-show="link.show"
@@ -217,31 +221,33 @@ onUnmounted(() => {
 
       <div class="toggle-container flex items-center gap-x-4 animate-icons">
         <ClientOnly>
-          <!-- Dotted Theme Button -->
-          <UIThemeButton
-            :icon="DottedIcon"
-            :is-active="activeTheme === 'dotted'"
-            variant="dotted"
-            :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
-            tooltip="Toggle Background Animation"
-            @click="
-              toggleBackground(activeTheme === 'dotted' ? 'default' : 'dotted')
-            "
-          />
-
-          <!-- Animated Theme Button -->
-          <UIThemeButton
-            :icon="BackgroundIcon"
-            :is-active="activeTheme === 'animated'"
-            variant="animated"
-            tooltip="Toggle Background Animation"
-            @click="
-              toggleBackground(
-                activeTheme === 'animated' ? 'default' : 'animated',
-              )
-            "
-          />
-
+          <template v-if="showLogo">
+            <!-- Dotted Theme Button -->
+            <UIThemeButton
+              :icon="DottedIcon"
+              :is-active="activeTheme === 'dotted'"
+              variant="dotted"
+              :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
+              tooltip="Toggle Background Animation"
+              @click="
+                toggleBackground(
+                  activeTheme === 'dotted' ? 'default' : 'dotted',
+                )
+              "
+            />
+            <!-- Animated Theme Button -->
+            <UIThemeButton
+              :icon="BackgroundIcon"
+              :is-active="activeTheme === 'animated'"
+              variant="animated"
+              tooltip="Toggle Background Animation"
+              @click="
+                toggleBackground(
+                  activeTheme === 'animated' ? 'default' : 'animated',
+                )
+              "
+            />
+          </template>
           <!-- SunAndMoon Button -->
           <UIThemeButton
             :icon="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
