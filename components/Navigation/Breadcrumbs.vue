@@ -15,8 +15,9 @@ const breadcrumbs = computed<Breadcrumb[]>(() => {
   pathArray.forEach((item, index) => {
     if (item !== "") {
       path += `/${item}`;
+      let name = item.path === "/" ? "e" : item;
       breadcrumbs.push({
-        name: formatName(item),
+        name: formatName(name),
         path: path,
         isLast: index === pathArray.length - 1,
       });
@@ -57,7 +58,10 @@ const formatName = (name: string): string => {
         class="flex items-center"
       >
         <!-- Separator -->
-        <span v-if="index > 0" class="mx-2 text-gray-400 dark:text-gray-600">
+        <span
+          v-if="crumb.name !== 'Home' && index > 0"
+          class="mx-2 text-gray-400 dark:text-gray-600"
+        >
           <svg
             class="w-4 h-4"
             fill="none"
@@ -76,8 +80,14 @@ const formatName = (name: string): string => {
         <!-- Breadcrumb Item -->
         <div
           :class="[
-            'flex items-center breadcrumb-link',
-            crumb.isLast ? 'active-crumb' : 'inactive-crumb',
+            'flex items-center',
+            crumb.isLast
+              ? 'active-crumb'
+              : crumb.name === 'Home'
+                ? ''
+                : crumb.name !== 'Home'
+                  ? 'breadcrumb-link hover-main-gradient'
+                  : 'hover-main-gradient',
           ]"
         >
           <NuxtLink
@@ -85,7 +95,10 @@ const formatName = (name: string): string => {
             :to="crumb.path"
             class="transition-colors duration-200"
           >
-            {{ crumb.name }}
+            <dev-tools-icons-home v-if="crumb.name === 'Home'" />
+            <template v-else>
+              {{ crumb.name }}
+            </template>
           </NuxtLink>
           <span v-else>{{ crumb.name }}</span>
         </div>
@@ -108,15 +121,8 @@ const formatName = (name: string): string => {
   position: relative;
 }
 
-.inactive-crumb:hover {
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
-  background-image: var(--main-gradient);
-}
-
 .breadcrumb-link {
   position: relative;
-  transition: all 0.369s cubic-bezier(0.4, 0, 0.2, 1);
+  @apply transition-all ease-linear duration-[369];
 }
 </style>
