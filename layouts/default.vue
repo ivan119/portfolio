@@ -8,7 +8,11 @@ const transitionMode = ref<"slide" | "fade">("fade");
 const transitionSlide = ref("slide-right");
 const transitionFade = ref("page");
 const route = useRoute();
-const showIntro = useLocalStorage("showIntro", true);
+const showIntro = useCookie<boolean>("showIntro", {
+  default: () => true,
+  watch: true, // keep it reactive
+  sameSite: "lax",
+});
 const showMainContent = computed(() => !showIntro.value);
 const showLogo = ref(!showIntro.value);
 // changeState will update and show main content
@@ -131,29 +135,26 @@ const onIndexPage = computed(
         </Transition>
       </div>
     </ClientOnly>
-
     <div class="content-container relative z-10">
-      <ClientOnly>
-        <IntroComponent
-          v-if="!showMainContent && onIndexPage"
-          class="grow no-animation"
-          @update:show-main-content="changeState"
-          @show-logo="updateShowLogo"
-        />
-      </ClientOnly>
+      <IntroComponent
+        v-if="showIntro && onIndexPage"
+        @update:show-main-content="changeState"
+        @show-logo="updateShowLogo"
+      />
       <navigation-header
+        v-if="showMainContent"
         :show-logo="showLogo"
         :active-theme="activeTheme"
         :show-main-content="showMainContent"
         @show-intro="showIntroComponent"
-        @toggle-background="(v) => toggleAnimateBackground(v)"
+        @toggle-background="(v: boolean) => toggleAnimateBackground(v)"
       />
       <div class="flex-1" v-show="showMainContent">
         <div class="grow">
           <slot />
         </div>
       </div>
-      <Footer class="container" v-show="showMainContent" />
+      <Footer class="container" v-if="showMainContent" />
       <ScrollProgress :visibility="showMainContent" />
     </div>
   </div>
