@@ -77,10 +77,7 @@ usePageSeo({
           >LinkedIn</BaseButton
         >
         or drop me an
-        <BaseButton
-          href="mailto:contacts_reQuests@proton.me"
-          external
-          variant="link"
+        <BaseButton href="mailto:KelavaIvan@proton.me" external variant="link"
           >email here.</BaseButton
         >
       </p>

@@ -358,7 +358,7 @@ onMounted(() => {
     <h3 data-typer data-attach="portfolio-hook" class="text-xl">
       Or contact
       <a
-        href="mailto:contacts_reQuests@proton.me"
+        href="mailto:KelavaIvan@proton.me"
         class="hover-main-gradient font-bold"
         >me</a
       >
