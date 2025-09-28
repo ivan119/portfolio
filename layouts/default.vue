@@ -129,7 +129,6 @@ const onIndexPage = computed(
         v-if="showMainContent"
         :show-logo="showLogo"
         @show-intro="showIntroComponent"
-        @toggle-background="(v: boolean) => toggleAnimateBackground(v)"
       />
       <div class="flex-1" v-show="showMainContent">
         <div class="grow">

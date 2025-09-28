@@ -14,13 +14,11 @@ export const useThemeButtons = () => {
         isThemeChanging.value = false;
       }, 369);
     }
-
     colorMode.preference = colorMode.preference === "dark" ? "light" : "dark";
   };
   const toggleBackground = (v: string) => {
     activeTheme.value = v;
   };
-
   const dottedSpinClass = computed(() => {
     return activeTheme.value === "dotted" ? "icon-spin-cw" : "icon-spin-ccw";
   });
