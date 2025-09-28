@@ -78,9 +78,9 @@ const addClickListener = () => {
                 hideNow.value = true;
                 setTimeout(() => {
                   emit("update:showMainContent", true);
-                }, 1369);
+                }, 693);
                 isIntroActive.value = false;
-              }, 693);
+              }, 369);
             }, 1369);
           })
           .start();
