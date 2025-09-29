@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
 import { useDefaultLayout } from "~/composables/useDefaultLayout";
+const BackgroundScene = defineAsyncComponent(
+  () => import("~/components/BackgroundScene.vue"),
+);
+const DottedLayout = defineAsyncComponent(
+  () => import("~/components/layoutComponents/DottedLayout.vue"),
+);
 const { activeTheme } = useThemeButtons();
 
 const {
@@ -10,8 +16,6 @@ const {
   showMainContent,
   showLogo,
   onIndexPage,
-  // computed
-  transition,
   // methods
   changeState,
   updateShowLogo,
@@ -31,7 +35,7 @@ const {
           key="animated-bg"
           class="background-container"
         />
-        <layout-components-dotted-layout
+        <DottedLayout
           v-else-if="activeTheme === 'dotted'"
           key="dotted-bg"
           class="background-container dotted-bg"
