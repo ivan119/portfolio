@@ -25,9 +25,7 @@ const {
 </script>
 <template>
   <!-- Main Content -->
-  <div
-    class="relative z-10 container mx-auto px-4 py-16 min-h-screen flex items-center justify-center"
-  >
+  <div class="relative z-10 mx-auto px-4 flex items-center justify-center">
     <div class="max-w-4xl w-full">
       <!-- Ultra Advanced Error Code Display -->
       <div class="text-center mb-16 perspective-1000">
