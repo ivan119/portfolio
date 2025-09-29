@@ -84,8 +84,9 @@ const handlePortfolioClick = () => {
         <div class="animate-wave relative w-10 h-10">
           <div class="absolute mt-2">
             <img
-              alt="waving-hand"
-              src="/waving-hand_40x40.webp"
+              alt="Waving hand emoji"
+              title="Waving hand"
+              src="/waving-hand.webp"
               width="40"
               height="40"
               loading="eager"
