@@ -1,101 +1,26 @@
 <script setup lang="ts">
-import { useRoute, useColorMode } from "#imports";
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
-// Manage color mode and transition states
-const colorMode = useColorMode();
+import { useDefaultLayout } from "~/composables/useDefaultLayout";
+const BackgroundScene = defineAsyncComponent(
+  () => import("~/components/BackgroundScene.vue"),
+);
+const DottedLayout = defineAsyncComponent(
+  () => import("~/components/layoutComponents/DottedLayout.vue"),
+);
 const { activeTheme } = useThemeButtons();
 
-const isDark = computed(() => colorMode.value === "dark");
-const transitionMode = ref<"slide" | "fade">("fade");
-const transitionSlide = ref("slide-right");
-const transitionFade = ref("page");
-const route = useRoute();
-const typeWriterMode = ref(false);
-const showIntro = useCookie<boolean>("showIntro", {
-  default: () => true,
-  watch: true, // keep it reactive
-  sameSite: "lax",
-});
-const showMainContent = computed(() => !showIntro.value);
-const showLogo = ref(!showIntro.value);
-// changeState will update and show main content
-const changeState = (value: boolean) => {
-  showIntro.value = !value;
-};
-// show logo will be shown as well when introComponent is destroyed
-const updateShowLogo = (value: boolean) => {
-  showLogo.value = value;
-};
-// showIntroComponent -> will show intro again if Logo is clicked on homepage
-const showIntroComponent = () => {
-  showLogo.value = false;
-  typeWriterMode.value = true;
-  setTimeout(() => {
-    showIntro.value = true;
-  }, 693);
-};
-
-const setupViewTransition = () => {
-  if (document.startViewTransition) {
-    const handleNavigation = () => {
-      document.startViewTransition();
-    };
-    // Listen for navigation events
-    window.addEventListener("popstate", handleNavigation);
-    // Clean up
-    onUnmounted(() => {
-      window.removeEventListener("popstate", handleNavigation);
-    });
-  }
-};
-onBeforeMount(() => {
-  typeWriterMode.value = false;
-  setupViewTransition();
-});
-
-// Watch route changes for slide direction
-const transitionSlideDirection = computed(() => {
-  return route.path === "/" ? "slide-left" : "slide-right";
-});
-// Update transition on route change
-const transition = computed(() => ({
-  name:
-    transitionMode.value === "slide"
-      ? transitionSlideDirection.value
-      : transitionFade.value,
-  mode: "out-in",
-}));
-const handleShowContent = () => {
-  if (route.path !== "/" && showIntro.value) {
-    showIntro.value = false;
-    updateShowLogo(true);
-  }
-};
-watch(
-  () => route.path,
-  () => {
-    handleShowContent();
-  },
-  { immediate: true },
-);
-// Handle case where we
-watch(
-  [() => route.path, showIntro],
-  () => {
-    if (route.path !== "/" && showIntro.value) {
-      const router = useRouter();
-      console.log("alpha_go");
-      router.push({ path: "/" });
-      setTimeout(() => {
-        showLogo.value = false;
-      }, 369);
-    }
-  },
-  { immediate: true },
-);
-const onIndexPage = computed(
-  () => route.name === "index" || route.path === "/",
-);
+const {
+  // state
+  typeWriterMode,
+  showIntro,
+  showMainContent,
+  showLogo,
+  onIndexPage,
+  // methods
+  changeState,
+  updateShowLogo,
+  showIntroComponent,
+} = useDefaultLayout();
 </script>
 
 <template>
@@ -110,7 +35,7 @@ const onIndexPage = computed(
           key="animated-bg"
           class="background-container"
         />
-        <layout-components-dotted-layout
+        <DottedLayout
           v-else-if="activeTheme === 'dotted'"
           key="dotted-bg"
           class="background-container dotted-bg"

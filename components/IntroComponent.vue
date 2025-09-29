@@ -28,9 +28,11 @@ usePageSeo({
 
 updateGreeting();
 watch(colorMode, () => {
-  updateGreeting();
-  const gr = document.getElementById("greeting");
-  if (gr) gr.innerHTML = greeting.value;
+  if (import.meta.client) {
+    updateGreeting();
+    const gr = document.getElementById("greeting");
+    if (gr) gr.innerHTML = greeting.value;
+  }
 });
 
 const props = defineProps({
@@ -67,9 +69,7 @@ const handlePortfolioClick = () => {
 </script>
 
 <template>
-  <div
-    class="h-dvh relative flex flex-col transition-all duration-[369] p-6 sm:p-8"
-  >
+  <div class="h-dvh relative flex flex-col p-6 sm:p-8">
     <article
       class="typewrite-wrapper fade-enter-from"
       :class="{
@@ -79,13 +79,14 @@ const handlePortfolioClick = () => {
       }"
       ref="typeWrite"
     >
-      <h1 data-typer class="text-3xl md:text-4xl font-bold mb-4">
+      <h2 data-typer class="text-3xl md:text-4xl font-bold mb-4">
         Hi
         <div class="animate-wave relative w-10 h-10">
           <div class="absolute mt-2">
             <img
-              alt="waving-hand"
-              src="/waving-hand_40x40.webp"
+              alt="Waving hand emoji"
+              title="Waving hand"
+              src="/waving-hand.webp"
               width="40"
               height="40"
               loading="eager"
@@ -98,7 +99,7 @@ const handlePortfolioClick = () => {
         </div>
         , I'm
         <span class="text-main-gradient">Ivan</span>
-      </h1>
+      </h2>
 
       <h2 data-typer class="text-2xl md:text-3xl mb-2">
         I design/develop things for the web
@@ -129,11 +130,21 @@ const handlePortfolioClick = () => {
           >me</a
         >
       </h3>
-
-      <p data-typer id="greeting" class="mt-12 text-sm italic">
+      <div v-if="!typwriterMode" class="slide-enter-active">
+        <p data-typer id="greeting" class="mt-12 text-sm italic">
+          {{ greeting }}
+        </p>
+        <p data-typer class="text-sm italic mt-2">cya</p>
+      </div>
+      <p
+        v-show="typwriterMode"
+        data-typer
+        id="greeting"
+        class="mt-12 text-sm italic"
+      >
         {{ greeting }}
       </p>
-      <p data-typer class="text-sm italic mt-2">cya</p>
+      <p v-show="typwriterMode" data-typer class="text-sm italic mt-2">cya</p>
     </article>
     <Transition
       enter-active-class="transition transform duration-300"

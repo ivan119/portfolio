@@ -20,6 +20,8 @@ export function usePageSeo({ title, description, image, imageAlt, robots = "inde
       ? image
       : `${url.origin}${image.startsWith("/") ? image : `/${image}`}`
     : undefined;
+  const siteName = "Ivan Kelava";
+  const ogLocale = lang === "en" ? "en_US" : `${lang}_${lang.toUpperCase()}`;
 
   // Run on both SSR and client navigations so tags exist every time
   useSeoMeta({
@@ -35,6 +37,8 @@ export function usePageSeo({ title, description, image, imageAlt, robots = "inde
     twitterTitle: title,
     twitterDescription: description,
     robots,
+    ogSiteName: siteName,
+    ogLocale,
   });
 
   useHead({
