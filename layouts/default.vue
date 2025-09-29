@@ -1,75 +1,3 @@
-<script setup lang="ts">
-import { useThemeButtons } from "~/composables/UI/useThemeButtons";
-import { useDefaultLayout } from "~/composables/useDefaultLayout";
-const BackgroundScene = defineAsyncComponent(
-  () => import("~/components/BackgroundScene.vue"),
-);
-const DottedLayout = defineAsyncComponent(
-  () => import("~/components/layoutComponents/DottedLayout.vue"),
-);
-const { activeTheme } = useThemeButtons();
-
-const {
-  // state
-  typeWriterMode,
-  showIntro,
-  showMainContent,
-  showLogo,
-  onIndexPage,
-  // methods
-  changeState,
-  updateShowLogo,
-  showIntroComponent,
-} = useDefaultLayout();
-</script>
-
-<template>
-  <div
-    class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto"
-  >
-    <ClientOnly>
-      <!-- Background with transition -->
-      <Transition name="bg-fade">
-        <BackgroundScene
-          v-if="activeTheme === 'animated'"
-          key="animated-bg"
-          class="background-container"
-        />
-        <DottedLayout
-          v-else-if="activeTheme === 'dotted'"
-          key="dotted-bg"
-          class="background-container dotted-bg"
-        />
-        <div
-          v-else
-          key="default-bg"
-          class="background-container static-bg"
-        ></div>
-      </Transition>
-    </ClientOnly>
-    <div class="content-container relative z-10">
-      <IntroComponent
-        v-if="showIntro && onIndexPage"
-        :typwriter-mode="typeWriterMode"
-        @update:show-main-content="changeState"
-        @show-logo="updateShowLogo"
-      />
-      <navigation-header
-        v-if="showMainContent"
-        :show-logo="showLogo"
-        @show-intro="showIntroComponent"
-      />
-      <div class="flex-1" v-show="showMainContent">
-        <div class="grow">
-          <slot />
-        </div>
-      </div>
-      <Footer class="container" v-if="showMainContent" />
-      <ScrollProgress :visibility="showMainContent" />
-    </div>
-  </div>
-</template>
-
 <style scoped>
 /* Enable smoother transitions */
 :root {
@@ -151,3 +79,70 @@ const {
   }
 }
 </style>
+<script setup lang="ts">
+import { useThemeButtons } from "~/composables/UI/useThemeButtons";
+import { useDefaultLayout } from "~/composables/useDefaultLayout";
+const BackgroundScene = defineAsyncComponent(
+  () => import("~/components/UI/Themes/BackgroundScene.vue"),
+);
+const DottedLayout = defineAsyncComponent(
+  () => import("~/components/UI/Themes/DottedLayout.vue"),
+);
+const { activeTheme } = useThemeButtons();
+
+const {
+  // state
+  typeWriterMode,
+  showIntro,
+  showMainContent,
+  showLogo,
+  onIndexPage,
+  // methods
+  changeState,
+  updateShowLogo,
+  showIntroComponent,
+} = useDefaultLayout();
+</script>
+
+<template>
+  <div
+    class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto"
+  >
+    <!-- Background with transition -->
+    <ClientOnly>
+      <Transition name="bg-fade">
+        <BackgroundScene
+          v-if="activeTheme === 'animated'"
+          key="animated-bg"
+          class="background-container"
+        />
+        <DottedLayout
+          v-else-if="activeTheme === 'dotted'"
+          key="dotted-bg"
+          class="background-container dotted-bg"
+        />
+        <UIThemesErrorCode v-else />
+      </Transition>
+    </ClientOnly>
+    <div class="content-container relative z-10">
+      <IntroComponent
+        v-if="showIntro && onIndexPage"
+        :typwriter-mode="typeWriterMode"
+        @update:show-main-content="changeState"
+        @show-logo="updateShowLogo"
+      />
+      <navigation-header
+        v-if="showMainContent"
+        :show-logo="showLogo"
+        @show-intro="showIntroComponent"
+      />
+      <div class="flex-1" v-show="showMainContent">
+        <div class="grow">
+          <slot />
+        </div>
+      </div>
+      <Footer class="container" v-if="showMainContent" />
+      <ScrollProgress :visibility="showMainContent" />
+    </div>
+  </div>
+</template>
