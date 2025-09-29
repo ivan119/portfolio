@@ -62,7 +62,7 @@ onMounted(async () => {
       <UIFeaturedPost
         :post="featuredPost"
         :image-url="featuredPost.coverImage || '/logo.png'"
-        :use-bg-dots="true"
+        :use-bg-dots="false"
         class="mb-12"
       />
 
