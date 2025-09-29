@@ -83,10 +83,10 @@
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
 import { useDefaultLayout } from "~/composables/useDefaultLayout";
 const BackgroundScene = defineAsyncComponent(
-  () => import("~/components/BackgroundScene.vue"),
+  () => import("~/components/UI/Themes/BackgroundScene.vue"),
 );
 const DottedLayout = defineAsyncComponent(
-  () => import("~/components/layoutComponents/DottedLayout.vue"),
+  () => import("~/components/UI/Themes/DottedLayout.vue"),
 );
 const { activeTheme } = useThemeButtons();
 
@@ -121,11 +121,7 @@ const {
           key="dotted-bg"
           class="background-container dotted-bg"
         />
-        <div
-          v-else
-          key="default-bg"
-          class="background-container static-bg"
-        ></div>
+        <UIThemesErrorCode v-else />
       </Transition>
     </ClientOnly>
     <div class="content-container relative z-10">
