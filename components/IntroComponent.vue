@@ -28,9 +28,11 @@ usePageSeo({
 
 updateGreeting();
 watch(colorMode, () => {
-  updateGreeting();
-  const gr = document.getElementById("greeting");
-  if (gr) gr.innerHTML = greeting.value;
+  if (import.meta.client) {
+    updateGreeting();
+    const gr = document.getElementById("greeting");
+    if (gr) gr.innerHTML = greeting.value;
+  }
 });
 
 const props = defineProps({
@@ -67,9 +69,7 @@ const handlePortfolioClick = () => {
 </script>
 
 <template>
-  <div
-    class="h-dvh relative flex flex-col transition-all duration-[369] p-6 sm:p-8"
-  >
+  <div class="h-dvh relative flex flex-col p-6 sm:p-8">
     <article
       class="typewrite-wrapper fade-enter-from"
       :class="{
@@ -130,11 +130,21 @@ const handlePortfolioClick = () => {
           >me</a
         >
       </h3>
-
-      <p data-typer id="greeting" class="mt-12 text-sm italic">
+      <div v-if="!typwriterMode" class="slide-enter-active">
+        <p data-typer id="greeting" class="mt-12 text-sm italic">
+          {{ greeting }}
+        </p>
+        <p data-typer class="text-sm italic mt-2">cya</p>
+      </div>
+      <p
+        v-show="typwriterMode"
+        data-typer
+        id="greeting"
+        class="mt-12 text-sm italic"
+      >
         {{ greeting }}
       </p>
-      <p data-typer class="text-sm italic mt-2">cya</p>
+      <p v-show="typwriterMode" data-typer class="text-sm italic mt-2">cya</p>
     </article>
     <Transition
       enter-active-class="transition transform duration-300"
