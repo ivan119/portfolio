@@ -2,6 +2,7 @@
 import { watch, onMounted } from "vue";
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
 import ThemeButtons from "~/components/UI/ThemeButtons.vue";
+import { useThrottleFn } from "@vueuse/core";
 const emit = defineEmits(["update:showMainContent", "showLogo"]);
 const { colorMode, activeTheme } = useThemeButtons();
 const { greeting, updateGreeting, getRandomQuote } = useIntroFunctions();
@@ -59,13 +60,13 @@ onMounted(() => {
   });
 });
 
-const handlePortfolioClick = () => {
+const handlePortfolioClick = useThrottleFn(() => {
   onPortfolioClick({
     onShowLogo: () => emit("showLogo", true),
     onShowMain: () => emit("update:showMainContent", true),
     getRandomQuote,
   });
-};
+}, 5000);
 </script>
 
 <template>
