@@ -79,7 +79,7 @@ const handlePortfolioClick = () => {
       }"
       ref="typeWrite"
     >
-      <h1 data-typer class="text-3xl md:text-4xl font-bold mb-4">
+      <h2 data-typer class="text-3xl md:text-4xl font-bold mb-4">
         Hi
         <div class="animate-wave relative w-10 h-10">
           <div class="absolute mt-2">
@@ -98,7 +98,7 @@ const handlePortfolioClick = () => {
         </div>
         , I'm
         <span class="text-main-gradient">Ivan</span>
-      </h1>
+      </h2>
 
       <h2 data-typer class="text-2xl md:text-3xl mb-2">
         I design/develop things for the web
