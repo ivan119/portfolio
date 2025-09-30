@@ -1,0 +1,347 @@
+.card {
+    /* Use inset shadow as base border to avoid hover halo */
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.6),
+            rgba(255, 255, 255, 0.12)
+    );
+    transform-style: preserve-3d;
+    z-index: 1;
+    outline: none;
+    position: relative;
+    /* Ensure inner content doesn't overlap border mask corners */
+    border-radius: 0.5rem; /* match rounded-lg */
+    /* Improve initial rendering: skip offscreen painting and layout until needed */
+    content-visibility: auto;
+    contain-intrinsic-size: 220px;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    z-index: 0;
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.dark .card {
+    background: linear-gradient(
+            to bottom,
+            rgba(31, 41, 55, 0.6),
+            rgba(31, 41, 55, 0.12)
+    );
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.card:hover,
+.card:focus-within {
+    transform: translateY(-4px) scale(1.025);
+    box-shadow:
+            inset 0 0 0 1px transparent,
+            0 8px 24px rgba(0, 0, 0, 0.16),
+            0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    background: radial-gradient(#2563eb 1px, transparent 1px);
+}
+
+.dark .card:hover,
+.dark .card:focus-within {
+    box-shadow:
+            inset 0 0 0 1px transparent,
+            0 8px 24px rgba(0, 0, 0, 0.28),
+            0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.card .icon-container {
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card.group:hover .gauss-scale,
+.card.group:focus-within .gauss-scale {
+    transform: rotateY(12deg) scale(1.13);
+}
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px; /* border thickness */
+    background: linear-gradient(
+            45deg,
+            var(--main-gradient-from),
+            var(--main-gradient-to)
+    );
+    -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+    mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    /* Prevent subpixel bleed by aligning to physical pixels */
+    will-change: transform, opacity;
+}
+
+.card:hover::after,
+.card:focus-within::after {
+    opacity: 1;
+}
+
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.card .tech-icon {
+    display: inline-block;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 0.45s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+    font-size: 2rem;
+}
+
+.card.group:hover .tech-icon:not(.preserve-animation),
+.card.group:focus-within .tech-icon:not(.preserve-animation) {
+    animation: gentle-pulse 0.45s ease-in-out infinite alternate;
+    font-size: 2.5rem;
+}
+
+@keyframes gentle-pulse {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 2px currentColor);
+    }
+    100% {
+        transform: scale(1.13);
+        filter: drop-shadow(0 0 12px currentColor);
+    }
+}
+
+/* Skill Card */
+
+.skill-card {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    background: linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.5),
+            rgba(255, 255, 255, 0.1)
+    );
+    transform-style: preserve-3d;
+    height: 220px; /* Reduced height for better fit */
+    z-index: 1;
+    /* Improve initial rendering: skip offscreen painting and layout until needed */
+    content-visibility: auto;
+    contain-intrinsic-size: 220px;
+}
+
+.dark .skill-card {
+    background: linear-gradient(
+            to bottom,
+            rgba(31, 41, 55, 0.5),
+            rgba(31, 41, 55, 0.1)
+    );
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.skill-card:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.dark .skill-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Adjust floating animation to maintain fixed height */
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-5px) scale(1.02);
+    }
+}
+
+/* Disable card animation to prevent movement affecting layout */
+.skill-card:hover {
+    animation: none;
+}
+
+.skill-card[data-proficiency="Expert"]:hover {
+    animation: none;
+}
+
+/* Add a container to prevent overflow and keep cards at fixed positions */
+.skill-card .icon-container {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+    height: 40px; /* Reduced height for icon container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Add glow effect on hover (single definition) */
+
+/* Add glow effect on hover */
+.skill-card:hover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(
+            45deg,
+            var(--main-gradient-from),
+            var(--main-gradient-to)
+    );
+    -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+    mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* Add pulse animation for expert level skills */
+@keyframes pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.group[data-proficiency="Expert"]:hover {
+    animation: pulse 2s infinite;
+}
+
+/* Add floating animation */
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.skill-card.group:hover {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Framework showcase animation */
+.translate-x-0 {
+    transform: translateX(0);
+}
+
+.translate-x-full {
+    transform: translateX(100%);
+}
+
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+/* (deduped pulse keyframes above; removed duplicate expert hover) */
+
+/* 3D Effect */
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.rotate-y-12 {
+    transform: rotateY(12deg);
+}
+
+/* Glass Effect */
+.backdrop-blur-sm {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Logo animations (skill card hover uses existing gentle-pulse keyframes) */
+.skill-card.group:hover .tech-icon {
+    animation: gentle-pulse 0.369s ease-in-out infinite alternate;
+}
+
+
+/* Blog Post Card */
+
+.post-card {
+    transition: all 0.3s ease;
+    background: transparent;
+    /* Inset base border (light) to avoid halo on hover */
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    @apply h-full relative rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl backdrop-blur-sm;
+}
+
+.dark .post-card {
+    background: transparent;
+    /* Inset base border (dark) */
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.post-card:hover,
+.post-card:focus-within {
+    transform: translateY(-4px);
+    /* Hide inset border while gradient border shows */
+    box-shadow:
+            inset 0 0 0 1px transparent,
+            0 8px 24px rgba(0, 0, 0, 0.16),
+            0 2px 8px rgba(0, 0, 0, 0.1);
+}
+/* Gradient border effect for post-cards are bit different then .card */
+.post-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(
+            45deg,
+            var(--main-gradient-from),
+            var(--main-gradient-to)
+    );
+    -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+    mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s;
+    will-change: opacity;
+}
+
+.post-card:hover::after,
+.post-card:focus-within::after {
+    opacity: 1;
+}

@@ -107,9 +107,4 @@ usePageSeo({
   </div>
 </template>
 
-<style scoped>
-/* Add glow effect to cards on hover */
-.transform:hover {
-  filter: drop-shadow(0 0 8px rgba(45, 212, 191, 0.1));
-}
-</style>
+<style scoped></style>

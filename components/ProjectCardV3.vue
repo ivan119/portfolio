@@ -8,30 +8,29 @@ useHead({
     },
   ],
 });
-const props = defineProps({
-  project: {
-    type: Object,
-    required: true,
-    default: () => ({
-      title: "",
-      description: "",
-      link: "#",
-      categories: [],
-      tags: [],
-    }),
-  },
-  colored: {
-    type: Boolean,
-    default: false,
-  },
-  useBgDots: {
-    type: Boolean,
-    default: false,
-  },
-});
+interface ProjectTag {
+  name?: string;
+  icon?: string;
+  gaussCMSlogo?: boolean;
+}
+
+interface Project {
+  title: string;
+  description: string;
+  link: string;
+  categories: string[];
+  tags: ProjectTag[];
+  gaussCMSlogo?: boolean;
+}
+
+const props = defineProps<{
+  project: Project;
+  colored?: boolean;
+  useBgDots?: boolean;
+}>();
 
 // Function to get category colors
-const getCategoryColor = (category) => {
+const getCategoryColor = (category: string): string => {
   const colors = {
     frontend: "#3B82F6",
     backend: "#10B981",
@@ -39,12 +38,12 @@ const getCategoryColor = (category) => {
     mobile: "#06B6D4",
     design: "#F43F5E",
     default: "#6B7280",
-  };
-  return colors[category] || colors.default;
+  } as const;
+  return colors[category as keyof typeof colors] ?? colors.default;
 };
 
 // Function to get gradient colors
-const getGradientColors = (category) => {
+const getGradientColors = (category: string): [string, string] => {
   const colors = {
     frontend: ["#3B82F6", "#60A5FA"],
     backend: ["#10B981", "#34D399"],
@@ -52,12 +51,15 @@ const getGradientColors = (category) => {
     mobile: ["#06B6D4", "#22D3EE"],
     design: ["#F43F5E", "#FB7185"],
     default: ["#6B7280", "#9CA3AF"],
-  };
-  return colors[category] || colors.default;
+  } as const;
+  return (colors[category as keyof typeof colors] ?? colors.default) as [
+    string,
+    string,
+  ];
 };
 
 // Function to get tech icon color
-const getIconColor = (tag) => {
+const getIconColor = (tag: ProjectTag): string => {
   const techColors = {
     "devicon-vuejs": "#4FC08D",
     "devicon-nuxtjs": "#00DC82",
@@ -69,18 +71,19 @@ const getIconColor = (tag) => {
     "devicon-mongodb": "#47A248",
     "devicon-php": "#777BB4",
     "devicon-adonisjs": "#220052",
-  };
+  } as const;
 
   const baseIconClass = tag.icon?.split(" ")[0];
-  return (
-    techColors[baseIconClass] || getCategoryColor(props.project.categories[0])
-  );
+  if (baseIconClass && baseIconClass in techColors) {
+    return techColors[baseIconClass as keyof typeof techColors];
+  }
+  return getCategoryColor(props.project.categories[0] ?? "default");
 };
 </script>
 
 <template>
   <article
-    class="project-card relative bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group focus-within:ring-2 focus-within:ring-main-500"
+    class="card relative bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group focus-within:ring-2 focus-within:ring-main-500"
     tabindex="0"
   >
     <!-- Dotted Background -->
@@ -103,7 +106,7 @@ const getIconColor = (tag) => {
           :style="{
             background: project.tags[0]
               ? `linear-gradient(135deg, ${getIconColor(project.tags[0])}20, transparent)`
-              : `linear-gradient(135deg, ${getCategoryColor(project.categories[0])}20, transparent)`,
+              : `linear-gradient(135deg, ${getCategoryColor(project.categories[0] ?? 'default')}20, transparent)`,
           }"
         ></div>
         <div
@@ -179,133 +182,4 @@ const getIconColor = (tag) => {
   </article>
 </template>
 
-<style scoped>
-.project-card {
-  /* Use inset shadow as base border to avoid hover halo */
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.6),
-    rgba(255, 255, 255, 0.12)
-  );
-  transform-style: preserve-3d;
-  z-index: 1;
-  outline: none;
-  position: relative;
-  /* Ensure inner content doesn't overlap border mask corners */
-  border-radius: 0.5rem; /* match rounded-lg */
-  /* Improve initial rendering: skip offscreen painting and layout until needed */
-  content-visibility: auto;
-  contain-intrinsic-size: 220px;
-}
-
-.project-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  z-index: 0;
-  opacity: 0.1;
-  pointer-events: none;
-}
-
-.dark .project-card {
-  background: linear-gradient(
-    to bottom,
-    rgba(31, 41, 55, 0.6),
-    rgba(31, 41, 55, 0.12)
-  );
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-}
-
-.project-card:hover,
-.project-card:focus-within {
-  transform: translateY(-4px) scale(1.025);
-  box-shadow:
-    inset 0 0 0 1px transparent,
-    0 8px 24px rgba(0, 0, 0, 0.16),
-    0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-  background: radial-gradient(#2563eb 1px, transparent 1px);
-}
-
-.dark .project-card:hover,
-.dark .project-card:focus-within {
-  box-shadow:
-    inset 0 0 0 1px transparent,
-    0 8px 24px rgba(0, 0, 0, 0.28),
-    0 2px 8px rgba(0, 0, 0, 0.18);
-}
-
-.icon-container {
-  transform-style: preserve-3d;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.group:hover .gauss-scale,
-.group:focus-within .gauss-scale {
-  transform: rotateY(12deg) scale(1.13);
-}
-.project-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1.5px; /* border thickness */
-  background: linear-gradient(
-    45deg,
-    var(--main-gradient-from),
-    var(--main-gradient-to)
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0;
-  /* Prevent subpixel bleed by aligning to physical pixels */
-  will-change: transform, opacity;
-}
-
-.project-card:hover::after,
-.project-card:focus-within::after {
-  opacity: 1;
-}
-
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.tech-icon {
-  display: inline-block;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: all 0.45s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  font-size: 2rem;
-}
-
-.group:hover .tech-icon:not(.preserve-animation),
-.group:focus-within .tech-icon:not(.preserve-animation) {
-  animation: gentle-pulse 0.45s ease-in-out infinite alternate;
-  font-size: 2.5rem;
-}
-
-@keyframes gentle-pulse {
-  0% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 2px currentColor);
-  }
-  100% {
-    transform: scale(1.13);
-    filter: drop-shadow(0 0 12px currentColor);
-  }
-}
-</style>
+<style scoped></style>
