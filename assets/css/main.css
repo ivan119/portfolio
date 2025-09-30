@@ -1,8 +1,9 @@
+@import "cards.css";
+@import "defaultLayout.css";
 /* Main Tailwind Style */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 /* Global Theme Variables */
 :root {
   /* Primary gradient colors (light mode) */
@@ -104,13 +105,13 @@
 /* Gradient animation */
 @keyframes gradient-shift {
   0% {
-    background-position: 0% center;
+    background-position: 0 center;
   }
   50% {
     background-position: 100% center;
   }
   100% {
-    background-position: 0% center;
+    background-position: 0 center;
   }
 }
 
@@ -176,6 +177,11 @@ body {
 .dark > body {
   @apply bg-[var(--bg-dark)] text-[var(--text-dark)];
 }
+/*Nuxt Main*/
+.main {
+    @apply flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto
+}
+/*Nuxt Body container*/
 .container {
   @apply max-w-3xl mx-auto px-8 py-6 md:py-10;
 }

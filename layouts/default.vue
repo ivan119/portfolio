@@ -1,5 +1,5 @@
 <style scoped>
-/* Enable smoother transitions */
+/* this must be here otherwise it won't work as expected since it's still experimental*/
 :root {
   --view-transition-duration: 369ms;
 }
@@ -8,75 +8,11 @@
 ::view-transition-new(root) {
   animation-duration: var(--view-transition-duration);
 }
-
-/* Optional: Add fade effect to page transitions */
 ::view-transition-old(root) {
   animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both fade-out;
 }
 ::view-transition-new(root) {
   animation: 0.5s cubic-bezier(0.4, 0, 0.2, 1) both fade-in;
-}
-/* Content container for proper z-index ordering */
-.content-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100dvh;
-  position: relative;
-}
-/* Background transition effects */
-.background-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.static-bg {
-  transition: background-color 0.5s ease;
-}
-
-/* Transition for background animation toggle */
-.bg-fade-enter-active,
-.bg-fade-leave-active {
-  transition:
-    opacity 0.7s ease,
-    transform 0.5s ease;
-}
-
-.bg-fade-enter-from,
-.bg-fade-leave-to {
-  opacity: 0;
-  transform: scale(1.05);
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
 }
 </style>
 <script setup lang="ts">
@@ -105,9 +41,7 @@ const {
 </script>
 
 <template>
-  <div
-    class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto"
-  >
+  <div class="main">
     <!-- Background with transition -->
     <ClientOnly>
       <Transition name="bg-fade">
@@ -119,12 +53,12 @@ const {
         <DottedLayout
           v-else-if="activeTheme === 'dotted'"
           key="dotted-bg"
-          class="background-container dotted-bg"
+          class="background-container"
         />
         <UIThemesErrorCode v-else />
       </Transition>
     </ClientOnly>
-    <div class="content-container relative z-10">
+    <div class="content-container">
       <IntroComponent
         v-if="showIntro && onIndexPage"
         :typwriter-mode="typeWriterMode"

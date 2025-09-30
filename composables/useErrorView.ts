@@ -12,9 +12,9 @@ export function useErrorView(error: NuxtError | undefined) {
     }
     return false;
   });
-
-  const errorCode = computed(() => error?.statusCode || "404");
-
+  const errorCode = computed(() =>
+    fakeAdminDetected.value ? "401" : error?.statusCode || "404",
+  );
   const errorTitle = computed(() => {
     if (fakeAdminDetected.value) {
       return "You shouldn't explore here! 🕵️‍♂️";
@@ -43,7 +43,10 @@ export function useErrorView(error: NuxtError | undefined) {
       case 403:
         return "You don't have permission to access this resource.";
       default:
-        return error?.message || "An unexpected error occurred. Let's get you back on track.";
+        return (
+          error?.message ||
+          "An unexpected error occurred. Let's get you back on track."
+        );
     }
   });
 
@@ -94,17 +97,33 @@ export function useErrorView(error: NuxtError | undefined) {
   const isVisible = ref(false);
   const showContent = ref(false);
 
-  // Countdown and redirect for admin routes
-  const countdown = ref(5);
+  // Countdown and redirect for admin routes (smooth animation)
+  const countdownStart = 5;
+  const durationMs = countdownStart * 1000;
+  const startTime = ref(0);
+  const elapsedMs = ref(0);
+  const countdown = computed(() =>
+    Math.max(0, Math.ceil((durationMs - elapsedMs.value) / 1000)),
+  );
+  const progressPercent = computed(() => {
+    const percent = (elapsedMs.value / durationMs) * 100;
+    return Math.min(100, Math.max(0, percent));
+  });
 
+  let rafId: number | null = null;
   const startCountdown = () => {
-    const timer = setInterval(() => {
-      countdown.value--;
-      if (countdown.value <= 0) {
-        clearInterval(timer);
+    startTime.value = performance.now();
+    const tick = (now: number) => {
+      elapsedMs.value = now - startTime.value;
+      if (elapsedMs.value >= durationMs) {
+        elapsedMs.value = durationMs;
+        if (rafId !== null) cancelAnimationFrame(rafId);
         navigateTo("/");
+        return;
       }
-    }, 1000);
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
   };
 
   onMounted(() => {
@@ -132,6 +151,10 @@ export function useErrorView(error: NuxtError | undefined) {
   });
 
   onUnmounted(() => {
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
     if (typewriterInstance && typeof typewriterInstance.stop === "function") {
       try {
         typewriterInstance.stop();
@@ -145,6 +168,7 @@ export function useErrorView(error: NuxtError | undefined) {
     showContent,
     fakeAdminDetected,
     countdown,
+    progressPercent,
     // computed
     errorCode,
     errorTitle,
@@ -156,5 +180,3 @@ export function useErrorView(error: NuxtError | undefined) {
     typeTarget,
   };
 }
-
-
