@@ -178,6 +178,7 @@
 /* Disable card animation to prevent movement affecting layout */
 .skill-card:hover {
     animation: none;
+    background: radial-gradient(#2563eb 1px, transparent 1px);
 }
 
 .skill-card[data-proficiency="Expert"]:hover {
@@ -314,6 +315,9 @@
             inset 0 0 0 1px transparent,
             0 8px 24px rgba(0, 0, 0, 0.16),
             0 2px 8px rgba(0, 0, 0, 0.1);
+    background: radial-gradient(#2563eb 1px, transparent 1px);
+    @apply backdrop-blur-0
+
 }
 /* Gradient border effect for post-cards are bit different then .card */
 .post-card::after {
