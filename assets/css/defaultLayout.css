@@ -1,10 +1,6 @@
 /* Content container for proper z-index ordering */
 .content-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100dvh;
-    position: relative;
-    z-index: 10;
+    @apply flex flex-col h-dvh relative z-0
 }
 /* Background transition effects */
 .background-container {

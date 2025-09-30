@@ -39,7 +39,7 @@ const seoTitle = post?.title
   : "Blog Post — Ivan Kelava";
 const seoDescription =
   post?.excerpt || "Read the latest article by Ivan Kelava.";
-const seoImage = post?.coverImage || "/logo.png";
+const seoImage = post?.coverImage || "/seo/IvanKelavaBlog1200x627.webp";
 const seoImageAlt = post?.title
   ? `${post.title} cover image`
   : "Blog post cover image";

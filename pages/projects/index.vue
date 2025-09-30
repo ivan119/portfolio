@@ -10,8 +10,8 @@ usePageSeo({
   title: "Projects — Ivan Kelava",
   description:
     "Selected projects and case studies led by Ivan Kelava, showcasing frontend engineering and architecture.",
-  image: "/logo.png",
-  imageAlt: "Ivan Kelava",
+  image: "/seo/IvanKelavaProjects1200x627.webp",
+  imageAlt: "Projects - Ivan Kelava",
   lang: "en",
 });
 </script>
