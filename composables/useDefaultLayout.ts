@@ -9,7 +9,7 @@ export const useDefaultLayout = () => {
 
   const typeWriterMode = ref(false);
   const showIntro = useCookie<boolean>("showIntro", {
-    default: () => true,
+    default: () => false,
     watch: true,
     sameSite: "lax",
   });
