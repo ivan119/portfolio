@@ -28,6 +28,8 @@ const openOfficial = (skill: BasicSkill) => {
 definePageMeta({
   pageTransition: false,
 });
+
+const useBgDots = ref();
 </script>
 
 <template>
@@ -61,6 +63,7 @@ definePageMeta({
               v-for="skill in preferredSkills"
               :key="skill.name"
               @click.prevent="openOfficial(skill)"
+              :use-bg-dots="useBgDots"
               class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
               :skill="{
                 title: skill.name,

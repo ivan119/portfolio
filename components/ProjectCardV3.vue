@@ -24,6 +24,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  useBgDots: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // Function to get category colors
@@ -79,7 +83,12 @@ const getIconColor = (tag) => {
     class="project-card relative bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group focus-within:ring-2 focus-within:ring-main-500"
     tabindex="0"
   >
-    <!-- Dotted Decoration removed from here -->
+    <!-- Dotted Background -->
+    <div v-if="props.useBgDots" class="absolute inset-0 opacity-10">
+      <div
+        class="h-full w-full bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]"
+      ></div>
+    </div>
     <NuxtLink
       :href="project.link"
       target="_blank"
@@ -199,8 +208,6 @@ const getIconColor = (tag) => {
   z-index: 0;
   opacity: 0.1;
   pointer-events: none;
-  background: radial-gradient(#3b82f6 1px, transparent 1px);
-  background-size: 16px 16px;
 }
 
 .dark .project-card {
@@ -220,6 +227,7 @@ const getIconColor = (tag) => {
     0 8px 24px rgba(0, 0, 0, 0.16),
     0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 10;
+  background: radial-gradient(#2563eb 1px, transparent 1px);
 }
 
 .dark .project-card:hover,

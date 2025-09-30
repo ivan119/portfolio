@@ -28,7 +28,6 @@ export const projects: ProjectItem[] = [
       "A powerful Content Management System for creating, editing, and publishing content on websites and E-commerce platforms. Features include SEO optimization, multisite management, and multilingual support.",
     link: "https://gauss.hr/en/blog/cms-everything-you-need-to-know",
     tags: [
-      { name: "Vue.js", icon: "devicon-vuejs-plain" },
       { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
       { name: "TypeScript", icon: "devicon-typescript-plain" },
       { name: "Tailwind", icon: "devicon-tailwindcss-plain" },
