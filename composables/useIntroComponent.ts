@@ -89,7 +89,7 @@ export const useIntroComponent = () => {
           if (quoteDiv) {
             const quoteTw = new Typewriter(quoteDiv, {
               loop: false,
-              delay: 11,
+              delay: 12,
             });
             quoteTw
               .typeString(
