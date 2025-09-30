@@ -251,17 +251,12 @@ const {
         }"
       >
         <div class="text-center mb-8">
-          <h3
-            class="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-6"
-          >
-            Explore More Content
-          </h3>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
             <NuxtLink
               v-for="link in navigationLinks"
               :key="link.path"
               :to="link.path"
-              class="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl border border-gray-200/50 dark:border-gray-700/50 hover:bg-white dark:hover:bg-gray-800 hover:border-emerald-300 dark:hover:border-emerald-600 transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300 overflow-hidden focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-2 dark:focus-within:ring-offset-gray-900"
+              class="card bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group"
             >
               <!-- Background gradient on hover -->
               <div
