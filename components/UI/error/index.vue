@@ -35,7 +35,7 @@ const {
         <div class="relative inline-block transform-gpu">
           <!-- Large background number with 3D effect -->
           <h1
-            class="text-[200px] md:text-[300px] font-black leading-none text-gray-200/30 dark:text-gray-700/30 select-none transition-all duration-1000 transform-gpu"
+            class="text-[200px] md:text-[300px] font-black leading-none text-red-700/30 dark:text-gray-700/30 select-none transition-all duration-1000 transform-gpu"
             :class="{
               'opacity-100 scale-100 rotate-y-0': isVisible,
               'opacity-0 scale-75 rotate-y-12': !isVisible,
@@ -250,7 +250,12 @@ const {
         >
           <div
             class="h-full"
-            :style="{ width: `${progressPercent}%`, backgroundImage: 'var(--main-gradient)', backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%' }"
+            :style="{
+              width: `${progressPercent}%`,
+              backgroundImage: 'var(--main-gradient)',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: '100% 100%',
+            }"
           ></div>
         </div>
       </div>
