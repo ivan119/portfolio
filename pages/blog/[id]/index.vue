@@ -77,19 +77,3 @@ usePageSeo({
     </div>
   </div>
 </template>
-
-<style scoped>
-@keyframes bounce-left {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-4px);
-  }
-}
-
-.animate-bounce-left {
-  animation: bounce-left 1s ease-in-out infinite;
-}
-</style>

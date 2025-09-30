@@ -106,5 +106,3 @@ usePageSeo({
     </UIBanner>
   </div>
 </template>
-
-<style scoped></style>
