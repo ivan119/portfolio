@@ -12,6 +12,7 @@ const {
   showContent,
   fakeAdminDetected,
   countdown,
+  progressPercent,
   // computed
   errorCode,
   errorTitle,
@@ -25,8 +26,10 @@ const {
 </script>
 <template>
   <!-- Main Content -->
-  <div class="relative z-10 mx-auto px-4 flex items-center justify-center">
-    <div class="max-w-4xl w-full">
+  <div
+    class="relative z-10 mx-auto px-4 flex flex-col items-center justify-between"
+  >
+    <div class="max-w-4xl w-full h-full">
       <!-- Ultra Advanced Error Code Display -->
       <div class="text-center mb-16 perspective-1000">
         <div class="relative inline-block transform-gpu">
@@ -56,9 +59,9 @@ const {
                 <span class="relative inline-block">
                   {{ errorTitle }}
                   <!-- Holographic glow effect -->
-                  <div
+                  <span
                     class="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-blue-400/20 to-emerald-400/20 blur-xl scale-150 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  ></div>
+                  ></span>
                 </span>
               </h3>
 
@@ -77,89 +80,6 @@ const {
                 <!-- Subtle background glow -->
                 <div
                   class="absolute inset-0 bg-gradient-to-r from-emerald-50/30 via-blue-50/30 to-emerald-50/30 dark:from-emerald-900/20 dark:via-blue-900/20 dark:to-emerald-900/20 rounded-2xl blur-2xl -z-10"
-                ></div>
-              </div>
-
-              <!-- Easter Egg Countdown -->
-              <div
-                v-if="fakeAdminDetected && showContent"
-                class="absolute -right-16 top-1/2 transform -translate-y-1/2 w-36 h-36 bg-gradient-to-br from-red-50 via-red-100 to-red-50 dark:from-red-900/30 dark:via-red-800/20 dark:to-red-900/30 border border-red-200/60 dark:border-red-700/40 rounded-full shadow-2xl transition-all duration-700 delay-600 backdrop-blur-md overflow-hidden group flex items-center justify-center"
-                :class="{
-                  'opacity-100 translate-x-0 scale-100': showContent,
-                  'opacity-0 translate-x-8 scale-95': !showContent,
-                }"
-              >
-                <!-- Animated background pattern -->
-                <div
-                  class="absolute inset-0 bg-gradient-to-br from-red-400/5 to-red-600/5 dark:from-red-400/10 dark:to-red-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                ></div>
-
-                <!-- Glow effect -->
-                <div
-                  class="absolute inset-0 bg-red-400/20 dark:bg-red-500/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 scale-150 group-hover:scale-100"
-                ></div>
-
-                <!-- Content container -->
-                <div class="relative z-10 text-center px-2">
-                  <!-- Clock icon with enhanced animation -->
-                  <div class="flex items-center justify-center mb-2">
-                    <div class="relative">
-                      <span
-                        class="text-red-500 dark:text-red-400 text-3xl animate-pulse group-hover:animate-bounce transition-all duration-300"
-                        >⏰</span
-                      >
-                      <!-- Orbiting dots -->
-                      <div class="absolute inset-0 animate-orbit">
-                        <div
-                          class="absolute top-0 left-1/2 w-1 h-1 bg-red-400 rounded-full transform -translate-x-1/2 -translate-y-1/2"
-                        ></div>
-                        <div
-                          class="absolute bottom-0 left-1/2 w-1 h-1 bg-red-400 rounded-full transform -translate-x-1/2 translate-y-1/2"
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Border Loader Animation -->
-                  <div class="relative w-24 h-24 mx-auto mb-4">
-                    <!-- Background circle -->
-                    <div
-                      class="absolute inset-0 w-full h-full border-4 border-red-200/50 dark:border-red-800/50 rounded-full"
-                    ></div>
-
-                    <!-- Animated border loader -->
-                    <div
-                      class="absolute inset-0 w-full h-full border-4 border-transparent rounded-full"
-                      :style="{
-                        background: `conic-gradient(from 0deg, transparent ${(countdown / 5) * 360}deg, #ef4444 ${(countdown / 5) * 360}deg, #ef4444 360deg)`,
-                      }"
-                    ></div>
-
-                    <!-- Center content -->
-                    <div
-                      class="absolute inset-0 flex items-center justify-center"
-                    >
-                      <div class="text-center">
-                        <div
-                          class="text-lg font-bold text-red-600 dark:text-red-400"
-                        >
-                          {{ countdown }}s
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Status text -->
-                  <p
-                    class="text-red-600 dark:text-red-400 text-xs font-medium mb-2 opacity-80"
-                  >
-                    Redirecting...
-                  </p>
-                </div>
-
-                <!-- Corner accent -->
-                <div
-                  class="absolute top-0 right-0 w-8 h-8 bg-gradient-to-bl from-red-400/20 to-transparent rounded-bl-full"
                 ></div>
               </div>
             </div>
@@ -240,7 +160,6 @@ const {
           </BaseButton>
         </div>
       </div>
-
       <!-- Navigation Links (hidden for admin routes) -->
       <div
         v-if="!fakeAdminDetected"
@@ -301,49 +220,82 @@ const {
           </div>
         </div>
       </div>
-
-      <!-- Ultra Advanced Help Section -->
-      <div
-        class="text-center transition-all duration-700 delay-1000"
-        :class="{
-          'opacity-100 translate-y-0': showContent,
-          'opacity-0 translate-y-8': !showContent,
-        }"
-      >
-        <div
-          class="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-50 via-blue-50 to-emerald-50 dark:from-emerald-900/30 dark:via-blue-900/30 dark:to-emerald-900/30 border border-emerald-200/60 dark:border-emerald-700/60 rounded-2xl backdrop-blur-md shadow-lg hover:shadow-2xl transform hover:-translate-y-1 hover:scale-105 transition-all duration-500 overflow-hidden"
-        >
-          <!-- Animated background -->
-          <div
-            class="absolute inset-0 bg-gradient-to-r from-emerald-400/10 via-blue-400/10 to-emerald-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl scale-150 group-hover:scale-100"
-          ></div>
-
-          <!-- Floating particles -->
-          <div class="absolute inset-0 overflow-hidden rounded-2xl">
-            <div
-              class="absolute top-2 left-4 w-1 h-1 bg-emerald-400/50 rounded-full animate-ping"
-            ></div>
-            <div
-              class="absolute bottom-2 right-4 w-0.5 h-0.5 bg-blue-400/60 rounded-full animate-ping delay-300"
-            ></div>
-          </div>
-
-          <span
-            class="text-emerald-600 dark:text-emerald-400 text-xl animate-pulse group-hover:animate-bounce"
-            >💡</span
-          >
-          <span
-            class="text-sm font-medium text-emerald-700 dark:text-emerald-300 relative z-10"
-          >
-            Need help? Feel free to reach out via
-            <a
-              href="mailto:KelavaIvan@proton.me"
-              class="underline hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors font-semibold"
+    </div>
+    <!-- Admin countdown (no clock) -->
+    <div
+      v-if="fakeAdminDetected && showContent"
+      class="transform -translate-y-1/2 w-full md:w-1/4 bg-white/80 dark:bg-gray-800/80 border border-emerald-200/60 dark:border-emerald-700/40 rounded-2xl shadow-2xl transition-all duration-700 delay-600 backdrop-blur-md overflow-hidden group"
+      :class="{
+        'opacity-100 translate-x-0 scale-100': showContent,
+        'opacity-0 translate-x-8 scale-95': !showContent,
+      }"
+      aria-live="polite"
+    >
+      <div class="p-4">
+        <div class="flex justify-center gap-2 mb-2 w-full">
+          <div>
+            <span class="text-emerald-600 dark:text-emerald-400 text-lg"
+              >🛡️</span
             >
-              email
-            </a>
-          </span>
+            <span class="text-sm font-semibold text-gray-700 dark:text-gray-200"
+              >Restricted area</span
+            >
+          </div>
         </div>
+        <p class="text-xs text-gray-600 dark:text-gray-300 mb-3">
+          Redirecting in {{ countdown }}s
+        </p>
+        <div
+          class="w-full h-1.5 rounded-full bg-gray-200/70 dark:bg-gray-700/60 overflow-hidden"
+        >
+          <div
+            class="h-full"
+            :style="{ width: `${progressPercent}%`, backgroundImage: 'var(--main-gradient)', backgroundRepeat: 'no-repeat', backgroundSize: '100% 100%' }"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <!-- Ultra Advanced Help Section -->
+    <div
+      class="text-center transition-all duration-700 delay-1000"
+      :class="{
+        'opacity-100 translate-y-0': showContent,
+        'opacity-0 translate-y-8': !showContent,
+      }"
+    >
+      <div
+        class="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-50 via-blue-50 to-emerald-50 dark:from-emerald-900/30 dark:via-blue-900/30 dark:to-emerald-900/30 border border-emerald-200/60 dark:border-emerald-700/60 rounded-2xl backdrop-blur-md shadow-lg hover:shadow-2xl transform hover:-translate-y-1 hover:scale-105 transition-all duration-500 overflow-hidden"
+      >
+        <!-- Animated background -->
+        <div
+          class="absolute inset-0 bg-gradient-to-r from-emerald-400/10 via-blue-400/10 to-emerald-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl scale-150 group-hover:scale-100"
+        ></div>
+
+        <!-- Floating particles -->
+        <div class="absolute inset-0 overflow-hidden rounded-2xl">
+          <div
+            class="absolute top-2 left-4 w-1 h-1 bg-emerald-400/50 rounded-full animate-ping"
+          ></div>
+          <div
+            class="absolute bottom-2 right-4 w-0.5 h-0.5 bg-blue-400/60 rounded-full animate-ping delay-300"
+          ></div>
+        </div>
+
+        <span
+          class="text-emerald-600 dark:text-emerald-400 text-xl animate-pulse group-hover:animate-bounce"
+          >💡</span
+        >
+        <span
+          class="text-sm font-medium text-emerald-700 dark:text-emerald-300 relative z-10"
+        >
+          Need help? Feel free to reach out via
+          <a
+            href="mailto:KelavaIvan@proton.me"
+            class="underline hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors font-semibold"
+          >
+            email
+          </a>
+        </span>
       </div>
     </div>
   </div>
