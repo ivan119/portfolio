@@ -105,9 +105,7 @@ const {
 </script>
 
 <template>
-  <div
-    class="flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto"
-  >
+  <div class="main">
     <!-- Background with transition -->
     <ClientOnly>
       <Transition name="bg-fade">
@@ -119,7 +117,7 @@ const {
         <DottedLayout
           v-else-if="activeTheme === 'dotted'"
           key="dotted-bg"
-          class="background-container dotted-bg"
+          class="background-container"
         />
         <UIThemesErrorCode v-else />
       </Transition>
