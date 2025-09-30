@@ -15,6 +15,11 @@ const props = defineProps({
     default: true,
     required: false,
   },
+  dots: {
+    type: Boolean,
+    default: false,
+    required: false,
+  },
 });
 </script>
 
@@ -45,7 +50,7 @@ const props = defineProps({
   <section class="relative p-4 md:p-8 md:pt-5">
     <div class="ui-banner"></div>
     <!-- Light dots pattern -->
-    <div class="ui-banner-dots">
+    <div v-if="dots" class="ui-banner-dots">
       <div class="ui-banner-dots-container"></div>
     </div>
     <h1 v-if="firstTagIsH1 && title" class="heading-1 text-main-gradient pb-2">
