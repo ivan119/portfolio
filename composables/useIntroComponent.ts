@@ -115,8 +115,8 @@ export const useIntroComponent = () => {
               isIntroActive.value = false;
             }, 693);
           }, 369);
-        }, 1963);
-      }, 1693);
+        }, 3321);
+      }, 963);
     }, 369);
   };
 
