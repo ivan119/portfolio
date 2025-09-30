@@ -22,6 +22,7 @@
   flex-direction: column;
   min-height: 100dvh;
   position: relative;
+  z-index: 10;
 }
 /* Background transition effects */
 .background-container {
@@ -122,7 +123,7 @@ const {
         <UIThemesErrorCode v-else />
       </Transition>
     </ClientOnly>
-    <div class="content-container relative z-10">
+    <div class="content-container">
       <IntroComponent
         v-if="showIntro && onIndexPage"
         :typwriter-mode="typeWriterMode"
