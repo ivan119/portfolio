@@ -76,20 +76,6 @@ export const useDefaultLayout = () => {
     { immediate: true },
   );
 
-  watch(
-    [() => route.path, showIntro],
-    () => {
-      if (route.path !== "/" && showIntro.value) {
-        const router = useRouter();
-        router.push({ path: "/" });
-        setTimeout(() => {
-          showLogo.value = false;
-        }, 369);
-      }
-    },
-    { immediate: true },
-  );
-
   const onIndexPage = computed(
     () => route.name === "index" || route.path === "/",
   );
