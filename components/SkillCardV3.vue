@@ -26,7 +26,7 @@ interface Skill {
 const props = defineProps<{
   skill: Skill;
   colored?: boolean;
-  showBgDots?: boolean;
+  useBgDots?: boolean;
 }>();
 
 // Type for tech colors mapping
@@ -221,7 +221,7 @@ const getIconColor = (tag: Tag) => {
     }"
   >
     <!-- Dotted Background -->
-    <div v-if="showBgDots" class="absolute inset-0 opacity-10">
+    <div v-if="useBgDots" class="absolute inset-0 opacity-10">
       <div
         class="h-full w-full bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]"
       ></div>

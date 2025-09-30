@@ -95,6 +95,7 @@ usePageSeo({
                 v-for="project in allProjects"
                 :key="project.title"
                 :project="project"
+                :show-bg-dots="false"
                 :colored="true"
               />
             </div>
