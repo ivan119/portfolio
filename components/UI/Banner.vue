@@ -1,4 +1,7 @@
 <script setup>
+import { useThemeButtons } from "~/composables/UI/useThemeButtons.js";
+
+const { colorMode } = useThemeButtons();
 const props = defineProps({
   title: {
     type: String,
@@ -50,9 +53,14 @@ const props = defineProps({
   <section class="relative p-4 md:p-8 md:pt-5">
     <div class="ui-banner"></div>
     <!-- Light dots pattern -->
-    <div v-if="dots" class="ui-banner-dots">
-      <div class="ui-banner-dots-container"></div>
-    </div>
+    <ClientOnly>
+      <div
+        :class="{ invisible: colorMode.value === 'dark' }"
+        class="ui-banner-dots"
+      >
+        <div class="ui-banner-dots-container"></div>
+      </div>
+    </ClientOnly>
     <h1 v-if="firstTagIsH1 && title" class="heading-1 text-main-gradient pb-2">
       {{ title }}
     </h1>
