@@ -25,21 +25,14 @@ definePageMeta({
 const invisible = ref(true);
 const { fetchPosts, posts, featuredPost } = usePosts();
 await fetchPosts();
-// SEO (SSR only)
-if (import.meta.server) {
-  const seoPost = featuredPost.value;
-  usePageSeo({
-    title: "Blog — Ivan Kelava",
-    description:
-      seoPost?.excerpt ||
-      "Latest articles and insights on web development, Vue, Nuxt, and more.",
-    image: seoPost?.coverImage || "/logo.png",
-    imageAlt: seoPost?.title
-      ? `${seoPost.title} cover image`
-      : "Blog cover image",
-    lang: "en",
-  });
-}
+usePageSeo({
+  title: "Blog — Ivan Kelava",
+  description:
+    "Discover how AI agents are revolutionizing industries by automating complex tasks, improving decision-making, and enabling smarter human-machine collaboration in the evolving digital landscape.",
+  image: "/seo/IvanKelavaBlog1200x627.webp",
+  imageAlt: "Blog cover image",
+  lang: "en",
+});
 onMounted(async () => {
   // jumping breadcrumbs on routing bug fix
   // probably cause because of animations collide

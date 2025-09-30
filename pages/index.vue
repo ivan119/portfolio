@@ -3,7 +3,7 @@ usePageSeo({
   title: "Ivan Kelava",
   description:
     "Senior frontend developer from Osijek, Croatia. Over 5 years building user-friendly websites and platforms. Explore projects, skills, and get in touch.",
-  image: "/logo.png",
+  image: "/seo/IvanKelava1200x627.webp",
   imageAlt: "Ivan Kelava",
   lang: "en",
 });

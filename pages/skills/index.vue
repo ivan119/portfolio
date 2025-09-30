@@ -11,7 +11,7 @@ usePageSeo({
   title: "Skills — Ivan Kelava",
   description:
     "Technical skills, tools, and frameworks Ivan Kelava uses for modern web development.",
-  image: "/logo.png",
+  image: "/seo/IvanKelavaSkills1200x627.webp",
   imageAlt: "Ivan Kelava",
   lang: "en",
 });
@@ -37,7 +37,7 @@ const useBgDots = ref();
     :class="[
       showFrameworkDetails
         ? '!max-w-7xl'
-        : '!p-3 md:p-0 mx-auto w-full space-y-5 slide-enter-active',
+        : '!p-3 pt-3 md:p-0 mx-auto w-full space-y-5 slide-enter-active',
     ]"
   >
     <UIBanner
