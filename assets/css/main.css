@@ -120,7 +120,7 @@
   @apply h-[88px] flex justify-between p-8 px-5 lg:px-8;
 }
 .logo {
-  @apply lg:fixed;
+  @apply 2xl:fixed;
 }
 
 /* Global Classes */
