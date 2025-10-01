@@ -11,45 +11,47 @@
     stroke-linejoin="round"
     :class="['background-toggle', { 'is-active': isActive }]"
   >
-    <!-- Base background icon -->
-    <rect x="2" y="2" width="20" height="20" rx="2" ry="2" />
+    <g class="intro-group play-intro">
+      <!-- Base background icon -->
+      <rect x="2" y="2" width="20" height="20" rx="2" ry="2" />
 
-    <!-- Grid layers -->
-    <line x1="2" y1="8" x2="22" y2="8" class="grid-line" />
-    <line x1="2" y1="16" x2="22" y2="16" class="grid-line" />
-    <line x1="8" y1="2" x2="8" y2="22" class="grid-line" />
-    <line x1="16" y1="2" x2="16" y2="22" class="grid-line" />
+      <!-- Grid layers -->
+      <line x1="2" y1="8" x2="22" y2="8" class="grid-line" />
+      <line x1="2" y1="16" x2="22" y2="16" class="grid-line" />
+      <line x1="8" y1="2" x2="8" y2="22" class="grid-line" />
+      <line x1="16" y1="2" x2="16" y2="22" class="grid-line" />
 
-    <!-- Animated particles -->
-    <circle
-      v-for="(dot, i) in dots"
-      :key="i"
-      :cx="dot.x"
-      :cy="dot.y"
-      :r="isActive ? dot.size : dot.size * 0.5"
-      class="sparkle"
-      :style="{
-        animationDelay: `${i * 0.2}s`,
-        transformOrigin: `${dot.x}px ${dot.y}px`,
-        opacity: isActive ? 1 : 0.2,
-      }"
-    />
+      <!-- Animated particles -->
+      <circle
+        v-for="(dot, i) in dots"
+        :key="i"
+        :cx="dot.x"
+        :cy="dot.y"
+        :r="isActive ? dot.size : dot.size * 0.5"
+        class="sparkle"
+        :style="{
+          animationDelay: `${i * 0.2}s`,
+          transformOrigin: `${dot.x}px ${dot.y}px`,
+          opacity: isActive ? 1 : 0.2,
+        }"
+      />
 
-    <!-- Animated connections -->
-    <line
-      v-for="(conn, i) in connections"
-      :key="`conn-${i}`"
-      :x1="conn.x1"
-      :y1="conn.y1"
-      :x2="conn.x2"
-      :y2="conn.y2"
-      class="connection"
-      :style="{
-        strokeWidth: isActive ? conn.width : conn.width * 0.4,
-        opacity: isActive ? 0.5 : 0.05,
-        animationDelay: `${i * 0.15}s`,
-      }"
-    />
+      <!-- Animated connections -->
+      <line
+        v-for="(conn, i) in connections"
+        :key="`conn-${i}`"
+        :x1="conn.x1"
+        :y1="conn.y1"
+        :x2="conn.x2"
+        :y2="conn.y2"
+        class="connection"
+        :style="{
+          strokeWidth: isActive ? conn.width : conn.width * 0.4,
+          opacity: isActive ? 0.5 : 0.05,
+          animationDelay: `${i * 0.15}s`,
+        }"
+      />
+    </g>
   </svg>
 </template>
 
@@ -202,6 +204,22 @@ rect {
   }
   100% {
     transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Intro grow from ~1px to current size (24px base => ~0.04 scale) */
+.intro-group {
+  transform-origin: 12px 12px;
+}
+.play-intro {
+  animation: intro-grow 369ms ease-out both;
+}
+@keyframes intro-grow {
+  0% {
+    transform: scale(0.01);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>
