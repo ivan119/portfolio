@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="bg-gradient-to-br from-gray-50 via-white to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-emerald-900/20 overflow-hidden"
-  >
+  <div class="dotted-layout-container">
     <!-- Dotted Background Pattern -->
     <div class="absolute inset-0 opacity-20 dark:opacity-10">
       <div

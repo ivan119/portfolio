@@ -123,6 +123,9 @@
   @apply 2xl:fixed;
 }
 
+.footer {
+    @apply text-left py-4 text-gray-600 dark:text-gray-400
+}
 /* Global Classes */
 /* Global Heading Styles */
 .heading-1 {
