@@ -1,5 +1,5 @@
-import { projects, allProjects, techStackData } from "~/server/data/projects";
-import type { ProjectsResponse } from "~/types/project";
+import { projects, allProjects, techStackData } from "../data/projects";
+import type { ProjectsResponse } from "../types/project";
 
 export default defineCachedEventHandler(
   (): ProjectsResponse => {

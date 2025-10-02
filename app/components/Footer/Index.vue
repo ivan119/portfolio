@@ -7,7 +7,10 @@ const blogClass = computed(() => {
 </script>
 
 <template>
-  <footer :class="{ 'md:text-center': blogClass }" class="footer">
+  <footer
+    :class="{ 'md:text-center': blogClass }"
+    class="footer-container container"
+  >
     &copy; Ivan Kelava • CC BY-NC-SA 4.0
     {{ dateNow.getFullYear() }}
   </footer>

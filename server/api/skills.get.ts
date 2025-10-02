@@ -1,5 +1,5 @@
-import type { SkillsListResponse } from "~/types/skills";
-import { listSkills } from "~/server/data/skills";
+import type { SkillsListResponse } from "../types/skills";
+import { listSkills } from "../data/skills";
 
 export default defineCachedEventHandler(
   (): SkillsListResponse => {

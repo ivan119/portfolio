@@ -2,7 +2,7 @@ import type {
   BasicSkill,
   DetailedSkill,
   SkillsListResponse,
-} from "~/types/skills";
+} from "../types/skills";
 
 export const preferredSkills: BasicSkill[] = [
   {

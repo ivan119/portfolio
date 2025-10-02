@@ -1,4 +1,4 @@
-import { posts } from "~/server/data/posts";
+import { posts } from "../../data/posts";
 export default defineCachedEventHandler(
   async (event) => {
     const query = getQuery(event);

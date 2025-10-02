@@ -123,7 +123,7 @@
   @apply 2xl:fixed;
 }
 
-.footer {
+.footer-container {
     @apply text-left py-4 text-gray-600 dark:text-gray-400
 }
 /* Global Classes */

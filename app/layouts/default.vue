@@ -38,6 +38,7 @@ const {
   updateShowLogo,
   showIntroComponent,
 } = useDefaultLayout();
+debugger;
 </script>
 
 <template>
@@ -75,7 +76,7 @@ const {
           <slot />
         </div>
       </div>
-      <Footer class="container" v-if="showMainContent" />
+      <Footer v-if="showMainContent" />
       <ScrollProgress :visibility="showMainContent" />
     </div>
   </div>
