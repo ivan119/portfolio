@@ -30,7 +30,7 @@ export default defineCachedEventHandler(
     const transformedPosts =
       posts?.map((p) => transformPosts(p, constKeys)) || [];
     return {
-      featured_Post: transformedPosts[0],
+      featured_post: transformedPosts[0],
       posts: transformedPosts.slice(1),
     };
   },

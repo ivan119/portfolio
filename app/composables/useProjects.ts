@@ -1,4 +1,4 @@
-import type { ProjectsResponse } from "~/types/project";
+import type { ProjectsResponse } from "~~/server/types/project";
 
 export const useProjects = async () => {
   const { data, error, pending, refresh } = await useFetch<ProjectsResponse>(
@@ -11,7 +11,7 @@ export const useProjects = async () => {
         projects: [],
         allProjects: [],
       }),
-    }
+    },
   );
 
   return {
