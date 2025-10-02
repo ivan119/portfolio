@@ -23,7 +23,6 @@ import Node from "~/components/devTools/devicon/Node.vue";
 
 export const useIconComponentHandler = () => {
   const handleIconComponent = (value: string) => {
-    console.log(value);
     switch (value) {
       case "devicon-vuejs-plain":
         return VueJs;
