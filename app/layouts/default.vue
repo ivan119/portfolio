@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
 import { useDefaultLayout } from "~/composables/useDefaultLayout";
+import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 const BackgroundScene = defineAsyncComponent(
   () => import("~/components/UI/Themes/BackgroundScene.vue"),
 );
@@ -42,6 +43,7 @@ const {
 
 <template>
   <div class="main">
+    <SpeedInsights />
     <!-- Background with transition -->
     <ClientOnly>
       <Transition name="bg-fade">
