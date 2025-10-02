@@ -139,8 +139,8 @@ const getGradientColors = (categories: string[]): [string, string] => {
 const getProficiencyColor = (proficiency?: string) => {
   if (!proficiency) return "";
   const colors: ProficiencyColorMap = {
-    Expert: "text-emerald-500",
-    Advanced: "text-blue-500",
+    Experienced: "text-blue-500",
+    Advanced: "text-emerald-500",
     Intermediate: "text-yellow-500",
     Beginner: "text-gray-500",
   };
