@@ -21,9 +21,10 @@ import Python from "~/components/devTools/devicon/Python.vue";
 import AdobeXd from "~/components/devTools/devicon/AdobeXd.vue";
 import Figma from "~/components/devTools/devicon/Figma.vue";
 import Node from "~/components/devTools/devicon/Node.vue";
+import typescript from "~/components/devTools/devicon/Typescript.vue";
 
-export const useComponentHandler = () => {
-  const handleComponent = (value: string) => {
+export const useIconComponentHandler = () => {
+  const handleIconComponent = (value: string) => {
     console.log(value);
     switch (value) {
       case "devicon-vuejs-plain":
@@ -80,6 +81,6 @@ export const useComponentHandler = () => {
     }
   };
   return {
-    handleComponent,
+    handleIconComponent,
   };
 };

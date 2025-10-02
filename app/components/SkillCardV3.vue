@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useComponentHandler } from "~/composables/skills/useComponentHandler";
+import { useIconComponentHandler } from "~/composables/skills/useComponentHandler";
 
-const { handleComponent } = useComponentHandler();
+const { handleIconComponent } = useIconComponentHandler();
 useHead({
   link: [
     {
@@ -213,7 +213,7 @@ const activeItem: String = "";
           class="icon-container transform-gpu transition-transform duration-300 group-hover:rotate-y-12"
         >
           <component
-            :is="handleComponent(skill.icon)"
+            :is="handleIconComponent(skill.icon)"
             class="tech-icon"
             :class="getIconClasses(skill.icon)"
             :style="

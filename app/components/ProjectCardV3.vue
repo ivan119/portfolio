@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useComponentHandler } from "~/composables/skills/useComponentHandler";
+import { useIconComponentHandler } from "~/composables/skills/useComponentHandler";
 
-const { handleComponent } = useComponentHandler();
+const { handleIconComponent } = useIconComponentHandler();
 
 interface ProjectTag {
   name?: string;
@@ -115,7 +115,7 @@ const getIconColor = (tag: ProjectTag): string => {
           />
           <component
             v-else
-            :is="handleComponent(project.tags[0]?.icon)"
+            :is="handleIconComponent(project.tags[0]?.icon)"
             :class="[project.tags[0].icon, 'tech-icon', 'colored']"
           />
         </div>
@@ -156,7 +156,7 @@ const getIconColor = (tag: ProjectTag): string => {
           />
           <component
             v-else
-            :is="handleComponent(tag.icon)"
+            :is="handleIconComponent(tag.icon)"
             :class="[tag.icon, 'w-3 h-3', 'colored']"
           />
           {{ tag.name }}
