@@ -147,8 +147,9 @@ const getProficiencyColor = (proficiency?: string) => {
   return colors[proficiency as keyof typeof colors] || colors["Intermediate"];
 };
 
-// Function to get tech icon color with fallback
-const getIconColor = (tag: Tag) => {
+// Function to get tech icon color with fallback (safe if tag is missing)
+const getIconColor = (tag?: Tag) => {
+  if (!tag) return getCategoryColor(props.skill.categories);
   return getTechColor(tag.icon);
 };
 const activeItem: String = "";
@@ -175,8 +176,10 @@ const activeItem: String = "";
       target="_blank"
       class="relative flex flex-col h-full"
     >
-      <!-- Category Badge -->
-      <div class="absolute top-2 right-2 z-10">
+      <!-- Category Badge (slides out on hover) -->
+      <div
+        class="absolute top-2 right-2 z-10 transform transition-all group-hover:translate-x-6 group-hover:opacity-0"
+      >
         <span
           class="px-2 py-0.5 text-xs font-medium rounded-full backdrop-blur-sm"
           :style="{
