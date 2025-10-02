@@ -9,7 +9,7 @@ export const preferredSkills: BasicSkill[] = [
     id: "vuejs",
     name: "Vue.js",
     icon: "devicon-vuejs-plain",
-    category: "frontend",
+    category: "framework",
     proficiency: "Expert",
     description: "Modern reactive framework for building user interfaces",
     experience: "5+ years",
