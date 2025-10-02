@@ -1,13 +1,8 @@
 <script setup lang="ts">
-useHead({
-  link: [
-    {
-      rel: "stylesheet",
-      type: "text/css",
-      href: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css",
-    },
-  ],
-});
+import { useComponentHandler } from "~/composables/skills/useComponentHandler";
+
+const { handleComponent } = useComponentHandler();
+
 interface ProjectTag {
   name?: string;
   icon?: string;
@@ -118,11 +113,11 @@ const getIconColor = (tag: ProjectTag): string => {
             :rotate-animation="true"
             class="tech-icon preserve-animation w-8 h-8 md:w-8"
           />
-
-          <i
-            v-else-if="project.tags[0]?.icon"
+          <component
+            v-else
+            :is="handleComponent(project.tags[0]?.icon)"
             :class="[project.tags[0].icon, 'tech-icon', 'colored']"
-          ></i>
+          />
         </div>
       </div>
 
@@ -159,7 +154,11 @@ const getIconColor = (tag: ProjectTag): string => {
             :rotate-animation="true"
             class="w-4 h-4"
           />
-          <i v-else :class="[tag.icon, 'text-xs', 'colored']"></i>
+          <component
+            v-else
+            :is="handleComponent(tag.icon)"
+            :class="[tag.icon, 'w-3 h-3', 'colored']"
+          />
           {{ tag.name }}
         </span>
       </div>

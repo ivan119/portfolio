@@ -57,6 +57,7 @@ export const useComponentHandler = () => {
       case "devicon-cplusplus-plain":
         return Cpp;
       case "devicon-adonisjs-plain":
+      case "devicon-adonisjs-original":
         return AdonisJs;
       case "devicon-prisma-plain":
         return Prisma;
