@@ -44,6 +44,6 @@ useHead({
 
 <template>
   <NuxtLayout>
-    <NuxtPage class="container" />
+    <NuxtPage class="body-container" />
   </NuxtLayout>
 </template>
