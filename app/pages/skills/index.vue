@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { useSkills } from "~/composables/skills/useSkills";
-
 const showFrameworkDetails = ref(false);
-
 // Get skills data from composable (server-side)
 const { preferredSkills, experiencedSkills } = await useSkills();
 
@@ -14,14 +12,6 @@ usePageSeo({
   imageAlt: "Ivan Kelava",
   lang: "en",
 });
-
-// Always open official site for experienced skills
-import type { BasicSkill } from "~~/server/types/skills";
-const openOfficial = (skill: BasicSkill) => {
-  if (skill?.url) {
-    window.open(skill.url, "_blank");
-  }
-};
 
 // Disable page transitions
 definePageMeta({
@@ -72,6 +62,7 @@ const useBgDots = ref();
                 proficiency: skill.proficiency || '',
                 experience: skill.experience || '',
                 url: skill.url || '',
+                icon: skill.icon || '',
               }"
               :colored="true"
             />
@@ -106,6 +97,7 @@ const useBgDots = ref();
                 proficiency: skill.proficiency || '',
                 experience: skill.experience || '',
                 url: skill.url || '',
+                icon: skill.icon || '',
               }"
               :colored="true"
               :showBgDots="false"

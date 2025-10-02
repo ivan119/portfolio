@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useComponentHandler } from "~/composables/skills/useComponentHandler";
+
+const { handleComponent } = useComponentHandler();
 useHead({
   link: [
     {
@@ -22,6 +25,7 @@ interface Skill {
   proficiency?: string;
   experience?: string;
   url: string;
+  icon: string;
 }
 
 const props = defineProps<{
@@ -208,8 +212,21 @@ const activeItem: String = "";
         <div
           class="icon-container transform-gpu transition-transform duration-300 group-hover:rotate-y-12"
         >
+          <component
+            :is="handleComponent(skill.icon)"
+            class="tech-icon"
+            :class="getIconClasses(skill.icon)"
+            :style="
+              colored
+                ? {}
+                : {
+                    color: getIconColor(skill.tags[0]),
+                    textShadow: `0 2px 4px ${getIconColor(skill.tags[0])}30`,
+                  }
+            "
+          />
           <i
-            v-if="skill.tags[0]?.icon"
+            v-if="skill.tags[0]?.icon && false"
             :class="getIconClasses(skill.tags[0].icon)"
             :style="
               colored
