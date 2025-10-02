@@ -2,15 +2,6 @@
 import { useIconComponentHandler } from "~/composables/skills/useComponentHandler";
 
 const { handleIconComponent } = useIconComponentHandler();
-useHead({
-  link: [
-    {
-      rel: "stylesheet",
-      type: "text/css",
-      href: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css",
-    },
-  ],
-});
 interface Tag {
   name: string;
   icon: string;
