@@ -102,13 +102,15 @@
     position: relative;
     transform-style: preserve-3d;
     transition: all 0.45s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
 }
 
 .card.group:hover .tech-icon:not(.preserve-animation),
 .card.group:focus-within .tech-icon:not(.preserve-animation) {
     animation: gentle-pulse 0.45s ease-in-out infinite alternate;
-    font-size: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 @keyframes gentle-pulse {

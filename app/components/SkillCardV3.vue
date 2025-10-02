@@ -1,13 +1,7 @@
 <script setup lang="ts">
-useHead({
-  link: [
-    {
-      rel: "stylesheet",
-      type: "text/css",
-      href: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css",
-    },
-  ],
-});
+import { useIconComponentHandler } from "~/composables/skills/useComponentHandler";
+
+const { handleIconComponent } = useIconComponentHandler();
 interface Tag {
   name: string;
   icon: string;
@@ -22,6 +16,7 @@ interface Skill {
   proficiency?: string;
   experience?: string;
   url: string;
+  icon: string;
 }
 
 const props = defineProps<{
@@ -144,16 +139,17 @@ const getGradientColors = (categories: string[]): [string, string] => {
 const getProficiencyColor = (proficiency?: string) => {
   if (!proficiency) return "";
   const colors: ProficiencyColorMap = {
-    Expert: "text-emerald-500",
-    Advanced: "text-blue-500",
+    Experienced: "text-blue-500",
+    Advanced: "text-emerald-500",
     Intermediate: "text-yellow-500",
     Beginner: "text-gray-500",
   };
   return colors[proficiency as keyof typeof colors] || colors["Intermediate"];
 };
 
-// Function to get tech icon color with fallback
-const getIconColor = (tag: Tag) => {
+// Function to get tech icon color with fallback (safe if tag is missing)
+const getIconColor = (tag?: Tag) => {
+  if (!tag) return getCategoryColor(props.skill.categories);
   return getTechColor(tag.icon);
 };
 const activeItem: String = "";
@@ -180,8 +176,10 @@ const activeItem: String = "";
       target="_blank"
       class="relative flex flex-col h-full"
     >
-      <!-- Category Badge -->
-      <div class="absolute top-2 right-2 z-10">
+      <!-- Category Badge (slides out on hover) -->
+      <div
+        class="absolute top-2 right-2 z-10 transform transition-all group-hover:translate-x-6 group-hover:opacity-0"
+      >
         <span
           class="px-2 py-0.5 text-xs font-medium rounded-full backdrop-blur-sm"
           :style="{
@@ -208,9 +206,10 @@ const activeItem: String = "";
         <div
           class="icon-container transform-gpu transition-transform duration-300 group-hover:rotate-y-12"
         >
-          <i
-            v-if="skill.tags[0]?.icon"
-            :class="getIconClasses(skill.tags[0].icon)"
+          <component
+            :is="handleIconComponent(skill.icon)"
+            class="tech-icon"
+            :class="getIconClasses(skill.icon)"
             :style="
               colored
                 ? {}
@@ -219,8 +218,7 @@ const activeItem: String = "";
                     textShadow: `0 2px 4px ${getIconColor(skill.tags[0])}30`,
                   }
             "
-            class="tech-icon"
-          ></i>
+          />
         </div>
       </div>
 

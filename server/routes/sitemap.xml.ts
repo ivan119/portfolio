@@ -46,3 +46,4 @@ export default defineEventHandler((event) => {
   setHeader(event, "Content-Type", "application/xml");
   return xml;
 });
+
