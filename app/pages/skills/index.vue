@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import SkillCardV3 from "~/components/SkillCardV3.vue";
 import { useSkills } from "~/composables/skills/useSkills";
 
 const showFrameworkDetails = ref(false);
@@ -17,7 +16,7 @@ usePageSeo({
 });
 
 // Always open official site for experienced skills
-import type { BasicSkill } from "~/types/skills";
+import type { BasicSkill } from "~~/server/types/skills";
 const openOfficial = (skill: BasicSkill) => {
   if (skill?.url) {
     window.open(skill.url, "_blank");
@@ -62,7 +61,6 @@ const useBgDots = ref();
             <SkillCardV3
               v-for="skill in preferredSkills"
               :key="skill.name"
-              @click.prevent="openOfficial(skill)"
               :use-bg-dots="useBgDots"
               class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
               :skill="{
@@ -73,6 +71,7 @@ const useBgDots = ref();
                 tags: [{ name: skill.name, icon: skill.icon }],
                 proficiency: skill.proficiency || '',
                 experience: skill.experience || '',
+                url: skill.url || '',
               }"
               :colored="true"
             />
@@ -97,7 +96,6 @@ const useBgDots = ref();
             <SkillCardV3
               v-for="skill in experiencedSkills"
               :key="skill.name"
-              @click.prevent="openOfficial(skill)"
               class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
               :skill="{
                 title: skill.name,
@@ -107,6 +105,7 @@ const useBgDots = ref();
                 tags: [{ name: skill.name, icon: skill.icon }],
                 proficiency: skill.proficiency || '',
                 experience: skill.experience || '',
+                url: skill.url || '',
               }"
               :colored="true"
               :showBgDots="false"

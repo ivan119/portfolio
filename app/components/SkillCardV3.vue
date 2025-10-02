@@ -21,6 +21,7 @@ interface Skill {
   categories: string[];
   proficiency?: string;
   experience?: string;
+  url: string;
 }
 
 const props = defineProps<{
@@ -155,6 +156,7 @@ const getProficiencyColor = (proficiency?: string) => {
 const getIconColor = (tag: Tag) => {
   return getTechColor(tag.icon);
 };
+const activeItem: String = "";
 </script>
 
 <template>
@@ -174,7 +176,7 @@ const getIconColor = (tag: Tag) => {
     </div>
 
     <NuxtLink
-      :to="skill.link"
+      :to="skill.url"
       target="_blank"
       class="relative flex flex-col h-full"
     >
