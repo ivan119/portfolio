@@ -14,14 +14,12 @@ import Angular from "~/components/devTools/devicon/Angular.vue";
 import Cpp from "~/components/devTools/devicon/Cpp.vue";
 import AdonisJs from "~/components/devTools/devicon/AdonisJs.vue";
 import Prisma from "~/components/devTools/devicon/Prisma.vue";
-import Flutter from "~/components/devTools/devicon/React.vue";
 import MySql from "~/components/devTools/devicon/MySql.vue";
 import Php from "~/components/devTools/devicon/Php.vue";
 import Python from "~/components/devTools/devicon/Python.vue";
 import AdobeXd from "~/components/devTools/devicon/AdobeXd.vue";
 import Figma from "~/components/devTools/devicon/Figma.vue";
 import Node from "~/components/devTools/devicon/Node.vue";
-import typescript from "~/components/devTools/devicon/Typescript.vue";
 
 export const useIconComponentHandler = () => {
   const handleIconComponent = (value: string) => {
@@ -62,8 +60,6 @@ export const useIconComponentHandler = () => {
         return AdonisJs;
       case "devicon-prisma-plain":
         return Prisma;
-      case "devicon-flutter-plain":
-        return Flutter;
       case "devicon-mysql-plain":
         return MySql;
       case "devicon-nodejs-plain":
