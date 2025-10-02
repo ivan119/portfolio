@@ -95,6 +95,7 @@ const formatName = (name: string): string => {
             v-if="!crumb.isLast"
             :to="crumb.path"
             class="transition-colors duration-200"
+            aria-label="Breadcrumb navigation"
           >
             <dev-tools-icons-home v-if="crumb.name === 'Home'" />
             <template v-else>
