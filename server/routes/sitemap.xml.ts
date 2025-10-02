@@ -1,11 +1,19 @@
-import { posts } from "~/server/data/posts";
+import { posts } from "../data/posts";
 
 export default defineEventHandler((event) => {
   const proto = getHeader(event, "x-forwarded-proto") || "http";
-  const host = getHeader(event, "x-forwarded-host") || getHeader(event, "host") || "localhost:3000";
+  const host =
+    getHeader(event, "x-forwarded-host") ||
+    getHeader(event, "host") ||
+    "localhost:3000";
   const base = `${proto}://${host}`;
 
-  const urls: Array<{ loc: string; lastmod?: string; changefreq?: string; priority?: number }> = [
+  const urls: Array<{
+    loc: string;
+    lastmod?: string;
+    changefreq?: string;
+    priority?: number;
+  }> = [
     { loc: `${base}/`, priority: 1.0, changefreq: "weekly" },
     { loc: `${base}/projects`, priority: 0.8, changefreq: "weekly" },
     { loc: `${base}/skills`, priority: 0.8, changefreq: "weekly" },
@@ -13,7 +21,9 @@ export default defineEventHandler((event) => {
   ];
 
   for (const post of posts) {
-    const lastmod = (post as any).date ? new Date((post as any).date).toISOString() : undefined;
+    const lastmod = (post as any).date
+      ? new Date((post as any).date).toISOString()
+      : undefined;
     const id = (post as any).id || (post as any).slug;
     if (id) {
       urls.push({
@@ -36,5 +46,3 @@ export default defineEventHandler((event) => {
   setHeader(event, "Content-Type", "application/xml");
   return xml;
 });
-
-

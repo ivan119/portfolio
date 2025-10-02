@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import ProjectCardV3 from "@/components/ProjectCardV3.vue";
 import { useProjects } from "~/composables/useProjects";
 
 const showFrameworkDetails = ref(false);

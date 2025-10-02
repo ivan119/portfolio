@@ -75,7 +75,7 @@ const {
           <slot />
         </div>
       </div>
-      <Footer class="container" v-if="showMainContent" />
+      <Footer class="body-container" v-if="showMainContent" />
       <ScrollProgress :visibility="showMainContent" />
     </div>
   </div>

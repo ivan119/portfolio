@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="background-animation bg-gradient-to-br from-slate-50 via-emerald-50 to-blue-50 dark:from-gray-900 dark:via-slate-900 dark:to-gray-900 overflow-hidden"
-  >
+  <div class="error-code-container">
     <!-- Advanced Background Elements -->
     <div class="absolute inset-0 overflow-hidden">
       <!-- Animated geometric shapes with your brand colors -->

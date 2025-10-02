@@ -84,22 +84,3 @@ usePageSeo({
     </div>
   </article>
 </template>
-
-<style scoped>
-.font-extrabold {
-  animation: gradient-shift 3s ease infinite;
-  background-size: 200% auto;
-}
-
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% center;
-  }
-  50% {
-    background-position: 100% center;
-  }
-  100% {
-    background-position: 0% center;
-  }
-}
-</style>
