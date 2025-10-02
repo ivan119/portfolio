@@ -1,4 +1,5 @@
 import type { NuxtError } from "#app";
+// @ts-ignore
 import Typewriter from "typewriter-effect/dist/core";
 
 export function useErrorView(error: NuxtError | undefined) {

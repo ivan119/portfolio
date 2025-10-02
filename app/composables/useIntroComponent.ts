@@ -1,4 +1,5 @@
 import { ref, nextTick, type Ref } from "vue";
+// @ts-ignore
 import Typewriter from "typewriter-effect/dist/core";
 
 export const useIntroComponent = () => {

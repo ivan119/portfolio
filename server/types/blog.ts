@@ -1,18 +1,25 @@
 export interface BlogPost {
-  id: string
-  title: string
-  content: string
-  image: string
-  createdAt: string
-  slug: string
-  excerpt?: string
-  tags?: string[]
-  category?: string
-  coverPrompt?: string
+  id: string;
+  title: string;
+  content: string;
+  image: string;
+  createdAt: string;
+  slug: string;
+  excerpt?: string;
+  tags?: string[];
+  category?: string;
+  coverPrompt?: string;
 }
-
+export interface PreviewBlogPost {
+  author: string;
+  coverImage: string;
+  date: string;
+  excerpt: string;
+  id: string;
+  title: string;
+}
 export interface GeneratePostPayload {
-  prompt: string
+  prompt: string;
 }
 
 export interface SavePostResponse {
