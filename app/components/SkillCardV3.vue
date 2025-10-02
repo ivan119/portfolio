@@ -225,19 +225,6 @@ const activeItem: String = "";
                   }
             "
           />
-          <i
-            v-if="skill.tags[0]?.icon && false"
-            :class="getIconClasses(skill.tags[0].icon)"
-            :style="
-              colored
-                ? {}
-                : {
-                    color: getIconColor(skill.tags[0]),
-                    textShadow: `0 2px 4px ${getIconColor(skill.tags[0])}30`,
-                  }
-            "
-            class="tech-icon"
-          ></i>
         </div>
       </div>
 
