@@ -40,8 +40,8 @@ useHead({
     },
     {
       rel: "icon",
-      type: "image/png",
-      href: "/favicon-48x48.png",
+      type: "image/ico",
+      href: "/favicon-48x48.ico",
       sizes: "48x48",
     },
     {
