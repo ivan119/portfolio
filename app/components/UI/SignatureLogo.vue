@@ -46,7 +46,7 @@ const sizeClasses = {
     <NuxtImg
       class="rounded-full"
       :class="sizeClasses[size].avatar"
-      :src="'/favicon-96x96.png'"
+      :src="'/favicon-48x48.png'"
       loading="eager"
       fetchpriority="high"
       :alt="author"
