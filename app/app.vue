@@ -3,6 +3,12 @@ useHead({
   link: [
     {
       rel: "icon",
+      type: "image/ico",
+      href: "/favicon.ico",
+      sizes: "96x96",
+    },
+    {
+      rel: "icon",
       type: "image/png",
       href: "/favicon-32x32.png",
       sizes: "32x32",
@@ -15,11 +21,17 @@ useHead({
     },
     {
       rel: "icon",
-      type: "image/png",
-      href: "/favicon-96x96.png",
+      type: "image/ico",
+      href: "/favicon96x96.ico",
       sizes: "96x96",
     },
     { rel: "apple-touch-icon", href: "/favicon-180x180.png", sizes: "180x180" },
+    {
+      rel: "icon",
+      type: "image/ico",
+      href: "/favicon-180x180.ico",
+      sizes: "180x180",
+    },
     {
       rel: "icon",
       type: "image/png",
