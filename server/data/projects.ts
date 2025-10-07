@@ -51,7 +51,7 @@ export const projects: ProjectItem[] = [
     ],
     categories: ["fullstack"],
     status: "Completed",
-    year: "2023",
+    year: "2021 - 2025",
   },
 ];
 
@@ -74,7 +74,7 @@ export const allProjects: ProjectItem[] = [
     ],
     categories: ["frontend"],
     status: "Completed",
-    year: "2023",
+    year: "2022",
   },
   {
     title: "Sonic Pills",
@@ -94,7 +94,7 @@ export const allProjects: ProjectItem[] = [
     ],
     categories: ["frontend"],
     status: "Completed",
-    year: "2023",
+    year: "2022",
   },
   {
     title: "Invest in Croatia",
@@ -108,13 +108,13 @@ export const allProjects: ProjectItem[] = [
     ],
     categories: ["frontend"],
     status: "Completed",
-    year: "2022",
+    year: "2020",
   },
   {
     title: "Wine Yard",
     description:
       "Wineyard is an expert system that measures humidity, pressure, temperature, and CO2 and manages air conditioning devices in the wine cellar, without the physical presence of the winemaker.",
-    link: "https://wine-yard.net/en/homepage",
+    link: "https://gauss.hr/en/products/wineyard",
     tags: [
       { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
       { name: "Bootstrap", icon: "devicon-bootstrap-plain" },
@@ -122,6 +122,6 @@ export const allProjects: ProjectItem[] = [
     ],
     categories: ["frontend"],
     status: "Completed",
-    year: "2022",
+    year: "2021",
   },
 ];
