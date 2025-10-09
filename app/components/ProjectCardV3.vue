@@ -132,7 +132,7 @@ const getIconColor = (tag: ProjectTag): string => {
 
       <!-- Description -->
       <p
-        class="text-xs text-gray-600 dark:text-gray-400 px-3 mb-2 leading-relaxed"
+        class="text-xs text-gray-600 dark:text-gray-400 px-3 mb-2 leading-relaxed flex-1"
       >
         {{ project.description }}
       </p>
