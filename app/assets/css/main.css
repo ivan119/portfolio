@@ -1,9 +1,6 @@
 @import "cards.css";
 @import "defaultLayout.css";
 /* Main Tailwind Style */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 /* Global Theme Variables */
 :root {
   /* Primary gradient colors (light mode) */
