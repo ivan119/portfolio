@@ -53,7 +53,7 @@ const props = defineProps({
   <section class="relative p-4 md:p-8 md:pt-5">
     <div class="ui-banner"></div>
     <!-- Light dots pattern -->
-    <ClientOnly>
+    <ClientOnly v-if="false">
       <div
         :class="{ invisible: colorMode.value === 'dark' }"
         class="ui-banner-dots"
