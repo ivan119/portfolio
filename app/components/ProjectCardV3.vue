@@ -10,6 +10,7 @@ interface ProjectTag {
 }
 
 interface Project {
+  slug?: string;
   title: string;
   description: string;
   link: string;
@@ -88,9 +89,8 @@ const getIconColor = (tag: ProjectTag): string => {
       ></div>
     </div>
     <NuxtLink
-      :href="project.link"
-      target="_blank"
-      rel="noopener noreferrer"
+      v-if="props.project.slug"
+      :to="`/projects/${props.project.slug}`"
       class="relative flex flex-col h-full outline-none focus-visible:ring-2 focus-visible:ring-main-500 z-10"
       tabindex="-1"
     >
