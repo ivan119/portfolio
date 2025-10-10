@@ -109,7 +109,7 @@ export const projects: ProjectItem[] = [
       { name: "PHP", icon: "devicon-php-plain" },
       { name: "Chart.js", icon: "devicon-chartjs-plain" },
     ],
-    categories: ["fullstack"],
+    categories: ["frontend"],
     status: "Completed",
     year: "2021 - 2025",
     timeline: "Frontend Team Lead — May 2021 → Sep 2025",
