@@ -54,9 +54,7 @@ usePageSeo({
           <div class="relative p-5 md:p-8 space-y-4">
             <div class="flex items-start justify-between gap-3 flex-wrap">
               <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">
-                <span
-                  class="bg-gradient-to-r from-main-500 text-main-gradient-animated"
-                >
+                <span class="bg-gradient-to-r from-main-500 text-main-gradient">
                   {{ p.title }}
                 </span>
               </h1>
@@ -69,6 +67,7 @@ usePageSeo({
                 {{ p.status }}
               </span>
               <span
+                v-if="false"
                 class="inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800/60 dark:text-slate-200 border border-slate-200/60 dark:border-slate-700/60"
               >
                 {{ p.year }}
