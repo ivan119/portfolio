@@ -1,10 +1,9 @@
+@import "themes.css";
 @import "cards.css";
 @import "defaultLayout.css";
 /* Main Tailwind Style */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 /* Global Theme Variables */
+
 :root {
   /* Primary gradient colors (light mode) */
   --main-gradient-from: #10b981; /* emerald-500 */
@@ -49,7 +48,6 @@
     var(--main-gradient-to)
   );
 }
-
 :root {
   --c-bg: #091a28;
   --c-scrollbar: #bbb;
@@ -274,6 +272,15 @@ body {
 }
 .slide-enter-active > *:not(.no-animation):nth-child(5) {
   animation-delay: 0.75s;
+}
+.slide-enter-active > *:not(.no-animation):nth-child(6) {
+    animation-delay: 0.8s;
+}
+.slide-enter-active > *:not(.no-animation):nth-child(7) {
+    animation-delay: 0.85s;
+}
+.slide-enter-active > *:not(.no-animation):nth-child(8) {
+    animation-delay: 0.9s;
 }
 
 @keyframes slide-in {
