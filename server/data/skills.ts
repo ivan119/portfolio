@@ -246,6 +246,15 @@ export const experiencedSkills: BasicSkill[] = [
     url: "https://angular.io/",
   },
   {
+    name: "Frontend",
+    icon: "devicon-chartjs-plain",
+    category: "frontend",
+    proficiency: "Experienced",
+    description: "JavaScript charting library for the modern web",
+    color: "text-blue-500",
+    url: "https://www.chartjs.org/",
+  },
+  {
     name: "MySQL",
     icon: "devicon-mysql-plain",
     category: "database",
