@@ -277,7 +277,6 @@ export const allProjects: ProjectItem[] = [
       { name: "JavaScript", icon: "devicon-javascript-plain" },
       { name: "Vuetify", icon: "devicon-vuetify-plain" },
       { name: "Chart.js", icon: "devicon-chartjs-plain" },
-      { name: "nuxt-auth" },
     ],
     categories: ["frontend"],
     status: "Completed",
