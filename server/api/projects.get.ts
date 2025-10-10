@@ -23,7 +23,7 @@ export default defineCachedEventHandler(
     } as ProjectsResponse;
   },
   {
-    maxAge: 1,
+    maxAge: 60 * 5,
     swr: true,
   },
 );
