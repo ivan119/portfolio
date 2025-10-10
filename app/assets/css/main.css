@@ -1,7 +1,9 @@
+@import "themes.css";
 @import "cards.css";
 @import "defaultLayout.css";
 /* Main Tailwind Style */
 /* Global Theme Variables */
+
 :root {
   /* Primary gradient colors (light mode) */
   --main-gradient-from: #10b981; /* emerald-500 */
@@ -46,7 +48,6 @@
     var(--main-gradient-to)
   );
 }
-
 :root {
   --c-bg: #091a28;
   --c-scrollbar: #bbb;
