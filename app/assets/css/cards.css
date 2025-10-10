@@ -12,8 +12,6 @@
     content-visibility: auto;
     contain-intrinsic-size: 220px;
     min-height: 220px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    height: 220px; /* Reduced height for better fit */
 }
 
 .card::before {
