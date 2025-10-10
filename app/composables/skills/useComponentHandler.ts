@@ -21,6 +21,7 @@ import AdobeXd from "~/components/devTools/devicon/AdobeXd.vue";
 import Figma from "~/components/devTools/devicon/Figma.vue";
 import Node from "~/components/devTools/devicon/Node.vue";
 import ChartJs from "~/components/devTools/devicon/ChartJs.vue";
+import Vercel from "~/components/devTools/devicon/Vercel.vue";
 export const useIconComponentHandler = () => {
   const handleIconComponent = (value: string) => {
     switch (value) {
@@ -73,6 +74,8 @@ export const useIconComponentHandler = () => {
         return Figma;
       case "devicon-chartjs-plain":
         return ChartJs;
+      case "devicon-vercel-plain":
+        return Vercel;
       default:
         return null;
     }
