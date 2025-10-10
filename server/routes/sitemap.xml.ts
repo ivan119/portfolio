@@ -1,4 +1,5 @@
 import { posts } from "../data/posts";
+import { projects, allProjects } from "../data/projects";
 
 export default defineEventHandler((event) => {
   const proto = getHeader(event, "x-forwarded-proto") || "http";
@@ -33,6 +34,20 @@ export default defineEventHandler((event) => {
         lastmod,
       });
     }
+  }
+
+  // Include individual project pages
+  const projectSlugs = new Set<string>();
+  for (const p of [...projects, ...allProjects]) {
+    const slug = (p as any).slug;
+    if (slug) projectSlugs.add(slug);
+  }
+  for (const slug of projectSlugs) {
+    urls.push({
+      loc: `${base}/projects/${slug}`,
+      changefreq: "monthly",
+      priority: 0.7,
+    });
   }
 
   const urlset = urls
