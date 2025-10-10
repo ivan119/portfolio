@@ -238,7 +238,7 @@ export const allProjects: ProjectItem[] = [
     categories: ["frontend"],
     status: "Completed",
     year: "2020",
-    timeline: "My first project — 2020",
+    timeline: "My first comercial project — 2020",
     allowPreview: false,
   },
   {
