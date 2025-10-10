@@ -157,7 +157,7 @@ const activeItem: String = "";
 
 <template>
   <article
-    class="card skill-card relative bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group"
+    class="card relative bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group"
     :style="{
       '--category-color': getCategoryColor(skill.categories),
       '--gradient-from': getGradientColors(skill.categories)[0],
