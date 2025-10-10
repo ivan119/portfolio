@@ -273,6 +273,15 @@ body {
 .slide-enter-active > *:not(.no-animation):nth-child(5) {
   animation-delay: 0.75s;
 }
+.slide-enter-active > *:not(.no-animation):nth-child(6) {
+    animation-delay: 0.8s;
+}
+.slide-enter-active > *:not(.no-animation):nth-child(7) {
+    animation-delay: 0.85s;
+}
+.slide-enter-active > *:not(.no-animation):nth-child(8) {
+    animation-delay: 0.9s;
+}
 
 @keyframes slide-in {
   0% {
