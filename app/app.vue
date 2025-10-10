@@ -9,18 +9,6 @@ useHead({
     },
     {
       rel: "icon",
-      type: "image/ico",
-      href: "/favicon-16x16.ico",
-      sizes: "16x16",
-    },
-    {
-      rel: "icon",
-      type: "image/png",
-      href: "/favicon-32x32.png",
-      sizes: "32x32",
-    },
-    {
-      rel: "icon",
       type: "image/png",
       href: "/favicon-48x48.png",
       sizes: "48x48",
