@@ -308,6 +308,15 @@ export const experiencedSkills: BasicSkill[] = [
     color: "text-indigo-600",
     url: "https://adonisjs.com/",
   },
+  {
+    name: "Vercel",
+    icon: "devicon-vercel-plain",
+    category: "frontend",
+    proficiency: "Experienced",
+    description: "Platform for deploying serverless applications",
+    color: "text-indigo-700",
+    url: "https://vercel.com/home",
+  },
 ];
 
 export const listSkills = (): SkillsListResponse => ({
