@@ -246,6 +246,15 @@ export const experiencedSkills: BasicSkill[] = [
     url: "https://angular.io/",
   },
   {
+    name: "Frontend",
+    icon: "devicon-chartjs-plain",
+    category: "frontend",
+    proficiency: "Experienced",
+    description: "JavaScript charting library for the modern web",
+    color: "text-blue-500",
+    url: "https://www.chartjs.org/",
+  },
+  {
     name: "MySQL",
     icon: "devicon-mysql-plain",
     category: "database",
@@ -307,6 +316,15 @@ export const experiencedSkills: BasicSkill[] = [
     description: "Node.js MVC framework",
     color: "text-indigo-600",
     url: "https://adonisjs.com/",
+  },
+  {
+    name: "Vercel",
+    icon: "devicon-vercel-plain",
+    category: "frontend",
+    proficiency: "Experienced",
+    description: "Platform for deploying serverless applications",
+    color: "text-indigo-700",
+    url: "https://vercel.com/home",
   },
 ];
 
