@@ -246,7 +246,7 @@ export const experiencedSkills: BasicSkill[] = [
     url: "https://angular.io/",
   },
   {
-    name: "Frontend",
+    name: "Chartjs",
     icon: "devicon-chartjs-plain",
     category: "frontend",
     proficiency: "Experienced",
