@@ -151,7 +151,7 @@ onUnmounted(() => {
               v-show="link.show"
               :to="link.to"
               @click="handleNavigationClick(link)"
-              exact-active-class="nav-link-active"
+              active-class="nav-link-active"
               class="nav-link font-bold relative flex items-center mr-4 text-gray-600 dark:text-gray-300 transition-all duration-300 hover:scale-105"
               :class="{
                 'is-navigating': isNavigating && activeLink === link.to,
