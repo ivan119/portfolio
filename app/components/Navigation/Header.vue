@@ -114,21 +114,19 @@ onUnmounted(() => {
 <template>
   <header class="header-class animate">
     <div class="flex items-center gap-8">
-      <ClientOnly>
-        <transition name="page">
-          <NuxtLink
-            aria-label="homepage-intro-link"
-            v-if="props.showLogo"
-            @click="showIntroAgain"
-            to="/"
-            class="logo mt-6 relative hover:scale-105 transition-transform duration-300"
-          >
-            <dev-tools-signature2
-              class="w-[120px] h-20 text-gray-800 dark:text-white hover:bg-gradient-to-r hover:from-teal-500 hover:to-blue-600 hover:bg-clip-text hover:text-transparent transition-all duration-300"
-            />
-          </NuxtLink>
-        </transition>
-      </ClientOnly>
+      <transition name="page">
+        <NuxtLink
+          aria-label="homepage-intro-link"
+          v-if="props.showLogo"
+          @click="showIntroAgain"
+          to="/"
+          class="logo mt-6 relative hover:scale-105 transition-transform duration-300"
+        >
+          <dev-tools-signature2
+            class="w-[120px] h-20 text-gray-800 dark:text-white hover:bg-gradient-to-r hover:from-teal-500 hover:to-blue-600 hover:bg-clip-text hover:text-transparent transition-all duration-300"
+          />
+        </NuxtLink>
+      </transition>
     </div>
     <div class="flex items-center justify-center">
       <transition-group name="nav" tag="ul" class="flex">
