@@ -1,7 +1,7 @@
 .card {
     /* Use inset shadow as base border to avoid hover halo */
     box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.369s cubic-bezier(0.369, 0, 0.2, 1);
     transform-style: preserve-3d;
     z-index: 1;
     outline: none;
@@ -9,7 +9,6 @@
     /* Ensure inner content doesn't overlap border mask corners */
     border-radius: 0.5rem; /* match rounded-lg */
     /* Improve initial rendering: skip offscreen painting and layout until needed */
-    content-visibility: auto;
     contain-intrinsic-size: 220px;
     min-height: 220px;
 }

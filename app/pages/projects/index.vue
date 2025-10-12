@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { useProjects } from "~/composables/useProjects";
+import { isActiveProjectClass } from "~/composables/useActiveClass";
 
 const showFrameworkDetails = ref(false);
 
 const { projects, allProjects, error, pending, refresh } = await useProjects();
-
+definePageMeta({
+  middleware: ["projects-active"],
+});
 usePageSeo({
   title: "Projects — Ivan Kelava",
   description:
@@ -20,7 +23,10 @@ usePageSeo({
     :class="[
       showFrameworkDetails
         ? '!max-w-7xl'
-        : '!p-3 md:p-0 mx-auto w-full space-y-5 slide-enter-active',
+        : '!p-3 md:p-0 mx-auto w-full space-y-5',
+      {
+        'slide-enter-active': isActiveProjectClass,
+      },
     ]"
   >
     <!-- Banner Section -->
@@ -51,12 +57,10 @@ usePageSeo({
             <button class="underline" @click="refresh()">Retry</button>
           </div>
           <template v-else>
-            <UIEmptyState
-              v-if="projects.length === 0"
-              title="No projects yet"
-              description="Projects will appear here once available."
-            />
-            <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div
+              v-if="projects.length"
+              class="grid grid-cols-1 md:grid-cols-2 gap-6"
+            >
               <ProjectCardV3
                 v-for="project in projects"
                 :key="project.title"
@@ -64,6 +68,11 @@ usePageSeo({
                 :colored="true"
               />
             </div>
+            <UIEmptyState
+              v-else
+              title="No projects yet"
+              description="Projects will appear here once available."
+            />
           </template>
         </section>
       </template>
