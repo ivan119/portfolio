@@ -8,6 +8,8 @@ const slug = route.params.slug as string;
 
 import { useProject } from "~/composables/useProject";
 import Tooltip from "~/components/UI/Tooltip.vue";
+import { isActiveProjectClass } from "~/composables/useActiveClass";
+
 const { project, fetchProjectBySlug } = useProject();
 await fetchProjectBySlug(slug);
 
@@ -21,8 +23,9 @@ const onFrameLoad = () => {
 };
 const previewUrl = computed(() => p.value?.link || "");
 
-// (Removed) Related projects computation
-
+definePageMeta({
+  middleware: ["projects-active"],
+});
 usePageSeo({
   title: p.value?.title
     ? `${p.value.title} — Projects | Ivan Kelava`
@@ -37,8 +40,13 @@ usePageSeo({
 </script>
 
 <template>
-  <div class="!max-w-7xl !p-3 md:p-0 mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div v-if="p" class="mt-2 slide-enter-active">
+  <UIBanner
+    :class="{ 'slide-enter-active': isActiveProjectClass }"
+    title=""
+    description=""
+    class="!max-w-7xl !p-3"
+  >
+    <div v-if="p">
       <!-- Hero -->
       <div
         class="relative overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-white/5"
@@ -68,10 +76,18 @@ usePageSeo({
           </NuxtLink>
         </div>
 
-        <div class="relative p-5 md:p-8 space-y-4 slide-enter-active">
+        <div
+          :class="{ 'slide-enter-active': isActiveProjectClass }"
+          class="relative p-5 md:p-8 space-y-4"
+        >
           <div class="flex items-start justify-between gap-3 flex-wrap">
             <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">
-              <span class="bg-gradient-to-r from-main-500 text-main-gradient">
+              <span
+                :style="{
+                  'view-transition-name': `project-title-${p.slug}`,
+                }"
+                class="bg-gradient-to-r from-main-500 text-main-gradient"
+              >
                 {{ p.title }}
               </span>
             </h1>
@@ -98,7 +114,12 @@ usePageSeo({
             </span>
           </div>
 
-          <p class="text-sm text-gray-700 dark:text-gray-300">
+          <p
+            :style="{
+              'view-transition-name': `project-description-${p.slug}`,
+            }"
+            class="text-sm text-gray-700 dark:text-gray-300"
+          >
             {{ p.description }}
           </p>
 
@@ -111,9 +132,12 @@ usePageSeo({
 
           <div class="flex flex-wrap gap-2">
             <span
-              v-for="tag in p.tags"
+              v-for="(tag, index) in p.tags"
               :key="tag.name"
-              class="inline-flex items-center gap-2 text-xs px-2 py-1 rounded border border-slate-200 dark:border-slate-700"
+              :style="{
+                'view-transition-name': `project-tag-${p.slug}-${index}`,
+              }"
+              class="inline-flex items-center gap-2 text-xs font-medium, px-2 py-1 rounded border border-slate-200 dark:border-slate-700"
             >
               <dev-tools-icons-gauss-logo
                 v-if="tag.gaussCMSlogo"
@@ -228,5 +252,5 @@ usePageSeo({
         >
       </UIEmptyState>
     </div>
-  </div>
+  </UIBanner>
 </template>

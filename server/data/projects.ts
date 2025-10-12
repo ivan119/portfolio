@@ -203,8 +203,8 @@ export const allProjects: ProjectItem[] = [
     ],
     categories: ["frontend"],
     status: "Completed",
-    year: "2020",
-    timeline: "Launch — 2020",
+    year: "2021",
+    timeline: "Launch — 2021",
     allowPreview: false,
   },
   {
@@ -281,6 +281,7 @@ export const allProjects: ProjectItem[] = [
     categories: ["frontend"],
     status: "Completed",
     year: "2021",
+    timeline: "My second comercial project — 2020/2021",
     allowPreview: false,
   },
 ];

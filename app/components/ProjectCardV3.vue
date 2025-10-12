@@ -115,8 +115,8 @@ const getIconColor = (tag: ProjectTag): string => {
           />
           <component
             v-else
-            :is="handleIconComponent(project.tags[0]?.icon)"
-            :class="[project.tags[0].icon, 'tech-icon', 'colored']"
+            :is="handleIconComponent(project?.tags[0]?.icon)"
+            :class="[project?.tags[0].icon, 'tech-icon', 'colored']"
           />
         </div>
       </div>
@@ -124,7 +124,10 @@ const getIconColor = (tag: ProjectTag): string => {
       <!-- Title -->
       <div class="px-3 mb-1">
         <h2
-          class="text-base font-semibold text-main-gradient transition-all duration-300 group-hover:translate-x-1"
+          :style="{
+            'view-transition-name': `project-title-${project.slug}`,
+          }"
+          class="text-base text-main-gradient font-semibold transition-all duration-300 group-hover:translate-x-1"
         >
           {{ project.title }}
         </h2>
@@ -132,6 +135,9 @@ const getIconColor = (tag: ProjectTag): string => {
 
       <!-- Description -->
       <p
+        :style="{
+          'view-transition-name': `project-description-${project.slug}`,
+        }"
         class="text-xs text-gray-600 dark:text-gray-400 px-3 mb-2 leading-relaxed flex-1"
       >
         {{ project.description }}
@@ -140,10 +146,11 @@ const getIconColor = (tag: ProjectTag): string => {
       <!-- Tags -->
       <div class="flex flex-wrap gap-2 px-3 pb-3">
         <span
-          v-for="tag in project.tags"
+          v-for="(tag, index) in project.tags"
           :key="tag.name"
-          class="inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full transition-all duration-300 group-hover:scale-110 bg-opacity-80 border"
+          class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full transition-all duration-300 group-hover:scale-110 bg-opacity-80 border"
           :style="{
+            'view-transition-name': `project-tag-${project.slug}-${index}`,
             background: `${getIconColor(tag)}15`,
             borderColor: `${getIconColor(tag)}40`,
             boxShadow: `0 1px 4px ${getIconColor(tag)}20`,
