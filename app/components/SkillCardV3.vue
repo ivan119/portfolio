@@ -103,31 +103,31 @@ const getIconClasses = (icon: string) => {
 };
 
 const getCategoryColor = (categories: string[]) => {
-  if (categories.includes("Frontend")) return "#3B82F6";
-  if (categories.includes("Backend")) return "#10B981";
-  if (categories.includes("Full Stack")) return "#6366F1";
+  if (categories.includes("frontend")) return "#3B82F6";
+  if (categories.includes("backend")) return "#10B981";
+  if (categories.includes("full stack")) return "#6366F1";
   if (categories.includes("language")) return "#F59E0B";
-  if (categories.includes("database")) return "#EC4899";
-  if (categories.includes("framework")) return "#8B5CF6";
+  if (categories.includes("database")) return "#06B6D4";
+  if (categories.includes("framework")) return "#10B981";
   if (categories.includes("mobile")) return "#06B6D4";
   if (categories.includes("design")) return "#F43F5E";
-  if (categories.includes("tools")) return "#9333EA";
+  if (categories.includes("tools")) return "#06B6D4";
   return "#6B7280";
 };
 
 const getGradientColors = (categories: string[]): [string, string] => {
   const baseColor = getCategoryColor(categories);
   const colors: CategoryColorMap = {
-    Frontend: ["#3B82F6", "#60A5FA"],
-    Backend: ["#10B981", "#34D399"],
+    frontend: ["#3B82F6", "#10B981"],
+    backend: ["#10B981", "#34D399"],
     "Full Stack": ["#6366F1", "#818CF8"],
     language: ["#F59E0B", "#FBBF24"],
-    database: ["#EC4899", "#F472B6"],
-    framework: ["#8B5CF6", "#A78BFA"],
+    database: ["#06B6D4", "#FBBF24"],
+    framework: ["#10B981", "#3B82F6"],
     mobile: ["#06B6D4", "#22D3EE"],
     design: ["#F43F5E", "#FB7185"],
-    tools: ["#9333EA", "#A855F7"],
-    default: ["#6B7280", "#9CA3AF"],
+    tools: ["#06B6D4", "#9333EA"],
+    default: ["#9333EA", "#9333EA"],
   };
 
   const category = (categories[0]?.toLowerCase() ||
@@ -265,7 +265,7 @@ const activeItem: String = "";
       </p>
 
       <!-- Tech Stack with Tech Original Colors or themed colors -->
-      <div class="flex flex-wrap gap-1 px-2 pb-2">
+      <div class="flex flex-wrap gap-1 px-3 pb-2">
         <span
           v-for="tag in skill.tags"
           :key="tag.name"
