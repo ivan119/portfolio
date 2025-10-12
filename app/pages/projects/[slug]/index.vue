@@ -40,8 +40,13 @@ usePageSeo({
 </script>
 
 <template>
-  <div class="!max-w-7xl !p-3 md:p-0 mx-auto p-4 md:p-8 md:pt-5">
-    <div v-if="p" :class="{ 'slide-enter-active': isActiveProjectClass }">
+  <UIBanner
+    :class="{ 'slide-enter-active': isActiveProjectClass }"
+    title=""
+    description=""
+    class="!max-w-7xl !p-3"
+  >
+    <div v-if="p">
       <!-- Hero -->
       <div
         class="relative overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-white/5"
@@ -247,5 +252,5 @@ usePageSeo({
         >
       </UIEmptyState>
     </div>
-  </div>
+  </UIBanner>
 </template>
