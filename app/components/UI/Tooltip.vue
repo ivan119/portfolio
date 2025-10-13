@@ -4,8 +4,8 @@
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
     @click="handleClick"
-    @touchstart="handleTouchStart"
-    @touchend="handleTouchEnd"
+    @touchstart.passive="handleTouchStart"
+    @touchend.passive="handleTouchEnd"
   >
     <!-- Trigger element (slot) -->
     <slot />
