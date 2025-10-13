@@ -8,7 +8,6 @@ import BlogIcon from "~/components/devTools/Icons/Blog.vue";
 import SkillsIcon from "~/components/devTools/Icons/Skills.vue";
 import ProjectsIcon from "~/components/devTools/Icons/Projects.vue";
 import DottedIcon from "~/components/devTools/Icons/Dotted.vue";
-import Tooltip from "~/components/UI/Tooltip.vue";
 import ThemeButtons from "~/components/UI/ThemeButtons.vue";
 const colorMode = useColorMode();
 const showLinks = ref(false);
@@ -136,7 +135,7 @@ onUnmounted(() => {
           :key="link.to"
           v-show="showLinks"
         >
-          <Tooltip
+          <UITooltip
             :text="link.tooltipText"
             size="sm"
             :custom-styles="
@@ -172,7 +171,7 @@ onUnmounted(() => {
                 ></div>
               </div>
             </NuxtLink>
-          </Tooltip>
+          </UITooltip>
         </li>
       </transition-group>
       <theme-buttons />

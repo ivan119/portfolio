@@ -5,7 +5,7 @@
     @click="handleClick"
   >
     <!-- Icon with optional tooltip -->
-    <Tooltip
+    <UITooltip
       v-if="tooltip"
       :text="tooltip"
       :position="tooltipPosition"
@@ -13,7 +13,7 @@
       :theme="tooltipTheme"
     >
       <component :is="icon" :is-active="isActive" :class="iconClasses" />
-    </Tooltip>
+    </UITooltip>
 
     <!-- Active indicator -->
     <div
@@ -28,7 +28,6 @@
 </template>
 
 <script setup lang="ts">
-import Tooltip from "~/components/UI/Tooltip.vue";
 import { useThrottleFn } from "@vueuse/core";
 interface Props {
   icon: any;
