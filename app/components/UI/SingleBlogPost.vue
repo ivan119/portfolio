@@ -1,7 +1,6 @@
 <script setup lang="ts">
-const props = defineProps({
-  post: Object,
-});
+import type { BlogPost } from "~~/server/types/blog";
+const props = defineProps<{ post: BlogPost }>();
 
 // Helper to determine content type
 const isHeading = (item: any) => item.type === "heading";
