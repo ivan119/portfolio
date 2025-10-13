@@ -52,11 +52,17 @@ usePageSeo({
             aria-label="Open project in new tab"
             class="w-full h-full"
           >
-            <div
-              class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white/80 shadow-sm backdrop-blur hover:bg-white/95 focus:outline-none focus:ring-2 focus:ring-main-500 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-slate-900/80"
+            <UITooltip
+              text="View More"
+              position="left"
+              class="pointer-events-none md:pointer-events-auto"
             >
-              <UIIconsEye />
-            </div>
+              <div
+                class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white/80 shadow-sm backdrop-blur hover:bg-white/95 focus:outline-none focus:ring-2 focus:ring-main-500 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-slate-900/80"
+              >
+                <UIIconsEye />
+              </div>
+            </UITooltip>
           </NuxtLink>
         </div>
 
