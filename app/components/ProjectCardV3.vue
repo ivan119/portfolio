@@ -16,7 +16,6 @@ const props = defineProps<{
   useBgDots?: boolean;
 }>();
 const icon = props.project?.tags[0]?.icon;
-console.log(icon, "icon");
 // Function to get category colors
 const getCategoryColor = (category: string): string => {
   const colors = {
@@ -64,7 +63,7 @@ const getIconColor = (tag: ProjectTag): string => {
     </div>
     <NuxtLink
       v-if="props.project.slug"
-      :to="`/projects/${props.project.slug}`"
+      :to="`/projects/${project.slug}`"
       class="relative flex flex-col h-full outline-none focus-visible:ring-2 focus-visible:ring-main-500 z-10"
       tabindex="-1"
     >
