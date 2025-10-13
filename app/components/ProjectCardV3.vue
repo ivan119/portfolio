@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useIconComponentHandler } from "~/composables/skills/useComponentHandler";
+import type { ProjectItem } from "~~/server/types/project";
 
 const { handleIconComponent } = useIconComponentHandler();
 
@@ -9,22 +10,13 @@ interface ProjectTag {
   gaussCMSlogo?: boolean;
 }
 
-interface Project {
-  slug?: string;
-  title: string;
-  description: string;
-  link: string;
-  categories: string[];
-  tags: ProjectTag[];
-  gaussCMSlogo?: boolean;
-}
-
 const props = defineProps<{
-  project: Project;
+  project: ProjectItem;
   colored?: boolean;
   useBgDots?: boolean;
 }>();
-
+const icon = props.project?.tags[0]?.icon;
+console.log(icon, "icon");
 // Function to get category colors
 const getCategoryColor = (category: string): string => {
   const colors = {
@@ -37,23 +29,6 @@ const getCategoryColor = (category: string): string => {
   } as const;
   return colors[category as keyof typeof colors] ?? colors.default;
 };
-
-// Function to get gradient colors
-const getGradientColors = (category: string): [string, string] => {
-  const colors = {
-    frontend: ["#3B82F6", "#60A5FA"],
-    backend: ["#10B981", "#34D399"],
-    fullstack: ["#6366F1", "#818CF8"],
-    mobile: ["#06B6D4", "#22D3EE"],
-    design: ["#F43F5E", "#FB7185"],
-    default: ["#6B7280", "#9CA3AF"],
-  } as const;
-  return (colors[category as keyof typeof colors] ?? colors.default) as [
-    string,
-    string,
-  ];
-};
-
 // Function to get tech icon color
 const getIconColor = (tag: ProjectTag): string => {
   const techColors = {
@@ -63,7 +38,6 @@ const getIconColor = (tag: ProjectTag): string => {
     "devicon-tailwindcss": "#38B2AC",
     "devicon-bootstrap": "#7952B3",
     "devicon-javascript": "#F7DF1E",
-    "devicon-postgresql": "#336791",
     "devicon-mongodb": "#47A248",
     "devicon-php": "#777BB4",
     "devicon-adonisjs": "#220052",
@@ -115,8 +89,8 @@ const getIconColor = (tag: ProjectTag): string => {
           />
           <component
             v-else
-            :is="handleIconComponent(project?.tags[0]?.icon)"
-            :class="[project?.tags[0].icon, 'tech-icon', 'colored']"
+            :is="icon ? handleIconComponent(icon) : null"
+            :class="[icon, 'tech-icon', 'colored']"
           />
         </div>
       </div>
@@ -163,7 +137,7 @@ const getIconColor = (tag: ProjectTag): string => {
           />
           <component
             v-else
-            :is="handleIconComponent(tag.icon)"
+            :is="tag.icon ? handleIconComponent(tag.icon) : null"
             :class="[tag.icon, 'w-3 h-3', 'colored']"
           />
           {{ tag.name }}
