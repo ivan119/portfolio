@@ -2,13 +2,14 @@ export interface BlogPost {
   author: string;
   id: string;
   title: string;
-  content: Content;
+  content: Content[];
   image: string;
   createdAt?: string;
   excerpt?: string;
   tags?: string[];
   category?: string;
   coverImage?: string;
+  date?: string;
 }
 type Content = {
   alt?: string;
@@ -16,6 +17,7 @@ type Content = {
   content: string;
   level?: Level;
   type: string;
+  src?: string;
 };
 type Level = {
   $numberInt: string | number;
