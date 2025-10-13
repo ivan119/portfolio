@@ -1,7 +1,6 @@
 <script setup lang="ts">
-const props = defineProps({
-  post: Object,
-});
+import type { BlogPost } from "~~/server/types/blog";
+const props = defineProps<{ post: BlogPost }>();
 
 // Helper to determine content type
 const isHeading = (item: any) => item.type === "heading";
@@ -66,7 +65,7 @@ const getHeadingClass = (level: number) => {
     />
   </div>
 
-  <!-- Post Content BUG IS HERE OOBVIOUSLY WHEN IS FALSE ALL WORKS-->
+  <!-- Post Content BUG IS HERE OBVIOUSLY WHEN IS FALSE ALL WORKS-->
   <article
     v-if="props.post?.content && props.post.content.length"
     class="prose prose-lg dark:prose-invert max-w-none"
@@ -122,7 +121,6 @@ const getHeadingClass = (level: number) => {
       <svg
         class="w-5 h-5 text-gray-600 dark:text-gray-300 group-hover:text-blue-500 transform transition-transform duration-300 ease-in-out group-hover:animate-bounce-left"
         viewBox="0 0 24 24"
-        fill="none"
         stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"

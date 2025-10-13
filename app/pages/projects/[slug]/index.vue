@@ -1,39 +1,25 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import type { ProjectItem } from "~~/server/types/project";
 import { useIconComponentHandler } from "~/composables/skills/useComponentHandler";
 
 const route = useRoute();
 const slug = route.params.slug as string;
-
 import { useProject } from "~/composables/useProject";
-import Tooltip from "~/components/UI/Tooltip.vue";
 import { isActiveProjectClass } from "~/composables/useActiveClass";
-
 const { project, fetchProjectBySlug } = useProject();
 await fetchProjectBySlug(slug);
-
-const p = computed<ProjectItem | null>(() => project.value);
-
-// In-page preview (sandboxed iframe)
-const showPreview = ref(false);
-const frameLoaded = ref(false);
-const onFrameLoad = () => {
-  frameLoaded.value = true;
-};
-const previewUrl = computed(() => p.value?.link || "");
-
 definePageMeta({
   middleware: ["projects-active"],
 });
 usePageSeo({
-  title: p.value?.title
-    ? `${p.value.title} — Projects | Ivan Kelava`
+  title: project?.value?.title
+    ? `${project.value.title} — Projects | Ivan Kelava`
     : "Project — Ivan Kelava",
-  description: p.value?.description || "Project case study by Ivan Kelava.",
+  description:
+    project?.value?.description || "Project case study by Ivan Kelava.",
   image: "/seo/IvanKelavaProjects1200x627.webp",
-  imageAlt: p.value?.title
-    ? `${p.value.title} preview image`
+  imageAlt: project?.value?.title
+    ? `${project.value.title} preview image`
     : "Project preview image",
   lang: "en",
 });
@@ -41,12 +27,11 @@ usePageSeo({
 
 <template>
   <UIBanner
-    :class="{ 'slide-enter-active': isActiveProjectClass }"
+    :class="[{ 'slide-enter-active': isActiveProjectClass }, '!max-w-7xl !p-3']"
     title=""
     description=""
-    class="!max-w-7xl !p-3"
   >
-    <div v-if="p">
+    <div v-if="project">
       <!-- Hero -->
       <div
         class="relative overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-white/5"
@@ -60,19 +45,24 @@ usePageSeo({
         ></div>
         <div class="absolute top-4 right-4 z-10 flex items-center gap-2">
           <NuxtLink
-            v-if="p && p.link"
-            :to="p.link"
+            :to="project.link"
             external
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open project in new tab"
             class="w-full h-full"
           >
-            <div
-              class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white/80 shadow-sm backdrop-blur hover:bg-white/95 focus:outline-none focus:ring-2 focus:ring-main-500 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-slate-900/80"
+            <UITooltip
+              text="View More"
+              position="left"
+              class="pointer-events-none md:pointer-events-auto"
             >
-              <UIIconsEye />
-            </div>
+              <div
+                class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white/80 shadow-sm backdrop-blur hover:bg-white/95 focus:outline-none focus:ring-2 focus:ring-main-500 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-slate-900/80"
+              >
+                <UIIconsEye />
+              </div>
+            </UITooltip>
           </NuxtLink>
         </div>
 
@@ -84,11 +74,11 @@ usePageSeo({
             <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">
               <span
                 :style="{
-                  'view-transition-name': `project-title-${p.slug}`,
+                  'view-transition-name': `project-title-${project.slug}`,
                 }"
                 class="bg-gradient-to-r from-main-500 text-main-gradient"
               >
-                {{ p.title }}
+                {{ project.title }}
               </span>
             </h1>
           </div>
@@ -97,16 +87,16 @@ usePageSeo({
             <span
               class="inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 border border-emerald-200/60 dark:border-emerald-800/60"
             >
-              {{ p.status }}
+              {{ project.status }}
             </span>
             <span
-              v-if="p.timeline"
+              v-if="project.timeline"
               class="inline-flex items-center text-[11px] font-medium darkIndigoBackground"
             >
-              {{ p.timeline }}
+              {{ project.timeline }}
             </span>
             <span
-              v-for="cat in p.categories"
+              v-for="cat in project.categories"
               :key="cat"
               class="inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 border border-blue-200/60 dark:border-blue-800/60"
             >
@@ -116,26 +106,26 @@ usePageSeo({
 
           <p
             :style="{
-              'view-transition-name': `project-description-${p.slug}`,
+              'view-transition-name': `project-description-${project.slug}`,
             }"
             class="text-sm text-gray-700 dark:text-gray-300"
           >
-            {{ p.description }}
+            {{ project.description }}
           </p>
 
           <div
-            v-if="p.longDescription"
+            v-if="project.longDescription"
             class="prose dark:prose-invert max-w-none text-sm leading-relaxed"
           >
-            {{ p.longDescription }}
+            {{ project.longDescription }}
           </div>
 
           <div class="flex flex-wrap gap-2">
             <span
-              v-for="(tag, index) in p.tags"
+              v-for="(tag, index) in project.tags"
               :key="tag.name"
               :style="{
-                'view-transition-name': `project-tag-${p.slug}-${index}`,
+                'view-transition-name': `project-tag-${project.slug}-${index}`,
               }"
               class="inline-flex items-center gap-2 text-xs font-medium, px-2 py-1 rounded border border-slate-200 dark:border-slate-700"
             >
@@ -155,7 +145,7 @@ usePageSeo({
           </div>
           <Navigation-Breadcrumbs />
 
-          <div v-if="p.features?.length" class="mt-4">
+          <div v-if="project.features?.length" class="mt-4">
             <div
               class="rounded-xl border border-slate-200/70 dark:border-slate-800/70 bg-white/50 dark:bg-slate-900/40 p-4"
             >
@@ -166,7 +156,7 @@ usePageSeo({
                 class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-slate-700 dark:text-slate-300"
               >
                 <li
-                  v-for="f in p.features"
+                  v-for="f in project.features"
                   :key="f"
                   class="flex items-start gap-2"
                 >
@@ -179,7 +169,7 @@ usePageSeo({
             </div>
           </div>
 
-          <div v-if="p.responsibilities?.length" class="mt-4">
+          <div v-if="project.responsibilities?.length" class="mt-4">
             <div
               class="rounded-xl border border-slate-200/70 dark:border-slate-800/70 bg-white/50 dark:bg-slate-900/40 p-4"
             >
@@ -190,7 +180,7 @@ usePageSeo({
                 class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-slate-700 dark:text-slate-300"
               >
                 <li
-                  v-for="r in p.responsibilities"
+                  v-for="r in project.responsibilities"
                   :key="r"
                   class="flex items-start gap-2"
                 >
@@ -200,43 +190,6 @@ usePageSeo({
                   <span>{{ r }}</span>
                 </li>
               </ul>
-            </div>
-          </div>
-
-          <div v-if="showPreview && p.allowPreview !== false" class="mt-4">
-            <div
-              class="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden"
-            >
-              <iframe
-                v-if="previewUrl"
-                :src="previewUrl"
-                class="w-full h-[70vh] bg-white dark:bg-gray-900"
-                loading="lazy"
-                referrerpolicy="no-referrer"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-                @load="onFrameLoad"
-              />
-              <div
-                v-else
-                class="p-4 text-sm text-slate-600 dark:text-slate-300"
-              >
-                No preview URL available.
-              </div>
-            </div>
-            <p
-              v-if="showPreview && !frameLoaded"
-              class="mt-2 text-xs text-slate-500"
-            >
-              If the preview does not load, the site may block embedding
-              (X-Frame-Options/CSP).
-            </p>
-          </div>
-          <div v-else-if="showPreview && p.allowPreview === false" class="mt-4">
-            <div
-              class="rounded-lg border border-amber-200 bg-amber-50 dark:bg-amber-900/20 dark:border-amber-800 p-4 text-amber-800 dark:text-amber-200 text-sm"
-            >
-              Inline preview disabled for this project. Please use the Open
-              button to visit the live site.
             </div>
           </div>
         </div>

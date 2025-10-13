@@ -104,7 +104,6 @@ export const projects: ProjectItem[] = [
     tags: [
       { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
       { name: "Bootstrap", icon: "devicon-bootstrap-plain" },
-      { name: "PostgreSQL", icon: "devicon-postgresql-plain" },
       { name: "MongoDB", icon: "devicon-mongodb-plain" },
       { name: "PHP", icon: "devicon-php-plain" },
       { name: "Chart.js", icon: "devicon-chartjs-plain" },

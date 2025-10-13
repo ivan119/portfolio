@@ -1,15 +1,27 @@
 export interface BlogPost {
+  author: string;
   id: string;
   title: string;
-  content: string;
+  content: Content[];
   image: string;
-  createdAt: string;
-  slug: string;
+  createdAt?: string;
   excerpt?: string;
   tags?: string[];
   category?: string;
-  coverPrompt?: string;
+  coverImage?: string;
+  date?: string;
 }
+type Content = {
+  alt?: string;
+  caption?: string;
+  content: string;
+  level?: Level;
+  type: string;
+  src?: string;
+};
+type Level = {
+  $numberInt: string | number;
+};
 export interface PreviewBlogPost {
   author: string;
   coverImage: string;
@@ -18,14 +30,3 @@ export interface PreviewBlogPost {
   id: string;
   title: string;
 }
-export interface GeneratePostPayload {
-  prompt: string;
-}
-
-export interface SavePostResponse {
-  success: boolean;
-  post?: BlogPost;
-  error?: string;
-}
-
-export class BlogGenerationResponse {}

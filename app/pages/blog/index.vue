@@ -1,24 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
-import AiGeneratedBlogs from "~/components/AiGeneratedBlogs.vue";
+import { onMounted } from "vue";
 import { usePosts } from "~/composables/usePosts";
 import { isActiveClass } from "~/composables/useActiveClass";
-type BlogPost = {
-  id: string;
-  title: string;
-  excerpt: string;
-  coverImage?: string;
-  author: string;
-  date: string;
-  category?: string;
-  tags?: string[];
-};
-
-type BlogListCard = BlogPost & {
-  category: string;
-  tags: string[];
-  content: any[];
-};
 definePageMeta({
   middleware: ["blog-active"],
 });
@@ -54,13 +37,15 @@ onMounted(async () => {
     <template v-if="featuredPost && posts?.length > 0">
       <UIFeaturedPost
         :post="featuredPost"
-        :image-url="featuredPost.coverImage || '/logo.png'"
+        :image-url="
+          featuredPost.coverImage || '/seo/IvanKelavaBlog1200x627.webp'
+        "
         :use-bg-dots="false"
         class="mb-12"
       />
 
       <div class="mb-12">
-        <AiGeneratedBlogs :posts="posts" />
+        <AiGeneratedBlogs :posts />
       </div>
     </template>
     <template v-else>

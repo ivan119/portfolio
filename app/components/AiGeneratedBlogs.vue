@@ -1,39 +1,11 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import BlogPostCard from "~/components/UI/BlogPostCard.vue";
-
-// Define the type for our AI blog posts based on the JSON structure
-interface AiBlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  date: string;
-  author: string;
-  category: string;
-  tags: string[];
-  content: any[];
-}
-
+import type { PreviewBlogPost } from "~~/server/types/blog";
 // Accept posts from parent; fallback to empty array
-const props = defineProps<{ posts?: AiBlogPost[] }>();
+const props = defineProps<{ posts?: PreviewBlogPost[] }>();
 const posts = computed(() => props.posts || []);
 const loading = ref(false);
 const error = ref<string | null>(null);
-
-// Format date nicely
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
-
-// Get the first image from the content if available
-const getPostImage = (post: AiBlogPost) => {
-  const imageContent = post.content.find((item) => item.type === "image");
-  return imageContent ? imageContent.src : null;
-};
 </script>
 
 <template>
@@ -62,10 +34,10 @@ const getPostImage = (post: AiBlogPost) => {
           v-else
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-10"
         >
-          <BlogPostCard
+          <UIBlogPostCard
             v-for="(post, index) in posts"
             :key="post.id"
-            :post="post"
+            :post
             :is-odd-index="index % 2 === 1"
           />
         </div>

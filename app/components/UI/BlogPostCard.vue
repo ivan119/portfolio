@@ -1,30 +1,11 @@
 <script setup lang="ts">
-interface Post {
-  id: string;
-  title: string;
-  excerpt: string;
-  author: string;
-  date: string;
-  coverImage?: string;
-  content: any[];
-}
-
+import type { PreviewBlogPost } from "~~/server/types/blog";
 const props = defineProps<{
-  post: Post;
+  post: PreviewBlogPost;
   showBgDots?: boolean;
   isOddIndex?: boolean;
 }>();
-
 const doImageEffect = ref(false);
-
-// Format date nicely
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
 </script>
 
 <template>
@@ -54,7 +35,7 @@ const formatDate = (dateString: string) => {
         <!-- Image Container -->
         <div class="lg:w-1/2 relative aspect-video overflow-hidden">
           <NuxtImg
-            :src="post?.coverImage || '/logo.png'"
+            :src="post?.coverImage || '/seo/IvanKelavaBlog1200x627.webp'"
             :alt="post.title"
             :style="{ 'view-transition-name': `post-image-${post.id}` }"
             class="w-full h-full object-cover transform transition-transform duration-500"
