@@ -54,7 +54,7 @@ const formatDate = (dateString: string) => {
         <!-- Image Container -->
         <div class="lg:w-1/2 relative aspect-video overflow-hidden">
           <NuxtImg
-            :src="post?.coverImage || '/logo.png'"
+            :src="post?.coverImage || '/seo/IvanKelavaBlog1200x627.webp'"
             :alt="post.title"
             :style="{ 'view-transition-name': `post-image-${post.id}` }"
             class="w-full h-full object-cover transform transition-transform duration-500"
