@@ -107,7 +107,7 @@ const doImageEffect = ref(false);
   </NuxtLink>
 </template>
 
-<style scoped>
+<style>
 /* Shine effect */
 .shine-featured {
   position: absolute;
