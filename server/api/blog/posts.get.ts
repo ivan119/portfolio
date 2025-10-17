@@ -14,6 +14,7 @@ export default defineCachedEventHandler(
       "title",
       "author",
       "date",
+      "published",
       "excerpt",
     ];
 
@@ -27,8 +28,9 @@ export default defineCachedEventHandler(
       }, {} as any);
     }
     // Transform posts
-    const transformedPosts =
-      posts?.map((p) => transformPosts(p, constKeys)) || [];
+    const transformedPosts = posts
+      ?.filter((p) => p.published)
+      .map((p) => transformPosts(p, constKeys));
     return {
       featured_post: transformedPosts[0],
       posts: transformedPosts.slice(1),
@@ -36,6 +38,6 @@ export default defineCachedEventHandler(
   },
   {
     maxAge: 60 * 5,
-    swr: true,
+    swr: false,
   },
 );
