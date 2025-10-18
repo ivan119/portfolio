@@ -25,7 +25,7 @@ const doImageEffect = ref(false);
 
       <!-- Shine Effect -->
       <div class="absolute inset-0 overflow-hidden">
-        <div class="shine"></div>
+        <div class="shine-featured"></div>
       </div>
 
       <div

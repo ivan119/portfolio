@@ -1,11 +1,174 @@
 export const posts = [
   {
+    id: "evolution-of-frontend-architectures",
+    title: "The Evolution of Frontend Architectures",
+    date: "2025-10-17",
+    author: "Ivan Kelava",
+    category: "Web Development",
+    tags: ["Frontend", "Architecture", "SPA", "Microfrontends", "SSR"],
+    published: false,
+    excerpt:
+      "From static HTML pages to complex microfrontends, frontend architecture has continuously evolved to balance scalability, performance, and developer productivity. Let’s explore this fascinating journey and the trade-offs behind each stage.",
+    content: [
+      {
+        type: "paragraph",
+        content:
+          "Frontend architecture has come a long way—from simple static websites to sophisticated modular systems that can support thousands of developers working in parallel. Each phase of this evolution introduced new patterns, technologies, and trade-offs. Understanding these architectures helps engineers make informed decisions about scalability, performance, and complexity.",
+      },
+      {
+        type: "image",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/frontend_architecture_evolution_timeline.webp",
+        alt: "Frontend architecture evolution timeline",
+        caption:
+          "The evolution of frontend architectures: from static pages to modular and microfrontends.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "From Static Pages to MVC",
+      },
+      {
+        type: "paragraph",
+        content:
+          "The web began as a collection of static HTML and CSS files—lightweight, fast, but lacking interactivity. Every change required a full page reload. To make web applications more dynamic, frameworks like Ruby on Rails, Django, and ASP.NET introduced the Model-View-Controller (MVC) pattern. Here, the backend handled data (Model), logic (Controller), and rendering (View).",
+      },
+      {
+        type: "paragraph",
+        content:
+          "MVC made it easier to build dynamic pages but came with drawbacks: tight coupling between frontend and backend, slower performance due to full page reloads, and limited scalability.",
+      },
+      {
+        type: "image",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/mvc_architecture_example.webp",
+        alt: "Model-View-Controller architecture diagram",
+        caption:
+          "MVC introduced dynamic rendering but relied heavily on backend logic.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "The Rise of Single Page Applications (SPAs)",
+      },
+      {
+        type: "paragraph",
+        content:
+          "The introduction of JavaScript frameworks like Angular, React, and Vue marked the rise of Single Page Applications (SPAs). In an SPA, most logic runs in the browser, while the backend provides data via APIs. This separation allowed for faster interactions, real-time updates, and richer user experiences.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "However, SPAs shifted complexity to the client side. They often suffered from large JavaScript bundles, slower initial load times, and weaker SEO performance.",
+      },
+      {
+        type: "image",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/single_page_application_example.webp",
+        alt: "Single Page Application structure",
+        caption:
+          "SPAs moved business logic to the frontend, enabling dynamic user interfaces without full page reloads.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "Backend for Frontend (BFF) and API-Driven Design",
+      },
+      {
+        type: "paragraph",
+        content:
+          "As applications expanded to multiple clients—web, mobile, and IoT—the need for specialized APIs grew. The Backend for Frontend (BFF) pattern emerged, giving each frontend its own tailored backend layer. This improved flexibility and allowed teams to move faster, but introduced more infrastructure and maintenance overhead.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "GraphQL further enhanced this model by solving overfetching and underfetching issues common in REST APIs, allowing frontends to request exactly the data they needed.",
+      },
+      {
+        type: "image",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/backend_for_frontend_pattern.webp",
+        alt: "Backend for Frontend pattern",
+        caption:
+          "The Backend for Frontend pattern allows each client to have its own optimized backend layer.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "Server-Side Rendering (SSR) and Static Site Generation (SSG)",
+      },
+      {
+        type: "paragraph",
+        content:
+          "To address SPAs’ poor initial performance and SEO, frameworks like Next.js and Nuxt introduced Server-Side Rendering (SSR) and Static Site Generation (SSG). These techniques pre-render pages on the server or at build time, serving fast, SEO-friendly HTML while maintaining SPA-level interactivity via hydration.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Incremental Static Regeneration (ISR) further evolved this idea, allowing static pages to be revalidated periodically without full redeploys—perfect for blogs and e-commerce sites.",
+      },
+      {
+        type: "image",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/server_side_rendering_diagram.webp",
+        alt: "Server-side rendering process",
+        caption:
+          "SSR and SSG bring faster load times and improved SEO by rendering content before it reaches the browser.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "Modular Monoliths and Microfrontends",
+      },
+      {
+        type: "paragraph",
+        content:
+          "As frontends grew larger and teams scaled, modular architectures became essential. A modular monolith separates code into feature domains (e.g., users, payments) while sharing common services like authentication or UI libraries. This improves maintainability without adding deployment complexity.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Microfrontends take this further—splitting the frontend into independently deployed apps, each owned by a dedicated team. This enables parallel development and independent releases, but at the cost of higher complexity, slower performance, and greater infrastructure needs.",
+      },
+      {
+        type: "image",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/microfrontends_architecture_diagram.webp",
+        alt: "Microfrontends architecture",
+        caption:
+          "Microfrontends enable large-scale parallel development by splitting the frontend into independently deployable modules.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "Choosing the Right Architecture",
+      },
+      {
+        type: "paragraph",
+        content:
+          "No architecture is universally 'best'—each comes with trade-offs. SPAs offer great interactivity, but SSR improves SEO. Microfrontends scale teams, but add complexity. The key is aligning your architecture with your product’s goals, team size, and growth expectations.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "A small product might thrive as a simple SPA or modular monolith, while large enterprises benefit from BFFs and microfrontends. Senior engineers stand out by understanding these trade-offs and choosing the right balance between performance, scalability, and maintainability.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "Conclusion",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Frontend architecture has evolved from simple static documents into distributed ecosystems of modular, scalable systems. Each generation has aimed to solve performance, scalability, and developer experience challenges while introducing new ones. Understanding this evolution—and the trade-offs behind every architectural decision—is what truly defines senior-level frontend thinking.",
+      },
+    ],
+    coverImage:
+      "https://res.cloudinary.com/dvthrmqlp/image/upload/v1760739428/The_Evolution_of_Frontend_Architectures_p5saal.webp",
+  },
+  {
     id: "ai-agents-transforming-digital-landscape",
     title: "AI Agents: Transforming the Digital Landscape",
     date: "2024-11-15",
     author: "Ivan Kelava",
     category: "Technology",
     tags: ["AI", "Machine Learning", "Automation", "Future Tech"],
+    published: true,
     excerpt:
       "Explore how AI agents are revolutionizing industries by automating complex tasks, enhancing decision-making processes, and creating new possibilities for human-machine collaboration.",
     content: [
@@ -109,6 +272,7 @@ export const posts = [
     author: "Ivan Kelava",
     category: "Technology",
     tags: ["AI", "Quantum Computing", "Machine Learning", "Future Tech"],
+    published: true,
     excerpt:
       "Discover how quantum computing is set to revolutionize artificial intelligence, potentially solving complex problems that remain intractable for classical computers and opening new horizons for machine learning algorithms.",
     content: [
@@ -232,6 +396,7 @@ export const posts = [
       "Data Security",
       "Edge Computing",
     ],
+    published: true,
     excerpt:
       "Explore how federated learning is revolutionizing AI development by enabling models to learn from distributed data sources without compromising privacy, potentially solving one of the biggest challenges in modern artificial intelligence.",
     content: [

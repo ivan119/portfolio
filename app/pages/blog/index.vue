@@ -37,10 +37,7 @@ onMounted(async () => {
     <template v-if="featuredPost && posts?.length > 0">
       <UIFeaturedPost
         :post="featuredPost"
-        :image-url="
-          featuredPost.coverImage || '/seo/IvanKelavaBlog1200x627.webp'
-        "
-        :use-bg-dots="false"
+        :image-url="featuredPost.coverImage"
         class="mb-12"
       />
 
