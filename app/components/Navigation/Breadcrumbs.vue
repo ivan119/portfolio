@@ -64,6 +64,8 @@ const formatName = (name: string): string => {
         >
           <svg
             class="w-4 h-4"
+            width="1em"
+            height="1em"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

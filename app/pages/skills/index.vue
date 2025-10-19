@@ -3,7 +3,7 @@ import { useSkills } from "~/composables/skills/useSkills";
 const showFrameworkDetails = ref(false);
 // Get skills data from composable (server-side)
 const { preferredSkills, experiencedSkills } = await useSkills();
-
+const showExperienced = ref(false);
 usePageSeo({
   title: "Skills — Ivan Kelava",
   description:
@@ -12,12 +12,22 @@ usePageSeo({
   imageAlt: "Ivan Kelava",
   lang: "en",
 });
-
 // Disable page transitions
 definePageMeta({
   pageTransition: false,
 });
-
+onMounted(() => {
+  if (window?.screen?.height > 1029) {
+    // we showExperienced instantly
+    showExperienced.value = true;
+  } else {
+    // we showExperienced on first scroll
+    const onScroll = (): void => {
+      showExperienced.value = true;
+    };
+    window.addEventListener("scroll", onScroll, { once: true });
+  }
+});
 const useBgDots = ref();
 </script>
 
@@ -72,6 +82,7 @@ const useBgDots = ref();
     </UIBanner>
     <!-- Experienced With -->
     <UIBanner
+      v-if="showExperienced"
       title="Experienced With"
       description="Over the years, I have worked with or have experience using a variety of frameworks and tools, including:"
       :first-tag-is-h1="false"

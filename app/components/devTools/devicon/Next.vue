@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 0 128 128">
+  <svg width="1em" height="1em" viewBox="0 0 128 128">
     <circle cx="64" cy="64" r="64"></circle>
     <path
       fill="url(#a)"
