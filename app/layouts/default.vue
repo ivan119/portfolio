@@ -43,8 +43,6 @@ const {
 
 <template>
   <div class="main">
-    <SpeedInsights />
-    <!-- Background with transition -->
     <ClientOnly>
       <Transition name="bg-fade">
         <BackgroundScene
@@ -80,5 +78,6 @@ const {
       <Footer class="body-container" v-if="showMainContent" />
       <ScrollProgress :visibility="showMainContent" />
     </div>
+    <SpeedInsights />
   </div>
 </template>
