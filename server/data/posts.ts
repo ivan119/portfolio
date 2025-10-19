@@ -263,7 +263,7 @@ export const posts = [
       },
     ],
     coverImage:
-      "https://res.cloudinary.com/dvthrmqlp/image/upload/w_500,h_369,c_fill/v1758404195/AI_agents_transforming_the_digital_landscape._nmy5mo.webp",
+      "https://res.cloudinary.com/dvthrmqlp/image/upload/w_500,h_319,c_fill/v1760835369/AI_agents_transforming_the_digital_landscape_final_roeu4o.webp",
   },
   {
     id: "quantum-computing-ai-next-frontier",
@@ -327,7 +327,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758615619/Quantam_AI_Applications_ya9wez.png",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758615619/Quantam_AI_Applications_ya9wez.webp",
         alt: "Quantum AI applications across industries",
         caption:
           "Quantum-enhanced AI promises to transform industries from drug discovery and materials science to finance and cryptography.",
@@ -382,7 +382,7 @@ export const posts = [
       },
     ],
     coverImage:
-      "https://res.cloudinary.com/dvthrmqlp/image/upload/w_472,h_236,c_fill/v1758579873/Quantum_Computing_and_AI_The_Next_Frontier_dfqse7.png",
+      "https://res.cloudinary.com/dvthrmqlp/image/upload/w_472,h_236,c_fill/v1758579873/Quantum_Computing_and_AI_The_Next_Frontier_dfqse7.webp",
   },
   {
     title: "Federated Learning: The Rise of Privacy-Preserving AI",
@@ -517,6 +517,6 @@ export const posts = [
     ],
     id: "federated-learning-privacy-preserving-ai",
     coverImage:
-      "https://res.cloudinary.com/dvthrmqlp/image/upload/w_472,h_236,c_fill/v1758579873/Federated_Learning_The_Rise_of_Privacy-Preserving_AI_d1z0p6.webp",
+      "https://res.cloudinary.com/dvthrmqlp/image/upload/w_236,h_236,c_fill/v1758579873/Federated_Learning_The_Rise_of_Privacy-Preserving_AI_d1z0p6.webp",
   },
 ];
