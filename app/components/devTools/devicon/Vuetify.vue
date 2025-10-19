@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 0 128 128">
+  <svg width="1em" height="1em" viewBox="0 0 128 128">
     <path
       fill="#1697f6"
       d="M65.3 34.414 40.84 76.79 64 116.926l30.672-53.13 30.66-53.128H79Zm0 0"

@@ -121,6 +121,8 @@ const getHeadingClass = (level: number) => {
       <svg
         class="w-5 h-5 text-gray-600 dark:text-gray-300 group-hover:text-blue-500 transform transition-transform duration-300 ease-in-out group-hover:animate-bounce-left"
         viewBox="0 0 24 24"
+        width="1em"
+        height="1em"
         stroke="currentColor"
         stroke-width="2"
         stroke-linecap="round"
