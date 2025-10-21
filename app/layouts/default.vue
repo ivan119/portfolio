@@ -19,6 +19,7 @@
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
 import { useDefaultLayout } from "~/composables/useDefaultLayout";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
+import { useBreakpoints, breakpointsTailwind } from "@vueuse/core";
 const BackgroundScene = defineAsyncComponent(
   () => import("~/components/UI/Themes/BackgroundScene.vue"),
 );
@@ -39,12 +40,14 @@ const {
   updateShowLogo,
   showIntroComponent,
 } = useDefaultLayout();
+const breakpoints = useBreakpoints(breakpointsTailwind);
+const isMobileDevice = breakpoints.smaller("md");
 </script>
 
 <template>
   <div class="main">
     <ClientOnly>
-      <Transition name="bg-fade">
+      <Transition v-if="!isMobileDevice" name="bg-fade">
         <BackgroundScene
           v-if="activeTheme === 'animated'"
           key="animated-bg"
@@ -68,6 +71,7 @@ const {
       <navigation-header
         v-if="showMainContent"
         :show-logo="showLogo"
+        :isMobileDevice
         @show-intro="showIntroComponent"
       />
       <div class="flex-1" v-show="showMainContent">

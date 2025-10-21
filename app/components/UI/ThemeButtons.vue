@@ -20,13 +20,17 @@ const props = defineProps({
     default: false,
     required: false,
   },
+  isMobileDevice: {
+    type: Boolean,
+    default: false,
+  },
 });
 </script>
 
 <template>
   <div class="toggle-container flex items-center gap-x-4 animate-icons">
     <ClientOnly>
-      <template v-if="!hideThemeButtons">
+      <template v-if="!hideThemeButtons && !isMobileDevice">
         <!-- Dotted Theme Button -->
         <UIThemeButton
           :icon="DottedIcon"
