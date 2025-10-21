@@ -21,6 +21,10 @@ const props = defineProps({
     default: "default",
     validator: (value) => ["default", "dotted", "animated"].includes(value),
   },
+  isMobileDevice: {
+    type: Boolean,
+    default: false,
+  },
 });
 const emit = defineEmits(["show-intro", "toggle-background", "toggle-layout"]);
 
@@ -174,7 +178,7 @@ onUnmounted(() => {
           </UITooltip>
         </li>
       </transition-group>
-      <theme-buttons />
+      <theme-buttons :isMobileDevice />
     </div>
   </header>
 </template>
