@@ -3,7 +3,6 @@
 @import "defaultLayout.css";
 /* Main Tailwind Style */
 /* Global Theme Variables */
-
 :root {
   /* Primary gradient colors (light mode) */
   --main-gradient-from: #10b981; /* emerald-500 */
@@ -208,11 +207,6 @@ body {
     opacity: 1;
 }
 
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 0.2s;
-}
-
 .slide-enter,
 .slide-leave-to {
   transform: translateX(-100%);
@@ -251,8 +245,11 @@ body {
   opacity: 0;
   transform: translate(50px, 0);
 }
-
 /* Content Animations */
+.slide-enter-active,
+.slide-leave-active {
+    transition: transform 0.2s;
+}
 .slide-enter-active > *:not(.no-animation) {
   animation: slide-in 0.693s cubic-bezier(0.4, 0, 0.2, 1);
   animation-fill-mode: backwards;
