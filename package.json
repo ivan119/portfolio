@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@nuxt/image": "^1.11.0",
-    "@nuxtjs/cloudinary": "^4.0.0",
     "@nuxtjs/color-mode": "latest",
     "@nuxtjs/tailwindcss": "6.14.0",
     "@tailwindcss/forms": "^0.5.10",
