@@ -58,11 +58,29 @@ const getHeadingClass = (level: number) => {
       :style="{
         'view-transition-name': `post-image-${props.post?.id}`,
       }"
-      class="rounded-lg w-full max-h-[420px] object-cover"
       format="webp"
       loading="eager"
       fetchpriority="high"
-    />
+      :custom="true"
+      v-slot="{ isLoaded, imgAttrs, src }"
+    >
+      <!-- Show the actual image when loaded -->
+      <transition name="slide-fade">
+        <img
+          v-if="isLoaded"
+          v-bind="imgAttrs"
+          :src="src"
+          class="single-post"
+          :alt="props.post.title"
+        />
+        <UISkeletonImage
+          v-else
+          rounded="lg"
+          class="single-post"
+          aria-label="Loading post image"
+        />
+      </transition>
+    </NuxtImg>
   </div>
 
   <!-- Post Content BUG IS HERE OBVIOUSLY WHEN IS FALSE ALL WORKS-->
@@ -91,13 +109,29 @@ const getHeadingClass = (level: number) => {
         <NuxtImg
           :src="item.src"
           :alt="item.alt"
-          class="rounded-lg w-full"
           format="webp"
-          loading="eager"
-          :width="1024"
-          :height="576"
-          fetchpriority="high"
-        />
+          loading="lazy"
+          custom
+          v-slot="{ isLoaded, imgAttrs, src }"
+        >
+          <!-- Show the actual image when loaded -->
+          <transition name="slide-fade">
+            <img
+              v-if="isLoaded"
+              v-bind="imgAttrs"
+              :src="src"
+              class="single-post"
+              :alt="post.title"
+            />
+            <div v-else class="w-full h-full">
+              <UISkeletonImage
+                rounded="lg"
+                class="single-post"
+                aria-label="Loading post image"
+              />
+            </div>
+          </transition>
+        </NuxtImg>
         <figcaption v-if="item.caption" class="text-center text-gray-500 mt-2">
           {{ item.caption }}
         </figcaption>
@@ -134,3 +168,9 @@ const getHeadingClass = (level: number) => {
     </NuxtLink>
   </div>
 </template>
+
+<style scoped>
+.single-post {
+  @apply min-h-[132px] md:min-h-[260px] lg:min-h-[396px] max-h-[396px] rounded-lg w-full object-cover;
+}
+</style>
