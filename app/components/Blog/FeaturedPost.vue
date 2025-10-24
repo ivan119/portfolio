@@ -77,7 +77,7 @@ const doImageEffect = ref(false);
               <div v-else class="w-full h-full">
                 <UISkeletonImage
                   rounded="rounded-none"
-                  aria-label="Loading post image"
+                  aria-label="Loading featured post image"
                 />
               </div>
             </NuxtImg>

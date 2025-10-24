@@ -77,7 +77,7 @@ const getHeadingClass = (level: number) => {
           v-else
           rounded="lg"
           class="single-post"
-          aria-label="Loading post image"
+          aria-label="Loading single post cover image"
         />
       </transition>
     </NuxtImg>
@@ -127,7 +127,7 @@ const getHeadingClass = (level: number) => {
               <UISkeletonImage
                 rounded="lg"
                 class="single-post"
-                aria-label="Loading post image"
+                :aria-label="`Loading post image_${index}`"
               />
             </div>
           </transition>
