@@ -70,6 +70,7 @@ const getHeadingClass = (level: number) => {
           v-if="isLoaded"
           v-bind="imgAttrs"
           :src="src"
+          fetchpriority="high"
           class="single-post"
           :alt="props.post.title"
         />
