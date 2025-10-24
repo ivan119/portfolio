@@ -39,7 +39,7 @@ usePageSeo({
     <!-- Breadcrumbs -->
     <Navigation-Breadcrumbs class="px-3" />
     <UIBanner v-if="post" title="" description="" class="-mx-0 md:-mx-6 mt-2">
-      <UISingleBlogPost :post />
+      <BlogSingleBlogPost :post />
     </UIBanner>
     <!-- Not Found State -->
     <div v-else class="container mx-auto px-4 py-16">
