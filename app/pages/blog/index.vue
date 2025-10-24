@@ -35,14 +35,14 @@ onMounted(async () => {
       class="visible px-4 md:px-8 mb-3"
     />
     <template v-if="featuredPost && posts?.length > 0">
-      <UIFeaturedPost
+      <BlogFeaturedPost
         :post="featuredPost"
         :image-url="featuredPost.coverImage"
         class="mb-12"
       />
 
       <div class="mb-12">
-        <AiGeneratedBlogs :posts />
+        <BlogAiGeneratedBlogs :posts />
       </div>
     </template>
     <template v-else>

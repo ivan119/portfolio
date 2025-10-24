@@ -53,28 +53,34 @@ const doImageEffect = ref(false);
         <!-- Left: Featured Image -->
         <div class="featured-image">
           <div class="featured-image-wrap">
-            <template v-if="!props.loading">
-              <NuxtImg
-                v-if="post"
-                :src="imageUrl || post.coverImage"
+            <NuxtImg
+              :src="post.coverImage"
+              :alt="post.title"
+              :style="{
+                'view-transition-name': `post-image-${post.id}`,
+              }"
+              class="featured-image-img rounded-lg"
+              format="webp"
+              width="800"
+              loading="eager"
+              height="450"
+              fetchpriority="high"
+              custom
+              v-slot="{ isLoaded, imgAttrs, src }"
+            >
+              <img
+                v-if="isLoaded"
+                v-bind="imgAttrs"
+                :src="src"
                 :alt="post.title"
-                :style="{
-                  'view-transition-name': `post-image-${post.id}`,
-                }"
-                class="featured-image-img rounded-lg"
-                format="webp"
-                loading="eager"
-                fetchpriority="high"
-                width="800"
-                height="450"
               />
-            </template>
-            <template v-else>
-              <!-- Skeleton, no view-transition-name to avoid errors -->
-              <div
-                class="w-full h-full bg-gray-200 dark:bg-gray-700 animate-pulse"
-              ></div>
-            </template>
+              <div v-else class="w-full h-full">
+                <UISkeletonImage
+                  rounded="rounded-none"
+                  aria-label="Loading featured post image"
+                />
+              </div>
+            </NuxtImg>
             <div class="featured-image-overlay"></div>
           </div>
         </div>

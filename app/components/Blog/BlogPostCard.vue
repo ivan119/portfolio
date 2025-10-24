@@ -35,22 +35,39 @@ const doImageEffect = ref(false);
         <!-- Image Container -->
         <div class="lg:w-1/2 relative aspect-video overflow-hidden">
           <NuxtImg
-            :src="post?.coverImage || '/seo/IvanKelavaBlog1200x627.webp'"
-            :alt="post.title"
             :style="{ 'view-transition-name': `post-image-${post.id}` }"
+            :src="post?.coverImage || '/seo/IvanKelavaBlog1200x627.webp'"
             class="w-full h-full object-cover transform transition-transform duration-500"
             :class="{ 'scale-105': doImageEffect }"
             format="webp"
-            loading="eager"
+            loading="lazy"
             fetchpriority="high"
-          />
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent transition-opacity duration-300"
-            :class="{
-              'opacity-100': doImageEffect,
-              'opacity-0': !doImageEffect,
-            }"
-          ></div>
+            :custom="true"
+            v-slot="{ isLoaded, imgAttrs, src }"
+          >
+            <!-- Show the actual image when loaded -->
+            <transition name="slide-fade">
+              <img
+                v-if="isLoaded"
+                v-bind="imgAttrs"
+                :src="src"
+                :alt="post.title"
+              />
+              <div v-else class="w-full h-full">
+                <UISkeletonImage
+                  rounded="rounded-none"
+                  :aria-label="`Loading post image${post.id}`"
+                />
+              </div>
+            </transition>
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent transition-opacity duration-300"
+              :class="{
+                'opacity-100': doImageEffect,
+                'opacity-0': !doImageEffect,
+              }"
+            ></div>
+          </NuxtImg>
         </div>
 
         <!-- Content -->

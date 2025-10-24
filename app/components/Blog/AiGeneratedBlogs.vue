@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import type { PreviewBlogPost } from "~~/server/types/blog";
+import BlogPostCard from "~/components/Blog/BlogPostCard.vue";
 // Accept posts from parent; fallback to empty array
 const props = defineProps<{ posts?: PreviewBlogPost[] }>();
 const posts = computed(() => props.posts || []);
@@ -34,7 +35,7 @@ const error = ref<string | null>(null);
           v-else
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-10"
         >
-          <UIBlogPostCard
+          <BlogPostCard
             v-for="(post, index) in posts"
             :key="post.id"
             :post
