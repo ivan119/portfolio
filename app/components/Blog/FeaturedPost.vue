@@ -56,6 +56,7 @@ const props = withDefaults(
               loading="eager"
               height="450"
               fetchpriority="high"
+              preload
               custom
               v-slot="{ isLoaded, imgAttrs, src }"
             >
