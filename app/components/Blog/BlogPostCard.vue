@@ -33,9 +33,11 @@ const doImageEffect = ref(false);
         class="lg:flex h-full"
       >
         <!-- Image Container -->
-        <div class="lg:w-1/2 relative aspect-video overflow-hidden">
+        <div
+          :style="{ 'view-transition-name': `post-image-${post.id}` }"
+          class="lg:w-1/2 relative aspect-video overflow-hidden"
+        >
           <NuxtImg
-            :style="{ 'view-transition-name': `post-image-${post.id}` }"
             :src="post?.coverImage || '/seo/IvanKelavaBlog1200x627.webp'"
             class="w-full h-full object-cover transform transition-transform duration-500"
             :class="{ 'scale-105': doImageEffect }"
