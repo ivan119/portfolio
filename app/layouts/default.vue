@@ -47,6 +47,7 @@ const isMobileDevice = breakpoints.smaller("md");
 <template>
   <div class="main">
     <ClientOnly>
+      <SpeedInsights />
       <Transition v-if="!isMobileDevice" name="bg-fade">
         <BackgroundScene
           v-if="activeTheme === 'animated'"
