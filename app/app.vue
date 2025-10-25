@@ -32,6 +32,12 @@ useHead({
       href: "/favicon-180x180.png",
       sizes: "180x180",
     },
+    // Legacy iOS expects this sometimes; safe to point to same asset
+    {
+      rel: "apple-touch-icon-precomposed",
+      href: "/favicon-180x180.png",
+      sizes: "180x180",
+    },
   ],
 });
 </script>
