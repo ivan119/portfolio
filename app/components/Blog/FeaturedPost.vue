@@ -20,17 +20,6 @@ const props = withDefaults(
     loading: false,
   },
 );
-
-// Format date nicely
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
-
-const doImageEffect = ref(false);
 </script>
 
 <template>
