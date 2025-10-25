@@ -6,6 +6,18 @@
       "headers": {
         "cache-control": "public, max-age=31536000, immutable"
       }
+    },
+    {
+      "src": "^/fonts/(.*)$",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "^/seo/(.*)$",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
     }
   ]
 }

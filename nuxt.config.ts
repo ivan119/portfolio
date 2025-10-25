@@ -13,8 +13,9 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   experimental: {
     viewTransition: true,
+    renderJsonPayloads: true,
   },
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   css: ["~/assets/css/main.css"],
   modules: [
     "@nuxtjs/tailwindcss",
@@ -38,6 +39,17 @@ export default defineNuxtConfig({
     format: ["webp"],
   },
   ssr: true,
+  nitro: {
+    compressPublicAssets: true,
+    routeRules: {
+      "/": { prerender: true },
+      "/projects": { prerender: true },
+      "/skills": { prerender: true },
+      "/blog": { prerender: true },
+      "/blog/**": { isr: 300 },
+      "/api/**": { cache: { maxAge: 300, staleMaxAge: 86400 } },
+    },
+  },
   runtimeConfig: {
     public: {
       quoteApiUrl: "https://api.quotable.io",
