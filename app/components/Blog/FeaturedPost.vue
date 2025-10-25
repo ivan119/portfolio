@@ -20,17 +20,6 @@ const props = withDefaults(
     loading: false,
   },
 );
-
-// Format date nicely
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-};
-
-const doImageEffect = ref(false);
 </script>
 
 <template>
@@ -67,6 +56,7 @@ const doImageEffect = ref(false);
               loading="eager"
               height="450"
               fetchpriority="high"
+              preload
               custom
               v-slot="{ isLoaded, imgAttrs, src }"
             >

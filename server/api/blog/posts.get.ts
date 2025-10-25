@@ -37,7 +37,7 @@ export default defineCachedEventHandler(
     };
   },
   {
-    maxAge: 60 * 5,
-    swr: false,
+    maxAge: 60 * 60, // 1h
+    swr: true,
   },
 );

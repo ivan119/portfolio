@@ -6,7 +6,7 @@ export default defineCachedEventHandler(
     return listSkills();
   },
   {
-    maxAge: 60 * 5,
+    maxAge: 60 * 60 * 24, // 1d
     swr: true,
   },
 );
