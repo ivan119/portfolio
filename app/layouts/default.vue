@@ -82,6 +82,5 @@ const isMobileDevice = breakpoints.smaller("md");
       <Footer class="body-container" v-if="showMainContent" />
       <ScrollProgress :visibility="showMainContent" />
     </div>
-    <SpeedInsights />
   </div>
 </template>
