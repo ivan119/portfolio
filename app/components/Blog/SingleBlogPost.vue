@@ -52,36 +52,39 @@ const getHeadingClass = (level: number) => {
 
   <!-- Featured Image -->
   <div class="mb-12">
-    <NuxtImg
-      :src="props.post?.coverImage || ''"
-      :alt="props.post?.title || ''"
+    <div
       :style="{
         'view-transition-name': `post-image-${props.post?.id}`,
       }"
-      format="webp"
-      loading="eager"
-      fetchpriority="high"
-      :custom="true"
-      v-slot="{ isLoaded, imgAttrs, src }"
     >
-      <!-- Show the actual image when loaded -->
-      <transition name="slide-fade">
-        <img
-          v-if="isLoaded"
-          v-bind="imgAttrs"
-          :src="src"
-          fetchpriority="high"
-          class="single-post"
-          :alt="props.post.title"
-        />
-        <UISkeletonImage
-          v-else
-          rounded="lg"
-          class="single-post"
-          aria-label="Loading single post cover image"
-        />
-      </transition>
-    </NuxtImg>
+      <NuxtImg
+        :src="props.post?.coverImage || ''"
+        :alt="props.post?.title || ''"
+        format="webp"
+        loading="eager"
+        fetchpriority="high"
+        :custom="true"
+        v-slot="{ isLoaded, imgAttrs, src }"
+      >
+        <!-- Show the actual image when loaded -->
+        <transition name="slide-fade">
+          <img
+            v-if="isLoaded"
+            v-bind="imgAttrs"
+            :src="src"
+            fetchpriority="high"
+            class="single-post"
+            :alt="props.post.title"
+          />
+          <UISkeletonImage
+            v-else
+            rounded="lg"
+            class="single-post"
+            aria-label="Loading single post cover image"
+          />
+        </transition>
+      </NuxtImg>
+    </div>
   </div>
 
   <!-- Post Content BUG IS HERE OBVIOUSLY WHEN IS FALSE ALL WORKS-->

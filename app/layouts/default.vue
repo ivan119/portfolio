@@ -47,6 +47,7 @@ const isMobileDevice = breakpoints.smaller("md");
 <template>
   <div class="main">
     <ClientOnly>
+      <SpeedInsights />
       <Transition v-if="!isMobileDevice" name="bg-fade">
         <BackgroundScene
           v-if="activeTheme === 'animated'"
@@ -82,6 +83,5 @@ const isMobileDevice = breakpoints.smaller("md");
       <Footer class="body-container" v-if="showMainContent" />
       <ScrollProgress :visibility="showMainContent" />
     </div>
-    <SpeedInsights />
   </div>
 </template>

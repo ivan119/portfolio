@@ -52,13 +52,15 @@ const doImageEffect = ref(false);
       <div class="featured-grid">
         <!-- Left: Featured Image -->
         <div class="featured-image">
-          <div class="featured-image-wrap">
+          <div
+            :style="{
+              'view-transition-name': `post-image-${post.id}`,
+            }"
+            class="featured-image-wrap"
+          >
             <NuxtImg
               :src="post.coverImage"
               :alt="post.title"
-              :style="{
-                'view-transition-name': `post-image-${post.id}`,
-              }"
               class="featured-image-img rounded-lg"
               format="webp"
               width="800"
