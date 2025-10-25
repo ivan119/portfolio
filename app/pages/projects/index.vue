@@ -61,7 +61,7 @@ usePageSeo({
               v-if="projects.length"
               class="grid grid-cols-1 md:grid-cols-2 gap-6"
             >
-              <ProjectCardV3
+              <LazyProjectCardV3
                 v-for="project in projects"
                 :key="project.title"
                 :project="project"
@@ -99,7 +99,7 @@ usePageSeo({
               description="Other projects will appear here once available."
             />
             <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <ProjectCardV3
+              <LazyProjectCardV3
                 v-for="project in allProjects"
                 :key="project.title"
                 :project="project"

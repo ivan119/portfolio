@@ -52,7 +52,7 @@ const isMobileDevice = breakpoints.smaller("md");
         @update:show-main-content="changeState"
         @show-logo="updateShowLogo"
       />
-      <navigation-header
+      <LazyNavigationHeader
         v-if="showMainContent"
         :show-logo="showLogo"
         :isMobileDevice
@@ -63,8 +63,8 @@ const isMobileDevice = breakpoints.smaller("md");
           <slot />
         </div>
       </div>
-      <Footer class="body-container" v-if="showMainContent" />
-      <ScrollProgress :visibility="showMainContent" />
+      <LazyFooter class="body-container" v-if="showMainContent" />
+      <LazyScrollProgress :visibility="showMainContent" />
     </div>
   </div>
 </template>
