@@ -30,19 +30,19 @@ onMounted(async () => {
     :class="{ 'slide-enter-active': isActiveClass }"
     class="!max-w-7xl !p-3 md:p-0 mx-auto px-4 sm:px-6 lg:px-8 py-12"
   >
-    <Navigation-Breadcrumbs
+    <LazyNavigationBreadcrumbs
       :class="{ invisible: invisible }"
       class="visible px-4 md:px-8 mb-3"
     />
     <template v-if="featuredPost && posts?.length > 0">
-      <BlogFeaturedPost
+      <LazyBlogFeaturedPost
         :post="featuredPost"
         :image-url="featuredPost.coverImage"
         class="mb-12"
       />
 
       <div class="mb-12">
-        <BlogAiGeneratedBlogs :posts />
+        <LazyBlogAiGeneratedBlogs :posts />
       </div>
     </template>
     <template v-else>

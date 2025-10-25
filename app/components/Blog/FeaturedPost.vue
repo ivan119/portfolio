@@ -52,9 +52,9 @@ const props = withDefaults(
               :alt="post.title"
               class="featured-image-img rounded-lg"
               format="webp"
-              width="800"
+              width="432"
               loading="eager"
-              height="450"
+              height="369"
               fetchpriority="high"
               preload
               custom
@@ -64,7 +64,6 @@ const props = withDefaults(
                 v-if="isLoaded"
                 v-bind="imgAttrs"
                 :src="src"
-                fetchpriority="high"
                 :alt="post.title"
               />
               <div v-else class="w-full h-full">
