@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useSkills } from "~/composables/skills/useSkills";
 const showFrameworkDetails = ref(false);
-// Get skills data from composable (server-side)
 const { preferredSkills, experiencedSkills } = await useSkills();
 const showExperienced = ref(false);
 usePageSeo({
@@ -17,18 +16,8 @@ definePageMeta({
   pageTransition: false,
 });
 onMounted(() => {
-  if (window?.screen?.height > 1029) {
-    // we showExperienced instantly
-    showExperienced.value = true;
-  } else {
-    // we showExperienced on first scroll
-    const onScroll = (): void => {
-      showExperienced.value = true;
-    };
-    window.addEventListener("scroll", onScroll, { once: true });
-  }
+  showExperienced.value = true;
 });
-const useBgDots = ref();
 </script>
 
 <template>
@@ -57,7 +46,7 @@ const useBgDots = ref();
             title="No preferred skills yet"
             description="They will appear here once available."
           />
-          <div v-else class="skill-card-grid">
+          <div ref="target" v-else class="skill-card-grid">
             <SkillCardV3
               v-for="skill in preferredSkills"
               :key="skill.name"
