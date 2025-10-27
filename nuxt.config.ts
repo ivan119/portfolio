@@ -52,6 +52,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL || "https://www.ivankelava.me",
       quoteApiUrl: "https://api.quotable.io",
       techNewsApiUrl: "https://api.spaceflightnewsapi.net",
       factsApiUrl: "https://uselessfacts.jsph.pl",
