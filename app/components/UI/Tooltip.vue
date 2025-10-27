@@ -14,7 +14,7 @@
     <Transition name="tooltip" appear>
       <div
         v-show="showTooltip"
-        ref="tooltipRef"
+        ref="tooltip_ref"
         :class="[
           'tooltip',
           `tooltip-${currentPosition}`,
@@ -57,7 +57,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const showTooltip = ref(false);
-const tooltipRef = ref<HTMLElement | null>(null);
+const tooltipRef = useTemplateRef<HTMLDivElement>("tooltip_ref");
 const currentPosition = ref(props.position);
 const isTouch = ref(false);
 const touchStartTime = ref(0);
