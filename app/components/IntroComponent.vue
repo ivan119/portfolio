@@ -169,7 +169,7 @@ const handlePortfolioClick = useThrottleFn(() => {
 
 ::v-deep(.animate-wave) {
   display: inline-block;
-  animation: wave 0.9s ease-in-out 2;
+  animation: wave 0.936s ease-in-out 2;
 }
 @keyframes wave {
   0%,
