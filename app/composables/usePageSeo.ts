@@ -12,13 +12,24 @@ export type PageSeoInput = {
  * - Runs SSR-only for static tags (best for Google)
  * - Accepts relative image paths and converts to absolute
  */
-export function usePageSeo({ title, description, image, imageAlt, robots = "index, follow", lang = "en" }: PageSeoInput) {
+export function usePageSeo({
+  title,
+  description,
+  image,
+  imageAlt,
+  robots = "index, follow",
+  lang = "en",
+}: PageSeoInput) {
   const url = useRequestURL();
+  const config = useRuntimeConfig();
   const canonical = `${url.origin}${url.pathname}`;
+  const siteOrigin = config?.public?.siteUrl?.replace(/\/$/, "");
+
+  // Build an absolute image URL safely
   const absoluteImage = image
     ? image.startsWith("http")
-      ? image
-      : `${url.origin}${image.startsWith("/") ? image : `/${image}`}`
+      ? image // already absolute
+      : `${siteOrigin}${image.startsWith("/") ? image : `/${image}`}`
     : undefined;
   const siteName = "Ivan Kelava";
   const ogLocale = lang === "en" ? "en_US" : `${lang}_${lang.toUpperCase()}`;
@@ -31,8 +42,12 @@ export function usePageSeo({ title, description, image, imageAlt, robots = "inde
     ogDescription: description,
     ogType: "website",
     ogUrl: canonical,
-    ...(absoluteImage ? { ogImage: absoluteImage, twitterImage: absoluteImage } : {}),
-    ...(imageAlt ? { ogImageAlt: imageAlt, twitterImageAlt: imageAlt } : {} as any),
+    ...(absoluteImage
+      ? { ogImage: absoluteImage, twitterImage: absoluteImage }
+      : {}),
+    ...(imageAlt
+      ? { ogImageAlt: imageAlt, twitterImageAlt: imageAlt }
+      : ({} as any)),
     twitterCard: absoluteImage ? "summary_large_image" : "summary",
     twitterTitle: title,
     twitterDescription: description,
@@ -46,5 +61,3 @@ export function usePageSeo({ title, description, image, imageAlt, robots = "inde
     link: [{ rel: "canonical", href: canonical }],
   });
 }
-
-
