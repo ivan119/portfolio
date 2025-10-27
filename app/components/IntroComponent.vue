@@ -169,7 +169,7 @@ const handlePortfolioClick = useThrottleFn(() => {
 
 ::v-deep(.animate-wave) {
   display: inline-block;
-  animation: wave 0.9s ease-in-out 2;
+  animation: wave 0.936s ease-in-out 2;
 }
 @keyframes wave {
   0%,
@@ -186,22 +186,6 @@ const handlePortfolioClick = useThrottleFn(() => {
   opacity: 0;
   transform: translateY(33px);
   animation: fadeIn 3s ease-in-out forwards;
-}
-@keyframes fadeInBlur3D {
-  0% {
-    opacity: 0;
-    filter: blur(10px) brightness(0.6);
-    transform: perspective(800px) translateZ(-80px);
-  }
-  100% {
-    opacity: 1;
-    filter: blur(0) brightness(1);
-    transform: perspective(800px) translateZ(0);
-  }
-}
-.animate-fade-in-blur-3d {
-  animation: fadeInBlur3D 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  display: inline-block; /* helps with transform */
 }
 @keyframes fadeInQuickPulse {
   0% {
@@ -223,7 +207,7 @@ const handlePortfolioClick = useThrottleFn(() => {
 }
 
 .animate-fade-in-quick-pulse {
-  animation: fadeInQuickPulse 0.369s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: fadeInQuickPulse 0.639s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   display: inline-block;
 }
 @keyframes fadeIn {

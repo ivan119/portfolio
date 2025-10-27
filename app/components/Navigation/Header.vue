@@ -27,7 +27,10 @@ const props = defineProps({
   },
 });
 const emit = defineEmits(["show-intro", "toggle-background", "toggle-layout"]);
-
+const test = () => {
+  console.log(1);
+};
+const route = useRoute();
 watch(
   () => props.showLogo,
   (newValue) => {
@@ -45,7 +48,6 @@ watch(
 );
 
 const showIntroAgain = () => {
-  const route = useRoute();
   if (route.path === "/") {
     // TODO: MAKE ON HOVER NO SIGNATURE ANIMATION OR PAUSE + MAKE V-IF ANIMATION WHEN SHOWING/HIDING
     emit("show-intro");
@@ -104,7 +106,7 @@ function handleNavigationClick(link) {
     setTimeout(() => {
       isNavigating.value = false;
       progress.value = 0;
-    }, 800);
+    }, 963);
   }
 }
 
@@ -161,8 +163,34 @@ onUnmounted(() => {
               }"
               aria-label="Navigation link"
             >
-              <component :is="link.icon" class="md:hidden" />
-              <span class="hidden md:block">{{ link.text }}</span>
+              <component
+                :is="link.icon"
+                :class="{ 'active-icon': route.path === link.to }"
+                class="mr-1"
+              />
+
+              <!-- Text transition -->
+              <Transition
+                enter-active-class="transition-all duration-300 ease-out"
+                enter-from-class="opacity-0 translate-y-1"
+                enter-to-class="opacity-100 translate-y-0"
+              >
+                <span
+                  v-show="route.path.includes(link.to)"
+                  class="ml-1 overflow-hidden"
+                >
+                  {{ link.text }}
+                </span>
+              </Transition>
+
+              <!-- Space / expansion transition -->
+              <div
+                class="transition-all duration-300"
+                :class="{
+                  'ml-1': route.path.includes(link.to),
+                  'ml-0': !route.path.includes(link.to),
+                }"
+              ></div>
 
               <!-- Progress indicator -->
               <div
@@ -185,7 +213,7 @@ onUnmounted(() => {
 
 <style scoped>
 .nav-link-active {
-  @apply md:text-transparent;
+  @apply text-transparent;
   background-clip: text;
   -webkit-background-clip: text;
   background-image: var(--main-gradient);
@@ -424,6 +452,8 @@ onUnmounted(() => {
     transform: translateY(0) scale(1);
   }
 }
-
+.active-icon {
+  @apply text-red-900 dark:text-[#00AEEF];
+}
 /* Hover effects removed per request; only mount animation remains */
 </style>
