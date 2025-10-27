@@ -1,86 +1,67 @@
-import VueJs from "~/components/devTools/devicon/Vuejs.vue";
-import NuxtJs from "~/components/devTools/devicon/NuxtJs.vue";
-import Typescript from "~/components/devTools/devicon/Typescript.vue";
-import Javascript from "~/components/devTools/devicon/Javascript.vue";
-import Webstorm from "~/components/devTools/devicon/Webstorm.vue";
-import Cursor from "~/components/devTools/devicon/Cursor.vue";
-import TailwindCss from "~/components/devTools/devicon/TailwindCss.vue";
-import MongoDb from "~/components/devTools/devicon/MongoDb.vue";
-import Bootstrap from "~/components/devTools/devicon/Bootstrap.vue";
-import Vuetify from "~/components/devTools/devicon/Vuetify.vue";
-import React from "~/components/devTools/devicon/React.vue";
-import Next from "~/components/devTools/devicon/Next.vue";
-import Angular from "~/components/devTools/devicon/Angular.vue";
-import Cpp from "~/components/devTools/devicon/Cpp.vue";
-import AdonisJs from "~/components/devTools/devicon/AdonisJs.vue";
-import Prisma from "~/components/devTools/devicon/Prisma.vue";
-import MySql from "~/components/devTools/devicon/MySql.vue";
-import Php from "~/components/devTools/devicon/Php.vue";
-import Python from "~/components/devTools/devicon/Python.vue";
-import AdobeXd from "~/components/devTools/devicon/AdobeXd.vue";
-import Figma from "~/components/devTools/devicon/Figma.vue";
-import Node from "~/components/devTools/devicon/Node.vue";
-import ChartJs from "~/components/devTools/devicon/ChartJs.vue";
-import Vercel from "~/components/devTools/devicon/Vercel.vue";
+// This is experimental
+// Consider to remove since is bad practice
+import { defineAsyncComponent } from "vue";
+
+const iconMap: Record<string, () => Promise<any>> = {
+  "devicon-vuejs-plain": () =>
+    import("~/components/devTools/devicon/Vuejs.vue"),
+  "devicon-nuxtjs-plain": () =>
+    import("~/components/devTools/devicon/NuxtJs.vue"),
+  "devicon-typescript-plain": () =>
+    import("~/components/devTools/devicon/Typescript.vue"),
+  "devicon-javascript-plain": () =>
+    import("~/components/devTools/devicon/Javascript.vue"),
+  "devicon-webstorm-plain": () =>
+    import("~/components/devTools/devicon/Webstorm.vue"),
+  "devicon-vscode-plain": () =>
+    import("~/components/devTools/devicon/Cursor.vue"),
+  "devicon-tailwindcss-plain": () =>
+    import("~/components/devTools/devicon/TailwindCss.vue"),
+  "devicon-mongodb-plain": () =>
+    import("~/components/devTools/devicon/MongoDb.vue"),
+  "devicon-bootstrap-plain": () =>
+    import("~/components/devTools/devicon/Bootstrap.vue"),
+  "devicon-vuetify-plain": () =>
+    import("~/components/devTools/devicon/Vuetify.vue"),
+  "devicon-react-original": () =>
+    import("~/components/devTools/devicon/React.vue"),
+  "devicon-react-plain": () =>
+    import("~/components/devTools/devicon/React.vue"),
+  "devicon-nextjs-original-wordmark": () =>
+    import("~/components/devTools/devicon/Next.vue"),
+  "devicon-nextjs-plain": () =>
+    import("~/components/devTools/devicon/Next.vue"),
+  "devicon-angularjs-plain": () =>
+    import("~/components/devTools/devicon/Angular.vue"),
+  "devicon-cplusplus-plain": () =>
+    import("~/components/devTools/devicon/Cpp.vue"),
+  "devicon-adonisjs-plain": () =>
+    import("~/components/devTools/devicon/AdonisJs.vue"),
+  "devicon-adonisjs-original": () =>
+    import("~/components/devTools/devicon/AdonisJs.vue"),
+  "devicon-prisma-plain": () =>
+    import("~/components/devTools/devicon/Prisma.vue"),
+  "devicon-mysql-plain": () =>
+    import("~/components/devTools/devicon/MySql.vue"),
+  "devicon-nodejs-plain": () =>
+    import("~/components/devTools/devicon/Node.vue"),
+  "devicon-php-plain": () => import("~/components/devTools/devicon/Php.vue"),
+  "devicon-python-plain": () =>
+    import("~/components/devTools/devicon/Python.vue"),
+  "devicon-xd-plain": () => import("~/components/devTools/devicon/AdobeXd.vue"),
+  "devicon-figma-plain": () =>
+    import("~/components/devTools/devicon/Figma.vue"),
+  "devicon-chartjs-plain": () =>
+    import("~/components/devTools/devicon/ChartJs.vue"),
+  "devicon-vercel-plain": () =>
+    import("~/components/devTools/devicon/Vercel.vue"),
+};
+
 export const useIconComponentHandler = () => {
   const handleIconComponent = (value: string) => {
-    switch (value) {
-      case "devicon-vuejs-plain":
-        return VueJs;
-      case "devicon-nuxtjs-plain":
-        return NuxtJs;
-      case "devicon-typescript-plain":
-        return Typescript;
-      case "devicon-javascript-plain":
-        return Javascript;
-      case "devicon-webstorm-plain":
-        return Webstorm;
-      case "devicon-vscode-plain":
-        return Cursor;
-      case "devicon-tailwindcss-plain":
-        return TailwindCss;
-      case "devicon-mongodb-plain":
-        return MongoDb;
-      case "devicon-bootstrap-plain":
-        return Bootstrap;
-      case "devicon-vuetify-plain":
-        return Vuetify;
-      case "devicon-react-original":
-      case "devicon-react-plain":
-        return React;
-      case "devicon-nextjs-original-wordmark":
-      case "devicon-nextjs-plain":
-        return Next;
-      case "devicon-angularjs-plain":
-        return Angular;
-      case "devicon-cplusplus-plain":
-        return Cpp;
-      case "devicon-adonisjs-plain":
-      case "devicon-adonisjs-original":
-        return AdonisJs;
-      case "devicon-prisma-plain":
-        return Prisma;
-      case "devicon-mysql-plain":
-        return MySql;
-      case "devicon-nodejs-plain":
-        return Node;
-      case "devicon-php-plain":
-        return Php;
-      case "devicon-python-plain":
-        return Python;
-      case "devicon-xd-plain":
-        return AdobeXd;
-      case "devicon-figma-plain":
-        return Figma;
-      case "devicon-chartjs-plain":
-        return ChartJs;
-      case "devicon-vercel-plain":
-        return Vercel;
-      default:
-        return null;
-    }
+    const loader = iconMap[value];
+    return loader ? defineAsyncComponent(loader) : null;
   };
-  return {
-    handleIconComponent,
-  };
+
+  return { handleIconComponent };
 };
