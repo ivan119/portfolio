@@ -4,10 +4,10 @@
     id="_x32_"
     width="24"
     height="24"
+    class="blog-icon"
     fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"
-    class="text-red-900 dark:text-[#00AEEF] pb-1"
     xml:space="preserve"
   >
     <g>
@@ -78,4 +78,9 @@
     </g>
   </svg>
 </template>
-<script setup lang="ts"></script>
+<style scoped>
+.blog-icon {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+</style>

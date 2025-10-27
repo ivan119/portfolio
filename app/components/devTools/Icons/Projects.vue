@@ -6,7 +6,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     width="24"
     height="24"
-    class="text-red-900 dark:text-[#00AEEF] pb-1"
+    class="pb-1"
     fill="currentColor"
     viewBox="0 0 122.88 96.44"
     style="enable-background: new 0 0 122.88 96.44"
