@@ -50,7 +50,6 @@ onMounted(() => {
             <SkillCardV3
               v-for="skill in preferredSkills"
               :key="skill.name"
-              :use-bg-dots="useBgDots"
               class="cursor-pointer hover:scale-[1.03] transition-transform duration-300"
               :skill="{
                 title: skill.name,
