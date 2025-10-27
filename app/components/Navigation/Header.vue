@@ -27,7 +27,9 @@ const props = defineProps({
   },
 });
 const emit = defineEmits(["show-intro", "toggle-background", "toggle-layout"]);
-
+const test = () => {
+  console.log(1);
+};
 watch(
   () => props.showLogo,
   (newValue) => {
@@ -161,7 +163,7 @@ onUnmounted(() => {
               }"
               aria-label="Navigation link"
             >
-              <component :is="link.icon" class="md:hidden" />
+              <component :is="link.icon" class="md:hidden" @click="test" />
               <span class="hidden md:block">{{ link.text }}</span>
 
               <!-- Progress indicator -->
