@@ -3,13 +3,17 @@ import { projects, allProjects } from "../data/projects";
 
 export default defineCachedEventHandler(
   (event) => {
+    // Determine base URL
+    const config = useRuntimeConfig();
+    const siteUrl = config.public?.siteUrl?.replace(/\/$/, "");
     const proto = getHeader(event, "x-forwarded-proto") || "http";
     const host =
       getHeader(event, "x-forwarded-host") ||
       getHeader(event, "host") ||
       "localhost:3000";
-    const base = `${proto}://${host}`;
+    const base = siteUrl || `${proto}://${host}`;
 
+    // Initialize URLs
     const urls: Array<{
       loc: string;
       lastmod?: string;
@@ -22,12 +26,14 @@ export default defineCachedEventHandler(
       { loc: `${base}/blog`, priority: 0.7, changefreq: "weekly" },
     ];
 
+    // Add blog posts
     for (const post of posts) {
       const lastmod = (post as any).date
         ? new Date((post as any).date).toISOString()
         : undefined;
       const id = (post as any).id || (post as any).slug;
-      if (id) {
+      const published = post.published || false;
+      if (id && published) {
         urls.push({
           loc: `${base}/blog/${id}`,
           changefreq: "monthly",
@@ -37,12 +43,10 @@ export default defineCachedEventHandler(
       }
     }
 
-    // Include individual project pages
-    const projectSlugs = new Set<string>();
-    for (const p of [...projects, ...allProjects]) {
-      const slug = (p as any).slug;
-      if (slug) projectSlugs.add(slug);
-    }
+    // Add projects
+    const projectSlugs = new Set(
+      [...projects, ...allProjects].map((p) => p.slug).filter(Boolean),
+    );
     for (const slug of projectSlugs) {
       urls.push({
         loc: `${base}/projects/${slug}`,
@@ -51,6 +55,7 @@ export default defineCachedEventHandler(
       });
     }
 
+    // Build XML
     const urlset = urls
       .map((u) => {
         return `  <url>\n    <loc>${u.loc}</loc>${u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : ""}\n    <changefreq>${u.changefreq || "monthly"}</changefreq>\n    <priority>${(u.priority ?? 0.5).toFixed(1)}</priority>\n  </url>`;
