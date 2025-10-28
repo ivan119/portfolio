@@ -42,11 +42,22 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
     routeRules: {
+      // ✅ Cache all Nuxt build assets for 1 year (safe, hashed filenames)
+      "/_nuxt/**": {
+        headers: { "cache-control": "public, max-age=31536000, immutable" },
+      },
+      // ✅ Cache static HTML for 1 day (fast return visits, still refreshes daily)
+      "/**": {
+        headers: { "cache-control": "public, max-age=86400" },
+      },
+      // ✅ Fully prerender static pages
       "/": { prerender: true },
       "/projects": { prerender: true },
       "/skills": { prerender: true },
       "/blog": { prerender: true },
-      "/blog/**": { isr: 300 },
+      // ✅ Blog posts: static regenerate once per day
+      "/blog/**": { isr: 86400 }, // 24h revalidation interval
+      // ✅ API caching
       "/api/**": { cache: { maxAge: 300, staleMaxAge: 86400 } },
     },
   },
