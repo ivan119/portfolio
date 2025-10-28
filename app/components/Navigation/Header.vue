@@ -153,34 +153,27 @@ onUnmounted(() => {
             }"
             aria-label="Navigation link"
           >
-            <component
-              :is="link.icon"
-              :class="{ 'active-icon': route.path === link.to }"
-              class="mr-1"
-            />
-
-            <!-- Text transition -->
-            <Transition
-              enter-active-class="transition-all duration-300 ease-out"
-              enter-from-class="opacity-0 translate-y-1"
-              enter-to-class="opacity-100 translate-y-0"
+            <!-- Space / expansion transition -->
+            <div
+              class="transition-all duration-200 flex"
+              :class="{
+                'mr-1 ml-1': route.path.includes(link.to),
+                'ml-0': !route.path.includes(link.to),
+              }"
             >
+              <component
+                :is="link.icon"
+                :class="{ 'active-icon': route.path === link.to }"
+                class="mr-1"
+              />
+
               <span
                 v-show="route.path.includes(link.to)"
                 class="ml-1 overflow-hidden"
               >
                 {{ link.text }}
               </span>
-            </Transition>
-
-            <!-- Space / expansion transition -->
-            <div
-              class="transition-all duration-300"
-              :class="{
-                'ml-1': route.path.includes(link.to),
-                'ml-0': !route.path.includes(link.to),
-              }"
-            ></div>
+            </div>
 
             <!-- Progress indicator -->
             <div
