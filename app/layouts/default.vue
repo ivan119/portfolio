@@ -58,6 +58,7 @@ const isMobileDevice = breakpoints.smaller("md");
         :isMobileDevice
         @show-intro="showIntroComponent"
       />
+      <NuxtLoadingIndicator v-if="showMainContent" />
       <div class="flex-1" v-show="showMainContent">
         <div class="grow">
           <slot />
