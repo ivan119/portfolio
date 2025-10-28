@@ -158,7 +158,7 @@ onUnmounted(() => {
               class="transition-all duration-200 flex"
               :class="{
                 'mr-1 ml-1': route.path.includes(link.to),
-                'ml-0': !route.path.includes(link.to),
+                'ml-0 mr-0': !route.path.includes(link.to),
               }"
             >
               <component
