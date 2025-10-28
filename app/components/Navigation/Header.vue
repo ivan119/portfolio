@@ -141,27 +141,25 @@ onUnmounted(() => {
           :key="link.to"
           v-show="showLinks"
         >
-          <UITooltip
-            :text="link.tooltipText"
-            size="sm"
-            :custom-styles="
-              link.to === '/projects'
-                ? { left: '0', transform: 'translateX(0)' }
-                : {}
-            "
+          <NuxtLink
+            v-show="link.show"
+            :to="link.to"
+            @click="handleNavigationClick(link)"
+            active-class="nav-link-active"
+            class="nav-link font-bold relative flex items-center mr-4 text-gray-600 dark:text-gray-300 transition-all duration-300 hover:scale-105"
+            :class="{
+              'is-navigating': isNavigating && activeLink === link.to,
+              'md:hover-main-gradient': !isNavigating || activeLink !== link.to,
+            }"
+            aria-label="Navigation link"
           >
-            <NuxtLink
-              v-show="link.show"
-              :to="link.to"
-              @click="handleNavigationClick(link)"
-              active-class="nav-link-active"
-              class="nav-link font-bold relative flex items-center mr-4 text-gray-600 dark:text-gray-300 transition-all duration-300 hover:scale-105"
+            <!-- Space / expansion transition -->
+            <div
+              class="transition-all duration-200 flex"
               :class="{
-                'is-navigating': isNavigating && activeLink === link.to,
-                'md:hover-main-gradient':
-                  !isNavigating || activeLink !== link.to,
+                'mr-1 ml-1': route.path.includes(link.to),
+                'ml-0 mr-0': !route.path.includes(link.to),
               }"
-              aria-label="Navigation link"
             >
               <component
                 :is="link.icon"
@@ -169,41 +167,25 @@ onUnmounted(() => {
                 class="mr-1"
               />
 
-              <!-- Text transition -->
-              <Transition
-                enter-active-class="transition-all duration-300 ease-out"
-                enter-from-class="opacity-0 translate-y-1"
-                enter-to-class="opacity-100 translate-y-0"
+              <span
+                v-show="route.path.includes(link.to)"
+                class="ml-1 overflow-hidden"
               >
-                <span
-                  v-show="route.path.includes(link.to)"
-                  class="ml-1 overflow-hidden"
-                >
-                  {{ link.text }}
-                </span>
-              </Transition>
+                {{ link.text }}
+              </span>
+            </div>
 
-              <!-- Space / expansion transition -->
+            <!-- Progress indicator -->
+            <div
+              v-if="isNavigating && activeLink === link.to"
+              class="nav-progress-container"
+            >
               <div
-                class="transition-all duration-300"
-                :class="{
-                  'ml-1': route.path.includes(link.to),
-                  'ml-0': !route.path.includes(link.to),
-                }"
+                class="nav-progress-bar"
+                :style="{ width: `${progress}%` }"
               ></div>
-
-              <!-- Progress indicator -->
-              <div
-                v-if="isNavigating && activeLink === link.to"
-                class="nav-progress-container"
-              >
-                <div
-                  class="nav-progress-bar"
-                  :style="{ width: `${progress}%` }"
-                ></div>
-              </div>
-            </NuxtLink>
-          </UITooltip>
+            </div>
+          </NuxtLink>
         </li>
       </transition-group>
       <theme-buttons :isMobileDevice />

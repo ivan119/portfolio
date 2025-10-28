@@ -28,33 +28,8 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="toggle-container flex items-center gap-x-4 animate-icons">
+  <div class="toggle-container flex flex-col animate-icons max-h-6 gap-y-3">
     <ClientOnly>
-      <template v-if="!hideThemeButtons && !isMobileDevice">
-        <!-- Dotted Theme Button -->
-        <UIThemeButton
-          :icon="DottedIcon"
-          :is-active="activeTheme === 'dotted'"
-          variant="dotted"
-          :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
-          tooltip="Toggle Background Animation"
-          @click="
-            toggleBackground(activeTheme === 'dotted' ? 'default' : 'dotted')
-          "
-        />
-        <!-- Animated Theme Button -->
-        <UIThemeButton
-          :icon="BackgroundIcon"
-          :is-active="activeTheme === 'animated'"
-          variant="animated"
-          tooltip="Toggle Background Animation"
-          @click="
-            toggleBackground(
-              activeTheme === 'animated' ? 'default' : 'animated',
-            )
-          "
-        />
-      </template>
       <!-- SunAndMoon Button -->
       <UIThemeButton
         :icon="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
@@ -67,8 +42,36 @@ const props = defineProps({
             ? 'Return to Light'
             : 'Embrace Darkness'
         "
+        tooltip-position="force-top"
         @click="toggleTheme"
       />
+      <template v-if="!hideThemeButtons && !isMobileDevice">
+        <!-- Dotted Theme Button -->
+        <UIThemeButton
+          :icon="DottedIcon"
+          :is-active="activeTheme === 'dotted'"
+          variant="dotted"
+          :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
+          tooltip="Toggle Background Animation"
+          tooltip-position="left"
+          @click="
+            toggleBackground(activeTheme === 'dotted' ? 'default' : 'dotted')
+          "
+        />
+        <!-- Animated Theme Button -->
+        <UIThemeButton
+          :icon="BackgroundIcon"
+          :is-active="activeTheme === 'animated'"
+          variant="animated"
+          tooltip="Toggle Background Animation"
+          tooltip-position="left"
+          @click="
+            toggleBackground(
+              activeTheme === 'animated' ? 'default' : 'animated',
+            )
+          "
+        />
+      </template>
     </ClientOnly>
   </div>
 </template>

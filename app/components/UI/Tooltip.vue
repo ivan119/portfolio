@@ -39,7 +39,7 @@ import { ref, watch, nextTick, onMounted, onUnmounted, computed } from "vue";
 
 interface Props {
   text: string;
-  position?: "top" | "bottom" | "left" | "right";
+  position?: "force-top" | "top" | "bottom" | "left" | "right";
   size?: "sm" | "md" | "lg";
   theme?: "dark" | "light" | "brand";
   delay?: number;
@@ -283,6 +283,13 @@ onUnmounted(() => {
 }
 
 /* Position variants */
+
+.tooltip-force-top {
+  bottom: 99%;
+  left: 50%;
+  transform: translateX(-99%);
+  margin-bottom: 3px;
+}
 .tooltip-top {
   bottom: 100%;
   left: 50%;
