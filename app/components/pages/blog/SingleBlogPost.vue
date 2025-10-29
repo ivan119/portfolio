@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { BlogPost } from "~~/server/types/blog";
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 const props = defineProps<{ post: BlogPost }>();
 
 // Helper to determine content type
@@ -20,8 +21,15 @@ const getHeadingClass = (level: number) => {
       return "text-xl font-bold mb-3 mt-4";
   }
 };
+const breakpoints = useBreakpoints(breakpointsTailwind);
+const isMobileDevice = breakpoints.smaller("sm");
+const isTablet = breakpoints.between("sm", "lg");
 
-// Tag pills are rendered via TagPill component
+const returnSizes = computed(() => {
+  if (isMobileDevice.value) return "144"; // mobiles
+  if (isTablet.value) return "196"; // between
+  return "256"; // desktop
+});
 </script>
 
 <template>
@@ -57,30 +65,33 @@ const getHeadingClass = (level: number) => {
       :style="{
         'view-transition-name': `post-image-${props.post?.id}`,
       }"
+      class="h-56 sm:h-80 lg:h-96"
     >
       <NuxtImg
-        :src="props.post?.coverImage || ''"
+        provider="cloudinary"
+        :src="props.post?.coverImage"
         :alt="props.post?.title || ''"
+        :sizes="returnSizes"
+        densities="2"
         format="webp"
+        class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
         loading="eager"
         fetchpriority="high"
-        :custom="true"
+        custom
         v-slot="{ isLoaded, imgAttrs, src }"
       >
-        <!-- Show the actual image when loaded -->
         <transition name="slide-fade">
           <img
             v-if="isLoaded"
-            v-bind="imgAttrs"
             :src="src"
-            fetchpriority="high"
-            class="single-post"
+            v-bind="imgAttrs"
             :alt="props.post.title"
+            class="w-full h-full object-cover rounded-lg"
           />
           <SkeletonImage
             v-else
             rounded="lg"
-            class="single-post"
+            class="w-full h-full"
             aria-label="Loading single post cover image"
           />
         </transition>
@@ -112,9 +123,13 @@ const getHeadingClass = (level: number) => {
       <!-- Images -->
       <figure v-else-if="isImage(item)" class="my-8">
         <NuxtImg
+          provider="cloudinary"
           :src="item.src"
           :alt="item.alt"
+          :sizes="returnSizes"
+          class="h-56 sm:h-80 lg:h-96 w-full object-cover"
           format="webp"
+          quality="auto"
           loading="lazy"
           custom
           v-slot="{ isLoaded, imgAttrs, src }"
@@ -123,15 +138,14 @@ const getHeadingClass = (level: number) => {
           <transition name="slide-fade">
             <img
               v-if="isLoaded"
-              v-bind="imgAttrs"
               :src="src"
-              class="single-post"
+              v-bind="imgAttrs"
               :alt="post.title"
             />
-            <div v-else class="w-full h-full">
+            <div v-else class="h-56 sm:h-80 lg:h-96">
               <SkeletonImage
                 rounded="lg"
-                class="single-post"
+                class="w-full h-full"
                 :aria-label="`Loading post image_${index}`"
               />
             </div>
@@ -173,9 +187,3 @@ const getHeadingClass = (level: number) => {
     </NuxtLink>
   </div>
 </template>
-
-<style scoped>
-.single-post {
-  @apply min-h-[132px] md:min-h-[260px] lg:min-h-[396px] max-h-[396px] rounded-lg w-full object-cover;
-}
-</style>
