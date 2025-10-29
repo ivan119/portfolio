@@ -1,14 +1,8 @@
 <script setup>
 // Import Sun and Moon components
-import SunIcon from "~/components/devTools/Icons/Sun.vue";
-import MoonIcon from "~/components/devTools/Icons/Moon.vue";
-import BackgroundIcon from "~/components/devTools/Icons/Background.vue";
-import AboutIcon from "~/components/devTools/Icons/About.vue";
-import BlogIcon from "~/components/devTools/Icons/Blog.vue";
-import SkillsIcon from "~/components/devTools/Icons/Skills.vue";
-import ProjectsIcon from "~/components/devTools/Icons/Projects.vue";
-import DottedIcon from "~/components/devTools/Icons/Dotted.vue";
-import ThemeButtons from "~/components/UI/ThemeButtons.vue";
+import BlogIcon from "~/components/ui/icons/Blog.vue";
+import SkillsIcon from "~/components/ui/icons/Skills.vue";
+import ProjectsIcon from "~/components/ui/icons/Projects.vue";
 const colorMode = useColorMode();
 const showLinks = ref(false);
 const props = defineProps({
@@ -127,7 +121,7 @@ onUnmounted(() => {
           to="/"
           class="logo mt-6 relative hover:scale-105 transition-transform duration-300"
         >
-          <dev-tools-signature2
+          <Signature2
             class="w-[120px] h-20 text-gray-800 dark:text-white hover:bg-gradient-to-r hover:from-teal-500 hover:to-blue-600 hover:bg-clip-text hover:text-transparent transition-all duration-300"
           />
         </NuxtLink>

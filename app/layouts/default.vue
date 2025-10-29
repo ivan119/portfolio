@@ -4,10 +4,10 @@ import { useDefaultLayout } from "~/composables/useDefaultLayout";
 import { SpeedInsights } from "@vercel/speed-insights/nuxt";
 import { useBreakpoints, breakpointsTailwind } from "@vueuse/core";
 const BackgroundScene = defineAsyncComponent(
-  () => import("~/components/UI/Themes/BackgroundScene.vue"),
+  () => import("~/components/ui/themes/BackgroundScene.vue"),
 );
 const DottedLayout = defineAsyncComponent(
-  () => import("~/components/UI/Themes/DottedLayout.vue"),
+  () => import("~/components/ui/themes/DottedLayout.vue"),
 );
 const { activeTheme } = useThemeButtons();
 
@@ -42,7 +42,7 @@ const isMobileDevice = breakpoints.smaller("md");
           key="dotted-bg"
           class="background-container"
         />
-        <UIThemesErrorCode v-else />
+        <ErrorCode v-else />
       </Transition>
     </ClientOnly>
     <div class="content-container">

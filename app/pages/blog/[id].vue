@@ -38,19 +38,19 @@ usePageSeo({
   >
     <!-- Breadcrumbs -->
     <Navigation-Breadcrumbs class="px-3" />
-    <UIBanner v-if="post" title="" description="" class="-mx-0 md:-mx-6 mt-2">
-      <BlogSingleBlogPost :post />
-    </UIBanner>
+    <Banner v-if="post" title="" description="" class="-mx-0 md:-mx-6 mt-2">
+      <SingleBlogPost :post />
+    </Banner>
     <!-- Not Found State -->
     <div v-else class="container mx-auto px-4 py-16">
-      <UIEmptyState
+      <EmptyState
         title="Post not found"
         description="The blog post you're looking for doesn't exist or has been removed."
       >
         <BaseButton variant="primary" @click="$router.push('/blog')"
           >Back to Blog</BaseButton
         >
-      </UIEmptyState>
+      </EmptyState>
     </div>
   </div>
 </template>

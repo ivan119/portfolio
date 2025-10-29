@@ -81,7 +81,7 @@ const getIconColor = (tag: ProjectTag): string => {
           class="icon-container transform-gpu transition-transform duration-500 group-hover:rotate-y-12"
           :class="{ 'gauss-scale': project.gaussCMSlogo }"
         >
-          <dev-tools-icons-gauss-logo
+          <gauss-logo
             v-if="project.gaussCMSlogo"
             :rotate-animation="true"
             class="tech-icon preserve-animation w-8 h-8 md:w-8"
@@ -129,7 +129,7 @@ const getIconColor = (tag: ProjectTag): string => {
             boxShadow: `0 1px 4px ${getIconColor(tag)}20`,
           }"
         >
-          <dev-tools-icons-gauss-logo
+          <gaussLogo
             v-if="tag.gaussCMSlogo"
             :rotate-animation="true"
             class="w-4 h-4"

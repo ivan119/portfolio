@@ -39,6 +39,17 @@ export default defineNuxtConfig({
     format: ["webp"],
   },
   ssr: true,
+  components: [
+    {
+      path: "~/components/pages/",
+      pathPrefix: false,
+    },
+    {
+      path: "~/components/ui/",
+      pathPrefix: false,
+    },
+    "~/components",
+  ],
   nitro: {
     compressPublicAssets: true,
     routeRules: {

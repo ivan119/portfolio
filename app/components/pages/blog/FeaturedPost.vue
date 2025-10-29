@@ -67,7 +67,7 @@ const props = withDefaults(
                 :alt="post.title"
               />
               <div v-else class="w-full h-full">
-                <UISkeletonImage
+                <SkeletonImage
                   rounded="rounded-none"
                   aria-label="Loading featured post image"
                 />
@@ -98,7 +98,7 @@ const props = withDefaults(
           <p class="featured-excerpt">
             {{ post.excerpt }}
           </p>
-          <UISignatureLogo :author="post.author" :date="post.date" size="md" />
+          <SignatureLogo :author="post.author" :date="post.date" size="md" />
         </div>
       </div>
     </div>

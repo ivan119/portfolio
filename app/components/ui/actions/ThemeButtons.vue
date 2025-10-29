@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import DottedIcon from "~/components/devTools/Icons/Dotted.vue";
-import BackgroundIcon from "~/components/devTools/Icons/Background.vue";
-import SunIcon from "~/components/devTools/Icons/Sun.vue";
-import MoonIcon from "~/components/devTools/Icons/Moon.vue";
+import DottedIcon from "~/components/UI/icons/Dotted.vue";
+import BackgroundIcon from "~/components/UI/icons/Background.vue";
+import SunIcon from "~/components/UI/icons/Sun.vue";
+import MoonIcon from "~/components/UI/icons/Moon.vue";
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
 
 const {
@@ -31,7 +31,7 @@ const props = defineProps({
   <div class="toggle-container flex flex-col animate-icons max-h-6 gap-y-3">
     <ClientOnly>
       <!-- SunAndMoon Button -->
-      <UIThemeButton
+      <themeButton
         :icon="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
         :is-active="colorMode.preference === 'dark'"
         :is-changing="isThemeChanging"
@@ -47,7 +47,7 @@ const props = defineProps({
       />
       <template v-if="!hideThemeButtons && !isMobileDevice">
         <!-- Dotted Theme Button -->
-        <UIThemeButton
+        <themeButton
           :icon="DottedIcon"
           :is-active="activeTheme === 'dotted'"
           variant="dotted"
@@ -59,7 +59,7 @@ const props = defineProps({
           "
         />
         <!-- Animated Theme Button -->
-        <UIThemeButton
+        <themeButton
           :icon="BackgroundIcon"
           :is-active="activeTheme === 'animated'"
           variant="animated"

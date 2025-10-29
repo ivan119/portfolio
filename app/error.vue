@@ -2,6 +2,6 @@
 
 <template>
   <NuxtLayout name="default">
-    <UIError />
+    <Error />
   </NuxtLayout>
 </template>

@@ -5,7 +5,7 @@
     @click="handleClick"
   >
     <!-- Icon with optional tooltip -->
-    <UITooltip
+    <Tooltip
       v-if="tooltip"
       :text="tooltip"
       :position="tooltipPosition"
@@ -13,7 +13,7 @@
       :theme="tooltipTheme"
     >
       <component :is="icon" :is-active="isActive" :class="iconClasses" />
-    </UITooltip>
+    </Tooltip>
 
     <!-- Active indicator -->
     <div

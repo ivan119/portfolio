@@ -26,7 +26,7 @@ usePageSeo({
 </script>
 
 <template>
-  <UIBanner
+  <Banner
     :class="[{ 'slide-enter-active': isActiveProjectClass }, '!max-w-7xl !p-3']"
     title=""
     description=""
@@ -52,7 +52,7 @@ usePageSeo({
             aria-label="Open project in new tab"
             class="w-full h-full"
           >
-            <UITooltip
+            <Tooltip
               text="View More"
               position="left"
               class="pointer-events-none md:pointer-events-auto"
@@ -60,9 +60,9 @@ usePageSeo({
               <div
                 class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-200 bg-white/80 shadow-sm backdrop-blur hover:bg-white/95 focus:outline-none focus:ring-2 focus:ring-main-500 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-200 dark:hover:bg-slate-900/80"
               >
-                <UIIconsEye />
+                <Eye />
               </div>
-            </UITooltip>
+            </Tooltip>
           </NuxtLink>
         </div>
 
@@ -129,10 +129,7 @@ usePageSeo({
               }"
               class="inline-flex items-center gap-2 text-xs font-medium, px-2 py-1 rounded border border-slate-200 dark:border-slate-700"
             >
-              <dev-tools-icons-gauss-logo
-                v-if="tag.gaussCMSlogo"
-                class="w-4 h-4"
-              />
+              <GaussLogo v-if="tag.gaussCMSlogo" class="w-4 h-4" />
               <component
                 v-else
                 :is="
@@ -196,14 +193,14 @@ usePageSeo({
       </div>
     </div>
     <div v-else class="container mx-auto px-4 py-16">
-      <UIEmptyState
+      <EmptyState
         title="Project not found"
         description="The project you're looking for doesn't exist or has been removed."
       >
         <BaseButton variant="primary" @click="$router.push('/projects')"
           >Back to Projects</BaseButton
         >
-      </UIEmptyState>
+      </EmptyState>
     </div>
-  </UIBanner>
+  </Banner>
 </template>

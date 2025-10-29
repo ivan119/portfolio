@@ -43,7 +43,7 @@ const getHeadingClass = (level: number) => {
     >
       {{ props.post?.title }}
     </h1>
-    <UISignatureLogo
+    <SignatureLogo
       :author="props.post?.author || ''"
       :date="props.post?.date || ''"
       size="md"
@@ -76,7 +76,7 @@ const getHeadingClass = (level: number) => {
             class="single-post"
             :alt="props.post.title"
           />
-          <UISkeletonImage
+          <SkeletonImage
             v-else
             rounded="lg"
             class="single-post"
@@ -128,7 +128,7 @@ const getHeadingClass = (level: number) => {
               :alt="post.title"
             />
             <div v-else class="w-full h-full">
-              <UISkeletonImage
+              <SkeletonImage
                 rounded="lg"
                 class="single-post"
                 :aria-label="`Loading post image_${index}`"
@@ -144,7 +144,7 @@ const getHeadingClass = (level: number) => {
   </article>
   <!-- Author Signature -->
   <div v-if="false" class="mt-10">
-    <UISignatureLogo
+    <SignatureLogo
       :author="props.post?.author || ''"
       :date="props.post?.date || ''"
       size="md"
