@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import DottedIcon from "~/components/UI/icons/Dotted.vue";
-import BackgroundIcon from "~/components/UI/icons/Background.vue";
-import SunIcon from "~/components/UI/icons/Sun.vue";
-import MoonIcon from "~/components/UI/icons/Moon.vue";
+import DottedIcon from "~/components/ui/icons/Dotted.vue";
+import BackgroundIcon from "~/components/ui/icons/Background.vue";
+import SunIcon from "~/components/ui/icons/Sun.vue";
+import MoonIcon from "~/components/ui/icons/Moon.vue";
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+const breakpoints = useBreakpoints(breakpointsTailwind);
+const smallerThen2xlWidth = breakpoints.smaller("2xl");
 
 const {
   activeTheme,
@@ -28,7 +31,9 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="toggle-container flex flex-col animate-icons max-h-6 gap-y-3">
+  <div
+    class="toggle-container flex flex-row flex-row-reverse 2xl:flex-col gap-x-2 animate-icons max-h-6 2xl:gap-y-3"
+  >
     <ClientOnly>
       <!-- SunAndMoon Button -->
       <themeButton
@@ -53,7 +58,7 @@ const props = defineProps({
           variant="dotted"
           :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
           tooltip="Toggle Background Animation"
-          tooltip-position="left"
+          :tooltip-position="smallerThen2xlWidth ? 'force-top' : 'left'"
           @click="
             toggleBackground(activeTheme === 'dotted' ? 'default' : 'dotted')
           "
@@ -64,7 +69,7 @@ const props = defineProps({
           :is-active="activeTheme === 'animated'"
           variant="animated"
           tooltip="Toggle Background Animation"
-          tooltip-position="left"
+          :tooltip-position="smallerThen2xlWidth ? 'force-top' : 'left'"
           @click="
             toggleBackground(
               activeTheme === 'animated' ? 'default' : 'animated',
