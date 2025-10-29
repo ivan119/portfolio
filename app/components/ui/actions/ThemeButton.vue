@@ -34,7 +34,7 @@ interface Props {
   isActive?: boolean;
   variant?: "animated" | "dotted" | "sun" | "moon";
   tooltip?: string;
-  tooltipPosition?: "top" | "bottom" | "left" | "right";
+  tooltipPosition?: "force-top" | "top" | "bottom" | "left" | "right";
   tooltipSize?: "sm" | "md" | "lg";
   tooltipTheme?: "dark" | "light" | "brand";
   showActiveIndicator?: boolean;
