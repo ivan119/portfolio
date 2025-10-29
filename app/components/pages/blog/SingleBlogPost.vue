@@ -20,19 +20,20 @@ const getHeadingClass = (level: number) => {
       return "text-xl font-bold mb-3 mt-4";
   }
 };
+
+// Tag pills are rendered via TagPill component
 </script>
 
 <template>
   <!-- Post Header -->
   <header class="mb-8">
     <div class="flex flex-wrap gap-2 mb-4">
-      <span
-        v-for="tag in props.post?.tags || []"
+      <TagPill
+        v-for="(tag, index) in props.post?.tags || []"
         :key="tag"
-        class="text-xs font-medium px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300"
-      >
-        {{ tag }}
-      </span>
+        :label="tag"
+        :index="index"
+      />
     </div>
 
     <h1
