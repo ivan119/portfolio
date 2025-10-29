@@ -101,7 +101,9 @@ const formatName = (name: string): string => {
           >
             <dev-tools-icons-home v-if="crumb.name === 'Home'" />
             <template v-else>
-              {{ crumb.name }}
+              <span class="text-black dark:text-gray-200">
+                {{ crumb.name }}
+              </span>
             </template>
           </NuxtLink>
           <span v-else>{{ crumb.name }}</span>
