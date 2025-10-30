@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useProjects } from "~/composables/useProjects";
 import { isActiveProjectClass } from "~/composables/useActiveClass";
-
+import { useIntersectionObserver } from "@vueuse/core";
 const showFrameworkDetails = ref(false);
-
 const { projects, allProjects, error, pending, refresh } = await useProjects();
+const projectsTarget = useTemplateRef<HTMLDivElement>("projectsTarget");
+const showProjects = ref(false);
 definePageMeta({
   middleware: ["projects-active"],
 });
@@ -15,6 +16,13 @@ usePageSeo({
   image: "/seo/IvanKelavaProjects1200x627.webp",
   imageAlt: "Projects - Ivan Kelava",
   lang: "en",
+});
+// Only show once the section comes into view
+useIntersectionObserver(projectsTarget, ([entry], observer) => {
+  if (entry?.isIntersecting) {
+    showProjects.value = true;
+    observer.disconnect(); // stop observing after first trigger
+  }
 });
 </script>
 
@@ -79,8 +87,13 @@ usePageSeo({
     </Banner>
 
     <!-- Other Projects -->
-    <Banner title="Other Projects" description="" :first-tag-is-h1="false">
-      <template #default>
+    <Banner
+      ref="projectsTarget"
+      title="Other Projects"
+      description=""
+      :first-tag-is-h1="false"
+    >
+      <template v-if="showProjects" #default>
         <section class="space-y-6">
           <div
             v-if="pending"

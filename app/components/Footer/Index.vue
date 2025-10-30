@@ -22,7 +22,7 @@ const blogClass = computed(() => {
 }
 
 .animate-fade-in-blur-3d {
-  animation: fadeInBlur3D 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: fadeInBlur3D 0.963s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   display: inline-block; /* helps with transform */
 }
 @keyframes fadeInBlur3D {
