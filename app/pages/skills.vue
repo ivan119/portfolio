@@ -37,20 +37,20 @@ useIntersectionObserver(experiencedTarget, ([entry], observer) => {
         : '!p-3 pt-3 md:p-0 mx-auto w-full space-y-5 slide-enter-active',
     ]"
   >
-    <UIBanner
+    <Banner
       title="Technical Skills"
       description="Technologies and tools I've mastered throughout my journey"
     />
 
     <!-- Preferred Tech Stack -->
-    <UIBanner
+    <Banner
       title="Preferred Tech Stack"
       description="My go-to technologies for modern web development are:"
       :first-tag-is-h1="false"
     >
       <template #default>
         <section class="space-y-4">
-          <UIEmptyState
+          <EmptyState
             v-if="preferredSkills.length === 0"
             title="No preferred skills yet"
             description="They will appear here once available."
@@ -76,12 +76,12 @@ useIntersectionObserver(experiencedTarget, ([entry], observer) => {
           </div>
         </section>
       </template>
-    </UIBanner>
+    </Banner>
 
     <!-- Experienced With -->
     <div ref="experiencedTarget">
       <Transition name="fade-slide" appear>
-        <UIBanner
+        <Banner
           v-if="showExperienced"
           title="Experienced With"
           description="Over the years, I have worked with or have experience using a variety of frameworks and tools, including:"
@@ -89,7 +89,7 @@ useIntersectionObserver(experiencedTarget, ([entry], observer) => {
         >
           <template #default>
             <section class="space-y-4">
-              <UIEmptyState
+              <EmptyState
                 v-if="experiencedSkills.length === 0"
                 title="No experienced skills yet"
                 description="They will appear here once available."
@@ -116,7 +116,7 @@ useIntersectionObserver(experiencedTarget, ([entry], observer) => {
               </div>
             </section>
           </template>
-        </UIBanner>
+        </Banner>
       </Transition>
     </div>
   </div>

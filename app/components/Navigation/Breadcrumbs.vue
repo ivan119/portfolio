@@ -99,7 +99,7 @@ const formatName = (name: string): string => {
             class="transition-colors duration-200"
             aria-label="Breadcrumb navigation"
           >
-            <dev-tools-icons-home v-if="crumb.name === 'Home'" />
+            <Home v-if="crumb.name === 'Home'" />
             <template v-else>
               <span class="text-black dark:text-gray-200">
                 {{ crumb.name }}

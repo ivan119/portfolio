@@ -1,7 +1,6 @@
 <script setup>
 import { watch, onMounted } from "vue";
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
-import ThemeButtons from "~/components/UI/ThemeButtons.vue";
 import { useThrottleFn } from "@vueuse/core";
 const emit = defineEmits(["update:showMainContent", "showLogo"]);
 const { colorMode, activeTheme } = useThemeButtons();
@@ -156,7 +155,7 @@ const handlePortfolioClick = useThrottleFn(() => {
       leave-to-class="translate-y-8 opacity-0"
     >
       <div v-if="showSunAndMoonIcon" class="right-8 bottom-8 absolute">
-        <theme-buttons :hide-theme-buttons="hideThemeButtons" />
+        <themeButtons :hide-theme-buttons="hideThemeButtons" />
       </div>
     </Transition>
   </div>

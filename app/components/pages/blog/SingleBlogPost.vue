@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { BlogPost } from "~~/server/types/blog";
+import { getBreakpoints } from "~/composables/shared/breakpoints";
 const props = defineProps<{ post: BlogPost }>();
-
+const { isMobileDevice, isTablet } = getBreakpoints();
 // Helper to determine content type
 const isHeading = (item: any) => item.type === "heading";
 const isParagraph = (item: any) => item.type === "paragraph";
@@ -20,19 +21,23 @@ const getHeadingClass = (level: number) => {
       return "text-xl font-bold mb-3 mt-4";
   }
 };
+const returnSizes = computed(() => {
+  if (isMobileDevice.value) return "480"; // mobiles
+  if (isTablet.value) return "720"; // between
+  return "936"; // desktop
+});
 </script>
 
 <template>
   <!-- Post Header -->
   <header class="mb-8">
     <div class="flex flex-wrap gap-2 mb-4">
-      <span
-        v-for="tag in props.post?.tags || []"
+      <TagPill
+        v-for="(tag, index) in props.post?.tags || []"
         :key="tag"
-        class="text-xs font-medium px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300"
-      >
-        {{ tag }}
-      </span>
+        :label="tag"
+        :index="index"
+      />
     </div>
 
     <h1
@@ -43,7 +48,7 @@ const getHeadingClass = (level: number) => {
     >
       {{ props.post?.title }}
     </h1>
-    <UISignatureLogo
+    <SignatureLogo
       :author="props.post?.author || ''"
       :date="props.post?.date || ''"
       size="md"
@@ -56,30 +61,33 @@ const getHeadingClass = (level: number) => {
       :style="{
         'view-transition-name': `post-image-${props.post?.id}`,
       }"
+      class="h-56 sm:h-80 lg:h-96"
     >
       <NuxtImg
-        :src="props.post?.coverImage || ''"
+        provider="cloudinary"
+        :src="props.post?.coverImage"
         :alt="props.post?.title || ''"
+        :sizes="returnSizes"
+        densities="1"
         format="webp"
+        class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
         loading="eager"
         fetchpriority="high"
-        :custom="true"
+        custom
         v-slot="{ isLoaded, imgAttrs, src }"
       >
-        <!-- Show the actual image when loaded -->
         <transition name="slide-fade">
           <img
             v-if="isLoaded"
-            v-bind="imgAttrs"
             :src="src"
-            fetchpriority="high"
-            class="single-post"
+            v-bind="imgAttrs"
             :alt="props.post.title"
+            class="w-full h-full object-cover rounded-lg"
           />
-          <UISkeletonImage
+          <SkeletonImage
             v-else
             rounded="lg"
-            class="single-post"
+            class="w-full h-full"
             aria-label="Loading single post cover image"
           />
         </transition>
@@ -111,9 +119,13 @@ const getHeadingClass = (level: number) => {
       <!-- Images -->
       <figure v-else-if="isImage(item)" class="my-8">
         <NuxtImg
+          provider="cloudinary"
           :src="item.src"
           :alt="item.alt"
+          :sizes="returnSizes"
+          class="h-56 sm:h-80 lg:h-96 w-full object-cover"
           format="webp"
+          quality="auto"
           loading="lazy"
           custom
           v-slot="{ isLoaded, imgAttrs, src }"
@@ -122,15 +134,14 @@ const getHeadingClass = (level: number) => {
           <transition name="slide-fade">
             <img
               v-if="isLoaded"
-              v-bind="imgAttrs"
               :src="src"
-              class="single-post"
+              v-bind="imgAttrs"
               :alt="post.title"
             />
-            <div v-else class="w-full h-full">
-              <UISkeletonImage
+            <div v-else class="h-56 sm:h-80 lg:h-96">
+              <SkeletonImage
                 rounded="lg"
-                class="single-post"
+                class="w-full h-full"
                 :aria-label="`Loading post image_${index}`"
               />
             </div>
@@ -144,7 +155,7 @@ const getHeadingClass = (level: number) => {
   </article>
   <!-- Author Signature -->
   <div v-if="false" class="mt-10">
-    <UISignatureLogo
+    <SignatureLogo
       :author="props.post?.author || ''"
       :date="props.post?.date || ''"
       size="md"
@@ -172,9 +183,3 @@ const getHeadingClass = (level: number) => {
     </NuxtLink>
   </div>
 </template>
-
-<style scoped>
-.single-post {
-  @apply min-h-[132px] md:min-h-[260px] lg:min-h-[396px] max-h-[396px] rounded-lg w-full object-cover;
-}
-</style>

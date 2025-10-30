@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import DottedIcon from "~/components/devTools/Icons/Dotted.vue";
-import BackgroundIcon from "~/components/devTools/Icons/Background.vue";
-import SunIcon from "~/components/devTools/Icons/Sun.vue";
-import MoonIcon from "~/components/devTools/Icons/Moon.vue";
+import DottedIcon from "~/components/ui/icons/Dotted.vue";
+import BackgroundIcon from "~/components/ui/icons/Background.vue";
+import SunIcon from "~/components/ui/icons/Sun.vue";
+import MoonIcon from "~/components/ui/icons/Moon.vue";
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+const breakpoints = useBreakpoints(breakpointsTailwind);
+const smallerThen2xlWidth = breakpoints.smaller("2xl");
 
 const {
   activeTheme,
@@ -28,10 +31,12 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="toggle-container flex flex-col animate-icons max-h-6 gap-y-3">
+  <div
+    class="toggle-container flex flex-row flex-row-reverse 2xl:flex-col gap-x-2 animate-icons max-h-6 2xl:gap-y-3"
+  >
     <ClientOnly>
       <!-- SunAndMoon Button -->
-      <UIThemeButton
+      <themeButton
         :icon="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
         :is-active="colorMode.preference === 'dark'"
         :is-changing="isThemeChanging"
@@ -47,24 +52,24 @@ const props = defineProps({
       />
       <template v-if="!hideThemeButtons && !isMobileDevice">
         <!-- Dotted Theme Button -->
-        <UIThemeButton
+        <themeButton
           :icon="DottedIcon"
           :is-active="activeTheme === 'dotted'"
           variant="dotted"
           :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
           tooltip="Toggle Background Animation"
-          tooltip-position="left"
+          :tooltip-position="smallerThen2xlWidth ? 'force-top' : 'left'"
           @click="
             toggleBackground(activeTheme === 'dotted' ? 'default' : 'dotted')
           "
         />
         <!-- Animated Theme Button -->
-        <UIThemeButton
+        <themeButton
           :icon="BackgroundIcon"
           :is-active="activeTheme === 'animated'"
           variant="animated"
           tooltip="Toggle Background Animation"
-          tooltip-position="left"
+          :tooltip-position="smallerThen2xlWidth ? 'force-top' : 'left'"
           @click="
             toggleBackground(
               activeTheme === 'animated' ? 'default' : 'animated',

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { getBreakpoints } from "~/composables/shared/breakpoints";
+const { isMobileDevice, isTablet } = getBreakpoints();
 interface Post {
   id: string;
   title: string;
@@ -20,6 +22,11 @@ const props = withDefaults(
     loading: false,
   },
 );
+const returnSizes = computed(() => {
+  if (isMobileDevice.value) return "420"; // mobiles
+  if (isTablet.value) return "639"; // between
+  return "720"; // desktop
+});
 </script>
 
 <template>
@@ -48,15 +55,15 @@ const props = withDefaults(
             class="featured-image-wrap"
           >
             <NuxtImg
+              provider="cloudinary"
               :src="post.coverImage"
               :alt="post.title"
               class="featured-image-img rounded-lg"
-              format="webp"
-              width="432"
+              densities="1"
+              quality="80"
+              :sizes="returnSizes"
               loading="eager"
-              height="369"
               fetchpriority="high"
-              preload
               custom
               v-slot="{ isLoaded, imgAttrs, src }"
             >
@@ -67,7 +74,7 @@ const props = withDefaults(
                 :alt="post.title"
               />
               <div v-else class="w-full h-full">
-                <UISkeletonImage
+                <SkeletonImage
                   rounded="rounded-none"
                   aria-label="Loading featured post image"
                 />
@@ -98,7 +105,7 @@ const props = withDefaults(
           <p class="featured-excerpt">
             {{ post.excerpt }}
           </p>
-          <UISignatureLogo :author="post.author" :date="post.date" size="md" />
+          <SignatureLogo :author="post.author" :date="post.date" size="md" />
         </div>
       </div>
     </div>

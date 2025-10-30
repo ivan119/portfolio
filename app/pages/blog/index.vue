@@ -35,25 +35,25 @@ onMounted(async () => {
       class="visible px-4 md:px-8 mb-3"
     />
     <template v-if="featuredPost && posts?.length > 0">
-      <LazyBlogFeaturedPost
+      <LazyFeaturedPost
         :post="featuredPost"
         :image-url="featuredPost.coverImage"
         class="mb-12"
       />
 
       <div class="mb-12">
-        <LazyBlogAiGeneratedBlogs :posts />
+        <LazyAiGeneratedBlogs :posts />
       </div>
     </template>
     <template v-else>
-      <UIEmptyState
+      <EmptyState
         title="No blog posts yet"
         description="AI-generated posts will appear here once available. Please check back soon."
       >
         <BaseButton variant="primary" @click="$router.push('/')">
           Go Home
         </BaseButton>
-      </UIEmptyState>
+      </EmptyState>
     </template>
   </div>
 </template>

@@ -37,8 +37,24 @@ export default defineNuxtConfig({
   image: {
     quality: 80,
     format: ["webp"],
+    providers: {
+      cloudinary: {
+        baseURL: "https://res.cloudinary.com/dvthrmqlp/image/upload/",
+      },
+    },
   },
   ssr: true,
+  components: [
+    {
+      path: "~/components/pages/",
+      pathPrefix: false,
+    },
+    {
+      path: "~/components/ui/",
+      pathPrefix: false,
+    },
+    "~/components",
+  ],
   nitro: {
     compressPublicAssets: true,
     routeRules: {

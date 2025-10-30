@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import type { PreviewBlogPost } from "~~/server/types/blog";
-import BlogPostCard from "~/components/Blog/BlogPostCard.vue";
 // Accept posts from parent; fallback to empty array
 const props = defineProps<{ posts?: PreviewBlogPost[] }>();
 const posts = computed(() => props.posts || []);
@@ -11,7 +10,7 @@ const error = ref<string | null>(null);
 
 <template>
   <div class="space-y-8">
-    <UIBanner
+    <Banner
       class="md:pb-12"
       title="Blog"
       description=""
@@ -43,6 +42,6 @@ const error = ref<string | null>(null);
           />
         </div>
       </template>
-    </UIBanner>
+    </Banner>
   </div>
 </template>

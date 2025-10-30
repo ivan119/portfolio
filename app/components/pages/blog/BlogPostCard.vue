@@ -56,7 +56,7 @@ const doImageEffect = ref(false);
                 :alt="post.title"
               />
               <div v-else class="w-full h-full">
-                <UISkeletonImage
+                <SkeletonImage
                   rounded="rounded-none"
                   :aria-label="`Loading post image${post.id}`"
                 />
@@ -84,11 +84,7 @@ const doImageEffect = ref(false);
             <p class="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
               {{ post.excerpt }}
             </p>
-            <UISignatureLogo
-              :author="post.author"
-              :date="post.date"
-              size="sm"
-            />
+            <SignatureLogo :author="post.author" :date="post.date" size="sm" />
           </div>
         </div>
       </div>

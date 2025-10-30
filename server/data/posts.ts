@@ -517,6 +517,6 @@ export const posts = [
     ],
     id: "federated-learning-privacy-preserving-ai",
     coverImage:
-      "https://res.cloudinary.com/dvthrmqlp/image/upload/w_236,h_236,c_fill/v1758579873/Federated_Learning_The_Rise_of_Privacy-Preserving_AI_d1z0p6.webp",
+      "https://res.cloudinary.com/dvthrmqlp/image/upload/w_472,h_236,c_fill/v1758579873/Federated_Learning_The_Rise_of_Privacy-Preserving_AI_d1z0p6.webp",
   },
 ];

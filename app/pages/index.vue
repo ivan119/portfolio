@@ -28,7 +28,7 @@ usePageSeo({
           Currently working at
           <BaseButton href="https://gauss.hr/en" external>
             <template #icon>
-              <dev-tools-icons-gauss-logo class="w-6 h-6 mr-1" />
+              <gauss-logo class="w-6 h-6 mr-1" />
             </template>
             Gauss
           </BaseButton>
@@ -38,7 +38,7 @@ usePageSeo({
           Core team lead and maintainer of
           <BaseButton href="https://gaussbox.com/modules-cms" external>
             <template #icon>
-              <dev-tools-icons-gauss-logo class="w-6 h-6 mr-1" />
+              <gauss-logo class="w-6 h-6 mr-1" />
             </template>
             Gauss CMS
           </BaseButton>

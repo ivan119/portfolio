@@ -30,7 +30,7 @@ usePageSeo({
     ]"
   >
     <!-- Banner Section -->
-    <UIBanner title="Projects" description="">
+    <Banner title="Projects" description="">
       <template #default>
         <p class="text-lg">
           Projects where I served as Team Lead at
@@ -40,10 +40,10 @@ usePageSeo({
           , leading development and architecture decisions.
         </p>
       </template>
-    </UIBanner>
+    </Banner>
 
     <!-- Loading / Error States for Main Projects -->
-    <UIBanner title="Main Projects" description="" :first-tag-is-h1="false">
+    <Banner title="Main Projects" description="" :first-tag-is-h1="false">
       <template #default>
         <section class="space-y-6">
           <div
@@ -68,7 +68,7 @@ usePageSeo({
                 :colored="true"
               />
             </div>
-            <UIEmptyState
+            <EmptyState
               v-else
               title="No projects yet"
               description="Projects will appear here once available."
@@ -76,10 +76,10 @@ usePageSeo({
           </template>
         </section>
       </template>
-    </UIBanner>
+    </Banner>
 
     <!-- Other Projects -->
-    <UIBanner title="Other Projects" description="" :first-tag-is-h1="false">
+    <Banner title="Other Projects" description="" :first-tag-is-h1="false">
       <template #default>
         <section class="space-y-6">
           <div
@@ -93,7 +93,7 @@ usePageSeo({
             <button class="underline" @click="refresh()">Retry</button>
           </div>
           <template v-else>
-            <UIEmptyState
+            <EmptyState
               v-if="allProjects.length === 0"
               title="No projects to show"
               description="Other projects will appear here once available."
@@ -109,8 +109,8 @@ usePageSeo({
             </div>
           </template>
         </section>
-        <UIGithubLink class="mt-5 md:mt-10" />
+        <GithubLink class="mt-5 md:mt-10" />
       </template>
-    </UIBanner>
+    </Banner>
   </div>
 </template>
