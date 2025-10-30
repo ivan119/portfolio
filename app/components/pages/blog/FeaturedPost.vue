@@ -23,9 +23,9 @@ const props = withDefaults(
   },
 );
 const returnSizes = computed(() => {
-  if (isMobileDevice.value) return "420"; // mobiles
+  if (isMobileDevice.value) return "396"; // mobiles
   if (isTablet.value) return "639"; // between
-  return "720"; // desktop
+  return "693"; // desktop
 });
 </script>
 
