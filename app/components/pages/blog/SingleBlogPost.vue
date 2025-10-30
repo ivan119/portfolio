@@ -22,9 +22,9 @@ const getHeadingClass = (level: number) => {
   }
 };
 const returnSizes = computed(() => {
-  if (isMobileDevice.value) return "144"; // mobiles
-  if (isTablet.value) return "196"; // between
-  return "256"; // desktop
+  if (isMobileDevice.value) return "480"; // mobiles
+  if (isTablet.value) return "720"; // between
+  return "936"; // desktop
 });
 </script>
 
@@ -68,7 +68,7 @@ const returnSizes = computed(() => {
         :src="props.post?.coverImage"
         :alt="props.post?.title || ''"
         :sizes="returnSizes"
-        densities="2"
+        densities="1"
         format="webp"
         class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
         loading="eager"
