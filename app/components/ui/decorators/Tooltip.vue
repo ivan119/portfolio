@@ -14,7 +14,7 @@
       <!-- Tooltip -->
       <Transition name="tooltip" appear>
         <div
-          v-show="showTooltip"
+          v-if="showTooltip"
           ref="tooltip_ref"
           :class="[
             'tooltip',
