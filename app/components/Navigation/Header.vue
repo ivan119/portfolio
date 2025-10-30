@@ -145,7 +145,7 @@ onUnmounted(() => {
               'is-navigating': isNavigating && activeLink === link.to,
               'md:hover-main-gradient': !isNavigating || activeLink !== link.to,
             }"
-            aria-label="Navigation link"
+            :aria-label="`Navigation-Link${link.text}`"
           >
             <!-- Space / expansion transition -->
             <div
