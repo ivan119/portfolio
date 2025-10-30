@@ -1,37 +1,39 @@
 <template>
-  <div
-    class="tooltip-container relative inline-block"
-    @mouseenter="handleMouseEnter"
-    @mouseleave="handleMouseLeave"
-    @click="handleClick"
-    @touchstart.passive="handleTouchStart"
-    @touchend.passive="handleTouchEnd"
-  >
-    <!-- Trigger element (slot) -->
-    <slot />
+  <ClientOnly>
+    <div
+      class="tooltip-container relative inline-block"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave"
+      @click="handleClick"
+      @touchstart.passive="handleTouchStart"
+      @touchend.passive="handleTouchEnd"
+    >
+      <!-- Trigger element (slot) -->
+      <slot />
 
-    <!-- Tooltip -->
-    <Transition name="tooltip" appear>
-      <div
-        v-show="showTooltip"
-        ref="tooltip_ref"
-        :class="[
-          'tooltip',
-          `tooltip-${currentPosition}`,
-          `tooltip-${size}`,
-          `tooltip-${theme}`,
-        ]"
-        :style="tooltipStyles"
-      >
-        {{ text }}
-
-        <!-- Arrow -->
+      <!-- Tooltip -->
+      <Transition name="tooltip" appear>
         <div
-          :class="['tooltip-arrow', `tooltip-arrow-${currentPosition}`]"
-        ></div>
-      </div>
-    </Transition>
-  </div>
+          v-show="showTooltip"
+          ref="tooltip_ref"
+          :class="[
+            'tooltip',
+            `tooltip-${currentPosition}`,
+            `tooltip-${size}`,
+            `tooltip-${theme}`,
+          ]"
+          :style="tooltipStyles"
+        >
+          {{ text }}
+
+          <!-- Arrow -->
+          <div
+            :class="['tooltip-arrow', `tooltip-arrow-${currentPosition}`]"
+          ></div>
+        </div>
+      </Transition>
+    </div>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
