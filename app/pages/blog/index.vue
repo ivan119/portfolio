@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { usePosts } from "~/composables/usePosts";
 import { isActiveClass } from "~/composables/useActiveClass";
+const { fetchPosts, posts, featuredPost } = usePosts();
+await fetchPosts();
 definePageMeta({
   middleware: ["blog-active"],
 });
-const { fetchPosts, posts, featuredPost } = usePosts();
-await fetchPosts();
 usePageSeo({
   title: "Blog — Ivan Kelava",
   description:
