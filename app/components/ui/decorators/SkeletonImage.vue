@@ -34,14 +34,13 @@ const props = withDefaults(
       </svg>
     </div>
   </div>
-  
 </template>
 
 <style scoped>
 .skeleton-base {
   position: relative;
   overflow: hidden;
-  background-color: var(--skeleton-bg, #e5e7eb);
+  background-color: transparent;
 }
 
 .skeleton-base::after {
@@ -69,5 +68,3 @@ const props = withDefaults(
   --skeleton-shine: rgba(255, 255, 255, 0.14);
 }
 </style>
-
-

@@ -18,8 +18,8 @@
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.18",
     "@vercel/speed-insights": "^1.2.0",
-    "@vueuse/nuxt": "^13.9.0",
-    "nuxt": "^4.1.2",
+    "@vueuse/nuxt": "^14.0.0",
+    "nuxt": "^4.2.0",
     "three": "^0.180.0",
     "typewriter-effect": "^2.22.0"
   },
@@ -27,7 +27,7 @@
     "node": "24.8.0"
   },
   "devDependencies": {
-    "@types/node": "^24.5.2",
+    "@types/node": "^24.9.2",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.36.0",
     "postcss": "^8.5.3",
