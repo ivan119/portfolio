@@ -12,24 +12,23 @@
       <slot />
 
       <!-- Tooltip -->
-      <Transition name="tooltip" appear>
+      <Transition
+        appear
+        :enter-active-class="'transition ease-out duration-200'"
+        :leave-active-class="'transition ease-in duration-200'"
+        :enter-from-class="enterFromClass"
+        :leave-to-class="enterFromClass"
+      >
         <div
           v-if="showTooltip"
           ref="tooltip_ref"
-          :class="[
-            'tooltip',
-            `tooltip-${currentPosition}`,
-            `tooltip-${size}`,
-            `tooltip-${theme}`,
-          ]"
+          :class="tooltipClassList"
           :style="tooltipStyles"
         >
           {{ text }}
 
           <!-- Arrow -->
-          <div
-            :class="['tooltip-arrow', `tooltip-arrow-${currentPosition}`]"
-          ></div>
+          <div :class="arrowClassList"></div>
         </div>
       </Transition>
     </div>
@@ -68,6 +67,92 @@ const hideTimer = ref<number | null>(null);
 const lastInteractionType = ref<"hover" | "click" | "touch" | "programmatic">(
   "programmatic",
 );
+
+const positionForAnim = computed(() =>
+  currentPosition.value === "force-top" ? "top" : currentPosition.value,
+);
+
+const tooltipClassList = computed(() => {
+  const base = [
+    "absolute",
+    "z-[1000]",
+    "pointer-events-none",
+    "whitespace-nowrap",
+    "font-medium",
+    "rounded-md",
+    "backdrop-blur-md",
+    "shadow-lg",
+    "max-w-[300px]",
+    "overflow-hidden",
+    "text-ellipsis",
+  ];
+
+  const positionMap: Record<string, string[]> = {
+    top: ["bottom-full", "left-1/2", "-translate-x-1/2", "mb-2"],
+    bottom: ["top-full", "left-1/2", "-translate-x-1/2", "mt-2"],
+    left: ["right-full", "top-1/2", "-translate-y-1/2", "mr-2"],
+    right: ["left-full", "top-1/2", "-translate-y-1/2", "ml-2"],
+    "force-top": [
+      "bottom-[99%]",
+      "left-1/2",
+      "-translate-x-[99%]",
+      "mb-[3px]",
+    ],
+  };
+
+  const sizeMap: Record<string, string[]> = {
+    sm: ["px-2", "py-1", "text-[11px]", "leading-[1.3]"],
+    md: ["px-2.5", "py-1.5", "text-[12px]", "leading-[1.4]"],
+    lg: ["px-3", "py-2", "text-[14px]", "leading-[1.4]"],
+  };
+
+  const themeMap: Record<string, string[]> = {
+    dark: ["bg-[#091a28]/95", "text-white"],
+    light: ["bg-white/95", "text-[#091a28]", "border", "border-black/10"],
+    brand: ["bg-gradient-to-br", "from-teal-600", "to-blue-600", "text-white"],
+  };
+
+  return [
+    ...base,
+    ...(positionMap[currentPosition.value] || positionMap.top),
+    ...(sizeMap[props.size] || sizeMap.md),
+    ...(themeMap[props.theme] || themeMap.dark),
+  ];
+});
+
+const arrowClassList = computed(() => {
+  const base = ["absolute", "w-2", "h-2", "rotate-45", "shadow-sm"];
+
+  const pos = positionForAnim.value;
+  const positionMap: Record<string, string[]> = {
+    top: ["top-full", "left-1/2", "-translate-x-1/2"],
+    bottom: ["bottom-full", "left-1/2", "-translate-x-1/2"],
+    left: ["left-full", "top-1/2", "-translate-y-1/2"],
+    right: ["right-full", "top-1/2", "-translate-y-1/2"],
+  };
+
+  const themeMap: Record<string, string[]> = {
+    dark: ["bg-[#091a28]"],
+    light: ["bg-white", "border", "border-black/10"],
+    brand: ["bg-gradient-to-br", "from-teal-600", "to-blue-600"],
+  };
+
+  return [
+    ...base,
+    ...(positionMap[pos] || positionMap.top),
+    ...(themeMap[props.theme] || themeMap.dark),
+  ];
+});
+
+const enterFromClass = computed(() => {
+  const map: Record<string, string> = {
+    top: "opacity-0 translate-y-1",
+    bottom: "opacity-0 -translate-y-1",
+    left: "opacity-0 translate-x-1",
+    right: "opacity-0 -translate-x-1",
+  };
+  return map[positionForAnim.value] || map.top;
+});
 
 // Combine custom styles with adjusted positioning styles
 const tooltipStyles = computed(() => ({
@@ -262,190 +347,4 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped>
-.tooltip-container {
-  display: inline-block;
-  position: relative;
-}
-
-/* Tooltip base */
-.tooltip {
-  position: absolute;
-  z-index: 1000;
-  pointer-events: none;
-  white-space: nowrap;
-  font-weight: 500;
-  border-radius: 6px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.2s ease;
-  max-width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Position variants */
-
-.tooltip-force-top {
-  bottom: 99%;
-  left: 50%;
-  transform: translateX(-99%);
-  margin-bottom: 3px;
-}
-.tooltip-top {
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-bottom: 8px;
-}
-.tooltip-bottom {
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 8px;
-}
-.tooltip-left {
-  right: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-right: 8px;
-}
-.tooltip-right {
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: 8px;
-}
-
-/* Size variants */
-.tooltip-sm {
-  padding: 4px 8px;
-  font-size: 11px;
-  line-height: 1.3;
-}
-.tooltip-md {
-  padding: 6px 10px;
-  font-size: 12px;
-  line-height: 1.4;
-}
-.tooltip-lg {
-  padding: 8px 12px;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-/* Theme variants */
-.tooltip-dark {
-  background: rgba(9, 26, 40, 0.95);
-  color: white;
-}
-.tooltip-light {
-  background: rgba(255, 255, 255, 0.95);
-  color: #091a28;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-.tooltip-brand {
-  background: linear-gradient(135deg, #0d9488, #2563eb);
-  color: white;
-}
-
-/* Arrow base */
-.tooltip-arrow {
-  position: absolute;
-  width: 0;
-  height: 0;
-}
-
-/* Arrow positions */
-.tooltip-arrow-top {
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 4px solid currentColor;
-}
-.tooltip-arrow-bottom {
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-bottom: 4px solid currentColor;
-}
-.tooltip-arrow-left {
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-  border-left: 4px solid currentColor;
-}
-.tooltip-arrow-right {
-  right: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-  border-right: 4px solid currentColor;
-}
-
-/* Dark theme arrow colors */
-.tooltip-dark .tooltip-arrow {
-  color: rgba(9, 26, 40, 0.95);
-}
-.tooltip-light .tooltip-arrow {
-  color: rgba(255, 255, 255, 0.95);
-}
-.tooltip-brand .tooltip-arrow {
-  color: #0d9488;
-}
-
-/* Transitions */
-.tooltip-enter-active,
-.tooltip-leave-active {
-  transition: all 0.2s ease;
-}
-.tooltip-enter-from,
-.tooltip-leave-to {
-  opacity: 0;
-  transform: translateX(-50%) translateY(-5px);
-}
-
-/* Position-specific transitions */
-.tooltip-top.tooltip-enter-from,
-.tooltip-top.tooltip-leave-to {
-  transform: translateX(-50%) translateY(5px);
-}
-.tooltip-bottom.tooltip-enter-from,
-.tooltip-bottom.tooltip-leave-to {
-  transform: translateX(-50%) translateY(-5px);
-}
-.tooltip-left.tooltip-enter-from,
-.tooltip-left.tooltip-leave-to {
-  transform: translateY(-50%) translateX(5px);
-}
-.tooltip-right.tooltip-enter-from,
-.tooltip-right.tooltip-leave-to {
-  transform: translateY(-50%) translateX(-5px);
-}
-
-/* Mobile optimizations */
-@media (hover: none) and (pointer: coarse) {
-  .tooltip {
-    font-size: 14px;
-    padding: 8px 12px;
-    max-width: 250px;
-  }
-
-  .tooltip-sm {
-    font-size: 12px;
-    padding: 6px 10px;
-  }
-
-  /* Ensure container doesn't interfere with touch events */
-  .tooltip-container {
-    touch-action: manipulation;
-  }
-}
-</style>
+<style scoped></style>
