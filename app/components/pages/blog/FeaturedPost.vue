@@ -71,6 +71,7 @@ const returnSizes = computed(() => {
                 v-if="isLoaded"
                 v-bind="imgAttrs"
                 :src="src"
+                fetchpriority="high"
                 :alt="post.title"
               />
               <div v-else class="w-full h-full">
