@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { BlogPost } from "~~/server/types/blog";
-import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+import { getBreakpoints } from "~/composables/shared/breakpoints";
 const props = defineProps<{ post: BlogPost }>();
-
+const { isMobileDevice, isTablet } = getBreakpoints();
 // Helper to determine content type
 const isHeading = (item: any) => item.type === "heading";
 const isParagraph = (item: any) => item.type === "paragraph";
@@ -21,10 +21,6 @@ const getHeadingClass = (level: number) => {
       return "text-xl font-bold mb-3 mt-4";
   }
 };
-const breakpoints = useBreakpoints(breakpointsTailwind);
-const isMobileDevice = breakpoints.smaller("sm");
-const isTablet = breakpoints.between("sm", "lg");
-
 const returnSizes = computed(() => {
   if (isMobileDevice.value) return "144"; // mobiles
   if (isTablet.value) return "196"; // between
