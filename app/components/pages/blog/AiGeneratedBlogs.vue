@@ -24,6 +24,7 @@ useIntersectionObserver(blogPostsTarget, ([entry], observer) => {
     <Banner
       ref="blogPostsTarget"
       class="md:pb-12"
+      :class="{ invisible: !showBlogPosts }"
       title="Blog"
       description=""
       :first-tag-is-h1="false"
