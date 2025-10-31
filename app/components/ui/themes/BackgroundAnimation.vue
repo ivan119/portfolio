@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref, shallowRef, onMounted, onBeforeUnmount, computed } from "vue";
+import { ref, shallowRef, onMounted, onBeforeUnmount, computed, nextTick } from "vue";
 import { useColorMode } from "#imports";
 
 // Keep track of mounting state
@@ -76,18 +76,24 @@ const addParticle = () => {
   particles.value = newParticles;
 };
 
-// Animation loop
+// Animation loop - all runs on main thread
 let animationId = null;
 let isAnimating = false;
+let lastFrameTime = 0;
 
-const animate = () => {
+const animate = (currentTime = 0) => {
   if (!isMounted.value || !isAnimating) return;
+
+  // Calculate delta time for consistent animation speed
+  const deltaTime = lastFrameTime ? (currentTime - lastFrameTime) / 16.67 : 1; // Normalize to ~60fps
+  lastFrameTime = currentTime || performance.now();
 
   const newParticles = [...particles.value];
   newParticles.forEach((particle) => {
-    particle.position[0] += particle.velocity[0];
-    particle.position[1] += particle.velocity[1];
-    particle.position[2] += particle.velocity[2];
+    // Apply velocity with delta time normalization (ensures main thread consistency)
+    particle.position[0] += particle.velocity[0] * deltaTime;
+    particle.position[1] += particle.velocity[1] * deltaTime;
+    particle.position[2] += particle.velocity[2] * deltaTime;
 
     // Bounce off boundaries
     for (let i = 0; i < 3; i++) {
@@ -119,23 +125,27 @@ const animate = () => {
     particles.value = newParticles;
   }
 
+  // Continue animation on main thread
   animationId = requestAnimationFrame(animate);
 };
 
-// Start animation function
+// Start animation function - ensures main thread execution
 const startAnimation = () => {
   if (isAnimating) return;
   isAnimating = true;
-  animate();
+  lastFrameTime = 0;
+  // Use requestAnimationFrame to ensure we start on the main thread
+  animationId = requestAnimationFrame(animate);
 };
 
-// Stop animation function
+// Stop animation function - proper cleanup on main thread
 const stopAnimation = () => {
   isAnimating = false;
   if (animationId) {
     cancelAnimationFrame(animationId);
     animationId = null;
   }
+  lastFrameTime = 0;
 };
 
 onMounted(() => {
@@ -161,10 +171,13 @@ onMounted(() => {
   }
   particles.value = initialParticles;
 
-  // Use setTimeout to ensure the component is fully mounted
-  setTimeout(() => {
-    startAnimation();
-  }, 100);
+  // Use nextTick + requestAnimationFrame to ensure main thread execution
+  nextTick(() => {
+    // Use requestAnimationFrame instead of setTimeout to keep on main thread
+    requestAnimationFrame(() => {
+      startAnimation();
+    });
+  });
 });
 
 onBeforeUnmount(() => {
