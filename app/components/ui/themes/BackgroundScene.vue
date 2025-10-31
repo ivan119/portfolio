@@ -7,6 +7,12 @@
 import * as THREE from "three";
 import { useColorMode } from "#imports";
 
+// Animation constants
+const ANIMATION_SPEED = 0.01;
+const PARTICLE_VELOCITY_FACTOR = 0.05;
+const BOUNDARY_THRESHOLD = 25;
+const ANIMATION_TIMEOUT_MULTIPLIER = 400;
+
 // Configuration options that can be customized
 const config = ref({
   particleColor: "#4a9eff", // Default dark mode particle color
@@ -169,9 +175,9 @@ onMounted(() => {
       particles.push({
         position: new THREE.Vector3(x, y, z),
         velocity: new THREE.Vector3(
-          (Math.random() - 0.5) * 0.05,
-          (Math.random() - 0.5) * 0.05,
-          (Math.random() - 0.5) * 0.05,
+          (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
+          (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
+          (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
         ),
         index: i,
         size: 1.0, // Current size factor
@@ -322,9 +328,9 @@ onMounted(() => {
       particle.position.add(particle.velocity);
 
       // Boundary check
-      if (Math.abs(particle.position.x) > 25) particle.velocity.x *= -1;
-      if (Math.abs(particle.position.y) > 25) particle.velocity.y *= -1;
-      if (Math.abs(particle.position.z) > 25) particle.velocity.z *= -1;
+      if (Math.abs(particle.position.x) > BOUNDARY_THRESHOLD) particle.velocity.x *= -1;
+      if (Math.abs(particle.position.y) > BOUNDARY_THRESHOLD) particle.velocity.y *= -1;
+      if (Math.abs(particle.position.z) > BOUNDARY_THRESHOLD) particle.velocity.z *= -1;
 
       // Update position array
       const idx = particle.index * 3;
@@ -582,7 +588,7 @@ onMounted(() => {
         const timeoutId = setTimeout(() => {
           animationTimeouts.delete(timeoutId);
           returnAlphaToNormal();
-        }, config.value.connectionAnimDuration * 400);
+        }, config.value.connectionAnimDuration * ANIMATION_TIMEOUT_MULTIPLIER);
         animationTimeouts.add(timeoutId);
       }
     };
@@ -593,7 +599,7 @@ onMounted(() => {
     if (!isAnimating) return;
     
     animationId = requestAnimationFrame(animate);
-    bgMaterial.uniforms.time.value += 0.01;
+    bgMaterial.uniforms.time.value += ANIMATION_SPEED;
 
     // Update particle connections (all runs on main thread)
     updateParticleConnections();
