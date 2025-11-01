@@ -17,7 +17,15 @@ export function usePosts() {
       posts.value = data.value?.posts || [];
       featuredPost.value = data.value?.featured_post || null;
     } catch (error) {
-      console.error("Error fetching posts:", error);
+      // Log error in development only
+      if (import.meta.dev) {
+        console.error("Error fetching posts:", error);
+      }
+      // In production, errors are handled by Nuxt's error handling
+      throw createError({
+        statusCode: 500,
+        statusMessage: "Failed to fetch posts",
+      });
     }
   };
 
@@ -32,7 +40,12 @@ export function usePosts() {
       );
       post.value = data.value;
     } catch (error) {
-      console.error("Error fetching post:", error);
+      // Log error in development only
+      if (import.meta.dev) {
+        console.error("Error fetching post:", error);
+      }
+      // In production, errors are handled by Nuxt's error handling
+      post.value = null;
       return null;
     }
   };

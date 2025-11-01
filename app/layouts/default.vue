@@ -41,7 +41,7 @@ const {
           key="dotted-bg"
           class="background-container"
         />
-        <ErrorCode v-else />
+        <ErrorCode v-else key="errorCode" />
       </Transition>
     </ClientOnly>
     <div class="content-container">

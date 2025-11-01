@@ -1,4 +1,6 @@
 import { posts } from "../../data/posts";
+import type { BlogPost, PreviewBlogPost } from "../../types/blog";
+
 export default defineCachedEventHandler(
   async (event) => {
     const query = getQuery(event);
@@ -8,29 +10,34 @@ export default defineCachedEventHandler(
         throw createError({ statusCode: 404, statusMessage: "Post not found" });
       return post;
     }
-    const constKeys = [
+    const constKeys: Array<keyof PreviewBlogPost> = [
       "id",
       "coverImage",
       "title",
       "author",
       "date",
-      "published",
       "excerpt",
     ];
 
     // Helper to transform posts to only include specific keys
-    function transformPosts(obj: any, keys: string[]) {
-      return keys.reduce((acc, key) => {
-        if (obj.hasOwnProperty(key)) {
-          acc[key] = obj[key];
-        }
-        return acc;
-      }, {} as any);
+    function transformPosts<T extends Record<string, unknown>, K extends keyof T>(
+      obj: T,
+      keys: K[],
+    ): Pick<T, K> {
+      return keys.reduce(
+        (acc, key) => {
+          if (key in obj) {
+            acc[key] = obj[key];
+          }
+          return acc;
+        },
+        {} as Pick<T, K>,
+      );
     }
     // Transform posts
     const transformedPosts = posts
-      ?.filter((p) => p.published)
-      .map((p) => transformPosts(p, constKeys));
+      ?.filter((p): p is BlogPost => p.published === true)
+      .map((p) => transformPosts<BlogPost, keyof PreviewBlogPost>(p, constKeys));
     return {
       featured_post: transformedPosts[0],
       posts: transformedPosts.slice(1),

@@ -52,7 +52,7 @@ usePageSeo({
             aria-label="Open project in new tab"
             class="w-full h-full"
           >
-            <Tooltip
+            <LazyTooltip
               text="View More"
               position="left"
               class="pointer-events-none md:pointer-events-auto"
@@ -62,7 +62,7 @@ usePageSeo({
               >
                 <Eye />
               </div>
-            </Tooltip>
+            </LazyTooltip>
           </NuxtLink>
         </div>
 

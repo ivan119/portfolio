@@ -1,5 +1,6 @@
 import { posts } from "../data/posts";
 import { projects, allProjects } from "../data/projects";
+import type { BlogPost } from "../types/blog";
 
 export default defineCachedEventHandler(
   (event) => {
@@ -28,11 +29,12 @@ export default defineCachedEventHandler(
 
     // Add blog posts
     for (const post of posts) {
-      const lastmod = (post as any).date
-        ? new Date((post as any).date).toISOString()
+      const blogPost = post as BlogPost;
+      const lastmod = blogPost.date
+        ? new Date(blogPost.date).toISOString()
         : undefined;
-      const id = (post as any).id || (post as any).slug;
-      const published = post.published || false;
+      const id = blogPost.id || (blogPost as { slug?: string }).slug;
+      const published = blogPost.published || false;
       if (id && published) {
         urls.push({
           loc: `${base}/blog/${id}`,

@@ -1,17 +1,12 @@
 import type { NuxtError } from "#app";
-// @ts-ignore
 import Typewriter from "typewriter-effect/dist/core";
+import type { TypewriterInstance } from "typewriter-effect/dist/core";
 
 export function useErrorView(error: NuxtError | undefined) {
   const route = useRoute();
 
-  const fakeAdminStyle = ref(false);
   const fakeAdminDetected = computed(() => {
-    if (route.path.includes("admin")) {
-      fakeAdminStyle.value = true;
-      return true;
-    }
-    return false;
+    return route.path.includes("admin");
   });
   const errorCode = computed(() =>
     fakeAdminDetected.value ? "401" : error?.statusCode || "404",
@@ -53,15 +48,20 @@ export function useErrorView(error: NuxtError | undefined) {
 
   // Typewriter
   const typeTarget = ref<HTMLElement | null>(null);
-  let typewriterInstance: any = null;
+  let typewriterInstance: TypewriterInstance | null = null;
 
   const initTypewriter = () => {
     if (!import.meta.client) return;
     if (!typeTarget.value) return;
-    if (typewriterInstance && typeof typewriterInstance.stop === "function") {
+    if (typewriterInstance) {
       try {
         typewriterInstance.stop();
-      } catch {}
+      } catch (error) {
+        // Log error in development, silently fail in production
+        if (import.meta.dev) {
+          console.warn("Typewriter cleanup error:", error);
+        }
+      }
     }
     typeTarget.value.innerHTML = "";
     typewriterInstance = new Typewriter(typeTarget.value, {
@@ -156,10 +156,15 @@ export function useErrorView(error: NuxtError | undefined) {
       cancelAnimationFrame(rafId);
       rafId = null;
     }
-    if (typewriterInstance && typeof typewriterInstance.stop === "function") {
+    if (typewriterInstance) {
       try {
         typewriterInstance.stop();
-      } catch {}
+      } catch (error) {
+        // Log error in development, silently fail in production
+        if (import.meta.dev) {
+          console.warn("Typewriter cleanup error:", error);
+        }
+      }
     }
   });
 

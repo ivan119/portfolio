@@ -91,6 +91,7 @@ useIntersectionObserver(projectsTarget, ([entry], observer) => {
       ref="projectsTarget"
       title="Other Projects"
       description=""
+      :class="{ invisible: !showProjects }"
       :first-tag-is-h1="false"
     >
       <template v-if="showProjects" #default>

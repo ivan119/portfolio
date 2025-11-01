@@ -36,7 +36,7 @@ const props = defineProps({
   >
     <ClientOnly>
       <!-- SunAndMoon Button -->
-      <themeButton
+      <ThemeButton
         :icon="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
         :is-active="colorMode.preference === 'dark'"
         :is-changing="isThemeChanging"
@@ -52,7 +52,7 @@ const props = defineProps({
       />
       <template v-if="!hideThemeButtons && !isMobileDevice">
         <!-- Dotted Theme Button -->
-        <themeButton
+        <ThemeButton
           :icon="DottedIcon"
           :is-active="activeTheme === 'dotted'"
           variant="dotted"
@@ -64,7 +64,7 @@ const props = defineProps({
           "
         />
         <!-- Animated Theme Button -->
-        <themeButton
+        <ThemeButton
           :icon="BackgroundIcon"
           :is-active="activeTheme === 'animated'"
           variant="animated"

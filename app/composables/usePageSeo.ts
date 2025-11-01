@@ -46,8 +46,11 @@ export function usePageSeo({
       ? { ogImage: absoluteImage, twitterImage: absoluteImage }
       : {}),
     ...(imageAlt
-      ? { ogImageAlt: imageAlt, twitterImageAlt: imageAlt }
-      : ({} as any)),
+      ? {
+          ogImageAlt: imageAlt,
+          twitterImageAlt: imageAlt,
+        }
+      : {}),
     twitterCard: absoluteImage ? "summary_large_image" : "summary",
     twitterTitle: title,
     twitterDescription: description,

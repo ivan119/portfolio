@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { usePosts } from "~/composables/usePosts";
 import { isActiveClass } from "~/composables/useActiveClass";
+const { fetchPosts, posts, featuredPost } = usePosts();
+await fetchPosts();
 definePageMeta({
   middleware: ["blog-active"],
 });
-const invisible = ref(true);
-const { fetchPosts, posts, featuredPost } = usePosts();
-await fetchPosts();
 usePageSeo({
   title: "Blog — Ivan Kelava",
   description:
@@ -16,13 +14,6 @@ usePageSeo({
   imageAlt: "Blog cover image",
   lang: "en",
 });
-onMounted(async () => {
-  // jumping breadcrumbs on routing bug fix
-  // probably cause because of animations collide
-  setTimeout(() => {
-    invisible.value = false;
-  }, 0);
-});
 </script>
 
 <template>
@@ -30,10 +21,8 @@ onMounted(async () => {
     :class="{ 'slide-enter-active': isActiveClass }"
     class="!max-w-7xl !p-3 md:p-0 mx-auto px-4 sm:px-6 lg:px-8 py-12"
   >
-    <LazyNavigationBreadcrumbs
-      :class="{ invisible: invisible }"
-      class="visible px-4 md:px-8 mb-3"
-    />
+    <span class="hidden"></span>
+    <LazyNavigationBreadcrumbs class="px-4 md:px-8 mb-3" />
     <template v-if="featuredPost && posts?.length > 0">
       <LazyFeaturedPost
         :post="featuredPost"

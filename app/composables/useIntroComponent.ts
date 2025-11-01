@@ -1,6 +1,6 @@
 import { ref, nextTick, type Ref } from "vue";
-// @ts-ignore
 import Typewriter from "typewriter-effect/dist/core";
+import type { TypewriterInstance } from "typewriter-effect/dist/core";
 
 export const useIntroComponent = () => {
   const hideNow = ref(false);
@@ -10,7 +10,7 @@ export const useIntroComponent = () => {
   const isIntroActive = ref(true);
   const typeWrite: Ref<HTMLElement | null> = ref(null);
   const del = ref(6);
-  let typewriterInstances: Array<{ stop?: () => void }> = [];
+  let typewriterInstances: TypewriterInstance[] = [];
 
   // click options so we can bind after Typewriter re-renders the anchor
   type ClickOptions = {
@@ -164,7 +164,7 @@ export const useIntroComponent = () => {
         element.style.minWidth = "";
       });
       tw.start();
-      typewriterInstances.push(tw as any);
+      typewriterInstances.push(tw);
       const estTypingMs = (chars || 1) * elementDelay;
       totalDelay += estTypingMs;
       if (idx === 0) {

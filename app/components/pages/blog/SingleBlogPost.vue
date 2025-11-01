@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import type { BlogPost } from "~~/server/types/blog";
 import { getBreakpoints } from "~/composables/shared/breakpoints";
+
+// Content item type guard helpers
+type ContentItem = BlogPost["content"][number];
+
 const props = defineProps<{ post: BlogPost }>();
 const { isMobileDevice, isTablet } = getBreakpoints();
+
 // Helper to determine content type
-const isHeading = (item: any) => item.type === "heading";
-const isParagraph = (item: any) => item.type === "paragraph";
-const isImage = (item: any) => item.type === "image";
+const isHeading = (item: ContentItem) => item.type === "heading";
+const isParagraph = (item: ContentItem) => item.type === "paragraph";
+const isImage = (item: ContentItem) => item.type === "image";
 
 // Get heading level class
 const getHeadingClass = (level: number) => {
@@ -95,7 +100,7 @@ const returnSizes = computed(() => {
     </div>
   </div>
 
-  <!-- Post Content BUG IS HERE OBVIOUSLY WHEN IS FALSE ALL WORKS-->
+  <!-- Post Content -->
   <article
     v-if="props.post?.content && props.post.content.length"
     class="prose prose-lg dark:prose-invert max-w-none"

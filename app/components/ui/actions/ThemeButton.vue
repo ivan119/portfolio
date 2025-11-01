@@ -5,7 +5,7 @@
     @click="handleClick"
   >
     <!-- Icon with optional tooltip -->
-    <Tooltip
+    <LazyTooltip
       v-if="tooltip"
       :text="tooltip"
       :position="tooltipPosition"
@@ -13,7 +13,7 @@
       :theme="tooltipTheme"
     >
       <component :is="icon" :is-active="isActive" :class="iconClasses" />
-    </Tooltip>
+    </LazyTooltip>
 
     <!-- Active indicator -->
     <div

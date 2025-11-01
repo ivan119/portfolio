@@ -21,9 +21,6 @@ const props = defineProps({
   },
 });
 const emit = defineEmits(["show-intro", "toggle-background", "toggle-layout"]);
-const test = () => {
-  console.log(1);
-};
 const route = useRoute();
 watch(
   () => props.showLogo,
@@ -43,7 +40,6 @@ watch(
 
 const showIntroAgain = () => {
   if (route.path === "/") {
-    // TODO: MAKE ON HOVER NO SIGNATURE ANIMATION OR PAUSE + MAKE V-IF ANIMATION WHEN SHOWING/HIDING
     emit("show-intro");
     setTimeout(() => {
       showLinks.value = false;
