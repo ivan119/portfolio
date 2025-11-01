@@ -33,9 +33,20 @@ export const useDefaultLayout = () => {
   };
 
   const setupViewTransition = () => {
-    if ((document as any).startViewTransition) {
+    // Type guard for View Transition API
+    interface DocumentWithViewTransition extends Document {
+      startViewTransition?: (callback?: () => void | Promise<void>) => {
+        finished: Promise<void>;
+        ready: Promise<void>;
+        updateCallbackDone: Promise<void>;
+        skipTransition: () => void;
+      };
+    }
+
+    const doc = document as DocumentWithViewTransition;
+    if (doc.startViewTransition) {
       const handleNavigation = () => {
-        (document as any).startViewTransition();
+        doc.startViewTransition?.();
       };
       window.addEventListener("popstate", handleNavigation);
       onUnmounted(() => {
