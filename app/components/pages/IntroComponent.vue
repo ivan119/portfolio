@@ -155,7 +155,7 @@ const handlePortfolioClick = useThrottleFn(() => {
       leave-to-class="translate-y-8 opacity-0"
     >
       <div v-if="showSunAndMoonIcon" class="right-8 bottom-8 absolute">
-        <themeButtons :hide-theme-buttons="hideThemeButtons" />
+        <themeButtons row-class :hide-theme-buttons="hideThemeButtons" />
       </div>
     </Transition>
   </div>

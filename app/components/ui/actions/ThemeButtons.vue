@@ -27,12 +27,17 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  rowClass: {
+    type: Boolean,
+    default: false,
+  },
 });
 </script>
 
 <template>
   <div
-    class="toggle-container flex flex-row flex-row-reverse 2xl:flex-col gap-x-2 animate-icons max-h-6 2xl:gap-y-3"
+    :class="{ '2xl:flex-col': !rowClass }"
+    class="toggle-container flex flex-row flex-row-reverse gap-x-2 animate-icons max-h-6 2xl:gap-y-3"
   >
     <ClientOnly>
       <!-- SunAndMoon Button -->
