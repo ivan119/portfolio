@@ -63,7 +63,9 @@ const props = defineProps({
           variant="dotted"
           :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
           tooltip="Toggle Background Animation"
-          :tooltip-position="smallerThen2xlWidth ? 'force-top' : 'left'"
+          :tooltip-position="
+            rowClass || smallerThen2xlWidth ? 'force-top' : 'left'
+          "
           @click="
             toggleBackground(activeTheme === 'dotted' ? 'default' : 'dotted')
           "
@@ -74,7 +76,9 @@ const props = defineProps({
           :is-active="activeTheme === 'animated'"
           variant="animated"
           tooltip="Toggle Background Animation"
-          :tooltip-position="smallerThen2xlWidth ? 'force-top' : 'left'"
+          :tooltip-position="
+            rowClass || smallerThen2xlWidth ? 'force-top' : 'left'
+          "
           @click="
             toggleBackground(
               activeTheme === 'animated' ? 'default' : 'animated',
