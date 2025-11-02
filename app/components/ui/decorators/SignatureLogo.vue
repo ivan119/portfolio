@@ -43,11 +43,11 @@ const sizeClasses = {
 
 <template>
   <div class="flex items-center" :class="sizeClasses[size].container">
-    <NuxtImg
+    <img
       class="rounded-full"
       :class="sizeClasses[size].avatar"
       :src="'/favicon-48x48.png'"
-      loading="eager"
+      loading="lazy"
       fetchpriority="high"
       :alt="author"
     />
