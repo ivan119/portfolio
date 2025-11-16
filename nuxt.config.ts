@@ -70,15 +70,20 @@ export default defineNuxtConfig({
       "/favicon-48x48.png": {
         headers: { "cache-control": "public, max-age=31536000, immutable" },
       },
-      // Fully prerender static pages
+
+      // Prerender main pages
       "/": { prerender: true },
       "/projects": { prerender: true },
       "/skills": { prerender: true },
       "/blog": { prerender: true },
-      // Blog posts: static regenerate every 7 days
-      "/blog/**": { isr: 86400 * 7 }, // 24h revalidation interval
-      // API caching
-      "/api/**": { cache: { maxAge: 300, staleMaxAge: 86400 } },
+
+      // ISR for blog posts
+      "/blog/**": { isr: 86400 * 7 },
+
+      // Edge cache APIs
+      "/api/**": {
+        cache: { maxAge: 300, staleMaxAge: 86400 },
+      },
     },
   },
   runtimeConfig: {
