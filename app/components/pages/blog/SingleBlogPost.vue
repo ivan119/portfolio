@@ -90,7 +90,7 @@ const returnSizes = computed(() => {
           <SkeletonImage
             v-else
             rounded="lg"
-            class="w-full h-full"
+            class="w-full h-full rounded-lg"
             aria-label="Loading single post cover image"
           />
         </transition>
@@ -137,13 +137,13 @@ const returnSizes = computed(() => {
               :src="src"
               v-bind="imgAttrs"
               loading="lazy"
-              class="h-56 sm:h-80 lg:h-96 w-full object-cover"
+              class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
               :alt="item.alt"
             />
             <div v-else class="h-56 sm:h-80 lg:h-96">
               <SkeletonImage
                 rounded="lg"
-                class="w-full h-full"
+                class="w-full h-full rounded-lg"
                 :aria-label="`Loading post image_${index}`"
               />
             </div>

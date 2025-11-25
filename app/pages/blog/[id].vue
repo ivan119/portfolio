@@ -32,10 +32,7 @@ usePageSeo({
 <template>
   <!-- Loaded State -->
 
-  <div
-    :class="{ 'slide-enter-active': isActiveClass }"
-    class="max-w-4xl mx-auto !px-3"
-  >
+  <div :class="{ 'slide-enter-active': isActiveClass }" class="mx-auto !px-3">
     <!-- Breadcrumbs -->
     <Navigation-Breadcrumbs class="px-3" />
     <Banner v-if="post" title="" description="" class="-mx-0 md:-mx-6 mt-2">
