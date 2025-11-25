@@ -20,7 +20,7 @@
     "@vercel/speed-insights": "^1.2.0",
     "@vueuse/nuxt": "^14.0.0",
     "nuxt": "^4.2.1",
-    "three": "^0.181.1",
+    "three": "^0.181.2",
     "typewriter-effect": "^2.22.0"
   },
   "volta": {
