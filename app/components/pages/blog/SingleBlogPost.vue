@@ -71,13 +71,9 @@ const returnSizes = computed(() => {
       <NuxtImg
         provider="cloudinary"
         :src="props.post?.coverImage"
-        :alt="props.post?.title || ''"
         :sizes="returnSizes"
         densities="1"
         format="webp"
-        class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
-        loading="eager"
-        fetchpriority="high"
         custom
         v-slot="{ isLoaded, imgAttrs, src }"
       >
@@ -86,13 +82,15 @@ const returnSizes = computed(() => {
             v-if="isLoaded"
             :src="src"
             v-bind="imgAttrs"
-            :alt="props.post.title"
-            class="w-full h-full object-cover rounded-lg"
+            loading="eager"
+            fetchpriority="high"
+            :alt="props.post?.title || ''"
+            class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
           />
           <SkeletonImage
             v-else
             rounded="lg"
-            class="w-full h-full"
+            class="w-full h-full rounded-lg"
             aria-label="Loading single post cover image"
           />
         </transition>
@@ -126,12 +124,9 @@ const returnSizes = computed(() => {
         <NuxtImg
           provider="cloudinary"
           :src="item.src"
-          :alt="item.alt"
           :sizes="returnSizes"
-          class="h-56 sm:h-80 lg:h-96 w-full object-cover"
           format="webp"
           quality="auto"
-          loading="lazy"
           custom
           v-slot="{ isLoaded, imgAttrs, src }"
         >
@@ -141,12 +136,14 @@ const returnSizes = computed(() => {
               v-if="isLoaded"
               :src="src"
               v-bind="imgAttrs"
-              :alt="post.title"
+              loading="lazy"
+              class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
+              :alt="item.alt"
             />
             <div v-else class="h-56 sm:h-80 lg:h-96">
               <SkeletonImage
                 rounded="lg"
-                class="w-full h-full"
+                class="w-full h-full rounded-lg"
                 :aria-label="`Loading post image_${index}`"
               />
             </div>

@@ -57,13 +57,9 @@ const returnSizes = computed(() => {
             <NuxtImg
               provider="cloudinary"
               :src="post.coverImage"
-              :alt="post.title"
-              class="featured-image-img rounded-lg"
               densities="1"
               quality="80"
               :sizes="returnSizes"
-              loading="eager"
-              fetchpriority="high"
               custom
               v-slot="{ isLoaded, imgAttrs, src }"
             >
@@ -71,12 +67,14 @@ const returnSizes = computed(() => {
                 v-if="isLoaded"
                 v-bind="imgAttrs"
                 :src="src"
+                class="featured-image-img rounded-lg"
                 fetchpriority="high"
                 :alt="post.title"
               />
               <div v-else class="w-full h-full">
                 <SkeletonImage
                   rounded="rounded-none"
+                  class="featured-image-img rounded-lg"
                   aria-label="Loading featured post image"
                 />
               </div>

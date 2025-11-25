@@ -39,11 +39,7 @@ const doImageEffect = ref(false);
         >
           <NuxtImg
             :src="post?.coverImage || '/seo/IvanKelavaBlog1200x627.webp'"
-            class="w-full h-full object-cover transform transition-transform duration-500"
-            :class="{ 'scale-105': doImageEffect }"
             format="webp"
-            loading="lazy"
-            fetchpriority="high"
             :custom="true"
             v-slot="{ isLoaded, imgAttrs, src }"
           >
@@ -51,7 +47,11 @@ const doImageEffect = ref(false);
             <transition name="slide-fade">
               <img
                 v-if="isLoaded"
+                class="w-full h-full object-cover transform transition-transform duration-500"
+                :class="{ 'scale-105': doImageEffect }"
                 v-bind="imgAttrs"
+                loading="lazy"
+                fetchpriority="high"
                 :src="src"
                 :alt="post.title"
               />

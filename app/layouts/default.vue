@@ -51,7 +51,7 @@ const {
         @update:show-main-content="changeState"
         @show-logo="updateShowLogo"
       />
-      <LazyNavigationHeader
+      <NavigationHeader
         v-if="showMainContent"
         :show-logo="showLogo"
         :isMobileDevice
