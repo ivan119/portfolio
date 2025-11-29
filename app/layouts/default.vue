@@ -51,7 +51,7 @@ const {
         @update:show-main-content="changeState"
         @show-logo="updateShowLogo"
       />
-      <NavigationHeader
+      <Header
         v-if="showMainContent"
         :show-logo="showLogo"
         :isMobileDevice

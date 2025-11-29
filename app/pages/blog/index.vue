@@ -22,7 +22,7 @@ usePageSeo({
     class="!max-w-7xl !p-3 md:p-0 mx-auto px-4 sm:px-6 lg:px-8 py-12"
   >
     <span class="hidden"></span>
-    <LazyNavigationBreadcrumbs class="px-4 md:px-8 mb-3" />
+    <Breadcrumbs class="px-4 md:px-8 mb-3" />
     <template v-if="featuredPost && posts?.length > 0">
       <LazyFeaturedPost
         :post="featuredPost"
