@@ -140,7 +140,7 @@ usePageSeo({
               {{ tag.name }}
             </span>
           </div>
-          <Navigation-Breadcrumbs />
+          <Breadcrumbs />
 
           <div v-if="project.features?.length" class="mt-4">
             <div

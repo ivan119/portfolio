@@ -1,9 +1,8 @@
 <script setup>
-// Import Sun and Moon components
 import BlogIcon from "~/components/ui/icons/Blog.vue";
 import SkillsIcon from "~/components/ui/icons/Skills.vue";
 import ProjectsIcon from "~/components/ui/icons/Projects.vue";
-const colorMode = useColorMode();
+
 const showLinks = ref(false);
 const props = defineProps({
   showLogo: {
