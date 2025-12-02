@@ -36,7 +36,6 @@ export const useIconComponentHandler = () => {
       .replace("-original", "")
       .replace("-wordmark", "")
       .toLowerCase();
-    console.log(key, "key?");
     return iconMap[key] ?? null;
   };
 
