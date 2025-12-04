@@ -23,6 +23,9 @@ for (const path in modules) {
   if (name === "node") {
     iconMap["nodejs"] = (modules[path] as any).default;
   }
+  if (name === "adobexd") {
+    iconMap["xd"] = (modules[path] as any).default;
+  }
   if (name) {
     iconMap[name] = (modules[path] as any).default;
   }
