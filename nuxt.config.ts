@@ -80,9 +80,6 @@ export default defineNuxtConfig({
         isr: 86400 * 7,
         cache: { maxAge: 86400, swr: true },
       },
-      "/**/_payload.json": {
-        cache: { maxAge: 86400, swr: true },
-      },
     },
   },
   runtimeConfig: {
