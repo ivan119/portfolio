@@ -10,6 +10,9 @@ const BackgroundScene = defineAsyncComponent(
 const DottedLayout = defineAsyncComponent(
   () => import("~/components/ui/themes/DottedLayout.vue"),
 );
+const ErrorCode = defineAsyncComponent(
+  () => import("~/components/ui/themes/ErrorCode.vue"),
+);
 const { activeTheme } = useThemeButtons();
 
 const {
