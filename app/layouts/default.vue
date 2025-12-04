@@ -63,7 +63,7 @@ const {
           <slot />
         </div>
       </div>
-      <LazyFooter class="body-container" v-if="showMainContent" />
+      <Footer class="body-container" v-if="showMainContent" />
       <LazyScrollProgress :visibility="showMainContent" />
     </div>
   </div>
