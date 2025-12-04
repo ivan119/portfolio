@@ -91,96 +91,6 @@ export const preferredSkills: BasicSkill[] = [
   },
 ];
 
-export const skills: BasicSkill[] = [
-  {
-    name: "Nuxt.js",
-    icon: "devicon-nuxtjs-plain",
-    url: "https://nuxtjs.org/",
-  },
-  {
-    name: "JavaScript",
-    icon: "devicon-javascript-plain",
-    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
-  },
-  {
-    name: "Tailwind CSS",
-    icon: "devicon-tailwindcss-plain",
-    url: "https://tailwindcss.com/",
-  },
-  { name: "Vue", icon: "devicon-vuejs-plain", url: "https://vuejs.org/" },
-  {
-    name: "Bootstrap",
-    icon: "devicon-bootstrap-plain",
-    url: "https://getbootstrap.com/",
-  },
-  {
-    name: "Vuetify",
-    icon: "devicon-vuetify-plain",
-    url: "https://vuetifyjs.com/en/",
-  },
-  {
-    name: "React",
-    icon: "devicon-react-original",
-    url: "https://reactjs.org/",
-  },
-  {
-    name: "Next.js",
-    icon: "devicon-nextjs-original-wordmark",
-    url: "https://nextjs.org/",
-  },
-  {
-    name: "Angular",
-    icon: "devicon-angularjs-plain",
-    url: "https://angular.io/",
-  },
-  {
-    name: "C++",
-    icon: "devicon-cplusplus-plain",
-    url: "https://isocpp.org/",
-  },
-  {
-    name: "AdonisJS",
-    icon: "devicon-adonisjs-plain",
-    url: "https://adonisjs.com/",
-  },
-  {
-    name: "Prisma ORM",
-    icon: "devicon-prisma-plain",
-    url: "https://www.prisma.io/",
-  },
-  {
-    name: "Flutter",
-    icon: "devicon-flutter-plain",
-    url: "https://flutter.dev/",
-  },
-  {
-    name: "SQL",
-    icon: "devicon-mysql-plain",
-    url: "https://www.w3schools.com/sql/",
-  },
-  { name: "PHP", icon: "devicon-php-plain", url: "https://www.php.net/" },
-  {
-    name: "Laravel",
-    icon: "devicon-laravel-plain",
-    url: "https://laravel.com/",
-  },
-  {
-    name: "Python",
-    icon: "devicon-python-plain",
-    url: "https://www.python.org/",
-  },
-  {
-    name: "Adobe XD",
-    icon: "devicon-xd-plain",
-    url: "https://www.adobe.com/products/xd.html",
-  },
-  {
-    name: "Figma",
-    icon: "devicon-figma-plain",
-    url: "https://www.figma.com/",
-  },
-];
-
 export const experiencedSkills: BasicSkill[] = [
   {
     name: "C++",
@@ -331,5 +241,4 @@ export const experiencedSkills: BasicSkill[] = [
 export const listSkills = (): SkillsListResponse => ({
   preferredSkills,
   experiencedSkills,
-  skills,
 });

@@ -9,7 +9,6 @@ export const useSkills = async () => {
       default: () => ({
         preferredSkills: [],
         experiencedSkills: [],
-        skills: [],
       }),
     },
   );
@@ -21,7 +20,6 @@ export const useSkills = async () => {
     experiencedSkills: computed<BasicSkill[]>(
       () => data.value?.experiencedSkills || [],
     ),
-    skills: computed<BasicSkill[]>(() => data.value?.skills || []),
     error,
     pending,
     refresh,
