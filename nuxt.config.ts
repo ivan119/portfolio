@@ -70,15 +70,19 @@ export default defineNuxtConfig({
       "/favicon-48x48.png": {
         headers: { "cache-control": "public, max-age=31536000, immutable" },
       },
-
-      // Prerender main pages
-      "/": { prerender: true },
-      "/projects": { prerender: true },
-      "/skills": { prerender: true },
-      "/blog": { prerender: true },
-
-      // ISR for blog posts
-      "/blog/**": { isr: 86400 * 7 },
+      // Prerender main pages -> cache globally for 1 day + SWR
+      "/": { cache: { maxAge: 86400, swr: true }, prerender: true },
+      "/projects": { cache: { maxAge: 86400, swr: true }, prerender: true },
+      "/skills": { cache: { maxAge: 86400, swr: true }, prerender: true },
+      "/blog": { cache: { maxAge: 86400, swr: true }, prerender: true },
+      // Blog ISR (regenerates weekly, but cached globally for 1 day)
+      "/blog/**": {
+        isr: 86400 * 7,
+        cache: { maxAge: 86400, swr: true },
+      },
+      "/**/_payload.json": {
+        cache: { maxAge: 86400, swr: true },
+      },
     },
   },
   runtimeConfig: {
