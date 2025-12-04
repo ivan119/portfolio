@@ -117,6 +117,7 @@ onUnmounted(() => {
           class="logo mt-6 relative hover:scale-105 transition-transform duration-300"
         >
           <Signature2
+            :animate="route.path === '/'"
             class="w-[120px] h-20 text-gray-800 dark:text-white hover:bg-gradient-to-r hover:from-teal-500 hover:to-blue-600 hover:bg-clip-text hover:text-transparent transition-all duration-300"
           />
         </NuxtLink>
