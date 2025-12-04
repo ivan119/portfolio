@@ -60,7 +60,7 @@ const {
         :isMobileDevice
         @show-intro="showIntroComponent"
       />
-      <NuxtLoadingIndicator v-if="showMainContent" />
+      <NuxtLoadingIndicator style="position: relative" v-if="showMainContent" />
       <div class="flex-1" v-show="showMainContent">
         <div class="grow">
           <slot />
