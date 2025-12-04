@@ -10,6 +10,9 @@ const BackgroundScene = defineAsyncComponent(
 const DottedLayout = defineAsyncComponent(
   () => import("~/components/ui/themes/DottedLayout.vue"),
 );
+const ErrorCode = defineAsyncComponent(
+  () => import("~/components/ui/themes/ErrorCode.vue"),
+);
 const { activeTheme } = useThemeButtons();
 
 const {
@@ -57,13 +60,13 @@ const {
         :isMobileDevice
         @show-intro="showIntroComponent"
       />
-      <NuxtLoadingIndicator v-if="showMainContent" />
+      <NuxtLoadingIndicator style="position: relative" v-if="showMainContent" />
       <div class="flex-1" v-show="showMainContent">
         <div class="grow">
           <slot />
         </div>
       </div>
-      <LazyFooter class="body-container" v-if="showMainContent" />
+      <Footer class="body-container" v-if="showMainContent" />
       <LazyScrollProgress :visibility="showMainContent" />
     </div>
   </div>

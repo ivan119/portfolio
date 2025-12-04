@@ -79,11 +79,6 @@ export default defineNuxtConfig({
 
       // ISR for blog posts
       "/blog/**": { isr: 86400 * 7 },
-
-      // Edge cache APIs
-      "/api/**": {
-        cache: { maxAge: 300, staleMaxAge: 86400 },
-      },
     },
   },
   runtimeConfig: {

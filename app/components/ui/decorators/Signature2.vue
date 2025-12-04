@@ -1,3 +1,12 @@
+<script setup>
+defineProps({
+  animate: {
+    type: Boolean,
+    default: false,
+  },
+});
+</script>
+
 <template>
   <svg
     class="-mt-5"
@@ -8,6 +17,7 @@
   >
     <g transform="translate(40, 400)">
       <path
+        :class="{ animate: animate }"
         class="path1"
         stroke-width="7"
         stroke-miterlimit="9"
@@ -54,13 +64,14 @@
 .path1 {
   stroke-dashoffset: 1px;
   stroke-dasharray: 350px 0;
-  animation: grow 9s ease forwards infinite;
   transform-origin: center;
   stroke: #303030;
   animation-delay: 0s;
+}
+.animate {
+  animation: grow 9630ms ease forwards infinite;
 }
 .dark .path1 {
   stroke: #fdfdfd;
 }
 </style>
-<script setup lang="ts"></script>
