@@ -20,10 +20,10 @@ export default defineCachedEventHandler(
     ];
 
     // Helper to transform posts to only include specific keys
-    function transformPosts<T extends Record<string, unknown>, K extends keyof T>(
-      obj: T,
-      keys: K[],
-    ): Pick<T, K> {
+    function transformPosts<
+      T extends Record<string, unknown>,
+      K extends keyof T,
+    >(obj: T, keys: K[]): Pick<T, K> {
       return keys.reduce(
         (acc, key) => {
           if (key in obj) {
@@ -36,8 +36,11 @@ export default defineCachedEventHandler(
     }
     // Transform posts
     const transformedPosts = posts
-      ?.filter((p): p is BlogPost => p.published === true)
-      .map((p) => transformPosts<BlogPost, keyof PreviewBlogPost>(p, constKeys));
+      ?.filter((p) => p.published)
+      .map((p) =>
+        // @ts-ignore
+        transformPosts<BlogPost, keyof PreviewBlogPost>(p, constKeys),
+      );
     return {
       featured_post: transformedPosts[0],
       posts: transformedPosts.slice(1),
