@@ -2,11 +2,11 @@ export const posts = [
   {
     id: "evolution-of-frontend-architectures",
     title: "The Evolution of Frontend Architectures",
-    date: "2025-10-17",
+    date: "2025-12-18",
     author: "Ivan Kelava",
     category: "Web Development",
     tags: ["Frontend", "Architecture", "SPA", "Microfrontends", "SSR"],
-    published: false,
+    published: true,
     excerpt:
       "From static HTML pages to complex microfrontends, frontend architecture has continuously evolved to balance scalability, performance, and developer productivity. Let’s explore this fascinating journey and the trade-offs behind each stage.",
     content: [
@@ -17,7 +17,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/frontend_architecture_evolution_timeline.webp",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1766084607/The_evolution_of_frontend_architectures_2_hlagkf.webp",
         alt: "Frontend architecture evolution timeline",
         caption:
           "The evolution of frontend architectures: from static pages to modular and microfrontends.",
@@ -39,7 +39,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/mvc_architecture_example.webp",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1766084607/Static_pages_to_MVC_transition_ifhd0u.webp",
         alt: "Model-View-Controller architecture diagram",
         caption:
           "MVC introduced dynamic rendering but relied heavily on backend logic.",
@@ -61,7 +61,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/single_page_application_example.webp",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1766083898/The_Rise_of_Single_Page_Applications_SPAs_w6edzu.webp",
         alt: "Single Page Application structure",
         caption:
           "SPAs moved business logic to the frontend, enabling dynamic user interfaces without full page reloads.",
@@ -83,7 +83,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/backend_for_frontend_pattern.webp",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1766083988/Backend_for_Frontend_BFF_and_API-Driven_Design_ppfubp.webp",
         alt: "Backend for Frontend pattern",
         caption:
           "The Backend for Frontend pattern allows each client to have its own optimized backend layer.",
@@ -105,7 +105,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/server_side_rendering_diagram.webp",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1766083429/Server-Side_Rendering_SSR_and_Static_Site_Generation_SSG_alkcqk.webp",
         alt: "Server-side rendering process",
         caption:
           "SSR and SSG bring faster load times and improved SEO by rendering content before it reaches the browser.",
@@ -127,7 +127,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/microfrontends_architecture_diagram.webp",
+        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1766083391/Modular_Monoliths_and_Microfrontends_g1ikma.webp",
         alt: "Microfrontends architecture",
         caption:
           "Microfrontends enable large-scale parallel development by splitting the frontend into independently deployable modules.",
