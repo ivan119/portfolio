@@ -29,7 +29,7 @@ export default defineCachedEventHandler(
 
     // Add blog posts
     for (const post of posts) {
-      const blogPost = post as BlogPost;
+      const blogPost = post;
       const lastmod = blogPost.date
         ? new Date(blogPost.date).toISOString()
         : undefined;

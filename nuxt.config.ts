@@ -75,8 +75,6 @@ export default defineNuxtConfig({
       "/projects": { prerender: true },
       "/skills": { prerender: true },
       "/blog": { prerender: true },
-      // ISR for blog posts
-      "/blog/**": { isr: 86400 * 7 },
     },
   },
   runtimeConfig: {

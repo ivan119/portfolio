@@ -10,6 +10,7 @@ export interface BlogPost {
   category?: string;
   coverImage?: string;
   date?: string;
+  published?: boolean;
 }
 type Content = {
   alt?: string;
