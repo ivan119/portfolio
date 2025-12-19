@@ -58,23 +58,30 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
     routeRules: {
-      // Cache all Nuxt build assets for 1 year (safe, hashed filenames)
+      // 1. Keep long-term cache for static assets (hashed files)
       "/_nuxt/**": {
         headers: { "cache-control": "public, max-age=31536000, immutable" },
       },
-      // Cache static HTML for 1 day (fast return visits, still refreshes daily)
-      "/**": {
-        headers: { "cache-control": "public, max-age=86400" },
-      },
-      // After cloudinary provider is added this was called every route change from cdn for some reason
       "/favicon-48x48.png": {
         headers: { "cache-control": "public, max-age=31536000, immutable" },
       },
-      // Prerender main pages
+      // 2. Prerendered pages (Static at build time)
       "/": { prerender: true },
       "/projects": { prerender: true },
       "/skills": { prerender: true },
-      "/blog": { prerender: true },
+      // 3. BLOG: Disable Prerender AND shorten the Browser Cache
+      "/blog": {
+        prerender: false,
+        headers: { "cache-control": "public, max-age=0, must-revalidate" }, // Browser must check server every time
+      },
+      "/blog/**": {
+        prerender: false,
+        headers: { "cache-control": "public, max-age=0, must-revalidate" },
+      },
+      // 4. Default for other pages (reduce from 24h to something safer)
+      "/**": {
+        headers: { "cache-control": "public, max-age=3600" }, // 1 hour
+      },
     },
   },
   runtimeConfig: {
