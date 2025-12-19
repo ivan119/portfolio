@@ -58,30 +58,15 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
     routeRules: {
-      // 1. Keep long-term cache for static assets (hashed files)
+      // 1. Static Assets (1 Year Cache)
       "/_nuxt/**": {
         headers: { "cache-control": "public, max-age=31536000, immutable" },
       },
       "/favicon-48x48.png": {
         headers: { "cache-control": "public, max-age=31536000, immutable" },
       },
-      // 2. Prerendered pages (Static at build time)
-      "/": { prerender: true },
-      "/projects": { prerender: true },
-      "/skills": { prerender: true },
-      // 3. BLOG: Disable Prerender AND shorten the Browser Cache
-      "/blog": {
-        prerender: false,
-        headers: { "cache-control": "public, max-age=0, must-revalidate" }, // Browser must check server every time
-      },
-      "/blog/**": {
-        prerender: false,
-        headers: { "cache-control": "public, max-age=0, must-revalidate" },
-      },
-      // 4. Default for other pages (reduce from 24h to something safer)
-      "/**": {
-        headers: { "cache-control": "public, max-age=3600" }, // 1 hour
-      },
+      // 2. EVERYTHING ELSE: Prerender it!
+      "/**": { prerender: true },
     },
   },
   runtimeConfig: {
