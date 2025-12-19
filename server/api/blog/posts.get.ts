@@ -49,5 +49,6 @@ export default defineCachedEventHandler(
   {
     maxAge: 60 * 60, // 1h
     swr: true,
+    getKey: (event) => event.path,
   },
 );
