@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlogPost } from "~~/server/types/blog";
+import type { BlogPost } from "~~/shared/types/blog";
 import { getBreakpoints } from "~/composables/shared/breakpoints";
 
 // Content item type guard helpers

@@ -1,19 +1,12 @@
 <script setup lang="ts">
+import type { PreviewBlogPost } from "~~/shared/types/blog";
 import { getBreakpoints } from "~/composables/shared/breakpoints";
+
 const { isMobileDevice, isTablet } = getBreakpoints();
-interface Post {
-  id: string;
-  title: string;
-  excerpt: string;
-  author: string;
-  date: string;
-  coverImage?: string; // 👈 include this since you’re now storing image URLs
-}
 
 const props = withDefaults(
   defineProps<{
-    post: Post;
-    imageUrl: string;
+    post: PreviewBlogPost;
     useBgDots?: boolean;
     loading?: boolean;
   }>(),
@@ -22,6 +15,7 @@ const props = withDefaults(
     loading: false,
   },
 );
+
 const returnSizes = computed(() => {
   if (isMobileDevice.value) return "396"; // mobiles
   if (isTablet.value) return "639"; // between
@@ -58,7 +52,7 @@ const returnSizes = computed(() => {
               provider="cloudinary"
               :src="post.coverImage"
               densities="1"
-              quality="80"
+              :quality="80"
               :sizes="returnSizes"
               custom
               v-slot="{ isLoaded, imgAttrs, src }"
