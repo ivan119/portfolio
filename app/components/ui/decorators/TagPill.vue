@@ -4,7 +4,7 @@ const props = withDefaults(
     label?: string;
     index?: number;
   }>(),
-  { label: "", index: 0 }
+  { label: "", index: 0 },
 );
 
 const baseClass =
@@ -41,9 +41,6 @@ const resolvedClass = computed(() => {
   <span :class="resolvedClass">
     <slot>{{ props.label }}</slot>
   </span>
-  
 </template>
 
 <style scoped></style>
-
-

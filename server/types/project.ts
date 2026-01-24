@@ -36,4 +36,3 @@ export interface ProjectsResponse {
   projects: ProjectItem[];
   allProjects: ProjectItem[];
 }
-

@@ -16,7 +16,11 @@
   );
 
   /* Single-color glow derived from the gradient */
-  --main-glow: color-mix(in srgb, var(--main-gradient-from) 50%, var(--main-gradient-to) 50%);
+  --main-glow: color-mix(
+    in srgb,
+    var(--main-gradient-from) 50%,
+    var(--main-gradient-to) 50%
+  );
 
   /* Theme colors */
   --bg-light: #f8fafc;
@@ -78,130 +82,130 @@ body {
 
 /* Header */
 .header-class {
-    @apply h-[88px] flex justify-between p-8 px-5 lg:px-8;
+  @apply h-[88px] flex justify-between p-8 px-5 lg:px-8;
 }
 .logo {
-    @apply 2xl:fixed;
+  @apply 2xl:fixed;
 }
 
 /* Global Classes */
 
 /*Nuxt Main*/
 .main {
-   @apply flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto
+  @apply flex flex-col min-h-screen relative overflow-hidden max-w-[1920px] mx-auto;
 }
 /*Nuxt Body container*/
 .body-container {
-   @apply max-w-3xl mx-auto px-8 py-6 md:py-10;
+  @apply max-w-3xl mx-auto px-8 py-6 md:py-10;
 }
 /* Global Heading Styles */
 .heading-1 {
-    @apply text-3xl md:text-4xl font-bold mb-3;
+  @apply text-3xl md:text-4xl font-bold mb-3;
 }
 
 .heading-2 {
-    @apply text-2xl md:text-3xl;
+  @apply text-2xl md:text-3xl;
 }
 
 .heading-3 {
-    @apply text-lg md:text-xl;
+  @apply text-lg md:text-xl;
 }
 .heading-4 {
-    @apply text-lg md:text-xl;
+  @apply text-lg md:text-xl;
 }
 
 .heading-5 {
-    @apply text-base md:text-lg;
+  @apply text-base md:text-lg;
 }
 .heading-6 {
-    @apply text-sm md:text-base;
+  @apply text-sm md:text-base;
 }
 
 /* Global utility classes for the gradient text */
 .text-main-gradient {
-    @apply font-bold bg-gradient-to-r
+  @apply font-bold bg-gradient-to-r
     from-red-600 via-blue-600 to-blue-700 /* light mode: higher contrast using red→blue */
     dark:from-teal-400 dark:to-blue-400
     bg-clip-text text-transparent;
 }
 
 .text-main-gradient-animated {
-    color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% auto;
-    animation: gradient-shift 3s ease infinite;
-    background-image: var(--main-gradient);
-    background-repeat: no-repeat;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: gradient-shift 3s ease infinite;
+  background-image: var(--main-gradient);
+  background-repeat: no-repeat;
 }
 
 .hover-main-gradient {
-    position: relative;
-    display: inline-block; /* needed for the ::after underline */
+  position: relative;
+  display: inline-block; /* needed for the ::after underline */
 }
 
 .hover-main-gradient::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 2px; /* thickness of underline */
-    width: 100%;
-    background-image: var(--main-gradient);
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 369ms linear;
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px; /* thickness of underline */
+  width: 100%;
+  background-image: var(--main-gradient);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 369ms linear;
 }
 
 .hover-main-gradient:hover,
 .hover-main-gradient:focus,
 .hover-main-gradient:active {
-    color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-image: var(--main-gradient);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: var(--main-gradient);
 }
 
 .hover-main-gradient:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 /* Gradient animation */
 @keyframes gradient-shift {
-    0% {
-        background-position: 0 center;
-    }
-    50% {
-        background-position: 100% center;
-    }
-    100% {
-        background-position: 0 center;
-    }
+  0% {
+    background-position: 0 center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+  100% {
+    background-position: 0 center;
+  }
 }
 /* Add shine effect */
 .shine {
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-            to right,
-            transparent,
-            rgba(255, 255, 255, 0.2),
-            transparent
-    );
-    transform: rotate(30deg);
-    transition: transform 0.6s ease;
-    opacity: 0;
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: rotate(30deg);
+  transition: transform 0.6s ease;
+  opacity: 0;
 }
 
 .group:hover .shine {
-    transform: rotate(30deg) translateX(100%);
-    opacity: 1;
+  transform: rotate(30deg) translateX(100%);
+  opacity: 1;
 }
 
 .slide-enter,
@@ -212,12 +216,12 @@ body {
 /* Page Transitions */
 .page-enter-active,
 .page-leave-active {
-    transition: all 0.4s;
+  transition: all 0.4s;
 }
 .page-enter-from,
 .page-leave-to {
-    opacity: 0;
-    filter: blur(1rem);
+  opacity: 0;
+  filter: blur(1rem);
 }
 
 .slide-left-enter-active,
@@ -245,7 +249,7 @@ body {
 /* Content Animations */
 .slide-enter-active,
 .slide-leave-active {
-    transition: transform 0.2s;
+  transition: transform 0.2s;
 }
 .slide-enter-active > *:not(.no-animation) {
   animation: slide-in 0.693s cubic-bezier(0.4, 0, 0.2, 1);
@@ -268,13 +272,13 @@ body {
   animation-delay: 0.75s;
 }
 .slide-enter-active > *:not(.no-animation):nth-child(6) {
-    animation-delay: 0.8s;
+  animation-delay: 0.8s;
 }
 .slide-enter-active > *:not(.no-animation):nth-child(7) {
-    animation-delay: 0.85s;
+  animation-delay: 0.85s;
 }
 .slide-enter-active > *:not(.no-animation):nth-child(8) {
-    animation-delay: 0.9s;
+  animation-delay: 0.9s;
 }
 
 @keyframes slide-in {

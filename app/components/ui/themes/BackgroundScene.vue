@@ -171,25 +171,25 @@ onMounted(() => {
     sizeArray[i] = 1.0; // Normalized size (will be multiplied by base size)
     alphaArray[i] = 1.0; // Normalized alpha (will affect particle opacity)
 
-      // Store particle data for simulation
-      particles.push({
-        position: new THREE.Vector3(x, y, z),
-        velocity: new THREE.Vector3(
-          (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
-          (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
-          (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
-        ),
-        index: i,
-        size: 1.0, // Current size factor
-        targetSize: 1.0, // Target size for animation
-        sizeStartTime: 0, // Start time for size animation
-        sizeDuration: 0, // Duration for size animation
-        alpha: 1.0, // Current opacity factor
-        targetAlpha: 1.0, // Target opacity for animation
-        alphaStartTime: 0, // Start time for alpha animation
-        alphaDuration: 0, // Duration for alpha animation
-        connections: new Set(), // Track connections for this particle
-      });
+    // Store particle data for simulation
+    particles.push({
+      position: new THREE.Vector3(x, y, z),
+      velocity: new THREE.Vector3(
+        (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
+        (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
+        (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
+      ),
+      index: i,
+      size: 1.0, // Current size factor
+      targetSize: 1.0, // Target size for animation
+      sizeStartTime: 0, // Start time for size animation
+      sizeDuration: 0, // Duration for size animation
+      alpha: 1.0, // Current opacity factor
+      targetAlpha: 1.0, // Target opacity for animation
+      alphaStartTime: 0, // Start time for alpha animation
+      alphaDuration: 0, // Duration for alpha animation
+      connections: new Set(), // Track connections for this particle
+    });
   }
 
   particlesGeometry.setAttribute(
@@ -328,9 +328,12 @@ onMounted(() => {
       particle.position.add(particle.velocity);
 
       // Boundary check
-      if (Math.abs(particle.position.x) > BOUNDARY_THRESHOLD) particle.velocity.x *= -1;
-      if (Math.abs(particle.position.y) > BOUNDARY_THRESHOLD) particle.velocity.y *= -1;
-      if (Math.abs(particle.position.z) > BOUNDARY_THRESHOLD) particle.velocity.z *= -1;
+      if (Math.abs(particle.position.x) > BOUNDARY_THRESHOLD)
+        particle.velocity.x *= -1;
+      if (Math.abs(particle.position.y) > BOUNDARY_THRESHOLD)
+        particle.velocity.y *= -1;
+      if (Math.abs(particle.position.z) > BOUNDARY_THRESHOLD)
+        particle.velocity.z *= -1;
 
       // Update position array
       const idx = particle.index * 3;
@@ -342,11 +345,13 @@ onMounted(() => {
       if (particle.sizeDuration > 0) {
         const elapsed = (Date.now() - particle.sizeStartTime) / 1000; // Convert to seconds
         const progress = Math.min(elapsed / particle.sizeDuration, 1.0);
-        
+
         if (progress < 1.0) {
           // Interpolate between current and target size
-          const startSize = particle.size === 1.0 ? particle.size : particle.size;
-          particle.size = startSize + (particle.targetSize - startSize) * progress;
+          const startSize =
+            particle.size === 1.0 ? particle.size : particle.size;
+          particle.size =
+            startSize + (particle.targetSize - startSize) * progress;
         } else {
           // Animation complete
           particle.size = particle.targetSize;
@@ -358,11 +363,13 @@ onMounted(() => {
       if (particle.alphaDuration > 0) {
         const elapsed = (Date.now() - particle.alphaStartTime) / 1000; // Convert to seconds
         const progress = Math.min(elapsed / particle.alphaDuration, 1.0);
-        
+
         if (progress < 1.0) {
           // Interpolate between current and target alpha
-          const startAlpha = particle.alpha === 1.0 ? particle.alpha : particle.alpha;
-          particle.alpha = startAlpha + (particle.targetAlpha - startAlpha) * progress;
+          const startAlpha =
+            particle.alpha === 1.0 ? particle.alpha : particle.alpha;
+          particle.alpha =
+            startAlpha + (particle.targetAlpha - startAlpha) * progress;
         } else {
           // Animation complete
           particle.alpha = particle.targetAlpha;
@@ -485,13 +492,13 @@ onMounted(() => {
   // Animation when a new connection forms (time-based, runs on main thread)
   const triggerConnectAnimation = (particle) => {
     const now = Date.now();
-    
+
     // Pulse effect - grow first
     const startSize = particle.size;
     particle.targetSize = config.value.pulseStrength;
     particle.sizeStartTime = now;
     particle.sizeDuration = config.value.connectionAnimDuration * 0.3;
-    
+
     // Then return to normal (will be triggered in next phase)
     const returnToNormal = () => {
       if (particle && isAnimating) {
@@ -500,7 +507,7 @@ onMounted(() => {
         particle.sizeDuration = config.value.connectionAnimDuration * 0.7;
       }
     };
-    
+
     // Use requestAnimationFrame callback instead of setTimeout to keep on main thread
     const scheduleReturn = () => {
       if (isAnimating) {
@@ -518,7 +525,7 @@ onMounted(() => {
     particle.targetAlpha = 1.5;
     particle.alphaStartTime = now;
     particle.alphaDuration = config.value.connectionAnimDuration * 0.2;
-    
+
     // Then return to normal alpha
     const returnAlphaToNormal = () => {
       if (particle && isAnimating) {
@@ -527,7 +534,7 @@ onMounted(() => {
         particle.alphaDuration = config.value.connectionAnimDuration * 0.8;
       }
     };
-    
+
     const scheduleAlphaReturn = () => {
       if (isAnimating) {
         const timeoutId = setTimeout(() => {
@@ -543,12 +550,12 @@ onMounted(() => {
   // Animation when a connection breaks (time-based, runs on main thread)
   const triggerDisconnectAnimation = (particle) => {
     const now = Date.now();
-    
+
     // Subtle shrink effect
     particle.targetSize = 0.7;
     particle.sizeStartTime = now;
     particle.sizeDuration = config.value.connectionAnimDuration * 0.5;
-    
+
     // Then return to normal
     const returnToNormal = () => {
       if (particle && isAnimating) {
@@ -557,7 +564,7 @@ onMounted(() => {
         particle.sizeDuration = config.value.connectionAnimDuration * 0.5;
       }
     };
-    
+
     const scheduleReturn = () => {
       if (isAnimating) {
         const timeoutId = setTimeout(() => {
@@ -573,7 +580,7 @@ onMounted(() => {
     particle.targetAlpha = 0.6;
     particle.alphaStartTime = now;
     particle.alphaDuration = config.value.connectionAnimDuration * 0.4;
-    
+
     // Then return to normal
     const returnAlphaToNormal = () => {
       if (particle && isAnimating) {
@@ -582,7 +589,7 @@ onMounted(() => {
         particle.alphaDuration = config.value.connectionAnimDuration * 0.6;
       }
     };
-    
+
     const scheduleAlphaReturn = () => {
       if (isAnimating) {
         const timeoutId = setTimeout(() => {
@@ -597,7 +604,7 @@ onMounted(() => {
 
   const animate = () => {
     if (!isAnimating) return;
-    
+
     animationId = requestAnimationFrame(animate);
     bgMaterial.uniforms.time.value += ANIMATION_SPEED;
 
@@ -619,13 +626,13 @@ onMounted(() => {
       cancelAnimationFrame(animationId);
       animationId = null;
     }
-    
+
     // Cancel all pending timeouts (cleanup for main thread)
-    animationTimeouts.forEach(timeoutId => {
+    animationTimeouts.forEach((timeoutId) => {
       clearTimeout(timeoutId);
     });
     animationTimeouts.clear();
-    
+
     // Cancel any pending timeouts
     particles.forEach((particle) => {
       delete particle.targetSize;

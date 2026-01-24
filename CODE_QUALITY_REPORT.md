@@ -1,4 +1,5 @@
 # Code Quality Scan Report
+
 ## Nuxt 4.2 Portfolio Application
 
 **Generated:** $(date)  
@@ -24,11 +25,13 @@ This report identifies **29 code quality issues** across **11 files** in the Nux
 ## 🔴 Critical Issues (3)
 
 ### 1. Empty Catch Blocks Silently Swallowing Errors
+
 **File:** `app/composables/useErrorView.ts`  
 **Lines:** 64, 162  
 **Severity:** Critical
 
 **Issue:**
+
 ```typescript
 } catch {}
 ```
@@ -38,6 +41,7 @@ Empty catch blocks silently swallow errors, making debugging impossible and pote
 **Impact:** Errors from typewriter instance cleanup are completely hidden, making it difficult to diagnose issues in production.
 
 **Recommendation:** Add error logging or handle specific error types:
+
 ```typescript
 } catch (error) {
   // Log error in development, silently fail in production
@@ -50,11 +54,13 @@ Empty catch blocks silently swallow errors, making debugging impossible and pote
 ---
 
 ### 2. Type Casting with `as any` Bypassing Type Safety
+
 **File:** `app/composables/useDefaultLayout.ts`  
 **Line:** 36, 38  
 **Severity:** Critical
 
 **Issue:**
+
 ```typescript
 if ((document as any).startViewTransition) {
   (document as any).startViewTransition();
@@ -66,6 +72,7 @@ Using `as any` bypasses TypeScript's type checking, potentially causing runtime 
 **Impact:** If `startViewTransition` API changes or doesn't exist, the code will fail at runtime without type checking catching it.
 
 **Recommendation:** Create proper type definitions or use type guards:
+
 ```typescript
 interface DocumentWithViewTransition extends Document {
   startViewTransition?: () => void;
@@ -80,11 +87,13 @@ if (doc.startViewTransition) {
 ---
 
 ### 3. Missing Type Definitions for Third-Party Library
+
 **File:** `server/types/typewriter-effect-core.d.ts`  
 **Line:** 2  
 **Severity:** Critical
 
 **Issue:**
+
 ```typescript
 const Typewriter: any;
 ```
@@ -94,6 +103,7 @@ The Typewriter library has no proper type definitions, forcing use of `any` thro
 **Impact:** No type safety for Typewriter API usage, leading to potential runtime errors from incorrect method calls or property access.
 
 **Recommendation:** Create comprehensive type definitions based on the library's API:
+
 ```typescript
 interface TypewriterOptions {
   loop?: boolean;
@@ -109,7 +119,7 @@ interface TypewriterInstance {
   stop(): void;
 }
 
-declare module 'typewriter-effect/dist/core' {
+declare module "typewriter-effect/dist/core" {
   class Typewriter {
     constructor(element: HTMLElement, options?: TypewriterOptions);
     typeString(str: string): TypewriterInstance;
@@ -127,13 +137,16 @@ declare module 'typewriter-effect/dist/core' {
 ## 🟠 High Priority Issues (8)
 
 ### 4. @ts-ignore Directives Bypassing Type Checking
-**Files:** 
+
+**Files:**
+
 - `app/composables/useErrorView.ts` (line 2)
 - `app/composables/useIntroComponent.ts` (line 2)
 
 **Severity:** High
 
 **Issue:**
+
 ```typescript
 // @ts-ignore
 import Typewriter from "typewriter-effect/dist/core";
@@ -148,10 +161,12 @@ import Typewriter from "typewriter-effect/dist/core";
 ---
 
 ### 5. Excessive Use of `any` Type
+
 **Files:** Multiple files  
 **Severity:** High
 
 **Locations:**
+
 - `app/composables/useErrorView.ts:56` - `let typewriterInstance: any = null`
 - `app/composables/useIntroComponent.ts:167` - `typewriterInstances.push(tw as any)`
 - `app/composables/usePageSeo.ts:50` - `({} as any)`
@@ -163,6 +178,7 @@ import Typewriter from "typewriter-effect/dist/core";
 **Impact:** Loss of type safety, potential runtime errors, reduced IDE autocomplete support.
 
 **Recommendations:**
+
 - Replace `any` with proper types or `unknown` with type guards
 - Create interfaces for Typewriter instances
 - Use proper types for blog post items and project data
@@ -170,7 +186,9 @@ import Typewriter from "typewriter-effect/dist/core";
 ---
 
 ### 6. Console Statements in Production Code
+
 **Files:**
+
 - `app/components/Navigation/Header.vue:25` - `console.log(1)`
 - `app/composables/usePosts.ts:20,35` - `console.error` statements
 - `app/composables/useProject.ts:14` - `console.error` statement
@@ -179,12 +197,14 @@ import Typewriter from "typewriter-effect/dist/core";
 
 **Issue:** Console statements should not be in production code. They expose debug information and can impact performance.
 
-**Impact:** 
+**Impact:**
+
 - Debug output visible in production console
 - Potential performance impact
 - Information leakage
 
-**Recommendation:** 
+**Recommendation:**
+
 - Remove debug `console.log(1)` completely
 - Replace `console.error` with proper error logging/handling (e.g., Nuxt error handling or logging service)
 - Use conditional logging: `if (import.meta.dev) console.error(...)`
@@ -192,11 +212,13 @@ import Typewriter from "typewriter-effect/dist/core";
 ---
 
 ### 7. Unused Variables and Functions
+
 **File:** `app/composables/useErrorView.ts`  
 **Line:** 8  
 **Severity:** High
 
 **Issue:**
+
 ```typescript
 const fakeAdminStyle = ref(false);
 ```
@@ -210,11 +232,13 @@ const fakeAdminStyle = ref(false);
 ---
 
 ### 8. Unused Test Function
+
 **File:** `app/components/Navigation/Header.vue`  
 **Lines:** 24-26  
 **Severity:** High
 
 **Issue:**
+
 ```typescript
 const test = () => {
   console.log(1);
@@ -232,7 +256,9 @@ Test function is defined but never called or referenced.
 ## 🟡 Medium Priority Issues (12)
 
 ### 9. TODO Comments Indicating Incomplete Work
+
 **Files:**
+
 - `app/components/Navigation/Header.vue:46` - "MAKE ON HOVER NO SIGNATURE ANIMATION OR PAUSE + MAKE V-IF ANIMATION WHEN SHOWING/HIDING"
 - `app/middleware/projects-active.ts:2` - "REFACTOR THIS WITH VIEW-TRANSITION API EVENT FOR BLOG PAGE AS WELL!!!"
 - `app/components/pages/blog/SingleBlogPost.vue:98` - "BUG IS HERE OBVIOUSLY WHEN IS FALSE ALL WORKS"
@@ -241,14 +267,17 @@ Test function is defined but never called or referenced.
 
 **Impact:** Indicates incomplete features or known issues that need attention.
 
-**Recommendation:** 
+**Recommendation:**
+
 - Address TODOs or convert to GitHub issues
 - Remove or fix the BUG comment in SingleBlogPost.vue
 
 ---
 
 ### 10. Error Handling Without Proper Logging
+
 **Files:**
+
 - `app/composables/usePosts.ts:19-21,34-36`
 - `app/composables/useProject.ts:13-15`
 
@@ -259,6 +288,7 @@ Test function is defined but never called or referenced.
 **Impact:** Errors in production may go unnoticed without proper monitoring.
 
 **Recommendation:** Integrate error tracking (e.g., Sentry, LogRocket) or use Nuxt's error handling:
+
 ```typescript
 catch (error) {
   if (import.meta.dev) {
@@ -275,12 +305,14 @@ catch (error) {
 ---
 
 ### 11. Type Casting in Server Routes
+
 **File:** `server/routes/sitemap.xml.ts`  
 **Lines:** 31-34
 
 **Severity:** Medium
 
 **Issue:**
+
 ```typescript
 const lastmod = (post as any).date
   ? new Date((post as any).date).toISOString()
@@ -295,12 +327,14 @@ Multiple `as any` casts suggest missing or incorrect type definitions for post o
 ---
 
 ### 12. Generic Transform Function Using `any`
+
 **File:** `server/api/blog/posts.get.ts`  
 **Lines:** 22-28
 
 **Severity:** Medium
 
 **Issue:**
+
 ```typescript
 function transformPosts(obj: any, keys: string[]) {
   return keys.reduce((acc, key) => {
@@ -315,29 +349,35 @@ function transformPosts(obj: any, keys: string[]) {
 Using `any` removes type safety from a utility function.
 
 **Recommendation:** Use generics with proper constraints:
+
 ```typescript
 function transformPosts<T extends Record<string, any>, K extends keyof T>(
   obj: T,
-  keys: K[]
+  keys: K[],
 ): Pick<T, K> {
-  return keys.reduce((acc, key) => {
-    if (key in obj) {
-      acc[key] = obj[key];
-    }
-    return acc;
-  }, {} as Pick<T, K>);
+  return keys.reduce(
+    (acc, key) => {
+      if (key in obj) {
+        acc[key] = obj[key];
+      }
+      return acc;
+    },
+    {} as Pick<T, K>,
+  );
 }
 ```
 
 ---
 
 ### 13. Component Props Using `any` Type
+
 **File:** `app/components/ui/actions/ThemeButton.vue`  
 **Line:** 33
 
 **Severity:** Medium
 
 **Issue:**
+
 ```typescript
 interface Props {
   icon: any;
@@ -348,8 +388,9 @@ interface Props {
 Icon prop should have a proper type (e.g., `Component` or `VNode`).
 
 **Recommendation:**
+
 ```typescript
-import type { Component } from 'vue';
+import type { Component } from "vue";
 
 interface Props {
   icon: Component | string;
@@ -360,12 +401,14 @@ interface Props {
 ---
 
 ### 14. Function Parameters Using `any`
+
 **File:** `app/components/pages/blog/SingleBlogPost.vue`  
 **Lines:** 7-9
 
 **Severity:** Medium
 
 **Issue:**
+
 ```typescript
 const isHeading = (item: any) => item.type === "heading";
 const isParagraph = (item: any) => item.type === "paragraph";
@@ -379,6 +422,7 @@ Type guards should use proper types instead of `any`.
 ---
 
 ### 15. Inconsistent Error Handling Patterns
+
 **Files:** Multiple composables
 
 **Severity:** Medium
@@ -392,6 +436,7 @@ Type guards should use proper types instead of `any`.
 ---
 
 ### 16. Magic Numbers Without Constants
+
 **File:** `app/components/ui/themes/BackgroundScene.vue`  
 **Multiple locations**
 
@@ -400,6 +445,7 @@ Type guards should use proper types instead of `any`.
 **Issue:** Hard-coded values like `0.01`, `0.05`, `400`, `300` scattered throughout the code.
 
 **Recommendation:** Extract to named constants:
+
 ```typescript
 const ANIMATION_SPEED = 0.01;
 const PARTICLE_VELOCITY_FACTOR = 0.05;
@@ -409,6 +455,7 @@ const DEFAULT_PAUSE_DURATION = 400;
 ---
 
 ### 17. Missing Error Boundaries
+
 **Severity:** Medium
 
 **Issue:** No error boundaries or fallback UI for component failures.
@@ -418,6 +465,7 @@ const DEFAULT_PAUSE_DURATION = 400;
 ---
 
 ### 18. Potential Memory Leaks
+
 **File:** `app/components/ui/themes/BackgroundScene.vue`  
 **Lines:** 27-29
 
@@ -430,6 +478,7 @@ const DEFAULT_PAUSE_DURATION = 400;
 ---
 
 ### 19. Missing Input Validation
+
 **File:** `app/composables/useProject.ts`  
 **Line:** 6
 
@@ -438,12 +487,13 @@ const DEFAULT_PAUSE_DURATION = 400;
 **Issue:** `fetchProjectBySlug` doesn't validate the slug parameter before use.
 
 **Recommendation:** Add validation:
+
 ```typescript
 const fetchProjectBySlug = async (slug: string) => {
-  if (!slug || typeof slug !== 'string' || slug.trim().length === 0) {
+  if (!slug || typeof slug !== "string" || slug.trim().length === 0) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid slug parameter'
+      statusMessage: "Invalid slug parameter",
     });
   }
   // ... rest of function
@@ -453,12 +503,14 @@ const fetchProjectBySlug = async (slug: string) => {
 ---
 
 ### 20. Type Assertion Without Type Guard
+
 **File:** `app/composables/usePageSeo.ts`  
 **Line:** 50
 
 **Severity:** Medium
 
 **Issue:**
+
 ```typescript
 : ({} as any)
 ```
@@ -472,6 +524,7 @@ Using `as any` without proper type checking.
 ## 🟢 Low Priority Issues (6)
 
 ### 21. Commented Out Code
+
 **File:** `nuxt.config.ts`  
 **Lines:** 91-103
 
@@ -484,6 +537,7 @@ Using `as any` without proper type checking.
 ---
 
 ### 22. Inconsistent Naming Conventions
+
 **Files:** Multiple
 
 **Severity:** Low
@@ -495,6 +549,7 @@ Using `as any` without proper type checking.
 ---
 
 ### 23. Missing JSDoc Comments
+
 **Files:** Multiple composables and utilities
 
 **Severity:** Low
@@ -506,6 +561,7 @@ Using `as any` without proper type checking.
 ---
 
 ### 24. Hard-coded Strings
+
 **Files:** Multiple
 
 **Severity:** Low
@@ -513,16 +569,17 @@ Using `as any` without proper type checking.
 **Issue:** Magic strings like "admin", "401", "404" scattered throughout code.
 
 **Recommendation:** Extract to constants or enums:
+
 ```typescript
 const ROUTE_PATHS = {
-  ADMIN: 'admin',
-  HOME: '/',
+  ADMIN: "admin",
+  HOME: "/",
   // ...
 } as const;
 
 const ERROR_CODES = {
-  UNAUTHORIZED: '401',
-  NOT_FOUND: '404',
+  UNAUTHORIZED: "401",
+  NOT_FOUND: "404",
   // ...
 } as const;
 ```
@@ -530,6 +587,7 @@ const ERROR_CODES = {
 ---
 
 ### 25. Unused Imports
+
 **Severity:** Low
 
 **Issue:** Potential unused imports that should be cleaned up.
@@ -539,6 +597,7 @@ const ERROR_CODES = {
 ---
 
 ### 26. Inconsistent Quote Styles
+
 **Severity:** Low
 
 **Issue:** Mix of single and double quotes throughout the codebase.
@@ -549,13 +608,13 @@ const ERROR_CODES = {
 
 ## Summary Statistics
 
-| Severity | Count | Percentage |
-|----------|-------|------------|
-| 🔴 Critical | 3 | 10.3% |
-| 🟠 High | 8 | 27.6% |
-| 🟡 Medium | 12 | 41.4% |
-| 🟢 Low | 6 | 20.7% |
-| **Total** | **29** | **100%** |
+| Severity    | Count  | Percentage |
+| ----------- | ------ | ---------- |
+| 🔴 Critical | 3      | 10.3%      |
+| 🟠 High     | 8      | 27.6%      |
+| 🟡 Medium   | 12     | 41.4%      |
+| 🟢 Low      | 6      | 20.7%      |
+| **Total**   | **29** | **100%**   |
 
 ---
 
@@ -581,24 +640,28 @@ const ERROR_CODES = {
 ## Recommended Action Plan
 
 ### Phase 1: Critical Fixes (Week 1)
+
 1. Fix empty catch blocks with proper error handling
 2. Replace `as any` type casts with proper types
 3. Create comprehensive Typewriter type definitions
 4. Remove `@ts-ignore` directives
 
 ### Phase 2: High Priority (Week 2)
+
 1. Remove all `any` types and replace with proper types
 2. Remove console statements from production code
 3. Clean up unused variables and functions
 4. Implement proper error logging
 
 ### Phase 3: Medium Priority (Week 3)
+
 1. Address TODO comments or convert to issues
 2. Standardize error handling patterns
 3. Add input validation
 4. Extract magic numbers to constants
 
 ### Phase 4: Low Priority (Ongoing)
+
 1. Clean up commented code
 2. Standardize naming conventions
 3. Add JSDoc comments
@@ -634,4 +697,3 @@ Most issues are fixable with proper type definitions and standardized error hand
 
 **Report Generated by:** Code Quality Scanner  
 **Next Review:** Recommended after Phase 1 completion
-

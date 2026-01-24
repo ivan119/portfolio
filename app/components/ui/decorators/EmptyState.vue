@@ -45,10 +45,10 @@ const props = defineProps({
   padding: 2rem;
   border-radius: 1rem;
   background: linear-gradient(
-      to bottom right,
-      rgba(20, 184, 166, 0.06),
-      rgba(37, 99, 235, 0.06)
-    );
+    to bottom right,
+    rgba(20, 184, 166, 0.06),
+    rgba(37, 99, 235, 0.06)
+  );
   border: 1px solid rgba(59, 130, 246, 0.15);
 }
 
@@ -58,8 +58,14 @@ const props = defineProps({
   inset: -1px;
   border-radius: 1rem;
   pointer-events: none;
-  background: linear-gradient(135deg, var(--main-gradient-from), var(--main-gradient-to));
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  background: linear-gradient(
+    135deg,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   padding: 1px;
@@ -81,7 +87,11 @@ const props = defineProps({
   text-align: center;
   font-weight: 700;
   font-size: 1.25rem;
-  background: linear-gradient(90deg, var(--main-gradient-from), var(--main-gradient-to));
+  background: linear-gradient(
+    90deg,
+    var(--main-gradient-from),
+    var(--main-gradient-to)
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
