@@ -1,6 +1,5 @@
 import { posts } from "../data/posts";
 import { projects, allProjects } from "../data/projects";
-import type { BlogPost } from "../../shared/types/blog";
 
 export default defineCachedEventHandler(
   (event) => {
