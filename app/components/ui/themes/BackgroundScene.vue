@@ -4,7 +4,24 @@
 </template>
 
 <script setup>
-import * as THREE from "three";
+import {
+  Color,
+  Scene,
+  PerspectiveCamera,
+  WebGLRenderer,
+  ShaderMaterial,
+  PlaneGeometry,
+  Mesh,
+  MathUtils,
+  BufferGeometry,
+  BufferAttribute,
+  Vector3,
+  Points,
+  LineSegments,
+  AdditiveBlending,
+  Float32BufferAttribute,
+} from "three";
+
 import { useColorMode } from "#imports";
 
 // Animation constants
@@ -51,8 +68,8 @@ const updateParticleColor = (newColor, forLightMode = false) => {
 const updateMaterialColors = () => {
   const isLight = colorMode.value === "light";
   const particleColor = isLight
-    ? new THREE.Color(config.value.lightModeColor)
-    : new THREE.Color(config.value.particleColor);
+    ? new Color(config.value.lightModeColor)
+    : new Color(config.value.particleColor);
 
   if (particlesMaterial.uniforms && particlesMaterial.uniforms.color) {
     particlesMaterial.uniforms.color.value.set(particleColor);
@@ -68,14 +85,14 @@ const updateMaterialColors = () => {
 };
 
 onMounted(() => {
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
+  const scene = new Scene();
+  const camera = new PerspectiveCamera(
     40,
     window.innerWidth / window.innerHeight,
     0.1,
     1000,
   );
-  renderer = new THREE.WebGLRenderer({
+  renderer = new WebGLRenderer({
     antialias: true,
     alpha: true, // Enable transparency
   });
@@ -123,7 +140,7 @@ onMounted(() => {
     }
   `;
 
-  bgMaterial = new THREE.ShaderMaterial({
+  bgMaterial = new ShaderMaterial({
     vertexShader,
     fragmentShader,
     uniforms: {
@@ -135,12 +152,12 @@ onMounted(() => {
   });
 
   // Adjust background plane to fit viewport perfectly
-  const bgGeometry = new THREE.PlaneGeometry(200, 200); // Increased size
-  const backgroundMesh = new THREE.Mesh(bgGeometry, bgMaterial);
+  const bgGeometry = new PlaneGeometry(200, 200); // Increased size
+  const backgroundMesh = new Mesh(bgGeometry, bgMaterial);
   backgroundMesh.position.z = -100; // Push further back
   // Ensure background fills viewport
   const distance = Math.abs(backgroundMesh.position.z);
-  const vFov = THREE.MathUtils.degToRad(camera.fov);
+  const vFov = MathUtils.degToRad(camera.fov);
   const height = 2 * Math.tan(vFov / 2) * distance;
   const width = height * camera.aspect;
   backgroundMesh.scale.set(width / 100, height / 100, 1);
@@ -150,7 +167,7 @@ onMounted(() => {
   particles = [];
 
   // Create particles
-  const particlesGeometry = new THREE.BufferGeometry();
+  const particlesGeometry = new BufferGeometry();
   const posArray = new Float32Array(config.value.particleCount * 3);
   const sizeArray = new Float32Array(config.value.particleCount); // For size animation
   const alphaArray = new Float32Array(config.value.particleCount); // For opacity animation
@@ -173,8 +190,8 @@ onMounted(() => {
 
     // Store particle data for simulation
     particles.push({
-      position: new THREE.Vector3(x, y, z),
-      velocity: new THREE.Vector3(
+      position: new Vector3(x, y, z),
+      velocity: new Vector3(
         (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
         (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
         (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
@@ -194,15 +211,15 @@ onMounted(() => {
 
   particlesGeometry.setAttribute(
     "position",
-    new THREE.BufferAttribute(posArray, 3),
+    new BufferAttribute(posArray, 3),
   );
   particlesGeometry.setAttribute(
     "size",
-    new THREE.BufferAttribute(sizeArray, 1),
+    new BufferAttribute(sizeArray, 1),
   );
   particlesGeometry.setAttribute(
     "alpha",
-    new THREE.BufferAttribute(alphaArray, 1),
+    new BufferAttribute(alphaArray, 1),
   );
 
   // Vertex shader that handles size and opacity animation
@@ -242,19 +259,19 @@ onMounted(() => {
   `;
 
   // Custom particle material with shaders
-  particlesMaterial = new THREE.ShaderMaterial({
+  particlesMaterial = new ShaderMaterial({
     uniforms: {
-      color: { value: new THREE.Color(config.value.particleColor) },
+      color: { value: new Color(config.value.particleColor) },
       isLight: { value: colorMode.value === "light" },
     },
     vertexShader: particleVertexShader,
     fragmentShader: particleFragmentShader,
     transparent: true,
-    blending: THREE.AdditiveBlending,
+    blending: AdditiveBlending,
     depthWrite: false,
   });
 
-  particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+  particlesMesh = new Points(particlesGeometry, particlesMaterial);
   scene.add(particlesMesh);
 
   // Create connections with custom shader for animation
@@ -282,21 +299,21 @@ onMounted(() => {
   `;
 
   // Empty initial connection geometry
-  const connectionsGeometry = new THREE.BufferGeometry();
+  const connectionsGeometry = new BufferGeometry();
 
-  connectionsMaterial = new THREE.ShaderMaterial({
+  connectionsMaterial = new ShaderMaterial({
     vertexShader: connectionVertexShader,
     fragmentShader: connectionFragmentShader,
     uniforms: {
-      color: { value: new THREE.Color(config.value.particleColor) },
+      color: { value: new Color(config.value.particleColor) },
       isLight: { value: colorMode.value === "light" },
     },
     transparent: true,
-    blending: THREE.AdditiveBlending,
+    blending: AdditiveBlending,
     depthWrite: false,
   });
 
-  connectionsMesh = new THREE.LineSegments(
+  connectionsMesh = new LineSegments(
     connectionsGeometry,
     connectionsMaterial,
   );
@@ -474,17 +491,17 @@ onMounted(() => {
 
     // Update connections geometry
     connectionsMesh.geometry.dispose();
-    connectionsMesh.geometry = new THREE.BufferGeometry();
+    connectionsMesh.geometry = new BufferGeometry();
 
     if (connections.length > 0) {
       connectionsMesh.geometry.setAttribute(
         "position",
-        new THREE.Float32BufferAttribute(connections, 3),
+        new Float32BufferAttribute(connections, 3),
       );
 
       connectionsMesh.geometry.setAttribute(
         "connectionAlpha",
-        new THREE.Float32BufferAttribute(connectionAlphas, 1),
+        new Float32BufferAttribute(connectionAlphas, 1),
       );
     }
   };
