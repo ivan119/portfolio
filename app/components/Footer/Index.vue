@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const dateNow = new Date();
+const year = new Date().getFullYear()
 const route = useRoute();
 const blogClass = computed(() => {
   return route.name === "blog";
@@ -12,7 +12,7 @@ const blogClass = computed(() => {
     class="footer-container animate-fade-in-blur-3d"
   >
     &copy; Ivan Kelava • CC BY-NC-SA 4.0
-    {{ dateNow.getFullYear() }}
+    {{ year }}
   </footer>
 </template>
 
