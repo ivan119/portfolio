@@ -27,7 +27,7 @@
     "node": "24.13.0"
   },
   "devDependencies": {
-    "@types/node": "24.13.0",
+    "@types/node": "25",
     "autoprefixer": "^10.4.24",
     "eslint": "^10.0.0",
     "postcss": "^8.5.6",
