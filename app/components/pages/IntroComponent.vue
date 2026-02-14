@@ -2,8 +2,11 @@
 import { watch, onMounted } from "vue";
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
 import { useThrottleFn } from "@vueuse/core";
-const emit = defineEmits(["update:showMainContent", "showLogo"]);
+import { useDefaultLayout } from "~/composables/useDefaultLayout";
+
 const { colorMode, activeTheme } = useThemeButtons();
+const { typeWriterMode, changeState, updateShowLogo } = useDefaultLayout();
+
 const { greeting, updateGreeting, getRandomQuote } = useIntroFunctions();
 const {
   hideNow,
@@ -35,34 +38,30 @@ watch(colorMode, () => {
   }
 });
 
-const props = defineProps({
-  showIntro: { type: Boolean, default: true },
-  typwriterMode: { type: Boolean, default: false },
-});
-
 onMounted(() => {
   hideThemeButtons.value = activeTheme.value === "default";
-  if (props.typwriterMode) {
+  console.log("IntroComponent mounted", typeWriterMode.value);
+  if (typeWriterMode.value) {
     // meanse we are back beacuse click on logo on index page
-    // we use typwriter fully there
+    // we use typewriter fully there
     resetIntro({ activeTheme: activeTheme.value });
   } else {
-    // maybe here just instert small typwrite after effect then show icons :)
+    // maybe here just insert small typewriter after effect then show icons :)
     setTimeout(() => {
       showSunAndMoonIcon.value = true;
     }, 369);
   }
   setPortfolioClickOptions({
-    onShowLogo: () => emit("showLogo", true),
-    onShowMain: () => emit("update:showMainContent", true),
+    onShowLogo: () => updateShowLogo(true),
+    onShowMain: () => changeState(true),
     getRandomQuote,
   });
 });
 
 const handlePortfolioClick = useThrottleFn(() => {
   onPortfolioClick({
-    onShowLogo: () => emit("showLogo", true),
-    onShowMain: () => emit("update:showMainContent", true),
+    onShowLogo: () => updateShowLogo(true),
+    onShowMain: () => changeState(true),
     getRandomQuote,
   });
 }, 5000);
@@ -75,7 +74,7 @@ const handlePortfolioClick = useThrottleFn(() => {
       :class="{
         'fade-in': fadeInClass,
         hidden: hideNow,
-        'animate-fade-in-quick-pulse': !typwriterMode,
+        'animate-fade-in-quick-pulse': !typeWriterMode,
       }"
       ref="typeWrite"
     >
@@ -130,21 +129,21 @@ const handlePortfolioClick = useThrottleFn(() => {
           >me</a
         >
       </h3>
-      <div v-if="!typwriterMode" class="slide-enter-active">
+      <div v-if="!typeWriterMode" class="slide-enter-active">
         <p data-typer id="greeting" class="mt-12 text-sm italic">
           {{ greeting }}
         </p>
         <p data-typer class="text-sm italic mt-2">cya</p>
       </div>
       <p
-        v-show="typwriterMode"
+        v-show="typeWriterMode"
         data-typer
         id="greeting"
         class="mt-12 text-sm italic"
       >
         {{ greeting }}
       </p>
-      <p v-show="typwriterMode" data-typer class="text-sm italic mt-2">cya</p>
+      <p v-show="typeWriterMode" data-typer class="text-sm italic mt-2">cya</p>
     </article>
     <Transition
       enter-active-class="transition transform duration-300"

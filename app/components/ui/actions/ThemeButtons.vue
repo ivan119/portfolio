@@ -8,6 +8,10 @@ import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 const breakpoints = useBreakpoints(breakpointsTailwind);
 const smallerThen2xlWidth = breakpoints.smaller("2xl");
 
+import { getBreakpoints } from "~/composables/shared/breakpoints";
+
+const { isMobileDevice } = getBreakpoints();
+
 const {
   activeTheme,
   colorMode,
@@ -22,10 +26,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
     required: false,
-  },
-  isMobileDevice: {
-    type: Boolean,
-    default: false,
   },
   rowClass: {
     type: Boolean,
