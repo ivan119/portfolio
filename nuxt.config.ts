@@ -14,7 +14,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  compatibilityDate: "2024-04-03",
+  compatibilityDate: "latest",
   experimental: {
     viewTransition: true,
     renderJsonPayloads: false,
