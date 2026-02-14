@@ -40,7 +40,6 @@ watch(colorMode, () => {
 
 onMounted(() => {
   hideThemeButtons.value = activeTheme.value === "default";
-  console.log("IntroComponent mounted", typeWriterMode.value);
   if (typeWriterMode.value) {
     // meanse we are back beacuse click on logo on index page
     // we use typewriter fully there
