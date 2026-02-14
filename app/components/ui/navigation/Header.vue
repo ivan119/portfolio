@@ -1,28 +1,17 @@
 <script setup>
+import { useDefaultLayout } from "~/composables/useDefaultLayout";
+import { getBreakpoints } from "~/composables/shared/breakpoints";
 import BlogIcon from "~/components/ui/icons/Blog.vue";
 import SkillsIcon from "~/components/ui/icons/Skills.vue";
 import ProjectsIcon from "~/components/ui/icons/Projects.vue";
 
+const { showLogo, showIntroComponent } = useDefaultLayout();
+const { isMobileDevice } = getBreakpoints();
+
 const showLinks = ref(false);
-const props = defineProps({
-  showLogo: {
-    type: Boolean,
-    default: true,
-  },
-  activeTheme: {
-    type: String,
-    default: "default",
-    validator: (value) => ["default", "dotted", "animated"].includes(value),
-  },
-  isMobileDevice: {
-    type: Boolean,
-    default: false,
-  },
-});
-const emit = defineEmits(["show-intro", "toggle-background", "toggle-layout"]);
 const route = useRoute();
 watch(
-  () => props.showLogo,
+  showLogo,
   (newValue) => {
     if (newValue) {
       setTimeout(() => {
@@ -39,10 +28,10 @@ watch(
 
 const showIntroAgain = () => {
   if (route.path === "/") {
-    emit("show-intro");
     setTimeout(() => {
       showLinks.value = false;
-    }, 200);
+      showIntroComponent();
+    }, 369);
   }
 };
 
@@ -111,7 +100,7 @@ onUnmounted(() => {
       <transition name="page">
         <NuxtLink
           aria-label="homepage-intro-link"
-          v-if="props.showLogo"
+          v-if="showLogo"
           @click="showIntroAgain"
           to="/"
           class="logo mt-6 relative hover:scale-105 transition-transform duration-300"

@@ -48,18 +48,8 @@ const {
       </Transition>
     </ClientOnly>
     <div class="content-container">
-      <IntroComponent
-        v-if="showIntro && onIndexPage"
-        :typwriter-mode="typeWriterMode"
-        @update:show-main-content="changeState"
-        @show-logo="updateShowLogo"
-      />
-      <Header
-        v-if="showMainContent"
-        :show-logo="showLogo"
-        :isMobileDevice
-        @show-intro="showIntroComponent"
-      />
+      <IntroComponent v-if="showIntro && onIndexPage" />
+      <Header v-if="showMainContent" />
       <NuxtLoadingIndicator style="position: relative" v-if="showMainContent" />
       <div class="flex-1" v-show="showMainContent">
         <div class="grow">

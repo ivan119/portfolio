@@ -1,20 +1,26 @@
+const typeWriterMode = ref(false);
+const showLogo = ref(true);
+const transitionMode = ref<"slide" | "fade">("fade");
+const transitionSlide = ref("slide-right");
+const transitionFade = ref("page");
+
 export const useDefaultLayout = () => {
   const route = useRoute();
   const colorMode = useColorMode();
   const isDark = computed(() => colorMode.value === "dark");
 
-  const transitionMode = ref<"slide" | "fade">("fade");
-  const transitionSlide = ref("slide-right");
-  const transitionFade = ref("page");
-
-  const typeWriterMode = ref(false);
   const showIntro = useCookie<boolean>("showIntro", {
     default: () => false,
     watch: true,
     sameSite: "lax",
   });
+
   const showMainContent = computed(() => !showIntro.value);
-  const showLogo = ref(!showIntro.value);
+
+  // Initialize showLogo based on showIntro if it hasn't been set yet
+  if (process.client) {
+    showLogo.value = !showIntro.value;
+  }
 
   const changeState = (value: boolean) => {
     showIntro.value = !value;
@@ -33,9 +39,7 @@ export const useDefaultLayout = () => {
   };
 
   const setupViewTransition = () => {
-    // Type guard for View Transition API
-    // Check for View Transition API support
-    if ((document as any).startViewTransition) {
+    if (process.client && (document as any).startViewTransition) {
       const handleNavigation = () => {
         (document as any).startViewTransition?.();
       };
@@ -47,7 +51,6 @@ export const useDefaultLayout = () => {
   };
 
   onBeforeMount(() => {
-    typeWriterMode.value = false;
     setupViewTransition();
   });
 
@@ -66,6 +69,9 @@ export const useDefaultLayout = () => {
   const handleShowContent = () => {
     if (route.path !== "/" && showIntro.value) {
       showIntro.value = false;
+      updateShowLogo(true);
+    } else if (route.path === "/" && !showIntro.value) {
+      // Ensure logo is shown on home if intro is hidden
       updateShowLogo(true);
     }
   };

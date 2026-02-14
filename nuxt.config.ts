@@ -14,10 +14,28 @@ export default defineNuxtConfig({
       ],
     },
   },
-  compatibilityDate: "2024-04-03",
+  compatibilityDate: "latest",
   experimental: {
     viewTransition: true,
-    renderJsonPayloads: true,
+    renderJsonPayloads: false,
+    payloadExtraction: false,
+  },
+  vite: {
+    build: {
+      cssCodeSplit: true,
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules")) {
+              if (id.includes("three")) return "three";
+              if (id.includes("typewriter-effect")) return "typewriter";
+              return "vendor";
+            }
+          },
+        },
+      },
+    },
   },
   devtools: { enabled: false },
   css: ["~/assets/css/main.css"],
@@ -56,6 +74,7 @@ export default defineNuxtConfig({
     {
       path: "~/components/ui/",
       pathPrefix: false,
+      ignore: ["icons/devicon/**"],
     },
     "~/components",
   ],
