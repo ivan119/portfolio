@@ -1,4 +1,4 @@
-import type { PreviewBlogPost, BlogPost } from "~~/server/types/blog";
+import type { PreviewBlogPost, BlogPost } from "~~/shared/types/blog";
 
 export function usePosts() {
   const posts: Ref<PreviewBlogPost[]> = ref([]); // all posts

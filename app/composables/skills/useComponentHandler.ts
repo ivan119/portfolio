@@ -1,33 +1,27 @@
-const modules = import.meta.glob("~/components/ui/icons/devicon/*.vue", {
-  eager: true,
-});
-const iconMap: Record<string, any> = {};
+import { defineAsyncComponent } from "vue";
+
+const modules = import.meta.glob("~/components/ui/icons/devicon/*.vue");
+
+const iconMap: Record<string, () => Promise<any>> = {};
 
 for (const path in modules) {
-  // Extract filename: "Vuejs.vue" -> "vuejs"
   const name = path.split("/").pop()?.replace(".vue", "").toLowerCase();
-  // THIS WAS HOTFIX!
-  // TODO: THIS IS BAD PRACTICE ALL SHOULD MATCH THE DATA LIKE EVERYTHING ELSE IS
   if (name === "cursor") {
-    iconMap["vscode"] = (modules[path] as any).default;
+    iconMap["vscode"] = modules[path] as () => Promise<any>;
+  } else if (name === "cpp") {
+    iconMap["cplusplus"] = modules[path] as () => Promise<any>;
+  } else if (name === "next") {
+    iconMap["nextjs"] = modules[path] as () => Promise<any>;
+  } else if (name === "angular") {
+    iconMap["angularjs"] = modules[path] as () => Promise<any>;
+  } else if (name === "node") {
+    iconMap["nodejs"] = modules[path] as () => Promise<any>;
+  } else if (name === "adobexd") {
+    iconMap["xd"] = modules[path] as () => Promise<any>;
   }
-  if (name === "cpp") {
-    iconMap["cplusplus"] = (modules[path] as any).default;
-  }
-  if (name === "next") {
-    iconMap["nextjs"] = (modules[path] as any).default;
-  }
-  if (name === "angular") {
-    iconMap["angularjs"] = (modules[path] as any).default;
-  }
-  if (name === "node") {
-    iconMap["nodejs"] = (modules[path] as any).default;
-  }
-  if (name === "adobexd") {
-    iconMap["xd"] = (modules[path] as any).default;
-  }
+
   if (name) {
-    iconMap[name] = (modules[path] as any).default;
+    iconMap[name] = modules[path] as () => Promise<any>;
   }
 }
 
@@ -39,7 +33,11 @@ export const useIconComponentHandler = () => {
       .replace("-original", "")
       .replace("-wordmark", "")
       .toLowerCase();
-    return iconMap[key] ?? null;
+
+    const loader = iconMap[key];
+    if (!loader) return null;
+
+    return defineAsyncComponent(loader);
   };
 
   return { handleIconComponent };

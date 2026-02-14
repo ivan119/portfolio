@@ -31,7 +31,14 @@
 </template>
 
 <script setup>
-import { ref, shallowRef, onMounted, onBeforeUnmount, computed, nextTick } from "vue";
+import {
+  ref,
+  shallowRef,
+  onMounted,
+  onBeforeUnmount,
+  computed,
+  nextTick,
+} from "vue";
 import { useColorMode } from "#imports";
 
 // Keep track of mounting state

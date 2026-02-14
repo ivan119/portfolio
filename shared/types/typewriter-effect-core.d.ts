@@ -1,4 +1,4 @@
-declare module 'typewriter-effect/dist/core' {
+declare module "typewriter-effect/dist/core" {
   interface TypewriterOptions {
     loop?: boolean;
     delay?: number;
@@ -23,7 +23,10 @@ declare module 'typewriter-effect/dist/core' {
     pauseFor(ms: number): TypewriterInstance;
     deleteChars(amount: number): TypewriterInstance;
     deleteAll(speed?: number): TypewriterInstance;
-    callFunction(fn: (this: TypewriterInstance) => void, thisArg?: any): TypewriterInstance;
+    callFunction(
+      fn: (this: TypewriterInstance) => void,
+      thisArg?: any,
+    ): TypewriterInstance;
     pauseForRange(min: number, max: number): TypewriterInstance;
     changeDeleteSpeed(speed: number): TypewriterInstance;
     changeDelay(delay: number): TypewriterInstance;
@@ -39,7 +42,10 @@ declare module 'typewriter-effect/dist/core' {
     pauseFor(ms: number): TypewriterInstance;
     deleteChars(amount: number): TypewriterInstance;
     deleteAll(speed?: number): TypewriterInstance;
-    callFunction(fn: (this: TypewriterInstance) => void, thisArg?: any): TypewriterInstance;
+    callFunction(
+      fn: (this: TypewriterInstance) => void,
+      thisArg?: any,
+    ): TypewriterInstance;
     pauseForRange(min: number, max: number): TypewriterInstance;
     changeDeleteSpeed(speed: number): TypewriterInstance;
     changeDelay(delay: number): TypewriterInstance;
@@ -52,4 +58,3 @@ declare module 'typewriter-effect/dist/core' {
   export default Typewriter;
   export type { TypewriterInstance, TypewriterOptions };
 }
-

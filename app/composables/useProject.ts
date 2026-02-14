@@ -30,6 +30,3 @@ export function useProject() {
 
   return { project, fetchProjectBySlug };
 }
-
-
-

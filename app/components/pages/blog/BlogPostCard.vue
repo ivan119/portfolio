@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PreviewBlogPost } from "~~/server/types/blog";
+import type { PreviewBlogPost } from "~~/shared/types/blog";
 const props = defineProps<{
   post: PreviewBlogPost;
   showBgDots?: boolean;

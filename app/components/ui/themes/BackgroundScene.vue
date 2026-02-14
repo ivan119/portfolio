@@ -4,7 +4,24 @@
 </template>
 
 <script setup>
-import * as THREE from "three";
+import {
+  Color,
+  Scene,
+  PerspectiveCamera,
+  WebGLRenderer,
+  ShaderMaterial,
+  PlaneGeometry,
+  Mesh,
+  MathUtils,
+  BufferGeometry,
+  BufferAttribute,
+  Vector3,
+  Points,
+  LineSegments,
+  AdditiveBlending,
+  Float32BufferAttribute,
+} from "three";
+
 import { useColorMode } from "#imports";
 
 // Animation constants
@@ -51,8 +68,8 @@ const updateParticleColor = (newColor, forLightMode = false) => {
 const updateMaterialColors = () => {
   const isLight = colorMode.value === "light";
   const particleColor = isLight
-    ? new THREE.Color(config.value.lightModeColor)
-    : new THREE.Color(config.value.particleColor);
+    ? new Color(config.value.lightModeColor)
+    : new Color(config.value.particleColor);
 
   if (particlesMaterial.uniforms && particlesMaterial.uniforms.color) {
     particlesMaterial.uniforms.color.value.set(particleColor);
@@ -68,14 +85,14 @@ const updateMaterialColors = () => {
 };
 
 onMounted(() => {
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
+  const scene = new Scene();
+  const camera = new PerspectiveCamera(
     40,
     window.innerWidth / window.innerHeight,
     0.1,
     1000,
   );
-  renderer = new THREE.WebGLRenderer({
+  renderer = new WebGLRenderer({
     antialias: true,
     alpha: true, // Enable transparency
   });
@@ -123,7 +140,7 @@ onMounted(() => {
     }
   `;
 
-  bgMaterial = new THREE.ShaderMaterial({
+  bgMaterial = new ShaderMaterial({
     vertexShader,
     fragmentShader,
     uniforms: {
@@ -135,12 +152,12 @@ onMounted(() => {
   });
 
   // Adjust background plane to fit viewport perfectly
-  const bgGeometry = new THREE.PlaneGeometry(200, 200); // Increased size
-  const backgroundMesh = new THREE.Mesh(bgGeometry, bgMaterial);
+  const bgGeometry = new PlaneGeometry(200, 200); // Increased size
+  const backgroundMesh = new Mesh(bgGeometry, bgMaterial);
   backgroundMesh.position.z = -100; // Push further back
   // Ensure background fills viewport
   const distance = Math.abs(backgroundMesh.position.z);
-  const vFov = THREE.MathUtils.degToRad(camera.fov);
+  const vFov = MathUtils.degToRad(camera.fov);
   const height = 2 * Math.tan(vFov / 2) * distance;
   const width = height * camera.aspect;
   backgroundMesh.scale.set(width / 100, height / 100, 1);
@@ -150,7 +167,7 @@ onMounted(() => {
   particles = [];
 
   // Create particles
-  const particlesGeometry = new THREE.BufferGeometry();
+  const particlesGeometry = new BufferGeometry();
   const posArray = new Float32Array(config.value.particleCount * 3);
   const sizeArray = new Float32Array(config.value.particleCount); // For size animation
   const alphaArray = new Float32Array(config.value.particleCount); // For opacity animation
@@ -171,38 +188,38 @@ onMounted(() => {
     sizeArray[i] = 1.0; // Normalized size (will be multiplied by base size)
     alphaArray[i] = 1.0; // Normalized alpha (will affect particle opacity)
 
-      // Store particle data for simulation
-      particles.push({
-        position: new THREE.Vector3(x, y, z),
-        velocity: new THREE.Vector3(
-          (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
-          (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
-          (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
-        ),
-        index: i,
-        size: 1.0, // Current size factor
-        targetSize: 1.0, // Target size for animation
-        sizeStartTime: 0, // Start time for size animation
-        sizeDuration: 0, // Duration for size animation
-        alpha: 1.0, // Current opacity factor
-        targetAlpha: 1.0, // Target opacity for animation
-        alphaStartTime: 0, // Start time for alpha animation
-        alphaDuration: 0, // Duration for alpha animation
-        connections: new Set(), // Track connections for this particle
-      });
+    // Store particle data for simulation
+    particles.push({
+      position: new Vector3(x, y, z),
+      velocity: new Vector3(
+        (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
+        (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
+        (Math.random() - 0.5) * PARTICLE_VELOCITY_FACTOR,
+      ),
+      index: i,
+      size: 1.0, // Current size factor
+      targetSize: 1.0, // Target size for animation
+      sizeStartTime: 0, // Start time for size animation
+      sizeDuration: 0, // Duration for size animation
+      alpha: 1.0, // Current opacity factor
+      targetAlpha: 1.0, // Target opacity for animation
+      alphaStartTime: 0, // Start time for alpha animation
+      alphaDuration: 0, // Duration for alpha animation
+      connections: new Set(), // Track connections for this particle
+    });
   }
 
   particlesGeometry.setAttribute(
     "position",
-    new THREE.BufferAttribute(posArray, 3),
+    new BufferAttribute(posArray, 3),
   );
   particlesGeometry.setAttribute(
     "size",
-    new THREE.BufferAttribute(sizeArray, 1),
+    new BufferAttribute(sizeArray, 1),
   );
   particlesGeometry.setAttribute(
     "alpha",
-    new THREE.BufferAttribute(alphaArray, 1),
+    new BufferAttribute(alphaArray, 1),
   );
 
   // Vertex shader that handles size and opacity animation
@@ -242,19 +259,19 @@ onMounted(() => {
   `;
 
   // Custom particle material with shaders
-  particlesMaterial = new THREE.ShaderMaterial({
+  particlesMaterial = new ShaderMaterial({
     uniforms: {
-      color: { value: new THREE.Color(config.value.particleColor) },
+      color: { value: new Color(config.value.particleColor) },
       isLight: { value: colorMode.value === "light" },
     },
     vertexShader: particleVertexShader,
     fragmentShader: particleFragmentShader,
     transparent: true,
-    blending: THREE.AdditiveBlending,
+    blending: AdditiveBlending,
     depthWrite: false,
   });
 
-  particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+  particlesMesh = new Points(particlesGeometry, particlesMaterial);
   scene.add(particlesMesh);
 
   // Create connections with custom shader for animation
@@ -282,21 +299,21 @@ onMounted(() => {
   `;
 
   // Empty initial connection geometry
-  const connectionsGeometry = new THREE.BufferGeometry();
+  const connectionsGeometry = new BufferGeometry();
 
-  connectionsMaterial = new THREE.ShaderMaterial({
+  connectionsMaterial = new ShaderMaterial({
     vertexShader: connectionVertexShader,
     fragmentShader: connectionFragmentShader,
     uniforms: {
-      color: { value: new THREE.Color(config.value.particleColor) },
+      color: { value: new Color(config.value.particleColor) },
       isLight: { value: colorMode.value === "light" },
     },
     transparent: true,
-    blending: THREE.AdditiveBlending,
+    blending: AdditiveBlending,
     depthWrite: false,
   });
 
-  connectionsMesh = new THREE.LineSegments(
+  connectionsMesh = new LineSegments(
     connectionsGeometry,
     connectionsMaterial,
   );
@@ -328,9 +345,12 @@ onMounted(() => {
       particle.position.add(particle.velocity);
 
       // Boundary check
-      if (Math.abs(particle.position.x) > BOUNDARY_THRESHOLD) particle.velocity.x *= -1;
-      if (Math.abs(particle.position.y) > BOUNDARY_THRESHOLD) particle.velocity.y *= -1;
-      if (Math.abs(particle.position.z) > BOUNDARY_THRESHOLD) particle.velocity.z *= -1;
+      if (Math.abs(particle.position.x) > BOUNDARY_THRESHOLD)
+        particle.velocity.x *= -1;
+      if (Math.abs(particle.position.y) > BOUNDARY_THRESHOLD)
+        particle.velocity.y *= -1;
+      if (Math.abs(particle.position.z) > BOUNDARY_THRESHOLD)
+        particle.velocity.z *= -1;
 
       // Update position array
       const idx = particle.index * 3;
@@ -342,11 +362,13 @@ onMounted(() => {
       if (particle.sizeDuration > 0) {
         const elapsed = (Date.now() - particle.sizeStartTime) / 1000; // Convert to seconds
         const progress = Math.min(elapsed / particle.sizeDuration, 1.0);
-        
+
         if (progress < 1.0) {
           // Interpolate between current and target size
-          const startSize = particle.size === 1.0 ? particle.size : particle.size;
-          particle.size = startSize + (particle.targetSize - startSize) * progress;
+          const startSize =
+            particle.size === 1.0 ? particle.size : particle.size;
+          particle.size =
+            startSize + (particle.targetSize - startSize) * progress;
         } else {
           // Animation complete
           particle.size = particle.targetSize;
@@ -358,11 +380,13 @@ onMounted(() => {
       if (particle.alphaDuration > 0) {
         const elapsed = (Date.now() - particle.alphaStartTime) / 1000; // Convert to seconds
         const progress = Math.min(elapsed / particle.alphaDuration, 1.0);
-        
+
         if (progress < 1.0) {
           // Interpolate between current and target alpha
-          const startAlpha = particle.alpha === 1.0 ? particle.alpha : particle.alpha;
-          particle.alpha = startAlpha + (particle.targetAlpha - startAlpha) * progress;
+          const startAlpha =
+            particle.alpha === 1.0 ? particle.alpha : particle.alpha;
+          particle.alpha =
+            startAlpha + (particle.targetAlpha - startAlpha) * progress;
         } else {
           // Animation complete
           particle.alpha = particle.targetAlpha;
@@ -467,17 +491,17 @@ onMounted(() => {
 
     // Update connections geometry
     connectionsMesh.geometry.dispose();
-    connectionsMesh.geometry = new THREE.BufferGeometry();
+    connectionsMesh.geometry = new BufferGeometry();
 
     if (connections.length > 0) {
       connectionsMesh.geometry.setAttribute(
         "position",
-        new THREE.Float32BufferAttribute(connections, 3),
+        new Float32BufferAttribute(connections, 3),
       );
 
       connectionsMesh.geometry.setAttribute(
         "connectionAlpha",
-        new THREE.Float32BufferAttribute(connectionAlphas, 1),
+        new Float32BufferAttribute(connectionAlphas, 1),
       );
     }
   };
@@ -485,13 +509,13 @@ onMounted(() => {
   // Animation when a new connection forms (time-based, runs on main thread)
   const triggerConnectAnimation = (particle) => {
     const now = Date.now();
-    
+
     // Pulse effect - grow first
     const startSize = particle.size;
     particle.targetSize = config.value.pulseStrength;
     particle.sizeStartTime = now;
     particle.sizeDuration = config.value.connectionAnimDuration * 0.3;
-    
+
     // Then return to normal (will be triggered in next phase)
     const returnToNormal = () => {
       if (particle && isAnimating) {
@@ -500,7 +524,7 @@ onMounted(() => {
         particle.sizeDuration = config.value.connectionAnimDuration * 0.7;
       }
     };
-    
+
     // Use requestAnimationFrame callback instead of setTimeout to keep on main thread
     const scheduleReturn = () => {
       if (isAnimating) {
@@ -518,7 +542,7 @@ onMounted(() => {
     particle.targetAlpha = 1.5;
     particle.alphaStartTime = now;
     particle.alphaDuration = config.value.connectionAnimDuration * 0.2;
-    
+
     // Then return to normal alpha
     const returnAlphaToNormal = () => {
       if (particle && isAnimating) {
@@ -527,7 +551,7 @@ onMounted(() => {
         particle.alphaDuration = config.value.connectionAnimDuration * 0.8;
       }
     };
-    
+
     const scheduleAlphaReturn = () => {
       if (isAnimating) {
         const timeoutId = setTimeout(() => {
@@ -543,12 +567,12 @@ onMounted(() => {
   // Animation when a connection breaks (time-based, runs on main thread)
   const triggerDisconnectAnimation = (particle) => {
     const now = Date.now();
-    
+
     // Subtle shrink effect
     particle.targetSize = 0.7;
     particle.sizeStartTime = now;
     particle.sizeDuration = config.value.connectionAnimDuration * 0.5;
-    
+
     // Then return to normal
     const returnToNormal = () => {
       if (particle && isAnimating) {
@@ -557,7 +581,7 @@ onMounted(() => {
         particle.sizeDuration = config.value.connectionAnimDuration * 0.5;
       }
     };
-    
+
     const scheduleReturn = () => {
       if (isAnimating) {
         const timeoutId = setTimeout(() => {
@@ -573,7 +597,7 @@ onMounted(() => {
     particle.targetAlpha = 0.6;
     particle.alphaStartTime = now;
     particle.alphaDuration = config.value.connectionAnimDuration * 0.4;
-    
+
     // Then return to normal
     const returnAlphaToNormal = () => {
       if (particle && isAnimating) {
@@ -582,7 +606,7 @@ onMounted(() => {
         particle.alphaDuration = config.value.connectionAnimDuration * 0.6;
       }
     };
-    
+
     const scheduleAlphaReturn = () => {
       if (isAnimating) {
         const timeoutId = setTimeout(() => {
@@ -597,7 +621,7 @@ onMounted(() => {
 
   const animate = () => {
     if (!isAnimating) return;
-    
+
     animationId = requestAnimationFrame(animate);
     bgMaterial.uniforms.time.value += ANIMATION_SPEED;
 
@@ -619,13 +643,13 @@ onMounted(() => {
       cancelAnimationFrame(animationId);
       animationId = null;
     }
-    
+
     // Cancel all pending timeouts (cleanup for main thread)
-    animationTimeouts.forEach(timeoutId => {
+    animationTimeouts.forEach((timeoutId) => {
       clearTimeout(timeoutId);
     });
     animationTimeouts.clear();
-    
+
     // Cancel any pending timeouts
     particles.forEach((particle) => {
       delete particle.targetSize;

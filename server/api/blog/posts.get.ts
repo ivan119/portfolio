@@ -1,5 +1,5 @@
 import { posts } from "../../data/posts";
-import type { BlogPost, PreviewBlogPost } from "../../types/blog";
+import type { BlogPost, PreviewBlogPost } from "../../../shared/types/blog";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
