@@ -50,7 +50,11 @@ const {
     <div class="content-container">
       <IntroComponent v-if="showIntro && onIndexPage" />
       <Header v-if="showMainContent" />
-      <NuxtLoadingIndicator style="position: relative" v-if="showMainContent" />
+      <NuxtLoadingIndicator
+        color="var(--main-gradient)"
+        style="position: relative"
+        v-if="showMainContent"
+      />
       <div class="flex-1" v-show="showMainContent">
         <div class="grow">
           <slot />
