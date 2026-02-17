@@ -3,6 +3,7 @@ import DottedIcon from "~/components/ui/icons/Dotted.vue";
 import BackgroundIcon from "~/components/ui/icons/Background.vue";
 import SunIcon from "~/components/ui/icons/Sun.vue";
 import MoonIcon from "~/components/ui/icons/Moon.vue";
+import MonoIcon from "~/components/ui/icons/Mono.vue";
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 const breakpoints = useBreakpoints(breakpointsTailwind);
@@ -14,11 +15,13 @@ const { isMobileDevice } = getBreakpoints();
 
 const {
   activeTheme,
+  activeVibe,
   colorMode,
   dottedSpinClass,
   isThemeChanging,
   toggleTheme,
   toggleBackground,
+  toggleVibe,
 } = useThemeButtons();
 
 const props = defineProps({
@@ -43,7 +46,7 @@ const props = defineProps({
       <!-- SunAndMoon Button -->
       <ThemeButton
         :icon="colorMode.preference === 'dark' ? SunIcon : MoonIcon"
-        :is-active="colorMode.preference === 'dark'"
+        :is-active="activeVibe === 'mono'"
         :is-changing="isThemeChanging"
         :variant="colorMode.preference === 'dark' ? 'moon' : 'sun'"
         :show-active-indicator="false"
@@ -56,13 +59,24 @@ const props = defineProps({
         @click="toggleTheme"
       />
       <template v-if="!hideThemeButtons && !isMobileDevice">
+        <!-- Vibe Toggle Button -->
+        <ThemeButton
+          :icon="MonoIcon"
+          :is-active="activeVibe === 'mono'"
+          variant="mono"
+          tooltip="Toggle Pure Mono Vibe"
+          :tooltip-position="
+            rowClass || smallerThen2xlWidth ? 'force-top' : 'left'
+          "
+          @click="toggleVibe"
+        />
         <!-- Dotted Theme Button -->
         <ThemeButton
           :icon="DottedIcon"
           :is-active="activeTheme === 'dotted'"
           variant="dotted"
           :icon-classes="`w-6 h-6 icon-transition ${dottedSpinClass}`"
-          tooltip="Toggle Background Animation"
+          tooltip="Toggle Dotted Background"
           :tooltip-position="
             rowClass || smallerThen2xlWidth ? 'force-top' : 'left'
           "
@@ -75,7 +89,7 @@ const props = defineProps({
           :icon="BackgroundIcon"
           :is-active="activeTheme === 'animated'"
           variant="animated"
-          tooltip="Toggle Background Animation"
+          tooltip="Toggle Animated Background"
           :tooltip-position="
             rowClass || smallerThen2xlWidth ? 'force-top' : 'left'
           "

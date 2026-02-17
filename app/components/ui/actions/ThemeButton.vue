@@ -32,7 +32,7 @@ import { useThrottleFn } from "@vueuse/core";
 interface Props {
   icon: any;
   isActive?: boolean;
-  variant?: "animated" | "dotted" | "sun" | "moon";
+  variant?: "animated" | "dotted" | "sun" | "moon" | "mono";
   tooltip?: string;
   tooltipPosition?: "force-top" | "top" | "bottom" | "left" | "right";
   tooltipSize?: "sm" | "md" | "lg";
@@ -117,6 +117,17 @@ const handleClick = useThrottleFn(() => {
   top: -4px;
   right: -4px;
   background-color: #f59e0b; /* amber-500 */
+}
+
+.active-indicator-mono {
+  top: -4px;
+  right: -4px;
+  background-color: #ffffff; /* pure white */
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+.light .active-indicator-mono {
+  background-color: #000000; /* pure black */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Animation keyframes */

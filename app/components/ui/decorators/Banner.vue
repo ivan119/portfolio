@@ -28,11 +28,10 @@ const props = defineProps({
 
 <style scoped>
 .ui-banner {
-  /* Background gradient */
-  @apply absolute inset-0 bg-gradient-to-br
-  from-red-200/80 via-blue-200/60 to-transparent /* light mode: stronger visibility with red→blue */
-  dark:from-teal-900/30 dark:via-blue-900/20 dark:to-transparent
-  rounded-3xl -z-10;
+  background: var(--banner-bg);
+  border: var(--banner-border);
+  border-radius: var(--radius);
+  @apply absolute inset-0 -z-10;
 }
 
 .ui-banner-dots {
@@ -40,7 +39,10 @@ const props = defineProps({
 }
 
 .ui-banner-dots-container {
-  @apply h-full w-full bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] rounded-3xl;
+  background-image: radial-gradient(#3b82f6 1px, transparent 1px);
+  background-size: 16px 16px;
+  border-radius: var(--radius);
+  @apply h-full w-full;
 }
 
 .slot-content {

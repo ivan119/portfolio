@@ -22,12 +22,68 @@
     var(--main-gradient-to) 50%
   );
 
+  /* Radius variable for global shape control */
+  --radius: 0.5rem;
+
   /* Theme colors */
   --bg-light: #f8fafc;
   --text-light: #1e293b;
   --bg-dark: #091a28;
   --text-dark: #ebf4f1;
+
+  /* Design Tokens (Defaults) */
+  --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --card-blur: blur(8px);
+  --card-bg: rgba(255, 255, 255, 0.4);
+  --card-border: 1px solid rgba(0, 0, 0, 0.05);
+  --card-hover-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+  --banner-bg: linear-gradient(to br, rgba(239, 68, 68, 0.1) 0%, rgba(59, 130, 246, 0.1) 50%, transparent 100%);
+  --banner-border: none;
 }
+
+.dark {
+  --card-bg: rgba(17, 24, 39, 0.4);
+  --card-border: 1px solid rgba(255, 255, 255, 0.05);
+  --banner-bg: linear-gradient(to br, rgba(20, 184, 166, 0.15), rgba(37, 99, 235, 0.1), transparent);
+}
+
+/* Mono Vibe Orchestration */
+html[data-vibe="mono"] {
+  --radius: 0px !important;
+  --main-gradient: linear-gradient(to right, #000, #999);
+  --main-glow: #000;
+  
+  /* Neutralize Tokens for Brutalist Look */
+  --card-shadow: none;
+  --card-blur: none;
+  --card-bg: transparent;
+  --card-border: 1px solid rgba(0, 0, 0, 0.4);
+  --card-hover-shadow: none;
+  
+  --banner-bg: transparent;
+  --banner-border: 1px solid rgba(0, 0, 0, 0.4);
+  
+  --bg-light: #fff;
+  --text-light: #000;
+}
+
+html[data-vibe="mono"].dark {
+  --main-gradient: linear-gradient(to right, #fff, #444);
+  --main-glow: #fff;
+  
+  --card-border: 1px solid rgba(255, 255, 255, 0.4);
+  --banner-border: 1px solid rgba(255, 255, 255, 0.4);
+  
+  --bg-dark: #000;
+  --text-dark: #fff;
+}
+
+/* Force pure background in Mono mode */
+html[data-vibe="mono"] body {
+  background-image: none !important;
+}
+
 
 /* Dark mode variables */
 .dark {
@@ -127,6 +183,11 @@ body {
     from-red-600 via-blue-600 to-blue-700 /* light mode: higher contrast using red→blue */
     dark:from-teal-400 dark:to-blue-400
     bg-clip-text text-transparent;
+}
+
+html[data-vibe="mono"] .text-main-gradient {
+  background-image: var(--main-gradient) !important;
+  -webkit-text-fill-color: transparent !important;
 }
 
 .text-main-gradient-animated {

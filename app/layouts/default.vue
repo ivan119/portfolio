@@ -13,7 +13,7 @@ const DottedLayout = defineAsyncComponent(
 const ErrorCode = defineAsyncComponent(
   () => import("~/components/ui/themes/ErrorCode.vue"),
 );
-const { activeTheme } = useThemeButtons();
+const { activeTheme, activeVibe } = useThemeButtons();
 
 const {
   // state
@@ -27,20 +27,26 @@ const {
   updateShowLogo,
   showIntroComponent,
 } = useDefaultLayout();
+
+useHead({
+  htmlAttrs: {
+    "data-vibe": activeVibe,
+  },
+});
 </script>
 
 <template>
   <div class="main">
     <ClientOnly>
       <SpeedInsights />
-      <Transition v-if="!isMobileDevice" name="bg-fade">
+      <Transition v-if="activeVibe !== 'mono'" name="bg-fade">
         <BackgroundScene
-          v-if="activeTheme === 'animated'"
+          v-if="activeTheme === 'animated' && !isMobileDevice"
           key="animated-bg"
           class="background-container"
         />
         <DottedLayout
-          v-else-if="activeTheme === 'dotted'"
+          v-else-if="activeTheme === 'dotted' && !isMobileDevice"
           key="dotted-bg"
           class="background-container"
         />
