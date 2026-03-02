@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   typescript: {
     strict: true,
-    typeCheck: false, // Disable typeCheck to avoid vue-tsc lib file issues
+    typeCheck: true,
   },
   app: {
     head: {
@@ -22,7 +22,7 @@ export default defineNuxtConfig({
   },
   vite: {
     build: {
-      cssCodeSplit: true,
+      cssCodeSplit: false,
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
