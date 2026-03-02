@@ -4,25 +4,9 @@
 </template>
 
 <script setup>
-import {
-  Color,
-  Scene,
-  PerspectiveCamera,
-  WebGLRenderer,
-  ShaderMaterial,
-  PlaneGeometry,
-  Mesh,
-  MathUtils,
-  BufferGeometry,
-  BufferAttribute,
-  Vector3,
-  Points,
-  LineSegments,
-  AdditiveBlending,
-  Float32BufferAttribute,
-} from "three";
-
 import { useColorMode } from "#imports";
+
+let Color;
 
 // Animation constants
 const ANIMATION_SPEED = 0.01;
@@ -66,6 +50,7 @@ const updateParticleColor = (newColor, forLightMode = false) => {
 
 // Helper function to update material colors based on the current theme
 const updateMaterialColors = () => {
+  if (!Color || !particlesMaterial || !connectionsMaterial) return;
   const isLight = colorMode.value === "light";
   const particleColor = isLight
     ? new Color(config.value.lightModeColor)
@@ -84,7 +69,34 @@ const updateMaterialColors = () => {
   }
 };
 
-onMounted(() => {
+let cleanupFn = null;
+
+onUnmounted(() => {
+  if (cleanupFn) cleanupFn();
+});
+
+onMounted(async () => {
+  const THREE = await import("three");
+  Color = THREE.Color;
+  const {
+    Scene,
+    PerspectiveCamera,
+    WebGLRenderer,
+    ShaderMaterial,
+    PlaneGeometry,
+    Mesh,
+    MathUtils,
+    BufferGeometry,
+    BufferAttribute,
+    Vector3,
+    Points,
+    LineSegments,
+    AdditiveBlending,
+    Float32BufferAttribute,
+  } = THREE;
+
+  if (!sceneContainer.value) return;
+
   const scene = new Scene();
   const camera = new PerspectiveCamera(
     40,
@@ -636,7 +648,7 @@ onMounted(() => {
   animate();
 
   // Clean up on unmount
-  return () => {
+  cleanupFn = () => {
     // Stop animation first
     isAnimating = false;
     if (animationId) {
@@ -662,18 +674,20 @@ onMounted(() => {
     });
 
     window.removeEventListener("resize", handleResize);
-    scene.remove(backgroundMesh);
-    scene.remove(particlesMesh);
-    scene.remove(connectionsMesh);
+    if (scene) {
+      scene.remove(backgroundMesh);
+      scene.remove(particlesMesh);
+      scene.remove(connectionsMesh);
+    }
 
     // Dispose of geometries and materials
-    particlesMesh.geometry.dispose();
-    connectionsMesh.geometry.dispose();
-    bgMaterial.dispose();
-    particlesMaterial.dispose();
-    connectionsMaterial.dispose();
+    if (particlesMesh && particlesMesh.geometry) particlesMesh.geometry.dispose();
+    if (connectionsMesh && connectionsMesh.geometry) connectionsMesh.geometry.dispose();
+    if (bgMaterial) bgMaterial.dispose();
+    if (particlesMaterial) particlesMaterial.dispose();
+    if (connectionsMaterial) connectionsMaterial.dispose();
 
-    renderer.dispose();
+    if (renderer) renderer.dispose();
   };
 });
 
