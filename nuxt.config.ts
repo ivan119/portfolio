@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   experimental: {
     viewTransition: true,
     renderJsonPayloads: true,
-    payloadExtraction: true,
+    payloadExtraction: false,
   },
   vite: {
     build: {
@@ -80,7 +80,6 @@ export default defineNuxtConfig({
   ],
   nitro: {
     compressPublicAssets: true,
-    minify: true,
     routeRules: {
       // 1. Static Assets (1 Year Cache)
       "/_nuxt/**": {
