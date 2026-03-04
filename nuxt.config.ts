@@ -17,8 +17,6 @@ export default defineNuxtConfig({
   compatibilityDate: "latest",
   experimental: {
     viewTransition: true,
-    renderJsonPayloads: true,
-    payloadExtraction: false,
   },
   vite: {
     build: {
