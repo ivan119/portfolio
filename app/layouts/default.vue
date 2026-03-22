@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useThemeButtons } from "~/composables/UI/useThemeButtons";
 import { useDefaultLayout } from "~/composables/useDefaultLayout";
-import { SpeedInsights } from "@vercel/speed-insights/nuxt";
+import SpeedInsights from "@vercel/speed-insights/nuxt";
 import { getBreakpoints } from "~/composables/shared/breakpoints";
 const { isMobileDevice } = getBreakpoints();
 const BackgroundScene = defineAsyncComponent(

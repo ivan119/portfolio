@@ -19,6 +19,9 @@ export default defineNuxtConfig({
     viewTransition: true,
   },
   vite: {
+    optimizeDeps: {
+      include: ["typewriter-effect/dist/core"],
+    },
     build: {
       cssCodeSplit: false,
       chunkSizeWarningLimit: 1000,
@@ -42,6 +45,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@nuxt/image",
     "@vueuse/nuxt",
+    "@vercel/speed-insights/nuxt",
   ],
   postcss: {
     plugins: {
