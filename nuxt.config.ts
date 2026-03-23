@@ -17,10 +17,11 @@ export default defineNuxtConfig({
   compatibilityDate: "latest",
   experimental: {
     viewTransition: true,
-    renderJsonPayloads: false,
-    payloadExtraction: false,
   },
   vite: {
+    optimizeDeps: {
+      include: ["typewriter-effect/dist/core"],
+    },
     build: {
       cssCodeSplit: false,
       chunkSizeWarningLimit: 1000,
@@ -44,6 +45,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@nuxt/image",
     "@vueuse/nuxt",
+    "@vercel/speed-insights/nuxt",
   ],
   postcss: {
     plugins: {
