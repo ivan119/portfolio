@@ -21,6 +21,7 @@ export default defineNuxtConfig({
   compatibilityDate: "latest",
   experimental: {
     viewTransition: true,
+    payloadExtraction: false,
   },
   vite: {
     optimizeDeps: {
