@@ -1,33 +1,34 @@
-const modules = import.meta.glob("~/components/ui/icons/devicon/*.vue", {
-  eager: true,
-});
+const modules = import.meta.glob("~/components/ui/icons/devicon/*.vue");
 const iconMap: Record<string, any> = {};
 
 for (const path in modules) {
   // Extract filename: "Vuejs.vue" -> "vuejs"
   const name = path.split("/").pop()?.replace(".vue", "").toLowerCase();
+  
+  const asyncComponent = defineAsyncComponent(modules[path] as any);
+  
   // THIS WAS HOTFIX!
   // TODO: THIS IS BAD PRACTICE ALL SHOULD MATCH THE DATA LIKE EVERYTHING ELSE IS
   if (name === "cursor") {
-    iconMap["vscode"] = (modules[path] as any).default;
+    iconMap["vscode"] = asyncComponent;
   }
   if (name === "cpp") {
-    iconMap["cplusplus"] = (modules[path] as any).default;
+    iconMap["cplusplus"] = asyncComponent;
   }
   if (name === "next") {
-    iconMap["nextjs"] = (modules[path] as any).default;
+    iconMap["nextjs"] = asyncComponent;
   }
   if (name === "angular") {
-    iconMap["angularjs"] = (modules[path] as any).default;
+    iconMap["angularjs"] = asyncComponent;
   }
   if (name === "node") {
-    iconMap["nodejs"] = (modules[path] as any).default;
+    iconMap["nodejs"] = asyncComponent;
   }
   if (name === "adobexd") {
-    iconMap["xd"] = (modules[path] as any).default;
+    iconMap["xd"] = asyncComponent;
   }
   if (name) {
-    iconMap[name] = (modules[path] as any).default;
+    iconMap[name] = asyncComponent;
   }
 }
 

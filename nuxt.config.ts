@@ -4,6 +4,10 @@ export default defineNuxtConfig({
     strict: true,
     typeCheck: false, // Disable typeCheck to avoid vue-tsc lib file issues // TODO: find and fix error when typeCheck is true
   },
+  sourcemap: {
+    server: false,
+    client: false,
+  },
   app: {
     head: {
       htmlAttrs: { lang: "en" },
