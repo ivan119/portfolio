@@ -37,7 +37,6 @@
     "vue-tsc": "^3.2.6"
   },
   "overrides": {
-    "vite": "^8.0.0",
-    "//": "remove vite override when nuxt update next patch!!!"
+    "vite": "^8.0.0"
   }
 }
