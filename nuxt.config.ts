@@ -86,6 +86,10 @@ export default defineNuxtConfig({
   ],
   nitro: {
     compressPublicAssets: true,
+    prerender: {
+      crawlLinks: true, // Follow all <NuxtLink> hrefs found during prerender
+      routes: ["/", "/blog"], // Seed pages the crawler starts from
+    },
     routeRules: {
       // 1. Static Assets (1 Year Cache)
       "/_nuxt/**": {
