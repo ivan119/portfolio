@@ -32,7 +32,7 @@ export default defineNuxtConfig({
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
-          manualChunks(id) {
+          manualChunks(id: any) {
             if (id.includes("node_modules")) {
               if (id.includes("three")) return "three";
               if (id.includes("typewriter-effect")) return "typewriter";
@@ -50,7 +50,6 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@nuxt/image",
     "@vueuse/nuxt",
-    "@vercel/speed-insights/nuxt",
   ],
   postcss: {
     plugins: {
