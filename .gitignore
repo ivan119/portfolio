@@ -26,3 +26,4 @@ logs
 
 .cursor/rules/kluster-code-verify.mdc
 .kluster
+.output.txt
