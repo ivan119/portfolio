@@ -28,7 +28,6 @@ export default defineNuxtConfig({
       include: ["typewriter-effect/dist/core"],
     },
     build: {
-      cssCodeSplit: false,
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
@@ -50,6 +49,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@nuxt/image",
     "@vueuse/nuxt",
+    "@vercel/analytics",
   ],
   postcss: {
     plugins: {
