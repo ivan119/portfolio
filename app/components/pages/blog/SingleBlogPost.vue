@@ -13,6 +13,10 @@ const isHeading = (item: ContentItem) => item.type === "heading";
 const isParagraph = (item: ContentItem) => item.type === "paragraph";
 const isImage = (item: ContentItem) => item.type === "image";
 
+// Detect if an image URL is from Cloudinary or a local path
+const isCloudinaryUrl = (url?: string) =>
+  !!url && url.includes("cloudinary.com");
+
 // Get heading level class
 const getHeadingClass = (level: number) => {
   switch (level) {
@@ -68,7 +72,9 @@ const returnSizes = computed(() => {
       }"
       class="h-56 sm:h-80 lg:h-96"
     >
+      <!-- Cloudinary images -->
       <NuxtImg
+        v-if="isCloudinaryUrl(props.post?.coverImage)"
         provider="cloudinary"
         :src="props.post?.coverImage"
         :sizes="returnSizes"
@@ -95,6 +101,15 @@ const returnSizes = computed(() => {
           />
         </transition>
       </NuxtImg>
+      <!-- Local images -->
+      <img
+        v-else
+        :src="props.post?.coverImage"
+        loading="eager"
+        fetchpriority="high"
+        :alt="props.post?.title || ''"
+        class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
+      />
     </div>
   </div>
 
@@ -119,8 +134,8 @@ const returnSizes = computed(() => {
         {{ item.content }}
       </p>
 
-      <!-- Images -->
-      <figure v-else-if="isImage(item)" class="my-8">
+      <!-- Images (Cloudinary) -->
+      <figure v-else-if="isImage(item) && isCloudinaryUrl(item.src)" class="my-8">
         <NuxtImg
           provider="cloudinary"
           :src="item.src"
@@ -149,6 +164,18 @@ const returnSizes = computed(() => {
             </div>
           </transition>
         </NuxtImg>
+        <figcaption v-if="item.caption" class="text-center text-gray-500 mt-2">
+          {{ item.caption }}
+        </figcaption>
+      </figure>
+      <!-- Images (Local) -->
+      <figure v-else-if="isImage(item)" class="my-8">
+        <img
+          :src="item.src"
+          loading="lazy"
+          class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
+          :alt="item.alt"
+        />
         <figcaption v-if="item.caption" class="text-center text-gray-500 mt-2">
           {{ item.caption }}
         </figcaption>
