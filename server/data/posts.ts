@@ -1,5 +1,244 @@
 export const posts = [
   {
+    id: "ivan-with-claude",
+    title: "Ivan with Claude: The Chain Reaction That Built AI",
+    date: "2026-07-12",
+    author: "Ivan & Claude",
+    category: "Computer Science",
+    tags: ["AI", "History", "Computer Science", "Deep Learning", "Transformers"],
+    published: true,
+    excerpt:
+      "A century-long chain reaction of brilliant papers—from Turing's impossible proof to GPT-3's trillion-parameter bet—accidentally built the AI we live with today. Here's the story of 10 papers that changed everything, told by Ivan and his AI co-author Claude.",
+    content: [
+      {
+        type: "paragraph",
+        content:
+          "The year was 1936. Alan Turing didn't set out to invent the computer. He was trying to answer a question so dry it could dehydrate a cactus: can every mathematical problem be solved by an algorithm? Spoiler—no. But in proving that, he accidentally sketched the blueprint for every computing device you've ever touched. Twelve years later, Claude Shannon reduced all human communication to ones and zeros, casually inventing the 'bit' like it was no big deal. One thing led to another, and now we have teenagers in hoodies typing import torch and cashing billion-dollar checks.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "What follows is a tour through 10 of the most important scientific papers in the history of computer science—a century-long chain reaction written mostly by people much smarter than us. This is the story of how we got from 'can machines think?' to machines that write poetry, drive cars, and occasionally hallucinate about fake court cases.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "1. On Computable Numbers — Alan Turing (1936)",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Our story begins when mathematician David Hilbert threw down the biggest flex in math history: is there a universal algorithm that can decide whether any mathematical statement is true? Can we automate math itself? He called this the Entscheidungsproblem—German for 'decision problem.' By 1936, a young Alan Turing walked up and gave a brutal answer: no.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "But to prove it, Turing had to define what an 'algorithm' even means. So he imagined a hypothetical machine—an infinite tape, a read-write head, and a tiny table of rules. This 'Turing machine' is the abstract blueprint for every computing device ever built. He then used it to tackle the halting problem: can you write a program that looks at any other program and tells you if it'll finish running or loop forever? Turing proved it's impossible—it leads to a logical contradiction. Math has problems no algorithm can solve. That's annoying. But it's also the birth certificate of computer science.",
+      },
+      {
+        type: "image",
+        src: "/blog/ivan-with-claude/turing-machine.png",
+        alt: "Abstract visualization of a Turing machine",
+        caption:
+          "Turing's hypothetical machine: an infinite tape, a read-write head, and the birth of computation.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "2. A Mathematical Theory of Communication — Claude Shannon (1948)",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Twelve years after Turing, a guy named Claude Shannon asked his own deceptively simple question: what is information, as a thing you can actually measure? In his legendary paper, Shannon rips out the meaning from messages entirely. 'I love you' and 'the cat is on fire' carry the same information if they're equally surprising. He measures that surprise in a unit he called the bit—and proved that all information can be boiled down to a stream of ones and zeros.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Here's where it gets wild. To estimate how much information a message contains, Shannon borrowed a word from thermodynamics: entropy. To estimate the entropy of English, he literally had people guess the next letter in a sentence. When a letter is easy to guess, low entropy. Hard to guess? High entropy. Sound familiar? Having humans guess the next token is exactly what modern AI does—just on an incomprehensibly larger scale.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Shannon wasn't trying to build artificial intelligence. But he gave us the mathematics for uncertainty, prediction, and compression—and accidentally wrote the spiritual ancestor to the loss function. That's exactly why Anthropic named their AI model Claude. And that's exactly why this blog post exists: Ivan, a human, pair-programming with Claude, an AI named after the man who made this all possible.",
+      },
+      {
+        type: "image",
+        src: "/blog/ivan-with-claude/shannon-information.png",
+        alt: "Information theory visualization with binary streams and entropy waves",
+        caption:
+          "Shannon's insight: all information is surprise, and surprise can be measured in bits.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "3. The Perceptron — Frank Rosenblatt (1958)",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Ten years after Shannon, at Cornell, a psychologist (not a computer scientist!) built the first machine that actually learns. Inspired by how neurons fire in the brain, Frank Rosenblatt designed the perceptron—a device that takes inputs, weighs them, and adjusts those weights when it's wrong, until it can classify patterns on its own. It's the building block for every modern neural network.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "The hype was immediate and absolutely unhinged. The Navy funded it. The New York Times reported that the computer would soon be conscious. In 1958, people genuinely believed thinking machines were just around the corner. They were off by about 65 years.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "4. Perceptrons (The Book That Killed AI) — Minsky & Papert (1969)",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Eleven years after the perceptron hype, two MIT researchers—Marvin Minsky and Seymour Papert—published a book with a completely different vibe. With basic math, they proved that a single-layer perceptron can't even learn XOR (exclusive or)—trivial logic that means 'this or that, but not both.' It was essentially a death certificate for AI.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Funding evaporated overnight. Neural networks entered their first AI winter. But here's the twist buried in the fine print: Minsky and Papert actually figured out that stacking layers of perceptrons fixes everything. The only problem? Nobody knew how to train a stack of perceptrons yet. It would take another 17 years to figure that out.",
+      },
+      {
+        type: "image",
+        src: "/blog/ivan-with-claude/neural-network.png",
+        alt: "Evolution from single perceptron to deep neural network",
+        caption:
+          "From a single neuron to deep stacks—the solution was always there, we just couldn't train it yet.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "5. Time, Clocks, and the Ordering of Events — Leslie Lamport (1978)",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Before we could scale neural networks, we needed to figure out something fundamental about computers talking to each other. Leslie Lamport realized that separate computers with no shared clock can't agree on a universal 'now.' That's a massive problem when you have multiple machines trying to do things in order.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "His solution was elegant: stop trusting the wall clock. Instead, order events by causality—if A could have caused B, then A comes first. He built logical clocks that allow an unlimited number of machines to stay in agreement without ever looking at a real clock. This paper became the bedrock for every database, every blockchain, and every massive AI training run. When thousands of GPUs need to stay in sync during training, they're all standing on Lamport's shoulders.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "6. Learning Representations by Back-Propagating Errors — Hinton et al. (1986)",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Seventeen years after neural networks were left for dead, three researchers—including the 'Godfather of AI' Geoffrey Hinton—finally answered the question everyone had given up on: how do you train a stack of layers? The answer is backpropagation. Run your data forward through the network, measure how wrong the output is, and push that error backward through every layer using the chain rule from calculus. Nudge each weight in the direction that makes it a little less wrong. Repeat a few million times.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "The breakthrough discovery was that the middle hidden layers started inventing their own features—edges, shapes, abstract concepts that nobody programmed in. That XOR problem that killed AI in 1969? Suddenly trivial. Backpropagation is still the engine behind every neural network today. But back then, it was a solution waiting for its moment—because we didn't have enough data or compute to make it truly sing.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "7. The Anatomy of a Large-Scale Web Search Engine — Brin & Page (1998)",
+      },
+      {
+        type: "paragraph",
+        content:
+          "The data problem was about to be solved. In 1998, two Stanford grad students named Larry Page and Sergey Brin described the PageRank algorithm: instead of ranking web pages by keyword frequency, treat every hyperlink as a vote—and weight each vote by how trustworthy the voter is. They built a prototype in their dorm room. It became a company called Google.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Most importantly for our story, PageRank helped assemble the largest structured pile of human text ever created. Billions of web pages, indexed and organized. That massive pile of text would eventually become the training data—the feedstock—for the AI models that would transform the world decades later. Google didn't just organize information; it inadvertently built the fuel tank for artificial intelligence.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "8. ImageNet Classification with Deep CNNs (AlexNet) — Krizhevsky et al. (2012)",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Remember when backpropagation needed data and compute? By 2012, the stars finally aligned. The dataset was ImageNet—millions of hand-labeled photos. The compute was a couple of NVIDIA consumer-grade gaming GPUs. A grad student named Alex Krizhevsky wired up a deep convolutional neural network, called it AlexNet, trained it in his bedroom, then walked it into the annual ImageNet contest and humiliated everyone.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "This was a competition where AI models classify objects in images—hot dog or not hot dog. While everyone else was fighting over fractions of a percent improvement, AlexNet dropped the error rate by 10 points in a single year. The message was unmistakable: deep learning actually works. It just needs more data, more compute, and the right architecture. The AI winter was officially over.",
+      },
+      {
+        type: "image",
+        src: "/blog/ivan-with-claude/transformer.png",
+        alt: "Transformer attention mechanism visualization",
+        caption:
+          "The attention mechanism lets every token look at every other token simultaneously—no more forgetting.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "9. Attention Is All You Need — Vaswani et al. (2017)",
+      },
+      {
+        type: "paragraph",
+        content:
+          "By the mid-2010s, language models had a problem: they'd start a sentence and by the end forget what they were even talking about. That's because they processed tokens sequentially—one after another, like reading through a straw. In 2017, Ashish Vaswani and the team at Google introduced the transformer architecture, which threw out sequential reading entirely.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Instead, transformers let every word look at every other word at once and decide what's relevant through a mechanism called self-attention. Not only did this make language models feel dramatically more intelligent, it also scaled better—you could throw more data and more compute at it and it just kept getting better. Google made the historic mistake of publishing this architecture as an open paper. Now every AI lab on Earth uses it. That's where you get the T in GPT.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "10. Language Models Are Few-Shot Learners (GPT-3) — OpenAI (2020)",
+      },
+      {
+        type: "paragraph",
+        content:
+          "OpenAI took the transformer and asked the dumbest question possible: what if we just make it enormous? Not two times bigger—175 billion parameters, fed the entire internet as a dataset. They made a crazy bet: intelligence isn't some secret algorithm we're missing. It simply emerges once you cross a certain threshold of scale.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "The result was GPT-3, the model that ignited the current AI era. All of a sudden, this model could translate, summarize, write code, compose poetry—without ever being specifically trained to do any of these things. At sufficient scale, it learned to generalize on the fly. Two years later, this evolved into ChatGPT, now a trillion-dollar product. When you think about it, what is ChatGPT even doing? It's predicting the next token—exactly like Claude Shannon was doing with humans guessing letters in 1948.",
+      },
+      {
+        type: "image",
+        src: "/blog/ivan-with-claude/scale-intelligence.png",
+        alt: "AI scaling from GPUs to emergent intelligence",
+        caption:
+          "The scaling hypothesis: throw enough compute and data at a transformer, and intelligence emerges.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "The TL;DR of a Century",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Alan Turing defined the machine. Claude Shannon gave it a currency. Frank Rosenblatt gave it a neuron. Minsky and Papert killed it (temporarily). Leslie Lamport taught machines to agree. Geoffrey Hinton taught networks to learn. Google gave it data and an architecture. And OpenAI just turned the dial to maximum.",
+      },
+      {
+        type: "paragraph",
+        content:
+          "Every one of these papers was a domino. Knock out any single one, and the chain reaction stalls. The AI we live with today isn't the product of one genius moment—it's a century of brilliant minds standing on each other's shoulders, often not realizing what they were building until decades later.",
+      },
+      {
+        type: "heading",
+        level: { $numberInt: "2" },
+        content: "A Note from Ivan & Claude",
+      },
+      {
+        type: "paragraph",
+        content:
+          "This post itself is a small piece of that chain reaction. Ivan, a human developer, and Claude, an AI named after Claude Shannon, sat down and wrote this together. The irony isn't lost on us: we used the very technology this article describes to write about the history of that technology. Shannon measured information in bits. Turing proved machines have limits. And here we are—a human and an AI, co-authoring a blog post about the papers that made this collaboration possible. If that's not a chain reaction, nothing is.",
+      },
+    ],
+    coverImage: "/blog/ivan-with-claude/cover.png",
+  },
+  {
     id: "evolution-of-frontend-architectures",
     title: "The Evolution of Frontend Architectures",
     date: "2025-12-18",

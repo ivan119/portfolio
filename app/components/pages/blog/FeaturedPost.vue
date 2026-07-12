@@ -21,6 +21,10 @@ const returnSizes = computed(() => {
   if (isTablet.value) return "639"; // between
   return "693"; // desktop
 });
+
+// Detect if an image URL is from Cloudinary or a local path
+const isCloudinaryUrl = (url?: string) =>
+  !!url && url.includes("cloudinary.com");
 </script>
 
 <template>
@@ -49,6 +53,7 @@ const returnSizes = computed(() => {
             class="featured-image-wrap"
           >
             <NuxtImg
+              v-if="isCloudinaryUrl(post.coverImage)"
               provider="cloudinary"
               :src="post.coverImage"
               densities="1"
@@ -73,6 +78,13 @@ const returnSizes = computed(() => {
                 />
               </div>
             </NuxtImg>
+            <img
+              v-else
+              :src="post.coverImage"
+              class="featured-image-img rounded-lg"
+              fetchpriority="high"
+              :alt="post.title"
+            />
             <div class="featured-image-overlay"></div>
           </div>
         </div>
