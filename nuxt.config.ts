@@ -93,6 +93,9 @@ export default defineNuxtConfig({
       "/favicon-48x48.png": {
         headers: { "cache-control": "public, max-age=31536000, immutable" },
       },
+      "/blog/**": {
+        headers: { "cache-control": "public, max-age=31536000, immutable" },
+      },
       // 2. EVERYTHING ELSE: Prerender it!
       "/**": { prerender: true },
     },
