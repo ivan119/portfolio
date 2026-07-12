@@ -256,7 +256,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1766084607/The_evolution_of_frontend_architectures_2_hlagkf.webp",
+        src: "/blog/evolution-of-frontend-architectures/The_evolution_of_frontend_architectures_2_hlagkf.webp",
         alt: "Frontend architecture evolution timeline",
         caption:
           "The evolution of frontend architectures: from static pages to modular and microfrontends.",
@@ -278,7 +278,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1766084607/Static_pages_to_MVC_transition_ifhd0u.webp",
+        src: "/blog/evolution-of-frontend-architectures/Static_pages_to_MVC_transition_ifhd0u.webp",
         alt: "Model-View-Controller architecture diagram",
         caption:
           "MVC introduced dynamic rendering but relied heavily on backend logic.",
@@ -300,7 +300,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1766083898/The_Rise_of_Single_Page_Applications_SPAs_w6edzu.webp",
+        src: "/blog/evolution-of-frontend-architectures/The_Rise_of_Single_Page_Applications_SPAs_w6edzu.webp",
         alt: "Single Page Application structure",
         caption:
           "SPAs moved business logic to the frontend, enabling dynamic user interfaces without full page reloads.",
@@ -322,7 +322,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1766083988/Backend_for_Frontend_BFF_and_API-Driven_Design_ppfubp.webp",
+        src: "/blog/evolution-of-frontend-architectures/Backend_for_Frontend_BFF_and_API-Driven_Design_ppfubp.webp",
         alt: "Backend for Frontend pattern",
         caption:
           "The Backend for Frontend pattern allows each client to have its own optimized backend layer.",
@@ -344,7 +344,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1766083429/Server-Side_Rendering_SSR_and_Static_Site_Generation_SSG_alkcqk.webp",
+        src: "/blog/evolution-of-frontend-architectures/Server-Side_Rendering_SSR_and_Static_Site_Generation_SSG_alkcqk.webp",
         alt: "Server-side rendering process",
         caption:
           "SSR and SSG bring faster load times and improved SEO by rendering content before it reaches the browser.",
@@ -366,7 +366,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1766083391/Modular_Monoliths_and_Microfrontends_g1ikma.webp",
+        src: "/blog/evolution-of-frontend-architectures/Modular_Monoliths_and_Microfrontends_g1ikma.webp",
         alt: "Microfrontends architecture",
         caption:
           "Microfrontends enable large-scale parallel development by splitting the frontend into independently deployable modules.",
@@ -398,7 +398,7 @@ export const posts = [
       },
     ],
     coverImage:
-      "https://res.cloudinary.com/dvthrmqlp/image/upload/v1760739428/The_Evolution_of_Frontend_Architectures_p5saal.webp",
+      "/blog/evolution-of-frontend-architectures/The_Evolution_of_Frontend_Architectures_p5saal.webp",
   },
   {
     id: "ai-agents-transforming-digital-landscape",
@@ -418,7 +418,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/AI_Agents_Transforming_the_Digital_Landscape_OLD_cewcap.webp",
+        src: "/blog/ai-agents-transforming-digital-landscape/AI_Agents_Transforming_the_Digital_Landscape_OLD_cewcap.webp",
         alt: "AI agents transforming the digital landscape",
         caption:
           "AI agents are reshaping how we interact with technology across various domains.",
@@ -440,7 +440,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/I_agents_seamlessly_integrating_into_daily_life_and_work._gelwpv.webp",
+        src: "/blog/ai-agents-transforming-digital-landscape/I_agents_seamlessly_integrating_into_daily_life_and_work._gelwpv.webp",
         alt: "Evolution of AI agents timeline",
         caption:
           "The rapid evolution of AI agents from simple rule-based systems to sophisticated autonomous entities.",
@@ -462,7 +462,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/AI_agents_revolutionizing_industries._mkcvt2.webp",
+        src: "/blog/ai-agents-transforming-digital-landscape/AI_agents_revolutionizing_industries._mkcvt2.webp",
         alt: "AI agents transforming various industries",
         caption:
           "AI agents are creating new possibilities across healthcare, finance, manufacturing, and creative industries.",
@@ -484,7 +484,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758404195/Emphasizing_human-AI_collaboration_in_various_fields._lvzes2.webp",
+        src: "/blog/ai-agents-transforming-digital-landscape/Emphasizing_human-AI_collaboration_in_various_fields._lvzes2.webp",
         alt: "Future of human-AI collaboration",
         caption:
           "The future belongs to collaborative intelligence—humans and AI agents working together to solve complex problems.",
@@ -502,7 +502,7 @@ export const posts = [
       },
     ],
     coverImage:
-      "https://res.cloudinary.com/dvthrmqlp/image/upload/w_500,h_319,c_fill/v1760835369/AI_agents_transforming_the_digital_landscape_final_roeu4o.webp",
+      "/blog/ai-agents-transforming-digital-landscape/AI_agents_transforming_the_digital_landscape_final_roeu4o.webp",
   },
   {
     id: "quantum-computing-ai-next-frontier",
@@ -522,7 +522,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/v1758580675/Quantum_computing_and_AI_integration_byonvl.webp",
+        src: "/blog/quantum-computing-ai-next-frontier/Quantum_computing_and_AI_integration_byonvl.webp",
         alt: "Quantum computing and AI integration",
         caption:
           "Quantum computing represents the next evolutionary leap for artificial intelligence systems.",
@@ -544,7 +544,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758579873/Evolution_of_quantum_computing_and_AI_sdzugf.jpg",
+        src: "/blog/quantum-computing-ai-next-frontier/Evolution_of_quantum_computing_and_AI_sdzugf.jpg",
         alt: "Evolution of quantum computing and AI",
         caption:
           "The parallel evolution of quantum computing and artificial intelligence is creating new possibilities for computational problem-solving.",
@@ -566,7 +566,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758615619/Quantam_AI_Applications_ya9wez.webp",
+        src: "/blog/quantum-computing-ai-next-frontier/Quantam_AI_Applications_ya9wez.png",
         alt: "Quantum AI applications across industries",
         caption:
           "Quantum-enhanced AI promises to transform industries from drug discovery and materials science to finance and cryptography.",
@@ -588,7 +588,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758615619/Future_of_quantum_AI_collaboration_oeyfg2.webp",
+        src: "/blog/quantum-computing-ai-next-frontier/Future_of_quantum_AI_collaboration_oeyfg2.webp",
         alt: "Future of quantum AI collaboration",
         caption:
           "The future of quantum AI will likely involve hybrid systems that combine classical and quantum computing for optimal results.",
@@ -621,7 +621,7 @@ export const posts = [
       },
     ],
     coverImage:
-      "https://res.cloudinary.com/dvthrmqlp/image/upload/w_472,h_236,c_fill/v1758579873/Quantum_Computing_and_AI_The_Next_Frontier_dfqse7.webp",
+      "/blog/quantum-computing-ai-next-frontier/Quantum_Computing_and_AI_The_Next_Frontier_dfqse7.png",
   },
   {
     title: "Federated Learning: The Rise of Privacy-Preserving AI",
@@ -646,7 +646,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758618170/Federated_learning_network_visualization_nu6lyr.webp",
+        src: "/blog/federated-learning-privacy-preserving-ai/Federated_learning_network_visualization_nu6lyr.png",
         alt: "Federated learning network visualization",
         caption:
           "Federated learning enables AI training across distributed devices while keeping sensitive data local and private.",
@@ -666,13 +666,15 @@ export const posts = [
         content:
           "This paradox has limited AI's potential in critical domains where privacy concerns are paramount. It has also created justified public skepticism about how personal data is used in AI training. Federated learning offers a compelling solution to this dilemma by fundamentally changing how machine learning models are trained.",
       },
+      /*
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758617921/Evolution_of_privacy_in_AI_ziett1.webp",
+        src: "/blog/federated-learning-privacy-preserving-ai/2.webp",
         alt: "Evolution of privacy in AI",
         caption:
           "The evolution from centralized data collection to privacy-preserving federated learning represents a paradigm shift in AI development.",
       },
+      */
       {
         type: "heading",
         level: { $numberInt: "2" },
@@ -695,7 +697,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758617923/Federated_learning_across_industries_gxb3qu.webp",
+        src: "/blog/federated-learning-privacy-preserving-ai/Federated_learning_across_industries_gxb3qu.png",
         alt: "Federated learning across industries",
         caption:
           "Federated learning is enabling privacy-preserving AI applications across healthcare, finance, telecommunications, and other privacy-sensitive industries.",
@@ -722,7 +724,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "https://res.cloudinary.com/dvthrmqlp/image/upload/w_800,h_400,c_fill/v1758617922/Future_of_privacy-preserving_AI_collaboration_q0tkau.webp",
+        src: "/blog/federated-learning-privacy-preserving-ai/Future_of_privacy-preserving_AI_collaboration_q0tkau.png",
         alt: "Future of privacy-preserving AI collaboration",
         caption:
           "Federated learning enables unprecedented collaboration between organizations while maintaining strict data boundaries.",
@@ -756,6 +758,6 @@ export const posts = [
     ],
     id: "federated-learning-privacy-preserving-ai",
     coverImage:
-      "https://res.cloudinary.com/dvthrmqlp/image/upload/w_472,h_236,c_fill/v1758579873/Federated_Learning_The_Rise_of_Privacy-Preserving_AI_d1z0p6.webp",
+      "/blog/federated-learning-privacy-preserving-ai/Federated_Learning_The_Rise_of_Privacy-Preserving_AI_d1z0p6.png",
   },
 ];
