@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import type { PreviewBlogPost } from "~~/shared/types/blog";
-import { getBreakpoints } from "~/composables/shared/breakpoints";
-
-const { isMobileDevice, isTablet } = getBreakpoints();
 
 const props = withDefaults(
   defineProps<{
@@ -15,12 +12,6 @@ const props = withDefaults(
     loading: false,
   },
 );
-
-const returnSizes = computed(() => {
-  if (isMobileDevice.value) return "396"; // mobiles
-  if (isTablet.value) return "639"; // between
-  return "693"; // desktop
-});
 
 </script>
 
@@ -49,30 +40,13 @@ const returnSizes = computed(() => {
             }"
             class="featured-image-wrap"
           >
-            <NuxtImg
+            <img
               :src="post.coverImage"
-              densities="1"
-              :quality="80"
-              :sizes="returnSizes"
-              custom
-              v-slot="{ isLoaded, imgAttrs, src }"
-            >
-              <img
-                v-if="isLoaded"
-                v-bind="imgAttrs"
-                :src="src"
-                class="featured-image-img rounded-lg"
-                fetchpriority="high"
-                :alt="post.title"
-              />
-              <div v-else class="w-full h-full">
-                <SkeletonImage
-                  rounded="rounded-none"
-                  class="featured-image-img rounded-lg"
-                  aria-label="Loading featured post image"
-                />
-              </div>
-            </NuxtImg>
+              class="featured-image-img rounded-lg"
+              fetchpriority="high"
+              loading="eager"
+              :alt="post.title"
+            />
             <div class="featured-image-overlay"></div>
           </div>
         </div>

@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import type { BlogPost } from "~~/shared/types/blog";
-import { getBreakpoints } from "~/composables/shared/breakpoints";
 
 // Content item type guard helpers
 type ContentItem = BlogPost["content"][number];
 
 const props = defineProps<{ post: BlogPost }>();
-const { isMobileDevice, isTablet } = getBreakpoints();
 
 // Helper to determine content type
 const isHeading = (item: ContentItem) => item.type === "heading";
@@ -27,11 +25,6 @@ const getHeadingClass = (level: number) => {
       return "text-xl font-bold mb-3 mt-4";
   }
 };
-const returnSizes = computed(() => {
-  if (isMobileDevice.value) return "480"; // mobiles
-  if (isTablet.value) return "720"; // between
-  return "936"; // desktop
-});
 </script>
 
 <template>
@@ -69,32 +62,13 @@ const returnSizes = computed(() => {
       }"
       class="h-56 sm:h-80 lg:h-96"
     >
-      <NuxtImg
+      <img
         :src="props.post?.coverImage"
-        :sizes="returnSizes"
-        densities="1"
-        format="webp"
-        custom
-        v-slot="{ isLoaded, imgAttrs, src }"
-      >
-        <transition name="slide-fade">
-          <img
-            v-if="isLoaded"
-            :src="src"
-            v-bind="imgAttrs"
-            loading="eager"
-            fetchpriority="high"
-            :alt="props.post?.title || ''"
-            class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
-          />
-          <SkeletonImage
-            v-else
-            rounded="lg"
-            class="w-full h-full rounded-lg"
-            aria-label="Loading single post cover image"
-          />
-        </transition>
-      </NuxtImg>
+        loading="eager"
+        fetchpriority="high"
+        :alt="props.post?.title || ''"
+        class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
+      />
     </div>
   </div>
 
@@ -121,33 +95,12 @@ const returnSizes = computed(() => {
 
       <!-- Images -->
       <figure v-else-if="isImage(item)" class="my-8">
-        <NuxtImg
+        <img
           :src="item.src"
-          :sizes="returnSizes"
-          format="webp"
-          quality="auto"
-          custom
-          v-slot="{ isLoaded, imgAttrs, src }"
-        >
-          <!-- Show the actual image when loaded -->
-          <transition name="slide-fade">
-            <img
-              v-if="isLoaded"
-              :src="src"
-              v-bind="imgAttrs"
-              loading="lazy"
-              class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
-              :alt="item.alt"
-            />
-            <div v-else class="h-56 sm:h-80 lg:h-96">
-              <SkeletonImage
-                rounded="lg"
-                class="w-full h-full rounded-lg"
-                :aria-label="`Loading post image_${index}`"
-              />
-            </div>
-          </transition>
-        </NuxtImg>
+          loading="lazy"
+          class="h-56 sm:h-80 lg:h-96 w-full object-cover rounded-lg"
+          :alt="item.alt"
+        />
         <figcaption v-if="item.caption" class="text-center text-gray-500 mt-2">
           {{ item.caption }}
         </figcaption>

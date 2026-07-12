@@ -37,39 +37,20 @@ const doImageEffect = ref(false);
           :style="{ 'view-transition-name': `post-image-${post.id}` }"
           class="lg:w-1/2 relative aspect-video overflow-hidden"
         >
-          <NuxtImg
+          <img
             :src="post?.coverImage || '/seo/IvanKelavaBlog1200x627.webp'"
-            format="webp"
-            :custom="true"
-            v-slot="{ isLoaded, imgAttrs, src }"
-          >
-            <!-- Show the actual image when loaded -->
-            <transition name="slide-fade">
-              <img
-                v-if="isLoaded"
-                class="w-full h-full object-cover transform transition-transform duration-500"
-                :class="{ 'scale-105': doImageEffect }"
-                v-bind="imgAttrs"
-                loading="lazy"
-                fetchpriority="high"
-                :src="src"
-                :alt="post.title"
-              />
-              <div v-else class="w-full h-full">
-                <SkeletonImage
-                  rounded="rounded-none"
-                  :aria-label="`Loading post image${post.id}`"
-                />
-              </div>
-            </transition>
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent transition-opacity duration-300"
-              :class="{
-                'opacity-100': doImageEffect,
-                'opacity-0': !doImageEffect,
-              }"
-            ></div>
-          </NuxtImg>
+            class="w-full h-full object-cover transform transition-transform duration-500"
+            :class="{ 'scale-105': doImageEffect }"
+            loading="lazy"
+            :alt="post.title"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-gray-900/50 to-transparent transition-opacity duration-300"
+            :class="{
+              'opacity-100': doImageEffect,
+              'opacity-0': !doImageEffect,
+            }"
+          ></div>
         </div>
 
         <!-- Content -->
