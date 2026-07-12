@@ -22,9 +22,6 @@ const returnSizes = computed(() => {
   return "693"; // desktop
 });
 
-// Detect if an image URL is from Cloudinary or a local path
-const isCloudinaryUrl = (url?: string) =>
-  !!url && url.includes("cloudinary.com");
 </script>
 
 <template>
@@ -53,8 +50,6 @@ const isCloudinaryUrl = (url?: string) =>
             class="featured-image-wrap"
           >
             <NuxtImg
-              v-if="isCloudinaryUrl(post.coverImage)"
-              provider="cloudinary"
               :src="post.coverImage"
               densities="1"
               :quality="80"
@@ -78,13 +73,6 @@ const isCloudinaryUrl = (url?: string) =>
                 />
               </div>
             </NuxtImg>
-            <img
-              v-else
-              :src="post.coverImage"
-              class="featured-image-img rounded-lg"
-              fetchpriority="high"
-              :alt="post.title"
-            />
             <div class="featured-image-overlay"></div>
           </div>
         </div>

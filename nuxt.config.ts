@@ -63,13 +63,8 @@ export default defineNuxtConfig({
     fallback: "dark",
   },
   image: {
-    quality: 80,
+    quality: 99,
     format: ["webp"],
-    providers: {
-      cloudinary: {
-        baseURL: "https://res.cloudinary.com/dvthrmqlp/image/upload/",
-      },
-    },
   },
   ssr: true,
   components: [
