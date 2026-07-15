@@ -82,8 +82,34 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
     prerender: {
-      crawlLinks: true, // Follow all <NuxtLink> hrefs found during prerender
-      routes: ["/", "/blog"], // Seed pages the crawler starts from
+      crawlLinks: true,
+      // Explicitly list every URL so Nitro prerenders them as full static HTML.
+      // Dynamic routes (/blog/[id], /projects/[slug]) are NOT auto-discovered
+      // by the crawler when links are inside lazy/async components — causing
+      // Google to crawl empty shells and refuse to index them.
+      routes: [
+        // Static pages
+        "/",
+        "/blog",
+        "/projects",
+        "/skills",
+        // Blog posts — add new post IDs here when published
+        "/blog/ivan-with-claude",
+        "/blog/evolution-of-frontend-architectures",
+        "/blog/ai-agents-transforming-digital-landscape",
+        "/blog/quantum-computing-ai-next-frontier",
+        "/blog/federated-learning-privacy-preserving-ai",
+        // Project pages — add new slugs here when added
+        "/projects/gausscms",
+        "/projects/celeroone",
+        "/projects/delmerion-webshop",
+        "/projects/sonic-pills",
+        "/projects/invest-in-croatia",
+        "/projects/wineyard",
+        // Other crawlable routes
+        "/sitemap.xml",
+        "/robots.txt",
+      ],
     },
     routeRules: {
       // 1. Static Assets (1 Year Cache)

@@ -22,8 +22,12 @@ export function usePageSeo({
 }: PageSeoInput) {
   const url = useRequestURL();
   const config = useRuntimeConfig();
-  const canonical = `${url.origin}${url.pathname}`;
-  const siteOrigin = config?.public?.siteUrl?.replace(/\/$/, "");
+  // Use siteOrigin (from NUXT_PUBLIC_SITE_URL env var) for all canonical/og:url
+  // values. useRequestURL().origin returns "http://localhost" during Nitro's
+  // prerender phase, which would embed localhost in every canonical tag and
+  // cause Google to ignore or suppress those pages.
+  const siteOrigin = (config?.public?.siteUrl as string)?.replace(/\/$/, "") || url.origin;
+  const canonical = `${siteOrigin}${url.pathname}`;
 
   // Build an absolute image URL safely
   const absoluteImage = image
