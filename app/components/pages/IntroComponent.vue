@@ -23,7 +23,7 @@ const {
 usePageSeo({
   title: "Ivan Kelava",
   description:
-    "Senior frontend developer from Osijek, Croatia. Over 5 years building user-friendly websites and platforms. Explore projects, skills, and get in touch.",
+    "Senior software engineer & Owner of Singular Design from Osijek, Croatia. Over 6 years building user-friendly websites and platforms. Explore projects, skills, and get in touch.",
   image: "/seo/IvanKelavaWelcome1200x627.webp",
   imageAlt: "Ivan Kelava favicon",
   lang: "en",
@@ -104,7 +104,7 @@ const handlePortfolioClick = useThrottleFn(() => {
       </h2>
 
       <h3 data-typer class="text-2xl md:text-3xl mb-4">
-        Experienced as a frontend team lead developer
+        Founder and Senior Software Engineer at Singular Design
       </h3>
 
       <h3 data-typer class="text-xl mb-2">

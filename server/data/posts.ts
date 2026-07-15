@@ -666,7 +666,6 @@ export const posts = [
         content:
           "This paradox has limited AI's potential in critical domains where privacy concerns are paramount. It has also created justified public skepticism about how personal data is used in AI training. Federated learning offers a compelling solution to this dilemma by fundamentally changing how machine learning models are trained.",
       },
-      /*
       {
         type: "image",
         src: "/blog/federated-learning-privacy-preserving-ai/2.webp",
@@ -674,7 +673,6 @@ export const posts = [
         caption:
           "The evolution from centralized data collection to privacy-preserving federated learning represents a paradigm shift in AI development.",
       },
-      */
       {
         type: "heading",
         level: { $numberInt: "2" },

@@ -2,7 +2,7 @@
 usePageSeo({
   title: "Ivan Kelava",
   description:
-    "Senior frontend developer from Osijek, Croatia. Over 5 years building user-friendly websites and platforms. Explore projects, skills, and get in touch.",
+    "Senior software engineer & Owner of Singular Design from Osijek, Croatia. Over 6 years building user-friendly websites and platforms. Explore projects, skills, and get in touch.",
   image: "/seo/IvanKelava1200x627.webp",
   imageAlt: "Ivan Kelava",
   lang: "en",
@@ -21,34 +21,19 @@ usePageSeo({
         <span class="font-extrabold text-main-gradient-animated"
           >Ivan Kelava</span
         >, <br />
-        a senior frontend developer from Osijek, Croatia.
+        a senior software engineer & Owner of Singular Design from Osijek, Croatia.
       </h2>
-      <template v-if="false">
-        <p class="flex items-center gap-2 flex-wrap mt-3">
-          Currently working at
-          <BaseButton href="https://gauss.hr/en" external>
-            <template #icon>
-              <gauss-logo class="w-6 h-6 mr-1" />
-            </template>
-            Gauss
-          </BaseButton>
-        </p>
-
-        <p class="flex items-center gap-2 flex-wrap">
-          Core team lead and maintainer of
-          <BaseButton href="https://gaussbox.com/modules-cms" external>
-            <template #icon>
-              <gauss-logo class="w-6 h-6 mr-1" />
-            </template>
-            Gauss CMS
-          </BaseButton>
-        </p>
-      </template>
+      <div class="flex items-center gap-2 flex-wrap mt-3 text-gray-700 dark:text-gray-300">
+        <span>Currently leading development at</span>
+        <BaseButton href="mailto:KelavaIvan@proton.me" external variant="link">
+          Singular Design
+        </BaseButton>
+      </div>
     </div>
 
     <div class="mt-4 space-y-4 slide-enter-active">
       <p>
-        With over 5 years of experience in crafting user-friendly websites and
+        With over 6 years of experience in crafting user-friendly websites and
         large-scale platforms, I thrive on transforming innovative ideas into
         tangible realities. Explore my portfolio to discover the diverse range
         of projects I've brought to life. You can find my
