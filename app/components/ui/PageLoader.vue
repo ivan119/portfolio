@@ -1,23 +1,44 @@
 <script setup lang="ts">
 const { isLoading, progress } = useLoadingIndicator();
 
-// Show spinner IMMEDIATELY when navigation starts (router.beforeEach fires
-// synchronously on click — before page transition blur causes the visual freeze)
+// Only show spinner if navigation takes longer than this threshold.
+// Fast navigations (cached/prerendered pages) never flash the loader.
+const THRESHOLD_MS = 693;
+
 const isNavigating = ref(false);
 const router = useRouter();
+let showTimer: ReturnType<typeof setTimeout> | null = null;
+let navigationStart = 0;
 
 router.beforeEach(() => {
-  isNavigating.value = true;
+  navigationStart = Date.now();
+  // Schedule the spinner to appear only after THRESHOLD_MS
+  showTimer = setTimeout(() => {
+    isNavigating.value = true;
+  }, THRESHOLD_MS);
 });
 
 router.afterEach(() => {
-  // Small delay so new page content renders before spinner hides
-  setTimeout(() => { isNavigating.value = false; }, 350);
+  // Cancel the timer — if navigation finished before threshold, spinner never shows
+  if (showTimer !== null) {
+    clearTimeout(showTimer);
+    showTimer = null;
+  }
+  // If spinner was already visible, keep it a tiny bit so it doesn't flash-disappear
+  if (isNavigating.value) {
+    const elapsed = Date.now() - navigationStart;
+    const minVisibleMs = 400; // spinner visible for at least this long
+    const remaining = Math.max(0, minVisibleMs - elapsed + THRESHOLD_MS);
+    setTimeout(() => { isNavigating.value = false; }, remaining);
+  }
 });
 
-router.onError(() => { isNavigating.value = false; });
+router.onError(() => {
+  if (showTimer !== null) { clearTimeout(showTimer); showTimer = null; }
+  isNavigating.value = false;
+});
 
-// Combined: show if router started OR Nuxt's indicator is active
+// Show if slow navigation OR Nuxt's own indicator is active
 const showLoader = computed(() => isNavigating.value || isLoading.value);
 
 // Circumferences for the SVG arcs
