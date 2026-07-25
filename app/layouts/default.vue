@@ -30,6 +30,8 @@ const {
 
 <template>
   <div class="main">
+    <!-- Full-screen page transition spinner -->
+    <PageLoader />
     <ClientOnly>
       <Transition v-if="!isMobileDevice" name="bg-fade">
         <BackgroundScene
