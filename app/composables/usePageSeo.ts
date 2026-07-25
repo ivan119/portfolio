@@ -77,7 +77,7 @@ export function usePageSeo({
   });
 
   // Prepare Schema.org JSON-LD Structured Data
-  const jsonLdScripts: Array<{ type: string; children: string }> = [];
+  const jsonLdScripts: Array<{ type: "application/ld+json"; innerHTML: string }> = [];
 
   if (type === "article") {
     const articleSchema = {
@@ -104,7 +104,7 @@ export function usePageSeo({
     };
     jsonLdScripts.push({
       type: "application/ld+json",
-      children: JSON.stringify(articleSchema),
+      innerHTML: JSON.stringify(articleSchema),
     });
   } else if (cleanPath === "") {
     // Person & Website schema for home page
@@ -121,7 +121,7 @@ export function usePageSeo({
     };
     jsonLdScripts.push({
       type: "application/ld+json",
-      children: JSON.stringify(personSchema),
+      innerHTML: JSON.stringify(personSchema),
     });
   }
 
