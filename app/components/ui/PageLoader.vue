@@ -1,5 +1,61 @@
 <script setup lang="ts">
-const { isLoading, progress } = useLoadingIndicator();
+const { isLoading } = useLoadingIndicator({ throttle: 0 });
+
+// 120ms threshold: prevents flashing on instant cached route swaps,
+// but triggers spinner almost immediately when network requests/routing are pending on 3G.
+const THRESHOLD_MS = 120;
+const isNavigating = ref(false);
+const router = useRouter();
+
+let timer: ReturnType<typeof setTimeout> | null = null;
+let navStartTime = 0;
+
+function startLoading() {
+  if (timer !== null) clearTimeout(timer);
+  navStartTime = Date.now();
+  timer = setTimeout(() => {
+    isNavigating.value = true;
+  }, THRESHOLD_MS);
+}
+
+function stopLoading() {
+  if (timer !== null) {
+    clearTimeout(timer);
+    timer = null;
+  }
+  if (isNavigating.value) {
+    const elapsed = Date.now() - navStartTime;
+    const minVisibleMs = 369; // Keep spinner visible for at least 369ms for smooth visual feel
+    const remaining = Math.max(0, minVisibleMs - elapsed);
+    setTimeout(() => {
+      isNavigating.value = false;
+    }, remaining);
+  }
+}
+
+// Router hooks
+router.beforeEach(() => {
+  startLoading();
+});
+
+router.afterEach(() => {
+  stopLoading();
+});
+
+router.onError(() => {
+  stopLoading();
+});
+
+// Nuxt app hooks & useLoadingIndicator watch
+watch(isLoading, (loading) => {
+  if (loading) {
+    startLoading();
+  } else {
+    stopLoading();
+  }
+}, { immediate: true });
+
+const showLoader = computed(() => isNavigating.value);
 
 // Circumferences for the SVG arcs
 const R1 = 46; // outer ring radius
@@ -12,7 +68,7 @@ const C3 = +(2 * Math.PI * R3).toFixed(2);
 
 <template>
   <Transition name="page-loader">
-    <div v-if="isLoading" class="page-loader-overlay" aria-label="Loading page" role="status">
+    <div v-if="showLoader" class="page-loader-overlay" aria-label="Loading page" role="status">
 
       <!-- Background particles -->
       <div class="particles">
