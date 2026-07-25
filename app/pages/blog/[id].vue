@@ -25,6 +25,10 @@ usePageSeo({
   description: seoDescription,
   image: seoImage,
   imageAlt: seoImageAlt,
+  type: "article",
+  datePublished: post?.value?.date,
+  authorName: post?.value?.author || "Ivan Kelava",
+  keywords: post?.value?.tags,
   lang: "en",
 });
 </script>

@@ -21,6 +21,7 @@ usePageSeo({
   imageAlt: project?.value?.title
     ? `${project.value.title} preview image`
     : "Project preview image",
+  keywords: project?.value?.tags?.map((t) => t.name),
   lang: "en",
 });
 </script>
