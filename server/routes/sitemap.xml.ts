@@ -5,13 +5,13 @@ export default defineCachedEventHandler(
   (event) => {
     // Determine base URL
     const config = useRuntimeConfig();
-    const siteUrl = config.public?.siteUrl?.replace(/\/$/, "");
-    const proto = getHeader(event, "x-forwarded-proto") || "http";
+    const siteUrl = config.public?.siteUrl?.replace(/\/$/, "") || "https://www.ivankelava.me";
+    const proto = getHeader(event, "x-forwarded-proto") || "https";
     const host =
       getHeader(event, "x-forwarded-host") ||
-      getHeader(event, "host") ||
-      "localhost:3000";
-    const base = siteUrl || `${proto}://${host}`;
+      getHeader(event, "host");
+    const isLocalhost = !host || host.includes("localhost") || host.includes("127.0.0.1");
+    const base = isLocalhost ? siteUrl : `${proto}://${host}`;
 
     // Initialize URLs
     const urls: Array<{
