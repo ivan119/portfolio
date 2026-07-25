@@ -1,58 +1,61 @@
 <script setup lang="ts">
-// throttle: 0 — we control timing ourselves via watch() below
-const { isLoading, progress } = useLoadingIndicator({ throttle: 0 });
+const { isLoading } = useLoadingIndicator({ throttle: 0 });
 
-// ── Navigation threshold ─────────────────────────────────────────────────────
-// Spinner shows only if navigating to a new route takes > 693ms
-const NAVIGATION_THRESHOLD_MS = 693;
+// 120ms threshold: prevents flashing on instant cached route swaps,
+// but triggers spinner almost immediately when network requests/routing are pending on 3G.
+const THRESHOLD_MS = 120;
 const isNavigating = ref(false);
 const router = useRouter();
-let navTimer: ReturnType<typeof setTimeout> | null = null;
-let navigationStart = 0;
 
+let timer: ReturnType<typeof setTimeout> | null = null;
+let navStartTime = 0;
+
+function startLoading() {
+  if (timer !== null) clearTimeout(timer);
+  navStartTime = Date.now();
+  timer = setTimeout(() => {
+    isNavigating.value = true;
+  }, THRESHOLD_MS);
+}
+
+function stopLoading() {
+  if (timer !== null) {
+    clearTimeout(timer);
+    timer = null;
+  }
+  if (isNavigating.value) {
+    const elapsed = Date.now() - navStartTime;
+    const minVisibleMs = 369; // Keep spinner visible for at least 369ms for smooth visual feel
+    const remaining = Math.max(0, minVisibleMs - elapsed);
+    setTimeout(() => {
+      isNavigating.value = false;
+    }, remaining);
+  }
+}
+
+// Router hooks
 router.beforeEach(() => {
-  navigationStart = Date.now();
-  navTimer = setTimeout(() => { isNavigating.value = true; }, NAVIGATION_THRESHOLD_MS);
+  startLoading();
 });
 
 router.afterEach(() => {
-  if (navTimer !== null) { clearTimeout(navTimer); navTimer = null; }
-  if (isNavigating.value) {
-    const elapsed = Date.now() - navigationStart;
-    const remaining = Math.max(0, 369 - (elapsed - NAVIGATION_THRESHOLD_MS));
-    setTimeout(() => { isNavigating.value = false; }, remaining);
-  }
+  stopLoading();
 });
 
 router.onError(() => {
-  if (navTimer !== null) { clearTimeout(navTimer); navTimer = null; }
-  isNavigating.value = false;
+  stopLoading();
 });
 
-// ── Data / fetch loading threshold ──────────────────────────────────────────
-// Spinner shows if any useFetch / useAsyncData pending request takes > 200ms
-// (covers 3G slow API calls that router.beforeEach doesn't know about)
-const DATA_THRESHOLD_MS = 200;
-const isDataLoading = ref(false);
-let dataTimer: ReturnType<typeof setTimeout> | null = null;
-let dataStart = 0;
-
+// Nuxt app hooks & useLoadingIndicator watch
 watch(isLoading, (loading) => {
   if (loading) {
-    dataStart = Date.now();
-    dataTimer = setTimeout(() => { isDataLoading.value = true; }, DATA_THRESHOLD_MS);
+    startLoading();
   } else {
-    if (dataTimer !== null) { clearTimeout(dataTimer); dataTimer = null; }
-    if (isDataLoading.value) {
-      const elapsed = Date.now() - dataStart;
-      const remaining = Math.max(0, 369 - (elapsed - DATA_THRESHOLD_MS));
-      setTimeout(() => { isDataLoading.value = false; }, remaining);
-    }
+    stopLoading();
   }
-});
+}, { immediate: true });
 
-// Show spinner: slow navigation OR slow data fetch
-const showLoader = computed(() => isNavigating.value || isDataLoading.value);
+const showLoader = computed(() => isNavigating.value);
 
 // Circumferences for the SVG arcs
 const R1 = 46; // outer ring radius
