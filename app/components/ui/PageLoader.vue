@@ -1,6 +1,25 @@
 <script setup lang="ts">
 const { isLoading, progress } = useLoadingIndicator();
 
+// Show spinner IMMEDIATELY when navigation starts (router.beforeEach fires
+// synchronously on click — before page transition blur causes the visual freeze)
+const isNavigating = ref(false);
+const router = useRouter();
+
+router.beforeEach(() => {
+  isNavigating.value = true;
+});
+
+router.afterEach(() => {
+  // Small delay so new page content renders before spinner hides
+  setTimeout(() => { isNavigating.value = false; }, 350);
+});
+
+router.onError(() => { isNavigating.value = false; });
+
+// Combined: show if router started OR Nuxt's indicator is active
+const showLoader = computed(() => isNavigating.value || isLoading.value);
+
 // Circumferences for the SVG arcs
 const R1 = 46; // outer ring radius
 const R2 = 34; // middle ring radius
@@ -12,7 +31,7 @@ const C3 = +(2 * Math.PI * R3).toFixed(2);
 
 <template>
   <Transition name="page-loader">
-    <div v-if="isLoading" class="page-loader-overlay" aria-label="Loading page" role="status">
+    <div v-if="showLoader" class="page-loader-overlay" aria-label="Loading page" role="status">
 
       <!-- Background particles -->
       <div class="particles">
