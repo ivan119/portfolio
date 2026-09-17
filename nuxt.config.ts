@@ -50,7 +50,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@nuxt/image",
     "@vueuse/nuxt",
-    "@vercel/speed-insights",
+    "@vercel/speed-insights"
   ],
   postcss: {
     plugins: {
