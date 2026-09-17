@@ -48,8 +48,12 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "@nuxt/image",
+<<<<<<< HEAD
     "@vueuse/nuxt",
     "@vercel/analytics",
+=======
+    "@vueuse/nuxt"
+>>>>>>> chore/dep-update
   ],
   postcss: {
     plugins: {
