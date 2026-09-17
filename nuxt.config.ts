@@ -49,8 +49,7 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "@nuxt/image",
-    "@vueuse/nuxt",
-    "@vercel/speed-insights",
+    "@vueuse/nuxt"
   ],
   postcss: {
     plugins: {
