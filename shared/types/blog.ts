@@ -3,6 +3,7 @@ export interface BlogPost {
   id: string;
   title: string;
   content: Content[];
+  contentHtml?: string;
   image: string;
   createdAt?: string;
   excerpt?: string;

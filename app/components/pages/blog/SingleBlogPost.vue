@@ -74,10 +74,11 @@ const getHeadingClass = (level: number) => {
 
   <!-- Post Content -->
   <article
-    v-if="props.post?.content && props.post.content.length"
+    v-if="props.post?.contentHtml || props.post?.content?.length"
     class="prose prose-lg dark:prose-invert max-w-none"
   >
-    <div v-for="(item, index) in props.post?.content || []" :key="index">
+    <div v-if="props.post.contentHtml" v-html="props.post.contentHtml" />
+    <div v-else v-for="(item, index) in props.post?.content || []" :key="index">
       <!-- Headings -->
 
       <component

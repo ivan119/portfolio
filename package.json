@@ -19,6 +19,7 @@
     "@tailwindcss/typography": "^0.5.20",
     "@vercel/speed-insights": "^2.0.0",
     "@vueuse/nuxt": "^15.0.0",
+    "markdown-it": "^14.3.2",
     "nuxt": "^4.5.2",
     "three": "^0.186.0",
     "typewriter-effect": "^2.22.0"
@@ -27,6 +28,7 @@
     "node": "24.18.0"
   },
   "devDependencies": {
+    "@types/markdown-it": "^14.2.0",
     "@types/node": "26",
     "autoprefixer": "^10.6.1",
     "eslint": "^10.10.0",

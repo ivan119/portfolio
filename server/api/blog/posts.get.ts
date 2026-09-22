@@ -1,4 +1,4 @@
-import { posts } from "../../data/posts";
+import { posts } from "../../data/blog";
 import type { BlogPost, PreviewBlogPost } from "../../../shared/types/blog";
 
 export default defineEventHandler(async (event) => {

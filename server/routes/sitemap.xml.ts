@@ -1,4 +1,4 @@
-import { posts } from "../data/posts";
+import { posts } from "../data/blog";
 import { projects, allProjects } from "../data/projects";
 
 export default defineCachedEventHandler(
