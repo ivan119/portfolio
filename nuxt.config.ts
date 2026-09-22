@@ -1,3 +1,18 @@
+import { readFileSync, readdirSync } from "node:fs";
+import { resolve } from "node:path";
+
+const markdownBlogDirectory = resolve("server/content/blog");
+const markdownBlogFiles = readdirSync(markdownBlogDirectory, { withFileTypes: true })
+  .filter((entry) => entry.isFile() && entry.name.endsWith(".md") && entry.name !== "README.md")
+  .map((entry) => ({
+    name: entry.name,
+    source: readFileSync(resolve(markdownBlogDirectory, entry.name), "utf8"),
+  }));
+const markdownBlogRoutes = markdownBlogFiles.map(({ name, source }) => {
+  const id = source.match(/^id:\s*["']?([^\n"']+)["']?\s*$/m)?.[1];
+  return `/blog/${id || name.replace(/\.md$/, "")}`;
+});
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   typescript: {
@@ -82,6 +97,10 @@ export default defineNuxtConfig({
   ],
   nitro: {
     compressPublicAssets: true,
+    virtual: {
+      "#blog-content": () =>
+        `export default ${JSON.stringify(Object.fromEntries(markdownBlogFiles.map(({ name, source }) => [name, source])))}`,
+    },
     prerender: {
       crawlLinks: true,
       // Explicitly list every URL so Nitro prerenders them as full static HTML.
@@ -100,6 +119,7 @@ export default defineNuxtConfig({
         "/blog/ai-agents-transforming-digital-landscape",
         "/blog/quantum-computing-ai-next-frontier",
         "/blog/federated-learning-privacy-preserving-ai",
+        ...markdownBlogRoutes,
         // Project pages — add new slugs here when added
         "/projects/gausscms",
         "/projects/celeroone",
