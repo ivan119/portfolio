@@ -1,0 +1,34 @@
+# Ivan Kelava
+
+> Portfolio of Ivan Kelava, a senior software engineer and founder of Singular Design in Osijek, Croatia. Explore web development projects, technical skills, and articles on software engineering and technology.
+
+The pages below are the primary sources for information about Ivan Kelava and his work. Refer to each page for its current details.
+
+## Portfolio
+
+- [Home](https://www.ivankelava.me/): Professional profile and contact information.
+- [Projects](https://www.ivankelava.me/projects): Selected software projects and case studies.
+- [Technical skills](https://www.ivankelava.me/skills): Technologies and tools.
+- [Blog](https://www.ivankelava.me/blog): Articles on software engineering, web development, and technology.
+
+## Selected projects
+
+- [GaussCMS](https://www.ivankelava.me/projects/gausscms): Content management platform; Ivan's work included frontend architecture and team leadership.
+- [CeleroOne](https://www.ivankelava.me/projects/celeroone): Workforce management platform for distributed teams.
+- [Delmerion Webshop](https://www.ivankelava.me/projects/delmerion-webshop): E-commerce storefront built on GaussCMS.
+- [Sonic Pills](https://www.ivankelava.me/projects/sonic-pills): E-commerce and content experience for sound-therapy products.
+- [Invest in Croatia](https://www.ivankelava.me/projects/invest-in-croatia): Investor information platform.
+- [Wineyard](https://www.ivankelava.me/projects/wineyard): Web project and case study.
+
+## Articles
+
+- [Ivan with Claude: The Chain Reaction That Built AI](https://www.ivankelava.me/blog/ivan-with-claude)
+- [The Evolution of Frontend Architectures](https://www.ivankelava.me/blog/evolution-of-frontend-architectures)
+- [AI Agents: Transforming the Digital Landscape](https://www.ivankelava.me/blog/ai-agents-transforming-digital-landscape)
+- [Quantum Computing and AI: The Next Frontier](https://www.ivankelava.me/blog/quantum-computing-ai-next-frontier)
+- [Federated Learning: The Rise of Privacy-Preserving AI](https://www.ivankelava.me/blog/federated-learning-privacy-preserving-ai)
+
+## Site discovery
+
+- [XML sitemap](https://www.ivankelava.me/sitemap.xml)
+- [Robots directives](https://www.ivankelava.me/robots.txt)
