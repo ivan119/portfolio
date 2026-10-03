@@ -1,10 +1,10 @@
 <script setup>
 usePageSeo({
-  title: "Ivan Kelava",
+  title: "Ivan Kelava | Senior Software Engineer & Web Developer",
   description:
-    "Senior software engineer & Owner of Singular Design from Osijek, Croatia. Over 6 years building user-friendly websites and platforms. Explore projects, skills, and get in touch.",
-  image: "/seo/IvanKelava1200x627.webp",
-  imageAlt: "Ivan Kelava",
+    "Portfolio of Ivan Kelava, a senior software engineer and founder of Singular Design in Osijek, Croatia. Explore web development projects, technical skills, and articles.",
+  image: "/seo/IvanKelavaWelcome1200x627.webp",
+  imageAlt: "Screenshot of Ivan Kelava's software engineering portfolio",
   lang: "en",
 });
 </script>

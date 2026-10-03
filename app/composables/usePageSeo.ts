@@ -43,7 +43,7 @@ export function usePageSeo({
     ? image.startsWith("http")
       ? image
       : `${siteOrigin}${image.startsWith("/") ? image : `/${image}`}`
-    : `${siteOrigin}/seo/IvanKelava1200x627.webp`;
+    : `${siteOrigin}/seo/IvanKelavaWelcome1200x627.webp`;
 
   const siteName = "Ivan Kelava";
   const ogLocale = lang === "en" ? "en_US" : `${lang}_${lang.toUpperCase()}`;
@@ -113,7 +113,7 @@ export function usePageSeo({
       "@type": "Person",
       name: "Ivan Kelava",
       url: siteOrigin,
-      jobTitle: "Senior Software Engineer",
+      jobTitle: "Founder and Senior Software Engineer",
       sameAs: [
         "https://github.com/ivan119",
         "https://www.linkedin.com/in/kelava-ivan",
@@ -131,4 +131,3 @@ export function usePageSeo({
     script: jsonLdScripts,
   });
 }
-
