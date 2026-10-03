@@ -9,9 +9,9 @@ definePageMeta({
 usePageSeo({
   title: "Blog — Ivan Kelava",
   description:
-    "Discover how AI agents are revolutionizing industries by automating complex tasks, improving decision-making, and enabling smarter human-machine collaboration in the evolving digital landscape.",
+    "Articles by Ivan Kelava on software engineering, web development, artificial intelligence, and the ideas shaping modern technology.",
   image: "/seo/IvanKelavaBlog1200x627.webp",
-  imageAlt: "Blog cover image",
+  imageAlt: "Screenshot of Ivan Kelava's blog page",
   lang: "en",
 });
 </script>

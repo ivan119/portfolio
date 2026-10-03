@@ -20,8 +20,9 @@ usePageSeo({
   image: "/seo/IvanKelavaProjects1200x627.webp",
   imageAlt: project?.value?.title
     ? `${project.value.title} preview image`
-    : "Project preview image",
+    : "Screenshot of Ivan Kelava's projects page",
   keywords: project?.value?.tags?.map((t) => t.name),
+  robots: project?.value ? "index, follow" : "noindex, follow",
   lang: "en",
 });
 </script>

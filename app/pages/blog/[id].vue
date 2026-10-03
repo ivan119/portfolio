@@ -29,6 +29,7 @@ usePageSeo({
   datePublished: post?.value?.date,
   authorName: post?.value?.author || "Ivan Kelava",
   keywords: post?.value?.tags,
+  robots: post?.value ? "index, follow" : "noindex, follow",
   lang: "en",
 });
 </script>
