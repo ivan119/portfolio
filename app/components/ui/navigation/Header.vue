@@ -3,7 +3,7 @@ import { useDefaultLayout } from "~/composables/useDefaultLayout";
 import { getBreakpoints } from "~/composables/shared/breakpoints";
 import BlogIcon from "~/components/ui/icons/Blog.vue";
 import SkillsIcon from "~/components/ui/icons/Skills.vue";
-import ProjectsIcon from "~/components/ui/icons/Projects.vue";
+import ExperienceIcon from "~/components/ui/icons/Experience.vue";
 
 const { showLogo, showIntroComponent } = useDefaultLayout();
 const { isMobileDevice } = getBreakpoints();
@@ -44,10 +44,10 @@ const links = [
     show: true,
   },
   {
-    to: "/projects",
-    text: "Projects",
-    tooltipText: "Projects",
-    icon: ProjectsIcon,
+    to: "/experience",
+    text: "Experience",
+    tooltipText: "Experience & Work",
+    icon: ExperienceIcon,
     show: true,
   },
   {

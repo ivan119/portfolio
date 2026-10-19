@@ -21,7 +21,7 @@ export default defineCachedEventHandler(
       priority?: number;
     }> = [
       { loc: `${base}/`, priority: 1.0, changefreq: "weekly" },
-      { loc: `${base}/projects`, priority: 0.8, changefreq: "weekly" },
+      { loc: `${base}/experience`, priority: 0.9, changefreq: "weekly" },
       { loc: `${base}/skills`, priority: 0.8, changefreq: "weekly" },
       { loc: `${base}/blog`, priority: 0.7, changefreq: "weekly" },
     ];

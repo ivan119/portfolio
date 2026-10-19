@@ -91,8 +91,9 @@ export default defineNuxtConfig({
       routes: [
         // Static pages
         "/",
-        "/blog",
+        "/experience",
         "/projects",
+        "/blog",
         "/skills",
         // Blog posts — add new post IDs here when published
         "/blog/ivan-with-claude",
@@ -101,6 +102,8 @@ export default defineNuxtConfig({
         "/blog/quantum-computing-ai-next-frontier",
         "/blog/federated-learning-privacy-preserving-ai",
         // Project pages — add new slugs here when added
+        "/projects/urgood-creator-platform",
+        "/projects/everymatrix-cashout",
         "/projects/gausscms",
         "/projects/celeroone",
         "/projects/delmerion-webshop",
@@ -123,7 +126,7 @@ export default defineNuxtConfig({
       "/blog/**": {
         headers: { "cache-control": "public, max-age=31536000, immutable" },
       },
-      // 2. EVERYTHING ELSE: Prerender it!
+      // 3. EVERYTHING ELSE: Prerender it!
       "/**": { prerender: true },
     },
   },

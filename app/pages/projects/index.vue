@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { useProjects } from "~/composables/useProjects";
 import { isActiveProjectClass } from "~/composables/useActiveClass";
+
 const xlWidth = ref(false);
 const { projects, allProjects, error, pending, refresh } = await useProjects();
+
 definePageMeta({
   middleware: ["projects-active"],
 });
+
 usePageSeo({
   title: "Projects — Ivan Kelava",
   description:
-    "Selected projects and case studies led by Ivan Kelava, showcasing frontend engineering and architecture.",
+    "Selected projects, platforms, and case studies engineered and led by Ivan Kelava across SaaS, creator tech, eCommerce, and mobile.",
   image: "/seo/IvanKelavaProjects1200x627.webp",
   imageAlt: "Projects - Ivan Kelava",
   lang: "en",
@@ -19,27 +22,23 @@ usePageSeo({
 <template>
   <div
     :class="[
-      xlWidth ? '!max-w-7xl' : '!p-3 md:p-0 mx-auto w-full space-y-5',
+      xlWidth ? '!max-w-7xl' : '!p-3 md:p-0 mx-auto w-full space-y-6',
       {
         'slide-enter-active': isActiveProjectClass,
       },
     ]"
   >
-    <!-- Banner Section -->
-    <Banner title="Projects" description="">
+    <!-- Header Section -->
+    <Banner title="Projects & Case Studies" description="">
       <template #default>
-        <p class="text-lg">
-          Projects where I served as Team Lead at
-          <BaseButton href="https://gauss.hr/en" variant="link" external>
-            Gauss
-          </BaseButton>
-          , leading development and architecture decisions.
+        <p class="text-base md:text-lg text-slate-700 dark:text-slate-300">
+          A showcase of platforms, web architectures, and mobile apps I've built and led as Senior Software Engineer & Team Lead — spanning enterprise SaaS, creator tools, high-throughput sports betting, and eCommerce.
         </p>
       </template>
     </Banner>
 
-    <!-- Loading / Error States for Main Projects -->
-    <Banner title="Main Projects" description="" :first-tag-is-h1="false">
+    <!-- Main / Flagship Projects -->
+    <Banner title="Flagship Projects" description="" :first-tag-is-h1="false">
       <template #default>
         <section class="space-y-6">
           <div
@@ -59,7 +58,7 @@ usePageSeo({
             >
               <LazyProjectCardV3
                 v-for="project in projects"
-                :key="project.title"
+                :key="project.slug"
                 :project="project"
                 :colored="true"
               />
@@ -74,8 +73,8 @@ usePageSeo({
       </template>
     </Banner>
 
-    <!-- Other Projects -->
-    <Banner title="Other Projects" description="" :first-tag-is-h1="false">
+    <!-- Other Production Work -->
+    <Banner title="Client & Production Platforms" description="" :first-tag-is-h1="false">
       <template #default>
         <section class="space-y-6">
           <div
@@ -97,7 +96,7 @@ usePageSeo({
             <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <LazyProjectCardV3
                 v-for="project in allProjects"
-                :key="project.title"
+                :key="project.slug"
                 :project="project"
                 :show-bg-dots="false"
                 :colored="true"

@@ -23,6 +23,88 @@ export const techStackData: Record<string, TechStackEntry> = {
 
 export const projects: ProjectItem[] = [
   {
+    slug: "urgood-creator-platform",
+    title: "Urgood Creator Platform",
+    description:
+      "Creator publishing and recommendation platform featuring media feeds, Resy/OpenTable booking links, and Stripe recurring subscriptions.",
+    link: "https://ivankelava.me",
+    longDescription:
+      "Full stack development for Urgood via Singular Design. Building an end-to-end creator ecosystem featuring media updates, restaurant recommendation lists with direct Resy and OpenTable integrations, Stripe recurring subscriptions, and an iOS 1:1 mobile companion application. Leveraged modern AI-assisted engineering with Google Antigravity and Claude to accelerate shipping across web, mobile, and backend.",
+    company: "Singular Design / Urgood",
+    roles: ["Senior Software Engineer", "Full-Stack Architect"],
+    responsibilities: [
+      "Full ownership across Nuxt frontend, legacy PHP backend, and iOS app",
+      "Delivered the creator publishing beta 33% beyond the expected scope",
+      "Built restaurant booking integration with Resy and OpenTable APIs",
+      "Architected recurring payments and billing with Stripe",
+      "Resolved complex inherited HubSpot integration workflows",
+      "Utilized agentic IDE (Google Antigravity) and LLM workflows to maximize velocity",
+    ],
+    features: [
+      "Creator recommendation lists & media sharing",
+      "Resy & OpenTable table booking links",
+      "Recurring Stripe subscription payments",
+      "Companion iOS 1:1 mobile application",
+      "HubSpot CRM automation pipelines",
+      "AI-accelerated full-stack development",
+    ],
+    metrics: [
+      { label: "Creator Beta", value: "+33% Scope" },
+      { label: "Payments", value: "Stripe Recurring" },
+      { label: "Integrations", value: "Resy & OpenTable" },
+    ],
+    tags: [
+      { name: "Nuxt.js", icon: "devicon-nuxtjs-plain" },
+      { name: "Vue.js", icon: "devicon-vuejs-plain" },
+      { name: "TypeScript", icon: "devicon-typescript-plain" },
+      { name: "PHP", icon: "devicon-php-plain" },
+      { name: "Stripe", icon: "devicon-stripe-plain" },
+    ],
+    categories: ["frontend", "backend", "mobile"],
+    status: "In Progress",
+    year: "2026",
+    timeline: "Senior Software Engineer (B2B) — June 2026 → Present",
+    allowPreview: false,
+  },
+  {
+    slug: "everymatrix-cashout",
+    title: "EveryMatrix Bet Cash-Out App",
+    description:
+      "High-performance Vue NativeScript mobile application for live betting cash-outs and complex nested-list state architectures.",
+    link: "https://everymatrix.com/",
+    longDescription:
+      "Full-stack engineering at EveryMatrix (Zagreb). Rapidly onboarded to resolve 18 critical bugs within the first 3 days, followed by designing and delivering a full-stack nested-list architectural feature. Polished and prepared a Vue NativeScript mobile app for production launch of sports betting cash-out operations.",
+    company: "EveryMatrix",
+    roles: ["Software Engineer (Full-Stack)"],
+    responsibilities: [
+      "Resolved 18 critical production bugs in the first 3 days of onboarding",
+      "Engineered a full-stack nested-list feature across UI and data layer",
+      "Optimized and prepared a Vue NativeScript mobile app for live launch",
+      "Authored architectural handover report with scalability recommendations",
+    ],
+    features: [
+      "Live betting cash-out engine",
+      "Full-stack nested-list architecture",
+      "Cross-platform Vue NativeScript performance",
+      "High-throughput transactional stability",
+    ],
+    metrics: [
+      { label: "Bugs Fixed (3 Days)", value: "18" },
+      { label: "Mobile App", value: "Launch Ready" },
+      { label: "Architecture", value: "Nested Lists" },
+    ],
+    tags: [
+      { name: "Vue.js", icon: "devicon-vuejs-plain" },
+      { name: "TypeScript", icon: "devicon-typescript-plain" },
+      { name: "NativeScript", icon: "devicon-vuejs-plain" },
+    ],
+    categories: ["frontend", "mobile"],
+    status: "Completed",
+    year: "2026",
+    timeline: "Software Engineer (Full-Stack) — April 2026 → May 2026",
+    allowPreview: false,
+  },
+  {
     slug: "gausscms",
     title: "GaussCMS",
     description:

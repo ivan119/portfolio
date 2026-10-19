@@ -36,9 +36,9 @@ usePageSeo({
         With over 6 years of experience in crafting user-friendly websites and
         large-scale platforms, I thrive on transforming innovative ideas into
         tangible realities. Explore my portfolio to discover the diverse range
-        of projects I've brought to life. You can find my
-        <BaseButton to="/projects" variant="link"
-          >projects list here.</BaseButton
+        of projects I've brought to life. You can explore my
+        <BaseButton to="/experience" variant="link"
+          >work and experience here.</BaseButton
         >
       </p>
       <p>
