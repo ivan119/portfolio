@@ -462,7 +462,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "/blog/ai-agents-transforming-digital-landscape/AI_agents_revolutionizing_industries._mkcvt2.webp",
+        src: "/blog/ai-agents-transforming-digital-landscape/AI_agents_revolutionizing_industries_mkcvt2.webp",
         alt: "AI agents transforming various industries",
         caption:
           "AI agents are creating new possibilities across healthcare, finance, manufacturing, and creative industries.",
@@ -544,7 +544,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "/blog/quantum-computing-ai-next-frontier/Evolution_of_quantum_computing_and_AI_sdzugf.jpg",
+        src: "/blog/quantum-computing-ai-next-frontier/Evolution_of_quantum_computing_and_AI_sdzugf.webp",
         alt: "Evolution of quantum computing and AI",
         caption:
           "The parallel evolution of quantum computing and artificial intelligence is creating new possibilities for computational problem-solving.",
