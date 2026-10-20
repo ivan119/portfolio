@@ -2,7 +2,7 @@
 import { usePosts } from "~/composables/usePosts";
 import { isActiveClass } from "~/composables/useActiveClass";
 const { fetchPosts, posts, featuredPost } = usePosts();
-await fetchPosts();
+fetchPosts();
 definePageMeta({
   middleware: ["blog-active"],
 });
