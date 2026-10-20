@@ -668,7 +668,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "/blog/federated-learning-privacy-preserving-ai/2.webp",
+        src: "/blog/federated-learning-privacy-preserving-ai/Evolution_of_privacy_in_AI_ziett1.webp",
         alt: "Evolution of privacy in AI",
         caption:
           "The evolution from centralized data collection to privacy-preserving federated learning represents a paradigm shift in AI development.",
