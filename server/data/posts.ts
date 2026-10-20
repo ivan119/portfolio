@@ -37,7 +37,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "/blog/ivan-with-claude/turing-machine.png",
+        src: "/blog/ivan-with-claude/turing-machine.webp",
         alt: "Abstract visualization of a Turing machine",
         caption:
           "Turing's hypothetical machine: an infinite tape, a read-write head, and the birth of computation.",
@@ -64,7 +64,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "/blog/ivan-with-claude/shannon-information.png",
+        src: "/blog/ivan-with-claude/shannon-information.webp",
         alt: "Information theory visualization with binary streams and entropy waves",
         caption:
           "Shannon's insight: all information is surprise, and surprise can be measured in bits.",
@@ -101,7 +101,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "/blog/ivan-with-claude/neural-network.png",
+        src: "/blog/ivan-with-claude/neural-network.webp",
         alt: "Evolution from single perceptron to deep neural network",
         caption:
           "From a single neuron to deep stacks—the solution was always there, we just couldn't train it yet.",
@@ -168,7 +168,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "/blog/ivan-with-claude/transformer.png",
+        src: "/blog/ivan-with-claude/transformer.webp",
         alt: "Transformer attention mechanism visualization",
         caption:
           "The attention mechanism lets every token look at every other token simultaneously—no more forgetting.",
@@ -205,7 +205,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "/blog/ivan-with-claude/scale-intelligence.png",
+        src: "/blog/ivan-with-claude/scale-intelligence.webp",
         alt: "AI scaling from GPUs to emergent intelligence",
         caption:
           "The scaling hypothesis: throw enough compute and data at a transformer, and intelligence emerges.",
@@ -236,7 +236,7 @@ export const posts = [
           "This post itself is a small piece of that chain reaction. Ivan, a human developer, and Claude, an AI named after Claude Shannon, sat down and wrote this together. The irony isn't lost on us: we used the very technology this article describes to write about the history of that technology. Shannon measured information in bits. Turing proved machines have limits. And here we are—a human and an AI, co-authoring a blog post about the papers that made this collaboration possible. If that's not a chain reaction, nothing is.",
       },
     ],
-    coverImage: "/blog/ivan-with-claude/cover.png",
+    coverImage: "/blog/ivan-with-claude/cover.webp",
   },
   {
     id: "evolution-of-frontend-architectures",
@@ -566,7 +566,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "/blog/quantum-computing-ai-next-frontier/Quantam_AI_Applications_ya9wez.png",
+        src: "/blog/quantum-computing-ai-next-frontier/Quantam_AI_Applications_ya9wez.webp",
         alt: "Quantum AI applications across industries",
         caption:
           "Quantum-enhanced AI promises to transform industries from drug discovery and materials science to finance and cryptography.",
@@ -621,7 +621,7 @@ export const posts = [
       },
     ],
     coverImage:
-      "/blog/quantum-computing-ai-next-frontier/Quantum_Computing_and_AI_The_Next_Frontier_dfqse7.png",
+      "/blog/quantum-computing-ai-next-frontier/Quantum_Computing_and_AI_The_Next_Frontier_dfqse7.webp",
   },
   {
     title: "Federated Learning: The Rise of Privacy-Preserving AI",
@@ -646,7 +646,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "/blog/federated-learning-privacy-preserving-ai/Federated_learning_network_visualization_nu6lyr.png",
+        src: "/blog/federated-learning-privacy-preserving-ai/Federated_learning_network_visualization_nu6lyr.webp",
         alt: "Federated learning network visualization",
         caption:
           "Federated learning enables AI training across distributed devices while keeping sensitive data local and private.",
@@ -695,7 +695,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "/blog/federated-learning-privacy-preserving-ai/Federated_learning_across_industries_gxb3qu.png",
+        src: "/blog/federated-learning-privacy-preserving-ai/Federated_learning_across_industries_gxb3qu.webp",
         alt: "Federated learning across industries",
         caption:
           "Federated learning is enabling privacy-preserving AI applications across healthcare, finance, telecommunications, and other privacy-sensitive industries.",
@@ -722,7 +722,7 @@ export const posts = [
       },
       {
         type: "image",
-        src: "/blog/federated-learning-privacy-preserving-ai/Future_of_privacy-preserving_AI_collaboration_q0tkau.png",
+        src: "/blog/federated-learning-privacy-preserving-ai/Future_of_privacy-preserving_AI_collaboration_q0tkau.webp",
         alt: "Future of privacy-preserving AI collaboration",
         caption:
           "Federated learning enables unprecedented collaboration between organizations while maintaining strict data boundaries.",
@@ -756,6 +756,6 @@ export const posts = [
     ],
     id: "federated-learning-privacy-preserving-ai",
     coverImage:
-      "/blog/federated-learning-privacy-preserving-ai/Federated_Learning_The_Rise_of_Privacy-Preserving_AI_d1z0p6.png",
+      "/blog/federated-learning-privacy-preserving-ai/Federated_Learning_The_Rise_of_Privacy-Preserving_AI_d1z0p6.webp",
   },
 ];
