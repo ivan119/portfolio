@@ -68,15 +68,17 @@ const doAnimationOnMount = () => {
 svg {
   display: block;
 }
-.gauss-logo {
-  @keyframes rotate {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
   }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.gauss-logo {
   animation: rotate 9s linear infinite;
   transition: transform 9s ease;
 }
